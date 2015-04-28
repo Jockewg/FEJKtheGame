@@ -1,7 +1,5 @@
 package com.khamekaze.fejkathegame.Character;
 
-import org.newdawn.slick.geom.Rectangle;
-
 /**
  * Created by Swartt on 2015-04-28.
  */
@@ -13,12 +11,13 @@ public class Model {
     private int storedJumps;
     private int jumpCoolDown;
     private float size;
+    private float velocityY, velocityX, currentPositionX, currentPositionY;
 
     /**
      * Constructor for creating a character, gives it the default values for a character
      */
-    public Model ()  {
-    grounded = false;
+    public Model() {
+        grounded = false;
         health = 5;
         attackCoolDown = 1;
         storedAttacks = 2;
@@ -81,5 +80,37 @@ public class Model {
 
     public void setSize(float size) {
         this.size = size;
+    }
+
+    public float getVelocityY() {
+        return velocityY;
+    }
+
+    public void setVelocityY(float velocityY) {
+        this.velocityY = velocityY;
+    }
+
+    public float getVelocityX() {
+        return velocityX;
+    }
+
+    public void setVelocityX(float velocityX) {
+        this.velocityX = velocityX;
+    }
+
+    public float getCurrentPositionX() {
+        return currentPositionX;
+    }
+
+    public void setCurrentPositionX(float currentPositionX) {
+        this.currentPositionX = currentPositionX;
+    }
+
+    public float getCurrentPositionY() {
+        return currentPositionY;
+    }
+
+    public void setCurrentPositionY(float currentPositionY) {
+        this.currentPositionY = currentPositionY;
     }
 }
