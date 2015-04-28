@@ -48,27 +48,24 @@ public class Game extends BasicGame implements MouseListener {
             indicator.setCenterY(mouseYBefore);
             System.out.println("MouseX: " + mouseX + " MouseY: " + mouseY);
         }
+        
+        if (mouseX < mouseXBefore && input.isMouseButtonDown(Input.MOUSE_RIGHT_BUTTON)) {
+            System.out.println("moved left");
+        }
+        if (mouseX > mouseXBefore && input.isMouseButtonDown(Input.MOUSE_RIGHT_BUTTON)) {
+            System.out.println("moved right");
+        }
+        if (mouseY < mouseYBefore && input.isMouseButtonDown(Input.MOUSE_RIGHT_BUTTON)) {
+            System.out.println("moved up");
+        }
+        if (mouseY > mouseYBefore && input.isMouseButtonDown(Input.MOUSE_RIGHT_BUTTON)) {
+            System.out.println("moved down");
+        }
     }
 
     @Override
     public void render(GameContainer gc, Graphics g) throws SlickException {
         drawOriginIndicator(g, gc);
-    }
-
-    @Override
-    public void mouseDragged(int oldx, int oldy, int newx, int newy) {
-        if (newx < oldx) {
-            System.out.println("moved left");
-        }
-        if (newx > oldx) {
-            System.out.println("moved right");
-        }
-        if (newy < oldy) {
-            System.out.println("moved up");
-        }
-        if (newy > oldy) {
-            System.out.println("moved down");
-        }
     }
     
     public void drawOriginIndicator(Graphics g, GameContainer gc) {
