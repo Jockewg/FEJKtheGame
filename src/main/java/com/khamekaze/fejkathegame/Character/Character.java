@@ -3,7 +3,7 @@ package com.khamekaze.fejkathegame.Character;
 /**
  * Created by Swartt on 2015-04-28.
  */
-public class Model {
+public class Character {
     private boolean grounded;
     private int health;
     private float attackCoolDown;
@@ -13,11 +13,12 @@ public class Model {
     private float size;
     private float velocityY, velocityX, currentPositionX, currentPositionY;
     private boolean isAlive;
+    private HealthSystem healthSystem;
 
     /**
      * Constructor for creating a character, gives it the default values for a character
      */
-    public Model() {
+    public Character() {
         grounded = false;
         health = 5;
         attackCoolDown = 1;
@@ -26,6 +27,7 @@ public class Model {
         jumpCoolDown = 1;
         size = 40;
         isAlive = true;
+        this.healthSystem = new HealthSystem(this);
     }
 
     public boolean isGrounded() {
@@ -122,5 +124,9 @@ public class Model {
 
     public void setAlive(boolean alive) {
         this.isAlive = alive;
+    }
+
+    public HealthSystem getHealthSystem() {
+        return healthSystem;
     }
 }
