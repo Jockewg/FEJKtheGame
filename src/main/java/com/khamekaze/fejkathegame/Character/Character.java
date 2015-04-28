@@ -26,6 +26,7 @@ public class Character {
     private Shape player;
     private float gravity;
     private Color color;
+    private static int updateRate;
 
     /**
      * Constructor for creating a character, gives it the default values for a character
@@ -44,6 +45,7 @@ public class Character {
         this.movementSystem = new MovementSystem(this);
         gravity = 0.5f;
         jumpStrength = -15;
+        updateRate = 5;
     }
 
     public boolean isGrounded() {
