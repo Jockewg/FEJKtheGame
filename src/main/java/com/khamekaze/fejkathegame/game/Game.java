@@ -11,8 +11,10 @@ import org.newdawn.slick.geom.Circle;
 public class Game extends BasicGame implements MouseListener {
 
     private Circle indicator;
-    private float mouseX, mouseXBefore, y, mouseY, mouseYBefore, mouseSpeed;
-    private boolean attack;
+    private float mouseX, mouseXCircle, mouseXBefore,
+            mouseY, mouseYCircle, mouseYBefore;
+    private long time = 0;
+    private final long defultTimer = 500;
 
     public Game(String gameName) {
         super(gameName);
@@ -24,11 +26,8 @@ public class Game extends BasicGame implements MouseListener {
         mouseY = gc.getHeight() / 2;
         mouseX = gc.getWidth() / 2;
 
-        attack = false;
-        mouseSpeed = 0;
-
-        mouseXBefore = mouseX;
-        mouseYBefore = mouseY;
+        mouseXCircle = mouseX;
+        mouseYCircle = mouseY;
 
         indicator = new Circle(mouseX, gc.getWidth() / 2, 30);
     }
@@ -36,38 +35,32 @@ public class Game extends BasicGame implements MouseListener {
     @Override
     public void update(GameContainer gc, int i) throws SlickException {
         Input input = gc.getInput();
-
+        time -= i;
         mouseX = input.getMouseX();
         mouseY = input.getMouseY();
 
         if (input.isMousePressed(Input.MOUSE_RIGHT_BUTTON)) {
-            mouseXBefore = input.getMouseX();
-            mouseYBefore = input.getMouseY();
+            mouseXCircle = input.getMouseX();
+            mouseYCircle = input.getMouseY();
 
-            indicator.setCenterX(mouseXBefore);
-            indicator.setCenterY(mouseYBefore);
+            indicator.setCenterX(mouseXCircle);
+            indicator.setCenterY(mouseYCircle);
             System.out.println("MouseX: " + mouseX + " MouseY: " + mouseY);
         }
-        
-        if (mouseX < mouseXBefore && input.isMouseButtonDown(Input.MOUSE_RIGHT_BUTTON)) {
-            System.out.println("moved left");
-        }
-        if (mouseX > mouseXBefore && input.isMouseButtonDown(Input.MOUSE_RIGHT_BUTTON)) {
-            System.out.println("moved right");
-        }
-        if (mouseY < mouseYBefore && input.isMouseButtonDown(Input.MOUSE_RIGHT_BUTTON)) {
-            System.out.println("moved up");
-        }
-        if (mouseY > mouseYBefore && input.isMouseButtonDown(Input.MOUSE_RIGHT_BUTTON)) {
-            System.out.println("moved down");
+
+        if (time <= 0 && input.isMouseButtonDown(Input.MOUSE_RIGHT_BUTTON)) {
+            if (mouseX + 200 < mouseXBefore) {
+                System.out.println("attack left" + time);
+                time = defultTimer;
+            }
         }
     }
-
+    
     @Override
     public void render(GameContainer gc, Graphics g) throws SlickException {
         drawOriginIndicator(g, gc);
     }
-    
+
     public void drawOriginIndicator(Graphics g, GameContainer gc) {
         if (gc.getInput().isMouseButtonDown(Input.MOUSE_RIGHT_BUTTON)) {
             g.draw(indicator);

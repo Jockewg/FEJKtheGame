@@ -14,7 +14,7 @@ public class Main {
                     appgc = new AppGameContainer(new Game("FEJKA: The Game"));
                     appgc.setDisplayMode(900, 500, false);
                     appgc.setTargetFrameRate(60);
-                    appgc.setShowFPS(false);
+                    appgc.setShowFPS(true);
                     appgc.start();
             } catch (SlickException ex) {
                     Logger.getLogger(Game.class.getName()).log(Level.SEVERE, null, ex);
