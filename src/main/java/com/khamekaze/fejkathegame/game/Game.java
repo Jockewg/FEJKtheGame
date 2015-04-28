@@ -11,8 +11,8 @@ import org.newdawn.slick.geom.Circle;
 public class Game extends BasicGame implements MouseListener {
 
     private Circle indicator;
-    private float mouseX, mouseXCircle, mouseXBefore,
-            mouseY, mouseYCircle, mouseYBefore;
+    private float mouseX, mouseXBefore,
+            mouseY, mouseYBefore;
     private long time = 0;
     private final long defultTimer = 500;
 
@@ -26,8 +26,8 @@ public class Game extends BasicGame implements MouseListener {
         mouseY = gc.getHeight() / 2;
         mouseX = gc.getWidth() / 2;
 
-        mouseXCircle = mouseX;
-        mouseYCircle = mouseY;
+        mouseXBefore = mouseX;
+        mouseYBefore = mouseY;
 
         indicator = new Circle(mouseX, gc.getWidth() / 2, 30);
     }
@@ -40,11 +40,11 @@ public class Game extends BasicGame implements MouseListener {
         mouseY = input.getMouseY();
 
         if (input.isMousePressed(Input.MOUSE_RIGHT_BUTTON)) {
-            mouseXCircle = input.getMouseX();
-            mouseYCircle = input.getMouseY();
+            mouseXBefore = input.getMouseX();
+            mouseYBefore = input.getMouseY();
 
-            indicator.setCenterX(mouseXCircle);
-            indicator.setCenterY(mouseYCircle);
+            indicator.setCenterX(mouseXBefore);
+            indicator.setCenterY(mouseYBefore);
             System.out.println("MouseX: " + mouseX + " MouseY: " + mouseY);
         }
 
