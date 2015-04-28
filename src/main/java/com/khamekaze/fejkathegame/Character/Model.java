@@ -12,6 +12,7 @@ public class Model {
     private int jumpCoolDown;
     private float size;
     private float velocityY, velocityX, currentPositionX, currentPositionY;
+    private boolean isAlive;
 
     /**
      * Constructor for creating a character, gives it the default values for a character
@@ -24,6 +25,7 @@ public class Model {
         storedJumps = 2;
         jumpCoolDown = 1;
         size = 40;
+        isAlive = true;
     }
 
     public boolean isGrounded() {
@@ -112,5 +114,13 @@ public class Model {
 
     public void setCurrentPositionY(float currentPositionY) {
         this.currentPositionY = currentPositionY;
+    }
+
+    public boolean isAlive() {
+        return isAlive;
+    }
+
+    public void setAlive(boolean alive) {
+        this.isAlive = alive;
     }
 }
