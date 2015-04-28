@@ -1,5 +1,7 @@
 package com.khamekaze.fejkathegame.Character;
 
+import org.newdawn.slick.Input;
+
 /**
  * Created by Swartt on 2015-04-28.
  */
@@ -12,11 +14,9 @@ public class MovementSystem {
 
 
     public void jump() {
-
-
         character.getPlayer().setY(character.getPlayer().getY() + 0.1f);
         if (HITDETECTION) {
-            character.setStoredJumps(2);
+            regainStoredJumps();
             character.setVelocityY(character.getJumpStrength());
             character.setStoredJumps(-1);
         }
@@ -28,8 +28,28 @@ public class MovementSystem {
 
     }
 
-    public void regainStoredJumps() {
+    public void move() {
+        if (character.getMousePositionX() > character.getPreviousMousePositionX()) {
+            float tempvelx = character.getVelocityX();
+            if (character.getVelocityX() < 5)
+                character.setVelocityX(tempvelx += 0.2);
+            character.getPlayer().setCenterX(character.getCurrentPositionX() + character.getVelocityX());
+            character.setCurrentPositionX(character.getPlayer().getCenterX());
 
+        } else if (character.getMousePositionX() > character.getPreviousMousePositionX()) {
+            float tempvelx = character.getVelocityX();
+            if (character.getVelocityX() > 5)
+                character.setVelocityX(tempvelx -= 0.2);
+            character.getPlayer().setCenterX(character.getCurrentPositionX() + character.getVelocityX());
+            character.setCurrentPositionX(character.getPlayer().getCenterX());
+        } else {
+
+        }
+    }
+
+
+    public void regainStoredJumps() {
+        character.setStoredJumps(2);
     }
 
     public void gravity() {

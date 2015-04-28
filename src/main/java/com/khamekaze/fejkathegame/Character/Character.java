@@ -27,6 +27,8 @@ public class Character {
     private float gravity;
     private Color color;
     private static int updateRate;
+    private float mousePositionX;
+    private float previousMousePositionX;
 
     /**
      * Constructor for creating a character, gives it the default values for a character
@@ -176,18 +178,41 @@ public class Character {
         this.jumpStrength = jumpStrength;
     }
 
+    public float getMousePositionX() {
+        return mousePositionX;
+    }
+
+    public void setMousePositionX(float mousePositionX) {
+        this.mousePositionX = mousePositionX;
+    }
+
+    public float getPreviousMousePositionX() {
+        return previousMousePositionX;
+    }
+
+    public void setPreviousMousePositionX(float previousMousePositionX) {
+        this.previousMousePositionX = previousMousePositionX;
+    }
+
     public void init(GameContainer gc) throws SlickException {
+        currentPositionX = player.getCenterX();
+        mousePositionX = gc.getWidth() / 2;
+        previousMousePositionX = mousePositionX;
         player = new Circle(200, 200, size);
     }
 
 
     public void update(GameContainer gc, int i) throws SlickException {
-        movementSystem.gravity();
+        Input input = gc.getInput();
 
-        if (gc.getInput().isMousePressed(Input.MOUSE_LEFT_BUTTON)) {
+        movementSystem.gravity();
+        mousePositionX = input.getMouseX();
+        if (input.isMousePressed(Input.MOUSE_LEFT_BUTTON)) {
             movementSystem.jump();
         }
-
+        if (input.isMousePressed(Input.MOUSE_RIGHT_BUTTON)) {
+            movementSystem.move();
+        }
     }
 
 
