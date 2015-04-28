@@ -42,8 +42,6 @@ public class MovementSystem {
                 character.setVelocityX(tempvelx -= 0.2);
             character.getPlayer().setCenterX(character.getCurrentPositionX() + character.getVelocityX());
             character.setCurrentPositionX(character.getPlayer().getCenterX());
-        } else {
-
         }
     }
 
