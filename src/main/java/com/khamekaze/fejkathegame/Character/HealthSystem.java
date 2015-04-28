@@ -17,7 +17,7 @@ public class HealthSystem {
      */
     public void dealDamage (int damage) {
         int currentHealth = character.getHealth();
-        if (currentHealth > 0) {
+        if (currentHealth > 0 && character.isAlive()) {
             int newHealth = currentHealth - damage;
             character.setHealth(newHealth);
             isCharacterAlive();
