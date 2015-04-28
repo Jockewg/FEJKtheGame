@@ -55,6 +55,22 @@ public class Game extends BasicGame implements MouseListener {
         drawOriginIndicator(g, gc);
     }
 
+    @Override
+    public void mouseDragged(int oldx, int oldy, int newx, int newy) {
+        if (newx < oldx) {
+            System.out.println("moved left");
+        }
+        if (newx > oldx) {
+            System.out.println("moved right");
+        }
+        if (newy < oldy) {
+            System.out.println("moved up");
+        }
+        if (newy > oldy) {
+            System.out.println("moved down");
+        }
+    }
+    
     public void drawOriginIndicator(Graphics g, GameContainer gc) {
         if (gc.getInput().isMouseButtonDown(Input.MOUSE_RIGHT_BUTTON)) {
             g.draw(indicator);
