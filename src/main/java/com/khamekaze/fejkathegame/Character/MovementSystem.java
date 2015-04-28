@@ -5,24 +5,40 @@ package com.khamekaze.fejkathegame.Character;
  */
 public class MovementSystem {
     Character character;
+
     public MovementSystem(Character character) {
         this.character = character;
     }
 
-    public void jump() {
-        if (character.getStoredJumps() < 0 && character.getCanJump() == true) {
-            //Update character position
-            //character.setCurrentPositionY(character.getCurrentPositionY() + character.getVelocityY());
-        }
-    }
-    public void falling() {
-        if (!character.isGrounded()) {
 
+    public void jump() {
+
+
+        character.getPlayer().setY(character.getPlayer().getY() + 0.1f);
+        if (HITDETECTION) {
+            character.setStoredJumps(2);
+            character.setVelocityY(character.getJumpStrength());
+            character.setStoredJumps(-1);
         }
+        character.getPlayer().setY(character.getPlayer().getY() - 0.1f);
+        if (character.getStoredJumps() >= 0) {
+            character.setVelocityY(character.getJumpStrength());
+            character.setStoredJumps(-1);
+        }
+
     }
-    public void gravity () {
-        character.setVelocityY(character.getVelocityY() += character.getGravity());
+
+    public void regainStoredJumps() {
+
+    }
+
+    public void gravity() {
+        float i = character.getVelocityY();
+        character.setVelocityY(i += character.getGravity());
 
         character.getPlayer().setY(character.getPlayer().getY() + character.getVelocityY());
+        if (HITDETECTION) { //CHECK HIT DETECTiON
+            character.getPlayer().setY(character.getPlayer().getY() - character.getVelocityY());
+        }
     }
 }
