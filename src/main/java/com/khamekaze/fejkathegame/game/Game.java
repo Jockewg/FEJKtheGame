@@ -1,5 +1,6 @@
 package com.khamekaze.fejkathegame.game;
 
+import org.lwjgl.input.Mouse;
 import org.newdawn.slick.BasicGame;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -13,8 +14,9 @@ public class Game extends BasicGame implements MouseListener {
     private Circle indicator;
     private float mouseX, mouseXBefore,
             mouseY, mouseYBefore;
-    private long time = 0;
-    private final long defultTimer = 500;
+    private long cooldownTime = 0;
+    private final float sweepLenght = 200;
+    private final long defultCooldown = 500;
 
     public Game(String gameName) {
         super(gameName);
@@ -35,27 +37,26 @@ public class Game extends BasicGame implements MouseListener {
     @Override
     public void update(GameContainer gc, int i) throws SlickException {
         Input input = gc.getInput();
-        time -= i;
+        cooldownTime -= i;
         mouseX = input.getMouseX();
         mouseY = input.getMouseY();
 
         if (input.isMousePressed(Input.MOUSE_RIGHT_BUTTON)) {
             mouseXBefore = input.getMouseX();
             mouseYBefore = input.getMouseY();
-
+            
             indicator.setCenterX(mouseXBefore);
             indicator.setCenterY(mouseYBefore);
             System.out.println("MouseX: " + mouseX + " MouseY: " + mouseY);
         }
 
-        if (time <= 0 && input.isMouseButtonDown(Input.MOUSE_RIGHT_BUTTON)) {
-            if (mouseX + 200 < mouseXBefore) {
-                System.out.println("attack left" + time);
-                time = defultTimer;
-            }
+        if (cooldownTime <= 0 && input.isMouseButtonDown(Input.MOUSE_RIGHT_BUTTON)
+                && mouseX + 200 < mouseXBefore) {
+            System.out.println("attack left");
+            cooldownTime = defultCooldown;
         }
     }
-    
+
     @Override
     public void render(GameContainer gc, Graphics g) throws SlickException {
         drawOriginIndicator(g, gc);
