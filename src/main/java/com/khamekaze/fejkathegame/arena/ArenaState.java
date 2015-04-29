@@ -16,9 +16,8 @@ public class ArenaState extends BasicGameState {
     private MouseAndKeyBoardPlayerController playerController;
     private Physics physics;
     
-    public ArenaState(String name, Physics physics) {
+    public ArenaState(String name) {
         this.name = name;
-        this.physics = physics;
     }
 
     @Override
@@ -28,9 +27,9 @@ public class ArenaState extends BasicGameState {
 
     @Override
     public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {
-        arena = new Arena(name);
-        player = new Player(128, 416);
-        arena.addPlayer(player);
+        
+        player = new Player(800, 40);
+        arena = new Arena(name, player);
         
         playerController = new MouseAndKeyBoardPlayerController(player);
         

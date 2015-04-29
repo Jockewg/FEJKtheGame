@@ -23,15 +23,13 @@ public class Main extends StateBasedGame {
     
     public static final float SCALE = (float) (1 * ((double) WINDOW_WIDTH / 900));
     
-    private static final Physics physics = new Physics();
-    
     public Main() {
         super("FEJKA the game");
     }
     
     @Override
     public void initStatesList(GameContainer gc) throws SlickException {
-        addState(new ArenaState("arena", physics));
+        addState(new ArenaState("arena"));
         this.enterState(0);
 
     }

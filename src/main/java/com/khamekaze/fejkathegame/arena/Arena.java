@@ -18,15 +18,17 @@ public class Arena {
     
     private ArrayList<Player> players;
     
-    public Arena(String name) throws SlickException {
+    public Arena(String name, Player player) throws SlickException {
         map = new TiledMap("data/levels/" + name + ".tmx", "data/img");
         players = new ArrayList<Player>();
+        
+        addPlayer(player);
         
         loadTileMap();
     }
     
     public void loadTileMap() {
-        tiles = new Tile[map.getWidth()][map.getHeight()];
+        tiles = new Tile[map.getWidth() + 1][map.getHeight() + 1];
         
         int layerIndex = map.getLayerIndex("CollisionLayer");
         
@@ -51,6 +53,7 @@ public class Arena {
                         break;
                 }
                 tiles[x][y] = tile;
+                System.out.println(tile.toString());
             }
         }
     }

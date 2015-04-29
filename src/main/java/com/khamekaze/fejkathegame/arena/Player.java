@@ -26,6 +26,7 @@ public class Player extends LevelObject {
         decelerationSpeed = 0.001f;
     }
     
+    @Override
     public void updateBoundingShape() {
         boundingShape.updatePosition(x, y);
     }
@@ -87,7 +88,7 @@ public class Player extends LevelObject {
     }
     
     public void render() {
-        sprite.draw(x-2, y-2);
+        sprite.draw(x - 2, y - 2);
     }
 
 }
