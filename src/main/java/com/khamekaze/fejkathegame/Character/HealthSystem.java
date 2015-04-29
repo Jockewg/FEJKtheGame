@@ -14,10 +14,7 @@ public class HealthSystem {
 
     public HealthSystem(Character character) throws SlickException {
         this.character = character;
-        Image heartImage = new Image("C:\\Users\\Swartt\\Desktop\\FEJKA game placeholder art\\HeartContainerFull");
-        for (int i = 0; i < character.getHealth(); i++) {
-            hearts.add(new Heart(heartImage,50, 50));
-        }
+        setHealthbar();
     }
 
     /**
@@ -35,13 +32,18 @@ public class HealthSystem {
         }
     }
 
+    public void setHealthbar() throws SlickException {
+        Image heartImage = new Image("C:\\Users\\Swartt\\Desktop\\FEJKA game placeholder art\\HeartContainerFull");
+        for (int i = 0; i < character.getHealth(); i++) {
+            hearts.add(new Heart(heartImage,50 + i*50, 50));
+        }
+    }
     /**
      *
      */
     public void updateHealthBar() {
         //TODO: Implement graphical representation of a healthbar
-        int i;
-        for (i = character.getHealth(); i < hearts.size() - 1; i++) {
+        for (int i = character.getHealth(); i < hearts.size() - 1; i++) {
             hearts.remove(i);
         }
 
