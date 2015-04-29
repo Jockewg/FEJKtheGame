@@ -31,13 +31,13 @@ public class Character {
     private float previousMousePositionX;
     private long jumpCoolDownTick;
     private long jumpCoolDownDefault;
-
+    private Image heartContainerFull;
 
 
     /**
      * Constructor for creating a character, gives it the default values for a character
      */
-    public Character() {
+    public Character() throws SlickException {
         grounded = false;
         health = 5;
         attackCoolDown = 1;
@@ -202,6 +202,7 @@ public class Character {
 
     /**
      * initializes all variables the character needs when added to the games arena.
+     *
      * @param gc
      * @throws SlickException
      */
@@ -210,10 +211,13 @@ public class Character {
         mousePositionX = gc.getWidth() / 2;
         previousMousePositionX = mousePositionX;
         player = new Circle(200, 200, size);
+        heartContainerFull = new Image("C:\\Users\\Swartt\\Desktop\\FEJKA game placeholder art\\HeartContainerFull");
+        heartContainerFull.setFilter(Image.FILTER_NEAREST);
     }
 
     /**
      * updates the state of character, update is called every frame
+     *
      * @param gc
      * @param i
      * @throws SlickException
@@ -240,10 +244,12 @@ public class Character {
         if (input.isMouseButtonDown(Input.MOUSE_RIGHT_BUTTON)) {
             movementSystem.move();
         }
+
     }
 
     /**
      * renders the character
+     *
      * @param gc
      * @param grphcs
      * @throws SlickException
