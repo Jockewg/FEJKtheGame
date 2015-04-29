@@ -36,6 +36,11 @@
             <artifactId>library</artifactId>
             <version>2.1.2.2</version>
         </dependency>
+        <dependency>
+            <groupId>org.newdawn.slick</groupId>
+            <artifactId>jinput</artifactId>
+            <version>1</version>
+        </dependency>
     </dependencies>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

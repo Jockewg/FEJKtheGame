@@ -11,6 +11,8 @@ public class ArenaState extends BasicGameState {
     
     Arena arena;
     String name;
+    private Player player;
+    private MouseAndKeyBoardPlayerController playerController;
     
     public ArenaState(String name) {
         this.name = name;
@@ -24,6 +26,11 @@ public class ArenaState extends BasicGameState {
     @Override
     public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {
         arena = new Arena(name);
+        
+        player = new Player(128, 416);
+        arena.addPlayer(player);
+        
+        playerController = new MouseAndKeyBoardPlayerController(player);
 
     }
 
@@ -36,7 +43,7 @@ public class ArenaState extends BasicGameState {
 
     @Override
     public void update(GameContainer gc, StateBasedGame sbg, int i) throws SlickException {
-        
+        playerController.handleInput(gc.getInput(), i);
     }
     
 }
