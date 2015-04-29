@@ -68,7 +68,7 @@ public class Arena {
     }
     
     public void render() {
-        map.render(0, 0);
+        map.render(0, 0, 0, 0, 50, 50);
         
         for(Player p : players) {
             p.render();
