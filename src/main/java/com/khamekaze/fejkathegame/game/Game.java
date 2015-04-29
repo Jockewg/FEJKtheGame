@@ -13,10 +13,12 @@ public class Game extends BasicGame implements MouseListener {
 
     private Circle indicator;
     private float mouseX, mouseXBefore,
-            mouseY, mouseYBefore;
+            mouseY, mouseYBefore,
+            sweepXStart, sweepYStart,
+            sweepXEnd,sweepYEnd,
+            sweep;
     private long cooldownTime = 0;
-    private final float sweepLenght = 200;
-    private final long defultCooldown = 500;
+    private final long defaultCooldown = 500;
 
     public Game(String gameName) {
         super(gameName);
@@ -25,11 +27,11 @@ public class Game extends BasicGame implements MouseListener {
     @Override
     public void init(GameContainer gc) throws SlickException {
 
-        mouseY = gc.getHeight() / 2;
-        mouseX = gc.getWidth() / 2;
+//        mouseY = gc.getHeight() / 2;
+//        mouseX = gc.getWidth() / 2;
 
-        mouseXBefore = mouseX;
-        mouseYBefore = mouseY;
+//        mouseXBefore = mouseX;
+//        mouseYBefore = mouseY;
 
         indicator = new Circle(mouseX, gc.getWidth() / 2, 30);
     }
@@ -40,7 +42,7 @@ public class Game extends BasicGame implements MouseListener {
         cooldownTime -= i;
         mouseX = input.getMouseX();
         mouseY = input.getMouseY();
-
+        
         if (input.isMousePressed(Input.MOUSE_RIGHT_BUTTON)) {
             mouseXBefore = input.getMouseX();
             mouseYBefore = input.getMouseY();
@@ -49,12 +51,27 @@ public class Game extends BasicGame implements MouseListener {
             indicator.setCenterY(mouseYBefore);
             System.out.println("MouseX: " + mouseX + " MouseY: " + mouseY);
         }
-
-        if (cooldownTime <= 0 && input.isMouseButtonDown(Input.MOUSE_RIGHT_BUTTON)
-                && mouseX + 200 < mouseXBefore) {
-            System.out.println("attack left");
-            cooldownTime = defultCooldown;
+        
+        if (sweepXStart != mouseX) {
+            if (sweepXStart < mouseX) {
+                sweep = sweepXStart - mouseX;
+                System.out.println("speed left: " + sweep);
+            }
+            if (sweepXStart > mouseX) {
+                sweep = sweepXStart - mouseX;
+                System.out.println("speed right: " + sweep);
+            }
+            if (sweepYStart < mouseY) {
+                sweep = sweepYStart - mouseY;
+                System.out.println("speed down: " + sweep);
+            }
+            if (sweepYStart > mouseY) {
+                sweep = sweepYStart - mouseY;
+                System.out.println("speed up: " + sweep);
+            }
         }
+        sweepXStart = mouseX;
+        sweepYStart = mouseY;
     }
 
     @Override
