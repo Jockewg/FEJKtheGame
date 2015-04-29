@@ -16,6 +16,7 @@ public abstract class LevelObject {
     protected float decelerationSpeed = 1;
     protected Image sprite;
     protected boolean moving = false;
+    protected int storedJumps;
     
     protected boolean onGround = true;
     
@@ -24,7 +25,9 @@ public abstract class LevelObject {
         this.y = y;
         
         sprite = new Image("data/img/placeholder.png");
-        
+
+        storedJumps = 0;
+
         boundingShape = new AABoundingRect(x, y, 25, 25);
     }
     
@@ -103,7 +106,15 @@ public abstract class LevelObject {
     public void setMoving(boolean moving) {
         this.moving = moving;
     }
-    
+
+    public int getStoredJumps() {
+        return storedJumps;
+    }
+
+    public void setStoredJumps(int storedJumps) {
+        this.storedJumps = storedJumps;
+    }
+
     public void decelerate(int delta) {
         if(x_velocity > 0) {
             x_velocity -= decelerationSpeed * delta;

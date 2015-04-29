@@ -240,8 +240,9 @@ public class Character extends LevelObject {
     }
     
     public void jump() {
-        if(onGround) {
+        if(storedJumps >= 0) {
             y_velocity = -0.65f;
+            storedJumps--;
         }
     }
     

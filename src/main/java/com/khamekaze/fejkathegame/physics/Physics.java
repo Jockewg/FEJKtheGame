@@ -44,6 +44,7 @@ public class Physics {
             if(t.getBoundingShape() != null) {
                 if(t.getBoundingShape().checkCollision(obj.getBoundingShape())) {
                     obj.getBoundingShape().movePosition(0, -1);
+                    obj.setStoredJumps(0);
                     return true;
                 }
             }
