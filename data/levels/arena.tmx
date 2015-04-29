@@ -2,6 +2,11 @@
 <map version="1.0" orientation="orthogonal" renderorder="right-down" width="36" height="20" tilewidth="25" tileheight="25" nextobjectid="1">
  <tileset firstgid="1" name="Arena" tilewidth="25" tileheight="25">
   <image source="../img/tilesets/backgroundArena.png" width="900" height="500"/>
+  <tile id="0">
+   <properties>
+    <property name="tileType" value="solid"/>
+   </properties>
+  </tile>
   <tile id="38">
    <properties>
     <property name="tileType" value="air"/>

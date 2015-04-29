@@ -3,7 +3,7 @@ package com.khamekaze.fejkathegame.arena;
 import com.khamekaze.fejkathegame.collision.AABoundingRect;
 import com.khamekaze.fejkathegame.collision.BoundingShape;
 
-public class LevelObject {
+public abstract class LevelObject {
     
     protected float x, y;
     protected BoundingShape boundingShape;

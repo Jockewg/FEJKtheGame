@@ -3,6 +3,7 @@ package com.khamekaze.fejkathegame;
 import com.khamekaze.fejkathegame.arena.Arena;
 import com.khamekaze.fejkathegame.arena.ArenaState;
 import com.khamekaze.fejkathegame.game.Game;
+import com.khamekaze.fejkathegame.physics.Physics;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.jbox2d.common.Vec2;
@@ -22,13 +23,15 @@ public class Main extends StateBasedGame {
     
     public static final float SCALE = (float) (1 * ((double) WINDOW_WIDTH / 900));
     
+    private static final Physics physics = new Physics();
+    
     public Main() {
         super("FEJKA the game");
     }
     
     @Override
     public void initStatesList(GameContainer gc) throws SlickException {
-        addState(new ArenaState("arena"));
+        addState(new ArenaState("arena", physics));
         this.enterState(0);
 
     }

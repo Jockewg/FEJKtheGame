@@ -18,7 +18,7 @@ public class Player extends LevelObject {
         
         sprite = new Image("data/img/placeholder.png");
         
-        boundingShape = new AABoundingRect(x + 3, y, 25, 25);
+        boundingShape = new AABoundingRect(x, y, 25, 25);
         
         accelerationSpeed = 0.001f;
         maximumSpeed = 0.15f;
@@ -27,7 +27,7 @@ public class Player extends LevelObject {
     }
     
     public void updateBoundingShape() {
-        boundingShape.updatePosition(x + 3, y);
+        boundingShape.updatePosition(x, y);
     }
     
     public void decelerate(int delta) {
