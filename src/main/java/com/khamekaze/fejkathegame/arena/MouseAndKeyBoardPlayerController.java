@@ -29,4 +29,10 @@ public class MouseAndKeyBoardPlayerController {
         }
     }
     
+    private void handleMouseInput(Input i, int delta) {
+        if(i.isMousePressed(Input.MOUSE_LEFT_BUTTON)) {
+            
+        }
+    }
+    
 }

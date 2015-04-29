@@ -66,8 +66,8 @@ public class Character extends LevelObject {
         gravity = 0.5f;
         jumpStrength = -15;
         updateRate = 5;
-        jumpCoolDownTick = 0;
-        jumpCoolDownDefault = 500;
+        jumpCoolDownTick = 60;
+        jumpCoolDownDefault = 60;
     }
 
     public boolean isGrounded() {
@@ -213,11 +213,13 @@ public class Character extends LevelObject {
     public void setPreviousMousePositionX(float previousMousePositionX) {
         this.previousMousePositionX = previousMousePositionX;
     }
-
+    
+    @Override
     public boolean isMoving() {
         return moving;
     }
-
+    
+    @Override
     public void setMoving(boolean moving) {
         this.moving = moving;
     }
@@ -230,10 +232,37 @@ public class Character extends LevelObject {
      * @throws SlickException
      */
     public void init(GameContainer gc) throws SlickException {
+        Input input = gc.getInput();
         currentPositionX = player.getCenterX();
-        mousePositionX = gc.getWidth() / 2;
+        mousePositionX = input.getMouseX();
         previousMousePositionX = mousePositionX;
-        player = new Circle(200, 200, size);
+//        player = new Circle(200, 200, size);
+    }
+    
+    public void jump() {
+        if(onGround) {
+            y_velocity = -0.65f;
+        }
+    }
+    
+    public void moveLeft(int delta) {
+        if(x_velocity > -maximumSpeed) {
+            x_velocity -= accelerationSpeed * delta;
+            if(x_velocity < -maximumSpeed) {
+                x_velocity = -maximumSpeed;
+            }
+        }
+        moving = true;
+    }
+    
+    public void moveRight(int delta) {
+        if(x_velocity < maximumSpeed) {
+            x_velocity += accelerationSpeed * delta;
+            if(x_velocity > maximumSpeed) {
+                x_velocity = maximumSpeed;
+            }
+        }
+        moving = true;
     }
 
     /**
@@ -244,27 +273,30 @@ public class Character extends LevelObject {
      * @throws SlickException
      */
     public void update(GameContainer gc, int i) throws SlickException {
-        Input input = gc.getInput();
-
-        jumpCoolDownTick -= i;
-
-       /* movementSystem.gravity();*/
-
-        mousePositionX = input.getMouseX();
-
-
-        if (jumpCoolDownTick <= 0 && input.isMousePressed(Input.MOUSE_LEFT_BUTTON)) {
-            movementSystem.jump();
-            jumpCoolDownTick = jumpCoolDownDefault;
-        }
-
-        if (input.isMousePressed(Input.MOUSE_RIGHT_BUTTON)) {
-            previousMousePositionX = input.getMouseX();
-        }
-
-        if (input.isMouseButtonDown(Input.MOUSE_RIGHT_BUTTON)) {
-            movementSystem.move();
-        }
+//        Input input = gc.getInput();
+//        
+//        if(jumpCoolDownTick > 0)
+//            jumpCoolDownTick --;
+//        else if(jumpCoolDownTick < 0)
+//            jumpCoolDownTick = 0;
+//
+//       /* movementSystem.gravity();*/
+//
+//        mousePositionX = input.getMouseX();
+//
+//
+//        if (jumpCoolDownTick == 0 && input.isMousePressed(Input.MOUSE_LEFT_BUTTON)) {
+//            jump();
+//            jumpCoolDownTick = jumpCoolDownDefault;
+//        }
+//
+//        if (input.isMousePressed(Input.MOUSE_RIGHT_BUTTON)) {
+//            previousMousePositionX = input.getMouseX();
+//        }
+//
+//        if (input.isMouseButtonDown(Input.MOUSE_RIGHT_BUTTON)) {
+//            
+//        }
 
     }
 
