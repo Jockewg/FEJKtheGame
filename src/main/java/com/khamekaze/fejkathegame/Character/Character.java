@@ -5,6 +5,8 @@ import org.newdawn.slick.*;
 import org.newdawn.slick.geom.Circle;
 import org.newdawn.slick.geom.Shape;
 
+import java.util.ArrayList;
+
 /**
  * Created by Swartt on 2015-04-28.
  */
@@ -31,7 +33,7 @@ public class Character {
     private float previousMousePositionX;
     private long jumpCoolDownTick;
     private long jumpCoolDownDefault;
-    private Image heartContainerFull;
+
 
 
     /**
@@ -211,8 +213,6 @@ public class Character {
         mousePositionX = gc.getWidth() / 2;
         previousMousePositionX = mousePositionX;
         player = new Circle(200, 200, size);
-        heartContainerFull = new Image("C:\\Users\\Swartt\\Desktop\\FEJKA game placeholder art\\HeartContainerFull");
-        heartContainerFull.setFilter(Image.FILTER_NEAREST);
     }
 
     /**
@@ -257,5 +257,12 @@ public class Character {
     public void render(GameContainer gc, Graphics grphcs) throws SlickException {
         grphcs.setColor(color);
         grphcs.draw(player);
+        ArrayList<Heart> hearts = healthSystem.getHearts();
+        for (int i = 0; i < hearts.size(); i++) {
+            hearts.get(i).getGrahpicImage().draw(hearts.get(i).positionX, hearts.get(i).getPositionY());
+        }
+
+
+
     }
 }

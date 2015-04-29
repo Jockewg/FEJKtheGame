@@ -49,6 +49,10 @@ public class HealthSystem {
 
     }
 
+    public ArrayList<Heart> getHearts() {
+        return hearts;
+    }
+
     /**
      * checks the players health, if the players health is 0 or less it changes the
      * {@code isAlive} boolean to false
