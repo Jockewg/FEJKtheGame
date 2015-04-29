@@ -16,7 +16,7 @@ public class Game extends BasicGame implements MouseListener {
             mouseY, mouseYBefore,
             sweepXStart, sweepYStart,
             sweepXEnd,sweepYEnd,
-            sweep;
+            sweepSpeed;
     private long cooldownTime = 0;
     private final long defaultCooldown = 500;
 
@@ -52,22 +52,22 @@ public class Game extends BasicGame implements MouseListener {
             System.out.println("MouseX: " + mouseX + " MouseY: " + mouseY);
         }
         
-        if (sweepXStart != mouseX) {
+        if (sweepXStart != mouseX && sweepYStart != mouseY) {
             if (sweepXStart < mouseX) {
-                sweep = sweepXStart - mouseX;
-                System.out.println("speed left: " + sweep);
+                sweepSpeed = sweepXStart - mouseX;
+                System.out.println("speed left: " + sweepSpeed);
             }
             if (sweepXStart > mouseX) {
-                sweep = sweepXStart - mouseX;
-                System.out.println("speed right: " + sweep);
+                sweepSpeed = sweepXStart - mouseX;
+                System.out.println("speed right: " + sweepSpeed);
             }
             if (sweepYStart < mouseY) {
-                sweep = sweepYStart - mouseY;
-                System.out.println("speed down: " + sweep);
+                sweepSpeed = sweepYStart - mouseY;
+                System.out.println("speed down: " + sweepSpeed);
             }
             if (sweepYStart > mouseY) {
-                sweep = sweepYStart - mouseY;
-                System.out.println("speed up: " + sweep);
+                sweepSpeed = sweepYStart - mouseY;
+                System.out.println("speed up: " + sweepSpeed);
             }
         }
         sweepXStart = mouseX;
