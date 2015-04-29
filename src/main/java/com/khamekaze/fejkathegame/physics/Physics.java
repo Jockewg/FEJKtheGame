@@ -15,7 +15,7 @@ public class Physics {
     }
     
     private void handleCharacters(Arena arena, int delta) {
-        for(Player p : arena.getPlayers()) {
+        for(LevelObject p : arena.getPlayers()) {
             if(!p.isMoving()) {
                 p.decelerate(delta);
             }

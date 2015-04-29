@@ -2,6 +2,8 @@ package com.khamekaze.fejkathegame.arena;
 
 import com.khamekaze.fejkathegame.collision.AABoundingRect;
 import com.khamekaze.fejkathegame.collision.BoundingShape;
+import org.newdawn.slick.Image;
+import org.newdawn.slick.SlickException;
 
 public abstract class LevelObject {
     
@@ -11,12 +13,17 @@ public abstract class LevelObject {
     protected float x_velocity = 0;
     protected float y_velocity = 0;
     protected float maxFallSpeed = 1;
+    protected float decelerationSpeed = 1;
+    protected Image sprite;
+    protected boolean moving = false;
     
     protected boolean onGround = true;
     
-    public LevelObject(float x, float y) {
+    public LevelObject(float x, float y) throws SlickException {
         this.x = x;
         this.y = y;
+        
+        sprite = new Image("data/img/placeholder.png");
         
         boundingShape = new AABoundingRect(x, y, 25, 25);
     }
@@ -85,6 +92,31 @@ public abstract class LevelObject {
         this.onGround = onGround;
     }
     
+    public void render() throws SlickException {
+        sprite.draw(x - 4, y - 4);
+    }
+    
+    public boolean isMoving() {
+        return moving;
+    }
+    
+    public void setMoving(boolean moving) {
+        this.moving = moving;
+    }
+    
+    public void decelerate(int delta) {
+        if(x_velocity > 0) {
+            x_velocity -= decelerationSpeed * delta;
+            if(x_velocity < 0) {
+                x_velocity = 0;
+            }
+        } else if(x_velocity < 0) {
+            x_velocity += decelerationSpeed * delta;
+            if(x_velocity > 0) {
+                x_velocity = 0;
+            }
+        }
+    }
     
 
 }
