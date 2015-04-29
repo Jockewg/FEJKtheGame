@@ -54,6 +54,22 @@ public class MovementSystem {
             character.getPlayer().setCenterX(character.getCurrentPositionX() + character.getVelocityX());
             character.setCurrentPositionX(character.getPlayer().getCenterX());
         }
+        else {
+            if(character.getVelocityX() < 0) {
+                float temp = character.getVelocityX();
+                character.setVelocityX(temp += 0.2f);
+            }
+            if(character.getVelocityX() > 0) {
+                float temp = character.getVelocityX();
+                character.setVelocityX(temp -= 0.2f);
+            }
+            if(character.getVelocityX() < 0.2 && character.getVelocityX() > -0.2) {
+                character.setVelocityX(0);
+                character.getPlayer().setCenterX(character.getCurrentPositionX() + character.getVelocityX());
+                character.setCurrentPositionX(character.getPlayer().getCenterX());
+            }
+
+        }
     }
 
 
