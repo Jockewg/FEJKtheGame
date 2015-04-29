@@ -8,11 +8,19 @@ import org.newdawn.slick.Input;
 public class MovementSystem {
     Character character;
 
+    /**
+     * Constructor, needs to know what character it has to apply the movement too
+     * @param character
+     */
     public MovementSystem(Character character) {
         this.character = character;
     }
 
 
+    /**
+     * Moves the character horizontally upwards, check is the player is either on the ground (if true then regain all jumps)
+     * or if he has stored jumps left
+     */
     public void jump() {
         character.getPlayer().setY(character.getPlayer().getY() + 0.1f);
         if (HITDETECTION) {
@@ -28,6 +36,9 @@ public class MovementSystem {
 
     }
 
+    /**
+     * will move the character left or right along the X axel depending on mouse movement
+     */
     public void move() {
         if (character.getMousePositionX() > character.getPreviousMousePositionX()) {
             float tempvelx = character.getVelocityX();
@@ -46,10 +57,16 @@ public class MovementSystem {
     }
 
 
+    /**
+     * restores the amount of stored jumps a character has
+     */
     public void regainStoredJumps() {
         character.setStoredJumps(2);
     }
 
+    /**
+     * Applies gravity on the character
+     */
     public void gravity() {
         float i = character.getVelocityY();
         character.setVelocityY(i += character.getGravity());

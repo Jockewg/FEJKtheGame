@@ -194,6 +194,11 @@ public class Character {
         this.previousMousePositionX = previousMousePositionX;
     }
 
+    /**
+     * initializes all variables the character needs when added to the games arena.
+     * @param gc
+     * @throws SlickException
+     */
     public void init(GameContainer gc) throws SlickException {
         currentPositionX = player.getCenterX();
         mousePositionX = gc.getWidth() / 2;
@@ -201,21 +206,39 @@ public class Character {
         player = new Circle(200, 200, size);
     }
 
-
+    /**
+     * updates the state of character, update is called every frame
+     * @param gc
+     * @param i
+     * @throws SlickException
+     */
     public void update(GameContainer gc, int i) throws SlickException {
         Input input = gc.getInput();
 
         movementSystem.gravity();
+
         mousePositionX = input.getMouseX();
+
+
         if (input.isMousePressed(Input.MOUSE_LEFT_BUTTON)) {
             movementSystem.jump();
         }
+
         if (input.isMousePressed(Input.MOUSE_RIGHT_BUTTON)) {
+            previousMousePositionX = input.getMouseX();
+        }
+
+        if (input.isMouseButtonDown(Input.MOUSE_RIGHT_BUTTON)) {
             movementSystem.move();
         }
     }
 
-
+    /**
+     * renders the character
+     * @param gc
+     * @param grphcs
+     * @throws SlickException
+     */
     public void render(GameContainer gc, Graphics grphcs) throws SlickException {
         grphcs.setColor(color);
         grphcs.draw(player);
