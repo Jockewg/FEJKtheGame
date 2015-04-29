@@ -1,18 +1,12 @@
 package com.khamekaze.fejkathegame.arena;
 
-import com.khamekaze.fejkathegame.Character.*;
-import com.khamekaze.fejkathegame.Character.Character;
 import com.khamekaze.fejkathegame.tiles.AirTile;
 import com.khamekaze.fejkathegame.tiles.SolidTile;
 import com.khamekaze.fejkathegame.tiles.Tile;
-import java.util.ArrayList;
-import java.util.Calendar;
-
-import org.newdawn.slick.BasicGame;
-import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.tiled.TiledMap;
+
+import java.util.ArrayList;
 
 public class Arena {
     

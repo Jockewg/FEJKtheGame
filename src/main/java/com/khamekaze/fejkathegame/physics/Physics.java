@@ -2,8 +2,8 @@ package com.khamekaze.fejkathegame.physics;
 
 import com.khamekaze.fejkathegame.arena.Arena;
 import com.khamekaze.fejkathegame.arena.LevelObject;
-import com.khamekaze.fejkathegame.arena.Player;
 import com.khamekaze.fejkathegame.tiles.Tile;
+
 import java.util.ArrayList;
 
 public class Physics {

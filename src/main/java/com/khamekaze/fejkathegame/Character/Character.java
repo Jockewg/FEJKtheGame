@@ -2,7 +2,6 @@ package com.khamekaze.fejkathegame.Character;
 
 
 import com.khamekaze.fejkathegame.arena.LevelObject;
-import com.khamekaze.fejkathegame.collision.AABoundingRect;
 import org.newdawn.slick.*;
 import org.newdawn.slick.geom.Circle;
 import org.newdawn.slick.geom.Shape;
@@ -46,8 +45,6 @@ public class Character extends LevelObject {
      */
     public Character(float x, float y) throws SlickException {
         super(x, y);
-
-        new AABoundingRect(x, y, 25, 25);
 
         accelerationSpeed = 0.001f;
         maximumSpeed = 0.15f;

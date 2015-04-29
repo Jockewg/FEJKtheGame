@@ -1,6 +1,7 @@
 package com.khamekaze.fejkathegame.collision;
 
 import com.khamekaze.fejkathegame.tiles.Tile;
+
 import java.util.ArrayList;
 
 public abstract class BoundingShape {
