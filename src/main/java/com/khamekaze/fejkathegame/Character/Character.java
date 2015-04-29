@@ -29,6 +29,10 @@ public class Character {
     private static int updateRate;
     private float mousePositionX;
     private float previousMousePositionX;
+    private long jumpCoolDownTick;
+    private long jumpCoolDownDefault;
+
+
 
     /**
      * Constructor for creating a character, gives it the default values for a character
@@ -48,6 +52,8 @@ public class Character {
         gravity = 0.5f;
         jumpStrength = -15;
         updateRate = 5;
+        jumpCoolDownTick = 0;
+        jumpCoolDownDefault = 500;
     }
 
     public boolean isGrounded() {
@@ -215,13 +221,16 @@ public class Character {
     public void update(GameContainer gc, int i) throws SlickException {
         Input input = gc.getInput();
 
+        jumpCoolDownTick -= i;
+
         movementSystem.gravity();
 
         mousePositionX = input.getMouseX();
 
 
-        if (input.isMousePressed(Input.MOUSE_LEFT_BUTTON)) {
+        if (jumpCoolDownTick <= 0 && input.isMousePressed(Input.MOUSE_LEFT_BUTTON)) {
             movementSystem.jump();
+            jumpCoolDownTick = jumpCoolDownDefault;
         }
 
         if (input.isMousePressed(Input.MOUSE_RIGHT_BUTTON)) {
