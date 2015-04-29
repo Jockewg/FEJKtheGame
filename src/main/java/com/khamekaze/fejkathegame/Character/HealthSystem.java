@@ -33,7 +33,7 @@ public class HealthSystem {
     }
 
     public void setHealthbar() throws SlickException {
-        Image heartImage = new Image("C:\\Users\\Swartt\\Desktop\\FEJKA game placeholder art\\HeartContainerFull.png");
+        Image heartImage = new Image("data/img/heartcontainer/HeartContainerFull.png");
         for (int i = 0; i < character.getHealth(); i++) {
             hearts.add(new Heart(heartImage,50 + i*50, 50));
         }
