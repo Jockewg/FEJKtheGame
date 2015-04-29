@@ -1,6 +1,5 @@
 package com.khamekaze.fejkathegame.game;
 
-import org.lwjgl.input.Mouse;
 import org.newdawn.slick.BasicGame;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -8,6 +7,7 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.MouseListener;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Circle;
+import org.newdawn.slick.geom.Vector2f;
 
 public class Game extends BasicGame implements MouseListener {
 
@@ -27,11 +27,11 @@ public class Game extends BasicGame implements MouseListener {
     @Override
     public void init(GameContainer gc) throws SlickException {
 
-//        mouseY = gc.getHeight() / 2;
-//        mouseX = gc.getWidth() / 2;
+        mouseY = gc.getHeight() / 2;
+        mouseX = gc.getWidth() / 2;
 
-//        mouseXBefore = mouseX;
-//        mouseYBefore = mouseY;
+        mouseXBefore = mouseX;
+        mouseYBefore = mouseY;
 
         indicator = new Circle(mouseX, gc.getWidth() / 2, 30);
     }
@@ -53,22 +53,9 @@ public class Game extends BasicGame implements MouseListener {
         }
         
         if (sweepXStart != mouseX && sweepYStart != mouseY) {
-            if (sweepXStart < mouseX) {
-                sweepSpeed = sweepXStart - mouseX;
-                System.out.println("speed left: " + sweepSpeed);
-            }
-            if (sweepXStart > mouseX) {
-                sweepSpeed = sweepXStart - mouseX;
-                System.out.println("speed right: " + sweepSpeed);
-            }
-            if (sweepYStart < mouseY) {
-                sweepSpeed = sweepYStart - mouseY;
-                System.out.println("speed down: " + sweepSpeed);
-            }
-            if (sweepYStart > mouseY) {
-                sweepSpeed = sweepYStart - mouseY;
-                System.out.println("speed up: " + sweepSpeed);
-            }
+            sweepSpeed =(float) Math.sqrt(Math.pow(mouseX - sweepXStart, 2) +
+                    Math.pow(mouseY - sweepYStart, 2));
+            System.out.println("speed: " + sweepSpeed);
         }
         sweepXStart = mouseX;
         sweepYStart = mouseY;
