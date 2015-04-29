@@ -44,7 +44,6 @@ public class Physics {
             if(t.getBoundingShape() != null) {
                 if(t.getBoundingShape().checkCollision(obj.getBoundingShape())) {
                     obj.getBoundingShape().movePosition(0, -1);
-                    obj.setStoredJumps(0);
                     return true;
                 }
             }
@@ -60,6 +59,7 @@ public class Physics {
             obj.applyGravity(gravity * delta);
         } else {
             obj.setY_velocity(0);
+            obj.setStoredJumps(2);
         }
         
         float x_movement = obj.getX_velocity() * delta;

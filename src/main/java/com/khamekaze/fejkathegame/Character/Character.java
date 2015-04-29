@@ -56,7 +56,7 @@ public class Character extends LevelObject {
         health = 5;
         attackCoolDown = 1;
         storedAttacks = 2;
-        storedJumps = 2;
+        storedJumps = 0;
         size = 40;
         velocityY = 0;
         velocityX = 0;
@@ -240,10 +240,11 @@ public class Character extends LevelObject {
     }
     
     public void jump() {
-        if(storedJumps >= 0) {
+        if(storedJumps > 0) {
             y_velocity = -0.65f;
             storedJumps--;
         }
+        System.out.println(storedJumps);
     }
     
     public void moveLeft(int delta) {
