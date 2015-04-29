@@ -1,5 +1,6 @@
 package com.khamekaze.fejkathegame;
 
+<<<<<<< HEAD
 import com.khamekaze.fejkathegame.arena.Arena;
 import com.khamekaze.fejkathegame.arena.ArenaState;
 import com.khamekaze.fejkathegame.game.Game;
@@ -38,6 +39,21 @@ public class Main extends StateBasedGame {
         try {
                     AppGameContainer appgc = new AppGameContainer(new Main());
                     appgc.setDisplayMode(WINDOW_WIDTH, WINDOW_HEIGHT, FULLSCREEN);
+=======
+import com.khamekaze.fejkathegame.game.Game;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.newdawn.slick.AppGameContainer;
+import org.newdawn.slick.SlickException;
+
+public class Main {
+    
+    public static void main(String[] args) {
+        try {
+                    AppGameContainer appgc;
+                    appgc = new AppGameContainer(new Game("FEJKA: The Game"));
+                    appgc.setDisplayMode(900, 500, false);
+>>>>>>> parent of 8db59d3... Prepaired to merge
                     appgc.setTargetFrameRate(60);
                     appgc.setShowFPS(false);
                     appgc.start();
@@ -46,4 +62,8 @@ public class Main extends StateBasedGame {
             }
 
     }
+<<<<<<< HEAD
+=======
+
+>>>>>>> parent of 8db59d3... Prepaired to merge
 }
