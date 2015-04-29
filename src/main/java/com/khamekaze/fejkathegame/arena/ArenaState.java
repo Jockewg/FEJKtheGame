@@ -1,5 +1,6 @@
 package com.khamekaze.fejkathegame.arena;
 
+import com.khamekaze.fejkathegame.Character.*;
 import com.khamekaze.fejkathegame.Main;
 import com.khamekaze.fejkathegame.physics.Physics;
 import org.newdawn.slick.GameContainer;
@@ -29,6 +30,7 @@ public class ArenaState extends BasicGameState {
     public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {
         
         player = new Player(800, 40);
+
         arena = new Arena(name, player);
         
         playerController = new MouseAndKeyBoardPlayerController(player);

@@ -1,9 +1,13 @@
 package com.khamekaze.fejkathegame.arena;
 
+import com.khamekaze.fejkathegame.Character.*;
+import com.khamekaze.fejkathegame.Character.Character;
 import com.khamekaze.fejkathegame.tiles.AirTile;
 import com.khamekaze.fejkathegame.tiles.SolidTile;
 import com.khamekaze.fejkathegame.tiles.Tile;
 import java.util.ArrayList;
+import java.util.Calendar;
+
 import org.newdawn.slick.BasicGame;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -16,13 +20,13 @@ public class Arena {
     
     private Tile[][] tiles;
     
-    private ArrayList<Player> players;
+    private ArrayList<LevelObject> players;
     
-    public Arena(String name, Player player) throws SlickException {
+    public Arena(String name, LevelObject levelObject) throws SlickException {
         map = new TiledMap("data/levels/" + name + ".tmx", "data/img");
-        players = new ArrayList<Player>();
+        players = new ArrayList<LevelObject>();
         
-        addPlayer(player);
+        addPlayer(levelObject);
         
         loadTileMap();
     }
@@ -58,11 +62,11 @@ public class Arena {
         }
     }
     
-    public void addPlayer(Player p) {
+    public void addPlayer(LevelObject p) {
         players.add(p);
     }
     
-    public ArrayList<Player> getPlayers() {
+    public ArrayList<LevelObject> getPlayers() {
         return players;
     }
     
@@ -70,10 +74,10 @@ public class Arena {
         return tiles;
     }
     
-    public void render() {
+    public void render() throws SlickException {
         map.render(0, 0, 0, 0, 36, 20);
         
-        for(Player p : players) {
+        for(LevelObject p : players) {
             p.render();
         }
     }
