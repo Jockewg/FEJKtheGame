@@ -1,26 +1,81 @@
 package com.khamekaze.fejkathegame.arena;
 
+import com.khamekaze.fejkathegame.collision.AABoundingRect;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 
-public class Player {
+public class Player extends LevelObject {
     
-    protected float x, y;
     protected Image sprite;
     
+    protected float accelerationSpeed = 1;
+    protected float decelerationSpeed = 1;
+    protected float maximumSpeed = 1;
+    protected boolean moving = false;
+    
     public Player(float x, float y) throws SlickException {
-        this.x = x;
-        this.y = y;
+        super(x, y);
         
         sprite = new Image("data/img/placeholder.png");
+        
+        boundingShape = new AABoundingRect(x + 3, y, 25, 25);
+        
+        accelerationSpeed = 0.001f;
+        maximumSpeed = 0.15f;
+        maxFallSpeed = 0.3f;
+        decelerationSpeed = 0.001f;
+    }
+    
+    public void updateBoundingShape() {
+        boundingShape.updatePosition(x + 3, y);
+    }
+    
+    public void decelerate(int delta) {
+        if(x_velocity > 0) {
+            x_velocity -= decelerationSpeed * delta;
+            if(x_velocity < 0) {
+                x_velocity = 0;
+            }
+        } else if(x_velocity < 0) {
+            x_velocity += decelerationSpeed * delta;
+            if(x_velocity > 0) {
+                x_velocity = 0;
+            }
+        }
+    }
+    
+    public void jump() {
+        if(onGround) {
+            y_velocity = -0.4f;
+        }
     }
     
     public void moveLeft(int delta) {
-        x = x - (0.15f * delta);
+        if(x_velocity > -maximumSpeed) {
+            x_velocity -= accelerationSpeed * delta;
+            if(x_velocity < -maximumSpeed) {
+                x_velocity = -maximumSpeed;
+            }
+        }
+        moving = true;
     }
     
     public void moveRight(int delta) {
-        x = x + (0.15f * delta);
+        if(x_velocity < maximumSpeed) {
+            x_velocity += accelerationSpeed * delta;
+            if(x_velocity > maximumSpeed) {
+                x_velocity = maximumSpeed;
+            }
+        }
+        moving = true;
+    }
+    
+    public boolean isMoving() {
+        return moving;
+    }
+    
+    public void setMoving(boolean moving) {
+        this.moving = moving;
     }
     
     public float getX() {
