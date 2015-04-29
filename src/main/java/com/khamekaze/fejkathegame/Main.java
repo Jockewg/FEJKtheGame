@@ -1,15 +1,9 @@
 package com.khamekaze.fejkathegame;
 
-import com.khamekaze.fejkathegame.arena.Arena;
 import com.khamekaze.fejkathegame.arena.ArenaState;
 import com.khamekaze.fejkathegame.game.Game;
-import com.khamekaze.fejkathegame.physics.Physics;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.jbox2d.common.Vec2;
-import org.jbox2d.dynamics.BodyDef;
-import org.jbox2d.dynamics.BodyType;
-import org.jbox2d.dynamics.World;
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
