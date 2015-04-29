@@ -1,5 +1,6 @@
 package com.khamekaze.fejkathegame.Character;
 
+import com.khamekaze.fejkathegame.physics.Physics;
 import org.newdawn.slick.Input;
 
 /**
@@ -22,13 +23,13 @@ public class MovementSystem {
      * or if he has stored jumps left
      */
     public void jump() {
-        character.getPlayer().setY(character.getPlayer().getY() + 0.1f);
-        if (HITDETECTION) {
+        /*character.getPlayer().setY(character.getPlayer().getY() + 0.1f);*/
+        if (character.isGrounded()) {
             regainStoredJumps();
             character.setVelocityY(character.getJumpStrength());
             character.setStoredJumps(-1);
         }
-        character.getPlayer().setY(character.getPlayer().getY() - 0.1f);
+        /*character.getPlayer().setY(character.getPlayer().getY() - 0.1f);*/
         if (character.getStoredJumps() >= 0) {
             character.setVelocityY(character.getJumpStrength());
             character.setStoredJumps(-1);
@@ -70,6 +71,7 @@ public class MovementSystem {
             }
 
         }
+        character.setMoving(true);
     }
 
 
@@ -82,13 +84,15 @@ public class MovementSystem {
 
     /**
      * Applies gravity on the character
+     *
+     * LEGACY
      */
     public void gravity() {
         float i = character.getVelocityY();
         character.setVelocityY(i += character.getGravity());
 
         character.getPlayer().setY(character.getPlayer().getY() + character.getVelocityY());
-        if (HITDETECTION) { //CHECK HIT DETECTiON
+        if (true) { //CHECK HIT DETECTiON
             character.getPlayer().setY(character.getPlayer().getY() - character.getVelocityY());
         }
     }

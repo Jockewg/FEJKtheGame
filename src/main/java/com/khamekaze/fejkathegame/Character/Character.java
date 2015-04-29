@@ -1,6 +1,8 @@
 package com.khamekaze.fejkathegame.Character;
 
 
+import com.khamekaze.fejkathegame.arena.LevelObject;
+import com.khamekaze.fejkathegame.collision.AABoundingRect;
 import org.newdawn.slick.*;
 import org.newdawn.slick.geom.Circle;
 import org.newdawn.slick.geom.Shape;
@@ -10,7 +12,7 @@ import java.util.ArrayList;
 /**
  * Created by Swartt on 2015-04-28.
  */
-public class Character {
+public class Character extends LevelObject {
     private boolean grounded;
     private int health;
     private float attackCoolDown;
@@ -33,13 +35,26 @@ public class Character {
     private float previousMousePositionX;
     private long jumpCoolDownTick;
     private long jumpCoolDownDefault;
-
-
+    protected float accelerationSpeed = 1;
+    protected float decelerationSpeed = 1;
+    protected float maximumSpeed = 1;
+    protected boolean moving = false;
+    protected Image sprite;
 
     /**
      * Constructor for creating a character, gives it the default values for a character
      */
-    public Character() throws SlickException {
+    public Character(float x, float y) throws SlickException {
+        super(x, y);
+
+        new AABoundingRect(x, y, 25, 25);
+
+        accelerationSpeed = 0.001f;
+        maximumSpeed = 0.15f;
+        maxFallSpeed = 0.3f;
+        decelerationSpeed = 0.001f;
+        sprite = new Image("data/img/placeholder.png");
+
         grounded = false;
         health = 5;
         attackCoolDown = 1;
@@ -202,6 +217,15 @@ public class Character {
         this.previousMousePositionX = previousMousePositionX;
     }
 
+    public boolean isMoving() {
+        return moving;
+    }
+
+    public void setMoving(boolean moving) {
+        this.moving = moving;
+    }
+
+
     /**
      * initializes all variables the character needs when added to the games arena.
      *
@@ -227,7 +251,7 @@ public class Character {
 
         jumpCoolDownTick -= i;
 
-        movementSystem.gravity();
+       /* movementSystem.gravity();*/
 
         mousePositionX = input.getMouseX();
 
@@ -249,20 +273,13 @@ public class Character {
 
     /**
      * renders the character
-     *
-     * @param gc
-     * @param grphcs
      * @throws SlickException
      */
-    public void render(GameContainer gc, Graphics grphcs) throws SlickException {
-        grphcs.setColor(color);
-        grphcs.draw(player);
+    public void render() throws SlickException {
+        sprite.draw(x - 2, y - 2);
         ArrayList<Heart> hearts = healthSystem.getHearts();
         for (int i = 0; i < hearts.size(); i++) {
             hearts.get(i).getGrahpicImage().draw(hearts.get(i).positionX, hearts.get(i).getPositionY());
         }
-
-
-
     }
 }
