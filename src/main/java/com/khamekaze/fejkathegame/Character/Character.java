@@ -328,7 +328,7 @@ public class Character extends LevelObject {
      */
     @Override
     public void render() throws SlickException {
-        sprite.draw(x , y);
+        sprite.draw(x , y + 1);
         ArrayList<Heart> hearts = healthSystem.getHearts();
         for (int i = 0; i < hearts.size(); i++) {
             hearts.get(i).getGrahpicImage().draw(hearts.get(i).positionX, hearts.get(i).getPositionY());
