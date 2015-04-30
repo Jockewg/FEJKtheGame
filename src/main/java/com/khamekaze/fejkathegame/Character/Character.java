@@ -7,6 +7,7 @@ import org.newdawn.slick.geom.Circle;
 import org.newdawn.slick.geom.Shape;
 
 import java.util.ArrayList;
+import org.newdawn.slick.geom.Rectangle;
 
 /**
  * Created by Swartt on 2015-04-28.
@@ -39,6 +40,9 @@ public class Character extends LevelObject {
     protected float maximumSpeed = 2;
     protected boolean moving = false;
     protected Image sprite;
+    
+    private Shape jumpIndicator;
+    private float jumpIndicatorTransp;
 
     /**
      * Constructor for creating a character, gives it the default values for a character
@@ -247,9 +251,11 @@ public class Character extends LevelObject {
      */
     public void init(GameContainer gc) throws SlickException {
         Input input = gc.getInput();
+        jumpIndicatorTransp = 1f;
         currentPositionX = player.getCenterX();
         mousePositionX = input.getMouseX();
         previousMousePositionX = mousePositionX;
+        jumpIndicator = new Rectangle(gc.getWidth()/2, gc.getHeight()/2, 20, 2);
 //        player = new Circle(200, 200, size);
     }
     
@@ -327,5 +333,10 @@ public class Character extends LevelObject {
         for (int i = 0; i < hearts.size(); i++) {
             hearts.get(i).getGrahpicImage().draw(hearts.get(i).positionX, hearts.get(i).getPositionY());
         }
+    }
+    
+    public void renderJumpIndicator(Graphics g) {
+        g.setColor(new Color(1f, 1f, 1f, 0.5f));
+        g.fill(jumpIndicator);
     }
 }
