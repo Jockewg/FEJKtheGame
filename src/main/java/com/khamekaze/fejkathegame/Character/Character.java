@@ -266,13 +266,12 @@ public class Character extends LevelObject {
         currentPositionX = getX() - 16;
         currentPositionY = getY() + 32;
         
-        if(storedJumps > 0) {
-            if(!isOnGround())
-                jumpIndicatorTransp = 1.0f;
-            y_velocity = -0.50f;
-            storedJumps--;
-            jumpSound.playAsSoundEffect(1.0f, 1.0f, false);
-        }
+        if(!isOnGround())
+            jumpIndicatorTransp = 1.0f;
+        
+        y_velocity = -0.50f;
+        storedJumps--;
+        jumpSound.playAsSoundEffect(1.0f, 1.0f, false);
         
         System.out.println(storedJumps);
         System.out.println("X: " + currentPositionX);
