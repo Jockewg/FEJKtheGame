@@ -267,7 +267,8 @@ public class Character extends LevelObject {
         currentPositionY = getY() + 32;
         
         if(storedJumps > 0) {
-            jumpIndicatorTransp = 1.0f;
+            if(!isOnGround())
+                jumpIndicatorTransp = 1.0f;
             y_velocity = -0.50f;
             storedJumps--;
             jumpSound.playAsSoundEffect(1.0f, 1.0f, false);
