@@ -22,7 +22,7 @@ public class MovementSystem {
     }
     
     public void handleMouseInput(Input i, int delta) {
-        if(i.isMousePressed(Input.MOUSE_LEFT_BUTTON) || i.isKeyPressed(Input.KEY_SPACE)) {
+        if(i.isMousePressed(Input.MOUSE_LEFT_BUTTON) && character.getStoredJumps() > 0|| i.isKeyPressed(Input.KEY_SPACE) && character.getStoredJumps() > 0) {
             character.jump();
         }
     }
