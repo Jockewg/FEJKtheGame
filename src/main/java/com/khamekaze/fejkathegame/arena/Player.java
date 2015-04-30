@@ -10,7 +10,7 @@ public class Player extends LevelObject {
     
     protected float accelerationSpeed = 1;
     protected float decelerationSpeed = 1;
-    protected float maximumSpeed = 1;
+    protected float maximumSpeed = 2;
     protected boolean moving = false;
     
     public Player(float x, float y) throws SlickException {

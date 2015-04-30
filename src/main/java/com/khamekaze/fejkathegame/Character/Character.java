@@ -36,7 +36,7 @@ public class Character extends LevelObject {
     private long jumpCoolDownDefault;
     protected float accelerationSpeed = 1;
     protected float decelerationSpeed = 1;
-    protected float maximumSpeed = 1;
+    protected float maximumSpeed = 2;
     protected boolean moving = false;
     protected Image sprite;
 
@@ -46,10 +46,10 @@ public class Character extends LevelObject {
     public Character(float x, float y) throws SlickException {
         super(x, y);
 
-        accelerationSpeed = 0.001f;
-        maximumSpeed = 0.15f;
-        maxFallSpeed = 0.3f;
-        decelerationSpeed = 0.001f;
+        accelerationSpeed = 0.002f;
+        maximumSpeed = 0.28f;
+        maxFallSpeed = 0.38f;
+        decelerationSpeed = 0.002f;
         sprite = new Image("data/img/placeholder.png");
 
         grounded = false;
@@ -222,6 +222,20 @@ public class Character extends LevelObject {
     @Override
     public void setMoving(boolean moving) {
         this.moving = moving;
+    }
+    
+    public void decelerate(int delta) {
+        if(x_velocity > 0) {
+            x_velocity -= decelerationSpeed * delta;
+            if(x_velocity < 0) {
+                x_velocity = 0;
+            }
+        } else if(x_velocity < 0) {
+            x_velocity += decelerationSpeed * delta;
+            if(x_velocity > 0) {
+                x_velocity = 0;
+            }
+        }
     }
 
 

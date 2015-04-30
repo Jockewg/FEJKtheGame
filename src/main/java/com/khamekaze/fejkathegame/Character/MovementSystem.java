@@ -18,11 +18,22 @@ public class MovementSystem {
     
     public void handleInput(Input i, int delta) {
         handleMouseInput(i, delta);
+        handleKeyBoardInput(i, delta);
     }
     
     public void handleMouseInput(Input i, int delta) {
-        if(i.isMousePressed(Input.MOUSE_LEFT_BUTTON)) {
+        if(i.isMousePressed(Input.MOUSE_LEFT_BUTTON) || i.isKeyDown(Input.KEY_SPACE)) {
             character.jump();
+        }
+    }
+    
+    public void handleKeyBoardInput(Input i, int delta) {
+        if(i.isKeyDown(Input.KEY_A) || i.isKeyDown(Input.KEY_LEFT)) {
+            character.moveLeft(delta);
+        } else if(i.isKeyDown(Input.KEY_D) || i.isKeyDown(Input.KEY_RIGHT)) {
+            character.moveRight(delta);
+        } else {
+            character.setMoving(false);
         }
     }
 
