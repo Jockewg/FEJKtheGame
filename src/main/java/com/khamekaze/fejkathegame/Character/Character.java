@@ -256,13 +256,15 @@ public class Character extends LevelObject {
         mousePositionX = input.getMouseX();
         previousMousePositionX = mousePositionX;
         jumpIndicator = new Rectangle(gc.getWidth()/2, gc.getHeight()/2, 20, 2);
-//        player = new Circle(200, 200, size);
+        jumpIndicatorTransp = 1.0f;
     }
     
     public void jump() {
         if(storedJumps > 0) {
             y_velocity = -0.50f;
             storedJumps--;
+//            currentPositionX = player.getCenterX();
+//            currentPositionY = player.getCenterY() + 16;
         }
         System.out.println(storedJumps);
     }
@@ -335,8 +337,15 @@ public class Character extends LevelObject {
         }
     }
     
-    public void renderJumpIndicator(Graphics g) {
-        g.setColor(new Color(1f, 1f, 1f, 0.5f));
-        g.fill(jumpIndicator);
-    }
+//    public void renderJumpIndicator() {
+//        Graphics g = new Graphics();
+//        if(jumpIndicatorTransp <= 0.0f) {
+//            jumpIndicatorTransp = 1.0f;
+//        }
+//        g.setColor(new Color(1f, 1f, 1f, jumpIndicatorTransp));
+//        jumpIndicator.setCenterX(currentPositionX);
+//        jumpIndicator.setCenterY(currentPositionY);
+//        g.fill(jumpIndicator);
+//        jumpIndicatorTransp -= 0.02f;
+//    }
 }
