@@ -1,8 +1,8 @@
-package com.khamekaze.fejkathegame.physics;
+package com.fejkathegame.game.physics;
 
-import com.khamekaze.fejkathegame.arena.Arena;
-import com.khamekaze.fejkathegame.arena.LevelObject;
-import com.khamekaze.fejkathegame.tiles.Tile;
+import com.fejkathegame.game.arena.Arena;
+import com.fejkathegame.game.arena.LevelObject;
+import com.fejkathegame.game.tiles.Tile;
 
 import java.util.ArrayList;
 

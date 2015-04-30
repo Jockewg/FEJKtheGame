@@ -1,4 +1,4 @@
-package com.khamekaze.fejkathegame.tiles;
+package com.fejkathegame.game.tiles;
 
 public class AirTile extends Tile {
 

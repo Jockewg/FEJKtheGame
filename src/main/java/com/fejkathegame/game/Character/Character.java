@@ -1,7 +1,7 @@
-package com.khamekaze.fejkathegame.Character;
+package com.fejkathegame.game.Character;
 
 
-import com.khamekaze.fejkathegame.arena.LevelObject;
+import com.fejkathegame.game.arena.LevelObject;
 import org.newdawn.slick.*;
 import org.newdawn.slick.geom.Shape;
 

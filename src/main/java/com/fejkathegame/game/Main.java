@@ -1,7 +1,8 @@
-package com.khamekaze.fejkathegame;
+package com.fejkathegame.game;
 
-import com.khamekaze.fejkathegame.arena.ArenaState;
-import com.khamekaze.fejkathegame.game.Game;
+import com.fejkathegame.game.game.Game;
+import com.fejkathegame.game.arena.ArenaState;
+
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.newdawn.slick.AppGameContainer;

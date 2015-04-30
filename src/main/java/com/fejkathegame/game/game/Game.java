@@ -1,4 +1,4 @@
-package com.khamekaze.fejkathegame.game;
+package com.fejkathegame.game.game;
 
 import org.newdawn.slick.*;
 

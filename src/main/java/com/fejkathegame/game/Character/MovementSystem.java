@@ -1,4 +1,4 @@
-package com.khamekaze.fejkathegame.Character;
+package com.fejkathegame.game.Character;
 
 import org.newdawn.slick.Input;
 

@@ -1,4 +1,4 @@
-package com.khamekaze.fejkathegame.arena;
+package com.fejkathegame.game.arena;
 
 import org.newdawn.slick.Input;
 

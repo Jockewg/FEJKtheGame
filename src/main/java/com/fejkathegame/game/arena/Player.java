@@ -1,6 +1,6 @@
-package com.khamekaze.fejkathegame.arena;
+package com.fejkathegame.game.arena;
 
-import com.khamekaze.fejkathegame.collision.AABoundingRect;
+import com.fejkathegame.game.collision.AABoundingRect;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 

@@ -1,8 +1,8 @@
-package com.khamekaze.fejkathegame.arena;
+package com.fejkathegame.game.arena;
 
-import com.khamekaze.fejkathegame.tiles.AirTile;
-import com.khamekaze.fejkathegame.tiles.SolidTile;
-import com.khamekaze.fejkathegame.tiles.Tile;
+import com.fejkathegame.game.tiles.AirTile;
+import com.fejkathegame.game.tiles.SolidTile;
+import com.fejkathegame.game.tiles.Tile;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.tiled.TiledMap;
 

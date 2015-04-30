@@ -1,9 +1,9 @@
-package com.khamekaze.fejkathegame.arena;
+package com.fejkathegame.game.arena;
 
-import com.khamekaze.fejkathegame.Character.Character;
-import com.khamekaze.fejkathegame.Character.MovementSystem;
-import com.khamekaze.fejkathegame.Main;
-import com.khamekaze.fejkathegame.physics.Physics;
+import com.fejkathegame.game.Character.MovementSystem;
+import com.fejkathegame.game.Main;
+import com.fejkathegame.game.physics.Physics;
+import com.fejkathegame.game.Character.Character;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
