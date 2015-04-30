@@ -18,6 +18,7 @@ public class ArenaState extends BasicGameState {
     private String name;
     private MovementSystem movementSystem;
     private Physics physics;
+    private Character obj;
 
     /**
      * Constructor for ArenaState
@@ -35,7 +36,7 @@ public class ArenaState extends BasicGameState {
     @Override
     public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {
 
-        Character obj = null;
+        obj = null;
         try {
             obj = new Character(800, 40);
         } catch (IOException e) {

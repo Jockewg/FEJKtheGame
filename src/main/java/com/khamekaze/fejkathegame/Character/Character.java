@@ -256,22 +256,24 @@ public class Character extends LevelObject {
     public void init(GameContainer gc) throws SlickException {
         Input input = gc.getInput();
         jumpIndicatorTransp = 1f;
-        currentPositionX = player.getCenterX();
+        currentPositionX = getX();
         mousePositionX = input.getMouseX();
         previousMousePositionX = mousePositionX;
-        jumpIndicator = new Rectangle(gc.getWidth()/2, gc.getHeight()/2, 20, 2);
         jumpIndicatorTransp = 1.0f;
     }
     
     public void jump() {
+        currentPositionX = getX();
+        currentPositionY = getY() + 16;
         if(storedJumps > 0) {
             y_velocity = -0.50f;
             storedJumps--;
             jumpSound.playAsSoundEffect(1.0f, 1.0f, false);
-//            currentPositionX = player.getCenterX();
-//            currentPositionY = player.getCenterY() + 16;
         }
+        
         System.out.println(storedJumps);
+        System.out.println("X: " + currentPositionX);
+        System.out.println("Y: " + currentPositionY);
     }
     
     public void moveLeft(int delta) {
@@ -342,15 +344,15 @@ public class Character extends LevelObject {
         }
     }
     
-//    public void renderJumpIndicator() {
-//        Graphics g = new Graphics();
-//        if(jumpIndicatorTransp <= 0.0f) {
-//            jumpIndicatorTransp = 1.0f;
-//        }
-//        g.setColor(new Color(1f, 1f, 1f, jumpIndicatorTransp));
-//        jumpIndicator.setCenterX(currentPositionX);
-//        jumpIndicator.setCenterY(currentPositionY);
-//        g.fill(jumpIndicator);
-//        jumpIndicatorTransp -= 0.02f;
-//    }
+    public void renderJumpIndicator(float x, float y) {
+        jumpIndicator = new Rectangle(x, y, 20, 10);
+        Graphics g = new Graphics();
+        g.setColor(Color.white);
+        if(jumpIndicatorTransp <= 0) {
+            jumpIndicatorTransp = 1;
+        }
+        
+        g.draw(jumpIndicator);
+        jumpIndicatorTransp -= 0.2f;
+    }
 }
