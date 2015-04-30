@@ -16,11 +16,13 @@ public class ArenaState extends BasicGameState {
 
     private Arena arena;
     private String name;
-    private Player player;
-    private MouseAndKeyBoardPlayerController playerController;
     private MovementSystem movementSystem;
     private Physics physics;
 
+    /**
+     * Constructor for ArenaState
+     * @param name of the stage
+     */
     public ArenaState(String name) {
         this.name = name;
     }

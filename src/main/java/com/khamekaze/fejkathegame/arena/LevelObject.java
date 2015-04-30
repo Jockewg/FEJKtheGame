@@ -6,10 +6,9 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 
 public abstract class LevelObject {
-    
+
     protected float x, y;
     protected BoundingShape boundingShape;
-    
     protected float x_velocity = 0;
     protected float y_velocity = 0;
     protected float maxFallSpeed = 1;
@@ -17,30 +16,42 @@ public abstract class LevelObject {
     protected Image sprite;
     protected boolean moving = false;
     protected int storedJumps;
-    
     protected boolean onGround = true;
-    
+
+    /**
+     * Constructor for a {@code LevelObject}, creates a new level entity with standard values
+     * @param x coordinate for spawing the object
+     * @param y coordinate for spawing the object
+     * @throws SlickException
+     */
     public LevelObject(float x, float y) throws SlickException {
         this.x = x;
         this.y = y;
-        
+
         sprite = new Image("data/img/placeholder.png");
 
         storedJumps = 0;
 
         boundingShape = new AABoundingRect(x, y, 32, 31);
     }
-    
+
+    /**
+     * Applies given gravity to the object
+     * @param gravity
+     */
     public void applyGravity(float gravity) {
-        if(y_velocity < maxFallSpeed) {
+        if (y_velocity < maxFallSpeed) {
             y_velocity += gravity;
-            
-            if(y_velocity > maxFallSpeed) {
+
+            if (y_velocity > maxFallSpeed) {
                 y_velocity = maxFallSpeed;
             }
         }
     }
-    
+
+    /**
+     * changes the coordinates of the object
+     */
     public void updateBoundingShape() {
         boundingShape.updatePosition(x, y);
     }
@@ -94,15 +105,15 @@ public abstract class LevelObject {
     public void setOnGround(boolean onGround) {
         this.onGround = onGround;
     }
-    
+
     public void render() throws SlickException {
-        sprite.draw(x , y);
+        sprite.draw(x, y);
     }
-    
+
     public boolean isMoving() {
         return moving;
     }
-    
+
     public void setMoving(boolean moving) {
         this.moving = moving;
     }
@@ -115,19 +126,23 @@ public abstract class LevelObject {
         this.storedJumps = storedJumps;
     }
 
+    /**
+     * Applies deceleration to the object
+     * @param delta
+     */
     public void decelerate(int delta) {
-        if(x_velocity > 0) {
+        if (x_velocity > 0) {
             x_velocity -= decelerationSpeed * delta;
-            if(x_velocity < 0) {
+            if (x_velocity < 0) {
                 x_velocity = 0;
             }
-        } else if(x_velocity < 0) {
+        } else if (x_velocity < 0) {
             x_velocity += decelerationSpeed * delta;
-            if(x_velocity > 0) {
+            if (x_velocity > 0) {
                 x_velocity = 0;
             }
         }
     }
-    
+
 
 }
