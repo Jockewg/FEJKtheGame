@@ -296,7 +296,7 @@ public class Character extends LevelObject {
             sweepSpeed = (float) Math.sqrt(Math.pow(sweepXStart - sweepXEnd, 2) + 
                     Math.pow(sweepYStart - sweepYEnd, 2));
         }
-        if (sweepSpeed == sweepAttack) {
+        
         if (sweepSpeed >= sweepAttack && sweepSpeed <= sweepLimit) {
             System.out.println("attack " + sweepSpeed);
         }
