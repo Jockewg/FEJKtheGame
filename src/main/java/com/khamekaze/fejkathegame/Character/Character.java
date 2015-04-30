@@ -46,6 +46,8 @@ public class Character extends LevelObject {
     protected Audio jumpSound;
     private Shape jumpIndicator;
     private float jumpIndicatorTransp = 0.0f;
+    
+    private float playerWidth, playerHeight;
 
     /**
      * Constructor for creating a character, gives it the default values for a character
@@ -232,6 +234,22 @@ public class Character extends LevelObject {
         this.moving = moving;
     }
     
+    public float getPlayerWidth() {
+        return playerWidth;
+    }
+    
+    public void setPlayerWidth(float width) {
+        this.playerWidth = width;
+    }
+    
+    public float getPlayerHeight() {
+        return playerHeight;
+    }
+    
+    public void setPlayerHeight(float height) {
+        this.playerHeight = height;
+    }
+    
     public void decelerate(int delta) {
         if(x_velocity > 0) {
             x_velocity -= decelerationSpeed * delta;
@@ -263,7 +281,7 @@ public class Character extends LevelObject {
     }
     
     public void jump() {
-        currentPositionX = getX() - 16;
+        currentPositionX = getX() - 2;
         currentPositionY = getY() + 32;
         
         if(!isOnGround())
@@ -348,7 +366,7 @@ public class Character extends LevelObject {
     }
     
     public void renderJumpIndicator(float x, float y) {
-            jumpIndicator = new Rectangle(x, y, 64, 2);
+            jumpIndicator = new Rectangle(x, y, sprite.getWidth() + 4, 2);
             Graphics g = new Graphics();
             g.setColor(new Color(1.0f, 1.0f, 1.0f, jumpIndicatorTransp));
 
