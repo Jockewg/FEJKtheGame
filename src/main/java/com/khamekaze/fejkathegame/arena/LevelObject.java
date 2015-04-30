@@ -28,7 +28,7 @@ public abstract class LevelObject {
 
         storedJumps = 0;
 
-        boundingShape = new AABoundingRect(x, y, 32, 32);
+        boundingShape = new AABoundingRect(x, y, 32, 31);
     }
     
     public void applyGravity(float gravity) {
