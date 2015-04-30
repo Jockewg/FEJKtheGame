@@ -45,7 +45,7 @@ public class Character extends LevelObject {
     protected Image sprite;
     protected Audio jumpSound;
     private Shape jumpIndicator;
-    private float jumpIndicatorTransp;
+    private float jumpIndicatorTransp = 0.0f;
 
     /**
      * Constructor for creating a character, gives it the default values for a character
@@ -263,9 +263,11 @@ public class Character extends LevelObject {
     }
     
     public void jump() {
-        currentPositionX = getX();
-        currentPositionY = getY() + 16;
+        currentPositionX = getX() - 16;
+        currentPositionY = getY() + 32;
+        
         if(storedJumps > 0) {
+            jumpIndicatorTransp = 1.0f;
             y_velocity = -0.50f;
             storedJumps--;
             jumpSound.playAsSoundEffect(1.0f, 1.0f, false);
@@ -342,18 +344,15 @@ public class Character extends LevelObject {
         for (int i = 0; i < hearts.size(); i++) {
             hearts.get(i).getGraphicImage().draw(hearts.get(i).positionX, hearts.get(i).getPositionY());
         }
-        renderJumpIndicator(getX(), getY());
+        renderJumpIndicator(currentPositionX, currentPositionY);
     }
     
     public void renderJumpIndicator(float x, float y) {
-        jumpIndicator = new Rectangle(x, y, 20, 10);
-        Graphics g = new Graphics();
-        g.setColor(Color.white);
-        if(jumpIndicatorTransp <= 0) {
-            jumpIndicatorTransp = 1;
-        }
-        
-        g.draw(jumpIndicator);
-        jumpIndicatorTransp -= 0.2f;
+            jumpIndicator = new Rectangle(x, y, 64, 2);
+            Graphics g = new Graphics();
+            g.setColor(new Color(1.0f, 1.0f, 1.0f, jumpIndicatorTransp));
+
+            g.fill(jumpIndicator);
+            jumpIndicatorTransp -= 0.002f;
     }
 }
