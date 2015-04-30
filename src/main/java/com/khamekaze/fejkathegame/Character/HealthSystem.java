@@ -66,22 +66,22 @@ public class HealthSystem {
 }
 
 class Heart {
-    Image grahpicImage;
+    Image graphicImage;
     float positionX;
     float positionY;
 
-    public Heart(Image grahpicImage, float positionX, float positionY) {
-        this.grahpicImage = grahpicImage;
+    public Heart(Image graphicImage, float positionX, float positionY) {
+        this.graphicImage = graphicImage;
         this.positionX = positionX;
         this.positionY = positionY;
     }
 
-    public Image getGrahpicImage() {
-        return grahpicImage;
+    public Image getGraphicImage() {
+        return graphicImage;
     }
 
-    public void setGrahpicImage(Image grahpicImage) {
-        this.grahpicImage = grahpicImage;
+    public void setGraphicImage(Image graphicImage) {
+        this.graphicImage = graphicImage;
     }
 
     public float getPositionX() {
