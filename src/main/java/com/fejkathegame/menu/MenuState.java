@@ -2,6 +2,7 @@ package com.fejkathegame.menu;
 
 import com.fejkathegame.game.Main;
 import org.lwjgl.input.Mouse;
+import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
@@ -32,7 +33,7 @@ public class MenuState extends BasicGameState {
 
     @Override
     public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
-//        g.scale(Main.SCALE, Main.SCALE);
+        g.setBackground(Color.decode("#655d5d"));
         menu.render();
     }
 
