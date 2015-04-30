@@ -28,7 +28,7 @@ public abstract class LevelObject {
 
         storedJumps = 0;
 
-        boundingShape = new AABoundingRect(x, y, 25, 25);
+        boundingShape = new AABoundingRect(x, y, 32, 32);
     }
     
     public void applyGravity(float gravity) {
@@ -96,7 +96,7 @@ public abstract class LevelObject {
     }
     
     public void render() throws SlickException {
-        sprite.draw(x - 4, y - 4);
+        sprite.draw(x , y);
     }
     
     public boolean isMoving() {
