@@ -58,7 +58,7 @@ public class Character extends LevelObject {
 
         grounded = false;
         health = 5;
-        attackCoolDown = 1;
+        attackCoolDown = 100;
         storedAttacks = 2;
         storedJumps = 0;
         size = 40;
@@ -300,7 +300,8 @@ public class Character extends LevelObject {
         Vector2f direction = new Vector2f(sweepXStart - sweepXEnd, 
                 sweepYStart - sweepYEnd);
         
-        if (sweepSpeed >= sweepAttack && sweepSpeed <= sweepLimit) { // Attack movement here
+        if (sweepSpeed >= sweepAttack && sweepSpeed <= sweepLimit &&
+                attackCoolDown <= 0) { // Attack movement here
             System.out.println("attack " + sweepSpeed);
             x_velocity = (float) (attackVelocity * Math.cos(Math.toRadians(direction.getTheta())));
             y_velocity = (float) (attackVelocity * Math.sin(Math.toRadians(direction.getTheta())));
