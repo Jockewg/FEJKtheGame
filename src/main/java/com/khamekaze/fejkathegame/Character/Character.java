@@ -50,10 +50,10 @@ public class Character extends LevelObject {
     public Character(float x, float y) throws SlickException {
         super(x, y);
 
-        accelerationSpeed = 0.002f;
-        maximumSpeed = 0.28f;
-        maxFallSpeed = 0.38f;
-        decelerationSpeed = 0.002f;
+        accelerationSpeed = 0.010f;
+        maximumSpeed = 0.40f;
+        maxFallSpeed = 0.75f;
+        decelerationSpeed = 0.005f;
         sprite = new Image("data/img/placeholder.png");
 
         grounded = false;
@@ -261,7 +261,7 @@ public class Character extends LevelObject {
     
     public void jump() {
         if(storedJumps > 0) {
-            y_velocity = -0.65f;
+            y_velocity = -0.50f;
             storedJumps--;
         }
         System.out.println(storedJumps);
