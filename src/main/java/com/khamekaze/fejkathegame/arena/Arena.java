@@ -15,7 +15,13 @@ public class Arena {
     private Tile[][] tiles;
     
     private ArrayList<LevelObject> players;
-    
+
+    /**
+     * Constructor for Arena, creates the playingfield and adds all players to the field
+     * @param name
+     * @param levelObject
+     * @throws SlickException
+     */
     public Arena(String name, LevelObject levelObject) throws SlickException {
         map = new TiledMap("data/levels/" + name + ".tmx", "data/img");
         players = new ArrayList<LevelObject>();
@@ -24,7 +30,10 @@ public class Arena {
         
         loadTileMap();
     }
-    
+
+    /**
+     * populates the arena with tiles
+     */
     public void loadTileMap() {
         tiles = new Tile[map.getWidth() + 1][map.getHeight() + 1];
         
@@ -55,19 +64,34 @@ public class Arena {
             }
         }
     }
-    
+
+    /**
+     * adds a player to the player array
+     * @param p
+     */
     public void addPlayer(LevelObject p) {
         players.add(p);
     }
-    
+
+    /**
+     * returns the player array
+     * @return
+     */
     public ArrayList<LevelObject> getPlayers() {
         return players;
     }
-    
+
+    /**
+     * @return a multidimensional array of tiles
+     */
     public Tile[][] getTiles() {
         return tiles;
     }
-    
+
+    /**
+     * Renders the arena
+     * @throws SlickException
+     */
     public void render() throws SlickException {
         map.render(0, 0, 0, 0, 36, 20);
         
