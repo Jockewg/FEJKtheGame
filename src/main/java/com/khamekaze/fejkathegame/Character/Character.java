@@ -42,7 +42,7 @@ public class Character extends LevelObject {
     protected Image sprite;
     private float sweepXStart, sweepYStart, sweepXEnd, sweepYEnd, sweepSpeed;
     private double sweepAttack, sweepLimit;
-    private float attackSpeed;
+    private float attackVelocity;
 
     /**
      * Constructor for creating a character, gives it the default values for a character
@@ -74,7 +74,7 @@ public class Character extends LevelObject {
         jumpCoolDownDefault = 60;
         sweepAttack = 4;
         sweepLimit = 10;
-        attackSpeed = 0.50f;
+        attackVelocity = 1.0f;
     }
 
     public boolean isGrounded() {
@@ -297,8 +297,13 @@ public class Character extends LevelObject {
                     Math.pow(sweepYStart - sweepYEnd, 2));
         }
         
-        if (sweepSpeed >= sweepAttack && sweepSpeed <= sweepLimit) {
+        Vector2f direction = new Vector2f(sweepXStart - sweepXEnd, 
+                sweepYStart - sweepYEnd);
+        
+        if (sweepSpeed >= sweepAttack && sweepSpeed <= sweepLimit) { // Attack movement here
             System.out.println("attack " + sweepSpeed);
+            x_velocity = (float) (attackVelocity * Math.cos(Math.toRadians(direction.getTheta())));
+            y_velocity = (float) (attackVelocity * Math.sin(Math.toRadians(direction.getTheta())));
         }
         sweepXEnd = sweepXStart;
         sweepYEnd = sweepYStart;
@@ -313,18 +318,6 @@ public class Character extends LevelObject {
      */
     public void update(GameContainer gc, int i) throws SlickException {
 //        Input input = gc.getInput();
-//        
-//        sweepXStart = input.getMouseX();
-//        sweepYStart = input.getMouseY();
-//        
-//        if (sweepXEnd != sweepXStart || sweepYStart != sweepYEnd) {
-//            sweepSpeed = (float) Math.sqrt(Math.pow(sweepXStart - sweepXEnd, 2) + 
-//                    Math.pow(sweepYStart - sweepYEnd, 2));
-//            System.out.println(sweepSpeed);
-//        }
-//        
-//        sweepXEnd = input.getMouseX();
-//        sweepYEnd = input.getMouseY();
 //        
 //        if(jumpCoolDownTick > 0)
 //            jumpCoolDownTick --;
