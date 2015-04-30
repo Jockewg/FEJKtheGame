@@ -40,8 +40,8 @@ public class Character extends LevelObject {
     protected float maximumSpeed = 2;
     protected boolean moving = false;
     protected Image sprite;
-    private float sweepXStart, sweepYStart, sweepXEnd, sweepYEnd;
-    private double sweepAttack, sweepSpeed;
+    private float sweepXStart, sweepYStart, sweepXEnd, sweepYEnd, sweepSpeed;
+    private double sweepAttack, sweepLimit;
     private float attackSpeed;
 
     /**
@@ -72,7 +72,8 @@ public class Character extends LevelObject {
         updateRate = 5;
         jumpCoolDownTick = 60;
         jumpCoolDownDefault = 60;
-        sweepAttack = 3;
+        sweepAttack = 4;
+        sweepLimit = 10;
         attackSpeed = 0.50f;
     }
 
@@ -291,17 +292,16 @@ public class Character extends LevelObject {
         sweepXStart = i.getMouseX();
         sweepYStart = i.getMouseY();
         
-        if (sweepXEnd != sweepXStart || sweepYStart != sweepYEnd) {
-            sweepSpeed = Math.sqrt(Math.pow(sweepXStart - sweepXEnd, 2) + 
+        if (sweepXEnd != sweepXStart && sweepYStart != sweepYEnd) {
+            sweepSpeed = (float) Math.sqrt(Math.pow(sweepXStart - sweepXEnd, 2) + 
                     Math.pow(sweepYStart - sweepYEnd, 2));
-            if (sweepSpeed > 2) {
-            System.out.println(sweepSpeed);}
         }
         if (sweepSpeed == sweepAttack) {
+        if (sweepSpeed >= sweepAttack && sweepSpeed <= sweepLimit) {
             System.out.println("attack " + sweepSpeed);
         }
-        sweepXEnd = i.getMouseX();
-        sweepYEnd = i.getMouseY();
+        sweepXEnd = sweepXStart;
+        sweepYEnd = sweepYStart;
     }
 
     /**
