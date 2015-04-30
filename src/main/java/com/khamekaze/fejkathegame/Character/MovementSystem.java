@@ -25,6 +25,9 @@ public class MovementSystem {
         if(i.isMousePressed(Input.MOUSE_LEFT_BUTTON) || i.isKeyPressed(Input.KEY_SPACE)) {
             character.jump();
         }
+        if( i.isMouseButtonDown(Input.MOUSE_RIGHT_BUTTON)) {
+            character.attack(i, delta);
+        }
     }
     
     public void handleKeyBoardInput(Input i, int delta) {

@@ -7,6 +7,7 @@ import org.newdawn.slick.geom.Circle;
 import org.newdawn.slick.geom.Shape;
 
 import java.util.ArrayList;
+import org.newdawn.slick.geom.Vector2f;
 
 /**
  * Created by Swartt on 2015-04-28.
@@ -39,6 +40,9 @@ public class Character extends LevelObject {
     protected float maximumSpeed = 2;
     protected boolean moving = false;
     protected Image sprite;
+    private float sweepXStart, sweepYStart, sweepXEnd, sweepYEnd;
+    private double sweepAttack, sweepSpeed;
+    private float attackSpeed;
 
     /**
      * Constructor for creating a character, gives it the default values for a character
@@ -68,6 +72,8 @@ public class Character extends LevelObject {
         updateRate = 5;
         jumpCoolDownTick = 60;
         jumpCoolDownDefault = 60;
+        sweepAttack = 3;
+        attackSpeed = 0.50f;
     }
 
     public boolean isGrounded() {
@@ -280,6 +286,23 @@ public class Character extends LevelObject {
         }
         moving = true;
     }
+    
+    public void attack(Input i, int delta) {
+        sweepXStart = i.getMouseX();
+        sweepYStart = i.getMouseY();
+        
+        if (sweepXEnd != sweepXStart || sweepYStart != sweepYEnd) {
+            sweepSpeed = Math.sqrt(Math.pow(sweepXStart - sweepXEnd, 2) + 
+                    Math.pow(sweepYStart - sweepYEnd, 2));
+            if (sweepSpeed > 2) {
+            System.out.println(sweepSpeed);}
+        }
+        if (sweepSpeed == sweepAttack) {
+            System.out.println("attack " + sweepSpeed);
+        }
+        sweepXEnd = i.getMouseX();
+        sweepYEnd = i.getMouseY();
+    }
 
     /**
      * updates the state of character, update is called every frame
@@ -290,6 +313,18 @@ public class Character extends LevelObject {
      */
     public void update(GameContainer gc, int i) throws SlickException {
 //        Input input = gc.getInput();
+//        
+//        sweepXStart = input.getMouseX();
+//        sweepYStart = input.getMouseY();
+//        
+//        if (sweepXEnd != sweepXStart || sweepYStart != sweepYEnd) {
+//            sweepSpeed = (float) Math.sqrt(Math.pow(sweepXStart - sweepXEnd, 2) + 
+//                    Math.pow(sweepYStart - sweepYEnd, 2));
+//            System.out.println(sweepSpeed);
+//        }
+//        
+//        sweepXEnd = input.getMouseX();
+//        sweepYEnd = input.getMouseY();
 //        
 //        if(jumpCoolDownTick > 0)
 //            jumpCoolDownTick --;
