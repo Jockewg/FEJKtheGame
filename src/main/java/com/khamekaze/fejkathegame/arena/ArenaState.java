@@ -10,6 +10,8 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
+import java.io.IOException;
+
 public class ArenaState extends BasicGameState {
 
     private Arena arena;
@@ -31,7 +33,12 @@ public class ArenaState extends BasicGameState {
     @Override
     public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {
 
-        Character obj = new Character(800, 40);
+        Character obj = null;
+        try {
+            obj = new Character(800, 40);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
 
         arena = new Arena(name, obj);

@@ -3,11 +3,14 @@ package com.khamekaze.fejkathegame.Character;
 
 import com.khamekaze.fejkathegame.arena.LevelObject;
 import org.newdawn.slick.*;
-import org.newdawn.slick.geom.Circle;
 import org.newdawn.slick.geom.Shape;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import org.newdawn.slick.geom.Rectangle;
+import org.newdawn.slick.openal.Audio;
+import org.newdawn.slick.openal.AudioLoader;
+import org.newdawn.slick.util.ResourceLoader;
 
 /**
  * Created by Swartt on 2015-04-28.
@@ -40,14 +43,14 @@ public class Character extends LevelObject {
     protected float maximumSpeed = 2;
     protected boolean moving = false;
     protected Image sprite;
-    
+    protected Audio jumpSound;
     private Shape jumpIndicator;
     private float jumpIndicatorTransp;
 
     /**
      * Constructor for creating a character, gives it the default values for a character
      */
-    public Character(float x, float y) throws SlickException {
+    public Character(float x, float y) throws SlickException, IOException {
         super(x, y);
 
         accelerationSpeed = 0.010f;
@@ -72,6 +75,7 @@ public class Character extends LevelObject {
         updateRate = 5;
         jumpCoolDownTick = 60;
         jumpCoolDownDefault = 60;
+        jumpSound = AudioLoader.getAudio("WAV", ResourceLoader.getResourceAsStream("data/sound/Jump5.wav"));
     }
 
     public boolean isGrounded() {
@@ -263,6 +267,7 @@ public class Character extends LevelObject {
         if(storedJumps > 0) {
             y_velocity = -0.50f;
             storedJumps--;
+            jumpSound.playAsSoundEffect(1.0f, 1.0f, false);
 //            currentPositionX = player.getCenterX();
 //            currentPositionY = player.getCenterY() + 16;
         }
