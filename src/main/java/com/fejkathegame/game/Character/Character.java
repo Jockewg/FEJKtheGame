@@ -45,8 +45,9 @@ public class Character extends LevelObject {
     protected boolean moving = false;
     protected Image sprite;
     protected Audio jumpSound;
-    private Shape jumpIndicator;
+    private Shape jumpIndicator, attackIndicator;
     private float jumpIndicatorTransp = 0.0f;
+    private float attackIndicatorTransp = 0.0f;
     private float sweepXStart, sweepYStart, sweepXEnd, sweepYEnd, sweepSpeed;
     private double sweepAttack, sweepLimit;
     private float attackVelocity;
@@ -404,5 +405,11 @@ public class Character extends LevelObject {
 
             g.fill(jumpIndicator);
             jumpIndicatorTransp -= 0.002f;
+    }
+    public void renderAttackIndicator(float x, float y) {
+        attackIndicator = new Rectangle(x, y, sprite.getWidth() + 4, 2);
+        Graphics g = new Graphics();
+        g.setColor(new Color (1.0f, 1.0f, 1.0f));
+        g.fill(attackIndicator);
     }
 }
