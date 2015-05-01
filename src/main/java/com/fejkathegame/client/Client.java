@@ -21,9 +21,9 @@ public class Client {
      * @param playerName
      * @throws UnknownHostException
      */
-    public Client(int ipAddress, String playerName) {
+    public Client(String ipAddress, String playerName) {
         try {
-            address = InetAddress.getByName(String.valueOf(ipAddress));
+            address = InetAddress.getByName(ipAddress);
         } catch (UnknownHostException e) {
             e.printStackTrace();
             System.out.println("incorrect IP address");
@@ -36,6 +36,7 @@ public class Client {
      */
     public void connect() {
         try {
+            System.out.println("creating new socket");
             socket = new Socket(address, port);
             /*socket.setKeepAlive(true);*/
             printWriter = new PrintWriter(socket.getOutputStream(), true);

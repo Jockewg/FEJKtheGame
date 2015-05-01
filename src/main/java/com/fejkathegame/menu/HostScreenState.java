@@ -1,5 +1,7 @@
 package com.fejkathegame.menu;
 
+import com.fejkathegame.client.Client;
+import com.fejkathegame.server.Server;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -7,6 +9,7 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
+import sun.security.x509.IPAddressName;
 
 public class HostScreenState extends BasicGameState {
     
@@ -47,7 +50,10 @@ public class HostScreenState extends BasicGameState {
     public void checkIfConnectIsClicked(int x, int y, Input i) {
         if((x > 300 && x < 600) && (y > 331 && y < 371)) {
             if(i.isMousePressed(Input.MOUSE_LEFT_BUTTON)) {
-                //Logic for clicking connect
+                Client client = new Client("localhost", "PlayerNameTest");
+                client.connect();
+                Server server = new Server();
+                server.handleConnection();
             }
         }
     }

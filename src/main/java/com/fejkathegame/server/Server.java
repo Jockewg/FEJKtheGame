@@ -17,29 +17,29 @@ public class Server {
     protected ArrayList<Socket> players = new ArrayList<>();
 
 
-    public void connect() {
-        ServerSocket serverSocket = null;
-        Socket clientSocket = null;
-
-          /*  bufferedReader = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));*/
+    public Server() {
         try {
             serverSocket = new ServerSocket(port);
         } catch (IOException e) {
-            System.out.println(e);
+            System.out.println("server says: " + e);
         }
+    }
+
+    public void handleConnection() {
         while (true) {
             try {
                 clientSocket = serverSocket.accept();
-                players.add(clientSocket);
+                new ServerThread(clientSocket).run();
             } catch (IOException e) {
-                System.out.println(e);
+                System.out.println("derp");
+                System.out.println("handleConnection says: "+e);
             }
-            new ServerThread(clientSocket).start();
+
+
         }
-
-
     }
-    public void sendToAllPlayers(){
+
+    public void sendToAllPlayers() {
 
         for (Socket player : players) {
             try {
@@ -53,12 +53,14 @@ public class Server {
 }
 
 
-
-class ServerThread extends Thread {
+class ServerThread implements Runnable {
     protected Socket clientSocket;
 
     public ServerThread(Socket clientSocket) {
         this.clientSocket = clientSocket;
+
+        Thread t = new Thread(this);
+        t.start();
     }
 
     public void run() {
