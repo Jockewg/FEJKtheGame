@@ -8,6 +8,7 @@ import org.newdawn.slick.geom.Shape;
 import java.io.IOException;
 import java.util.ArrayList;
 import org.newdawn.slick.geom.Rectangle;
+import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.openal.Audio;
 import org.newdawn.slick.openal.AudioLoader;
 import org.newdawn.slick.util.ResourceLoader;
@@ -46,6 +47,9 @@ public class Character extends LevelObject {
     protected Audio jumpSound;
     private Shape jumpIndicator;
     private float jumpIndicatorTransp = 0.0f;
+    private float sweepXStart, sweepYStart, sweepXEnd, sweepYEnd, sweepSpeed;
+    private double sweepAttack, sweepLimit;
+    private float attackVelocity;
     
     private float playerWidth, playerHeight;
 
@@ -63,7 +67,7 @@ public class Character extends LevelObject {
 
         grounded = false;
         health = 5;
-        attackCoolDown = 1;
+        attackCoolDown = 100;
         storedAttacks = 2;
         storedJumps = 0;
         size = 40;
@@ -78,6 +82,9 @@ public class Character extends LevelObject {
         jumpCoolDownTick = 60;
         jumpCoolDownDefault = 60;
         jumpSound = AudioLoader.getAudio("WAV", ResourceLoader.getResourceAsStream("data/sound/Jump5.wav"));
+        sweepAttack = 4;
+        sweepLimit = 10;
+        attackVelocity = 1.0f;
     }
 
     public boolean isGrounded() {
@@ -315,7 +322,30 @@ public class Character extends LevelObject {
         }
         moving = true;
     }
-
+    
+    public void attack(Input i, int delta) {
+        sweepXStart = i.getMouseX();
+        sweepYStart = i.getMouseY();
+        
+        if (sweepXEnd != sweepXStart && sweepYStart != sweepYEnd) {
+            sweepSpeed = (float) Math.sqrt(Math.pow(sweepXStart - sweepXEnd, 2) + 
+                    Math.pow(sweepYStart - sweepYEnd, 2));
+        }
+        
+        Vector2f direction = new Vector2f(sweepXStart - sweepXEnd, 
+                sweepYStart - sweepYEnd);
+        
+        if (sweepSpeed >= sweepAttack && sweepSpeed <= sweepLimit &&
+                attackCoolDown <= 0) { // Attack movement here
+            System.out.println("attack " + sweepSpeed);
+            x_velocity = (float) (attackVelocity * Math.cos(Math.toRadians(direction.getTheta())));
+            y_velocity = (float) (attackVelocity * Math.sin(Math.toRadians(direction.getTheta())));
+            attackCoolDown = 1000;
+        }
+        sweepXEnd = sweepXStart;
+        sweepYEnd = sweepYStart;
+    }
+    
     /**
      * updates the state of character, update is called every frame
      *
