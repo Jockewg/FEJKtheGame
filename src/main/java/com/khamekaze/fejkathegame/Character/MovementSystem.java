@@ -22,12 +22,14 @@ public class MovementSystem {
     }
     
     public void handleMouseInput(Input i, int delta) {
+        character.setAttackCoolDown(character.getAttackCoolDown()-1);
         if(i.isMousePressed(Input.MOUSE_LEFT_BUTTON) || i.isKeyPressed(Input.KEY_SPACE)) {
             character.jump();
         }
         if( i.isMouseButtonDown(Input.MOUSE_RIGHT_BUTTON)) {
             character.attack(i, delta);
         }
+        
     }
     
     public void handleKeyBoardInput(Input i, int delta) {

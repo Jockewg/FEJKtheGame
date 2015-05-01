@@ -305,6 +305,7 @@ public class Character extends LevelObject {
             System.out.println("attack " + sweepSpeed);
             x_velocity = (float) (attackVelocity * Math.cos(Math.toRadians(direction.getTheta())));
             y_velocity = (float) (attackVelocity * Math.sin(Math.toRadians(direction.getTheta())));
+            attackCoolDown = 1000;
         }
         sweepXEnd = sweepXStart;
         sweepYEnd = sweepYStart;
