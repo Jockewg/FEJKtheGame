@@ -37,7 +37,10 @@ public class MovementSystem {
             character.moveLeft(delta);
         } else if(i.isKeyDown(Input.KEY_D) || i.isKeyDown(Input.KEY_RIGHT)) {
             character.moveRight(delta);
-        } else {
+        } else if(i.isKeyPressed(Input.KEY_Q)) {
+            character.getHealthSystem().dealDamage(1);
+        }
+        else {
             character.setMoving(false);
         }
     }

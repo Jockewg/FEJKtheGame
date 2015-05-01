@@ -56,8 +56,8 @@ public class HealthSystem {
     public void updateHealthBar() {
         //TODO: Implement graphical representation of a healthbar
         int health = character.getHealth();
-        if(getHearts().size() - 1 > health) {
-            getHearts().remove(health + 1);
+        if(getHearts().size() > health) {
+            getHearts().remove(health);
         }
 
     }
