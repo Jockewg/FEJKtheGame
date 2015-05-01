@@ -53,6 +53,7 @@ public class Character extends LevelObject {
     
     private float playerWidth, playerHeight;
 
+    
     /**
      * Constructor for creating a character, gives it the default values for a character
      */
@@ -392,6 +393,7 @@ public class Character extends LevelObject {
         for (int i = 0; i < hearts.size(); i++) {
             hearts.get(i).getGraphicImage().draw(hearts.get(i).getPositionX(), hearts.get(i).getPositionY());
         }
+        
         renderJumpIndicator(currentPositionX, currentPositionY);
     }
     
