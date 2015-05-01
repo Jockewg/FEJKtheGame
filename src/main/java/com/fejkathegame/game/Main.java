@@ -2,6 +2,7 @@ package com.fejkathegame.game;
 
 import com.fejkathegame.game.game.Game;
 import com.fejkathegame.game.arena.ArenaState;
+import com.fejkathegame.menu.HostScreenState;
 import com.fejkathegame.menu.MenuState;
 
 import java.util.logging.Level;
@@ -25,6 +26,7 @@ public class Main extends StateBasedGame {
     
     @Override
     public void initStatesList(GameContainer gc) throws SlickException {
+        addState(new HostScreenState("host"));
         addState(new MenuState("menu"));
         addState(new ArenaState("arena"));
         
