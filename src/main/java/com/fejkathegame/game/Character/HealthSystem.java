@@ -10,7 +10,7 @@ import java.util.ArrayList;
  */
 public class HealthSystem {
     Character character;
-    private Image heartImage = new Image("data/img/heartcontainer/health1.png");
+    private Image heartImage = new Image("data/img/heartcontainer/health2.png");
     ArrayList<Heart> hearts = new ArrayList<>();
 
     public HealthSystem(Character character) throws SlickException {
@@ -35,7 +35,19 @@ public class HealthSystem {
 
     public void setHealthbar() throws SlickException {
         for (int i = 0; i < character.getHealth(); i++) {
-            hearts.add(new Heart(heartImage, character.getX() + (i * 10), character.getY()));
+            //Old dot health system
+//            hearts.add(new Heart(heartImage, character.getX() + (i * 10), character.getY()));
+            if(i == 0) {
+                hearts.add(new Heart(heartImage, character.getX(), character.getY()));
+            } else if(i == 1) {
+                hearts.add(new Heart(heartImage, character.getX() + 16, character.getY()));
+            } else if(i == 2) {
+                hearts.add(new Heart(heartImage, character.getX(), character.getY() + 16));
+            } else if(i == 3) {
+                hearts.add(new Heart(heartImage, character.getX() + 16, character.getY() + 16));
+            } else if(i == 4) {
+                hearts.add(new Heart(heartImage, character.getX() + 8, character.getY() + 8));
+            }
         }
     }
     /**
@@ -43,8 +55,9 @@ public class HealthSystem {
      */
     public void updateHealthBar() {
         //TODO: Implement graphical representation of a healthbar
-        for (int i = character.getHealth(); i < hearts.size() - 1; i++) {
-            hearts.remove(i);
+        int health = character.getHealth();
+        if(getHearts().size() - 1 > health) {
+            getHearts().remove(health + 1);
         }
 
     }
@@ -66,7 +79,20 @@ public class HealthSystem {
     
     public void render() {
         for(int i = 0; i < hearts.size(); i ++) {
-            hearts.get(i).getGraphicImage().draw((character.getX() - 9) + (i * 10), character.getY() - 16);
+            //Dot health system
+//            hearts.get(i).getGraphicImage().draw((character.getX() - 9) + (i * 10), character.getY() - 16);
+            if(hearts.get(i) == null)
+                break;
+            if(i == 0)
+            hearts.get(i).getGraphicImage().draw(character.getX(), character.getY());
+            else if(i == 1)
+                hearts.get(i).getGraphicImage().draw(character.getX() + 16, character.getY());
+            else if(i == 2)
+                hearts.get(i).getGraphicImage().draw(character.getX(), character.getY() + 16);
+            else if(i == 3)
+                hearts.get(i).getGraphicImage().draw(character.getX() + 16, character.getY() + 16);
+            else if(i == 4)
+                hearts.get(i).getGraphicImage().draw(character.getX() + 8, character.getY() + 8);
         }
     }
 }
