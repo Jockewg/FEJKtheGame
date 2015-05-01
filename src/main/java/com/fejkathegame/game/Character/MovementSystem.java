@@ -27,7 +27,7 @@ public class MovementSystem {
                 i.isKeyPressed(Input.KEY_SPACE) && character.getStoredJumps() > 0) {
             character.jump();
         }
-        if( i.isMouseButtonDown(Input.MOUSE_RIGHT_BUTTON)) {
+        if( i.isMouseButtonDown(Input.MOUSE_RIGHT_BUTTON) && character.getStoredAttacks() > 0) {
             character.attack(i, delta);
         }
     }

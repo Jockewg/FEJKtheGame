@@ -17,6 +17,7 @@ public abstract class LevelObject {
     protected boolean moving = false;
     protected int storedJumps;
     protected boolean onGround = true;
+    protected int storedAttacks;
 
     /**
      * Constructor for a {@code LevelObject}, creates a new level entity with standard values
@@ -31,7 +32,9 @@ public abstract class LevelObject {
         sprite = new Image("data/img/placeholder.png");
 
         storedJumps = 0;
-
+        
+        storedAttacks = 0;
+        
         boundingShape = new AABoundingRect(x, y, 32, 31);
     }
 
@@ -126,6 +129,14 @@ public abstract class LevelObject {
         this.storedJumps = storedJumps;
     }
 
+    public int getStoredAttacks() {
+        return storedAttacks;
+    }
+
+    public void setStoredAttacks(int storedAttacks) {
+        this.storedAttacks = storedAttacks;
+    }
+    
     /**
      * Applies deceleration to the object
      * @param delta

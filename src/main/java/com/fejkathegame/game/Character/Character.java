@@ -349,6 +349,7 @@ public class Character extends LevelObject {
             rotateDirection = (float) direction.getTheta();
             attackIndicatorTransp = 1.0f;
             attackCoolDown = 1000;
+            storedAttacks--;
         }
         sweepXEnd = sweepXStart;
         sweepYEnd = sweepYStart;
