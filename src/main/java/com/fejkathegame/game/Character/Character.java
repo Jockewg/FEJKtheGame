@@ -45,7 +45,7 @@ public class Character extends LevelObject {
     protected float maximumSpeed = 2;
     protected boolean moving = false;
     protected Image sprite;
-    protected Audio jumpSound;
+    protected Audio jumpSound, attackSound;
     private Shape jumpIndicator, attackIndicator;
     private float jumpIndicatorTransp = 0.0f;
     private float attackIndicatorTransp = 0.0f;
@@ -87,6 +87,7 @@ public class Character extends LevelObject {
         jumpCoolDownTick = 60;
         jumpCoolDownDefault = 60;
         jumpSound = AudioLoader.getAudio("WAV", ResourceLoader.getResourceAsStream("data/sound/Jump5.wav"));
+        attackSound = AudioLoader.getAudio("WAV", ResourceLoader.getResourceAsStream("data/sound/Attack.wav"));
         sweepAttack = 4;
         sweepLimit = 10;
         attackVelocity = 1.0f;
@@ -350,6 +351,7 @@ public class Character extends LevelObject {
             attackIndicatorTransp = 1.0f;
             attackCoolDown = 1000;
             storedAttacks--;
+            attackSound.playAsSoundEffect(1.0f, 1.0f, false);
         }
         sweepXEnd = sweepXStart;
         sweepYEnd = sweepYStart;
