@@ -345,8 +345,12 @@ public class Character extends LevelObject {
         if (sweepSpeed >= sweepAttack && sweepSpeed <= sweepLimit
                 && attackCoolDown <= 0) { // Attack movement here
             System.out.println("attack " + sweepSpeed);
-            x_velocity = (float) (attackVelocity * Math.cos(Math.toRadians(direction.getTheta())));
-            y_velocity = (float) (attackVelocity * Math.sin(Math.toRadians(direction.getTheta())));
+//            x_velocity = (float) (attackVelocity * Math.cos(Math.toRadians(direction.getTheta())));
+//            y_velocity = (float) (attackVelocity * Math.sin(Math.toRadians(direction.getTheta())));
+            float angleX = (float) Math.cos(Math.toRadians(direction.getTheta()));
+            float angleY = (float) Math.sin(Math.toRadians(direction.getTheta()));
+            x_velocity = angleX * attackVelocity;
+            y_velocity = angleY * attackVelocity;
             rotateDirection = (float) direction.getTheta();
             attackIndicatorTransp = 1.0f;
             attackCoolDown = 1000;
