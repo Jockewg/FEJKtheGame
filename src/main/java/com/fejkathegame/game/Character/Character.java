@@ -1,6 +1,7 @@
 package com.fejkathegame.game.Character;
 
 import com.fejkathegame.game.arena.LevelObject;
+import com.fejkathegame.game.collision.AABoundingRect;
 import org.newdawn.slick.*;
 import org.newdawn.slick.geom.Shape;
 
@@ -69,6 +70,8 @@ public class Character extends LevelObject {
         maxFallSpeed = 0.75f;
         decelerationSpeed = 0.005f;
         sprite = new Image("data/img/placeholder.png");
+        
+        boundingShape = new AABoundingRect(x, y, 32, 32);
 
         grounded = false;
         health = 5;

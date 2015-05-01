@@ -49,7 +49,7 @@ public class AABoundingRect extends BoundingShape {
 
     @Override
     public ArrayList<Tile> getGroundTiles(Tile[][] tiles) {
-        ArrayList<Tile> tilesUnderneath = new ArrayList<Tile>();
+        ArrayList<Tile> tilesUnderneath = new ArrayList<>();
         int j = (int) (y + height + 1);
         
         for(int i = (int) x; i <= x + width + (25 - width % 25); i += 25) {
