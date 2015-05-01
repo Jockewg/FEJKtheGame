@@ -417,8 +417,7 @@ public class Character extends LevelObject {
         attackIndicator = new Rectangle(x+15, y+15, sprite.getWidth() + 20, 4);
         Graphics g = new Graphics();
         g.setColor(new Color(1.0f, 1.0f, 1.0f, attackIndicatorTransp));
-        g.rotate(x+15, y+15, (float) Math.toDegrees(rotateDirection));
-        g.fill(attackIndicator);
+        g.fill(attackIndicator.transform(Transform.createRotateTransform((float) Math.toRadians(rotateDirection), x+15, y+15)));
         attackIndicatorTransp -= 0.001f;
     }
 }
