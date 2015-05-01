@@ -10,6 +10,7 @@ import java.util.ArrayList;
  */
 public class HealthSystem {
     Character character;
+    private Image heartImage = new Image("data/img/heartcontainer/health1.png");
     ArrayList<Heart> hearts = new ArrayList<>();
 
     public HealthSystem(Character character) throws SlickException {
@@ -33,9 +34,8 @@ public class HealthSystem {
     }
 
     public void setHealthbar() throws SlickException {
-        Image heartImage = new Image("data/img/heartcontainer/HeartContainerFull.png");
         for (int i = 0; i < character.getHealth(); i++) {
-            hearts.add(new Heart(heartImage,50 + i*50, 50));
+            hearts.add(new Heart(heartImage, character.getX() + (i * 10), character.getY()));
         }
     }
     /**

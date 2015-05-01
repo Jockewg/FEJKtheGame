@@ -57,5 +57,4 @@ public class AABoundingRect extends BoundingShape {
         }
         return tilesUnderneath;
     }
-
 }

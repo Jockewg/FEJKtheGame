@@ -390,7 +390,7 @@ public class Character extends LevelObject {
         sprite.draw(x , y);
         ArrayList<Heart> hearts = healthSystem.getHearts();
         for (int i = 0; i < hearts.size(); i++) {
-            hearts.get(i).getGraphicImage().draw(hearts.get(i).positionX, hearts.get(i).getPositionY());
+            hearts.get(i).getGraphicImage().draw(hearts.get(i).getPositionX(), hearts.get(i).getPositionY());
         }
         renderJumpIndicator(currentPositionX, currentPositionY);
     }
