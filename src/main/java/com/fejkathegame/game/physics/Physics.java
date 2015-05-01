@@ -60,6 +60,7 @@ public class Physics {
         } else {
             obj.setY_velocity(0);
             obj.setStoredJumps(2);
+            obj.setStoredAttacks(2);
         }
         
         float x_movement = obj.getX_velocity() * delta;
