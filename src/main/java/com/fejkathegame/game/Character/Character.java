@@ -1,6 +1,5 @@
 package com.fejkathegame.game.Character;
 
-
 import com.fejkathegame.game.arena.LevelObject;
 import org.newdawn.slick.*;
 import org.newdawn.slick.geom.Shape;
@@ -8,6 +7,7 @@ import org.newdawn.slick.geom.Shape;
 import java.io.IOException;
 import java.util.ArrayList;
 import org.newdawn.slick.geom.Rectangle;
+import org.newdawn.slick.geom.Transform;
 import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.openal.Audio;
 import org.newdawn.slick.openal.AudioLoader;
@@ -17,6 +17,7 @@ import org.newdawn.slick.util.ResourceLoader;
  * Created by Swartt on 2015-04-28.
  */
 public class Character extends LevelObject {
+
     private boolean grounded;
     private int health;
     private float attackCoolDown;
@@ -51,12 +52,13 @@ public class Character extends LevelObject {
     private float sweepXStart, sweepYStart, sweepXEnd, sweepYEnd, sweepSpeed;
     private double sweepAttack, sweepLimit;
     private float attackVelocity;
-    
+    private Vector2f direction;
+
     private float playerWidth, playerHeight;
 
-    
     /**
-     * Constructor for creating a character, gives it the default values for a character
+     * Constructor for creating a character, gives it the default values for a
+     * character
      */
     public Character(float x, float y) throws SlickException, IOException {
         super(x, y);
@@ -232,50 +234,50 @@ public class Character extends LevelObject {
     public void setPreviousMousePositionX(float previousMousePositionX) {
         this.previousMousePositionX = previousMousePositionX;
     }
-    
+
     @Override
     public boolean isMoving() {
         return moving;
     }
-    
+
     @Override
     public void setMoving(boolean moving) {
         this.moving = moving;
     }
-    
+
     public float getPlayerWidth() {
         return playerWidth;
     }
-    
+
     public void setPlayerWidth(float width) {
         this.playerWidth = width;
     }
-    
+
     public float getPlayerHeight() {
         return playerHeight;
     }
-    
+
     public void setPlayerHeight(float height) {
         this.playerHeight = height;
     }
-    
+
     public void decelerate(int delta) {
-        if(x_velocity > 0) {
+        if (x_velocity > 0) {
             x_velocity -= decelerationSpeed * delta;
-            if(x_velocity < 0) {
+            if (x_velocity < 0) {
                 x_velocity = 0;
             }
-        } else if(x_velocity < 0) {
+        } else if (x_velocity < 0) {
             x_velocity += decelerationSpeed * delta;
-            if(x_velocity > 0) {
+            if (x_velocity > 0) {
                 x_velocity = 0;
             }
         }
     }
 
-
     /**
-     * initializes all variables the character needs when added to the games arena.
+     * initializes all variables the character needs when added to the games
+     * arena.
      *
      * @param gc
      * @throws SlickException
@@ -288,57 +290,58 @@ public class Character extends LevelObject {
         previousMousePositionX = mousePositionX;
         jumpIndicatorTransp = 1.0f;
     }
-    
+
     public void jump() {
         currentPositionX = getX() - 2;
         currentPositionY = getY() + 32;
-        
-        if(!isOnGround())
+
+        if (!isOnGround()) {
             jumpIndicatorTransp = 1.0f;
-        
+        }
+
         y_velocity = -0.50f;
         storedJumps--;
         jumpSound.playAsSoundEffect(1.0f, 1.0f, false);
-        
+
         System.out.println(storedJumps);
         System.out.println("X: " + currentPositionX);
         System.out.println("Y: " + currentPositionY);
     }
-    
+
     public void moveLeft(int delta) {
-        if(x_velocity > -maximumSpeed) {
+        if (x_velocity > -maximumSpeed) {
             x_velocity -= accelerationSpeed * delta;
-            if(x_velocity < -maximumSpeed) {
+            if (x_velocity < -maximumSpeed) {
                 x_velocity = -maximumSpeed;
             }
         }
         moving = true;
     }
-    
+
     public void moveRight(int delta) {
-        if(x_velocity < maximumSpeed) {
+        if (x_velocity < maximumSpeed) {
             x_velocity += accelerationSpeed * delta;
-            if(x_velocity > maximumSpeed) {
+            if (x_velocity > maximumSpeed) {
                 x_velocity = maximumSpeed;
             }
         }
         moving = true;
     }
-    
+
     public void attack(Input i, int delta) {
         sweepXStart = i.getMouseX();
         sweepYStart = i.getMouseY();
-        
+
         if (sweepXEnd != sweepXStart && sweepYStart != sweepYEnd) {
-            sweepSpeed = (float) Math.sqrt(Math.pow(sweepXStart - sweepXEnd, 2) + 
-                    Math.pow(sweepYStart - sweepYEnd, 2));
+            sweepSpeed = (float) Math.sqrt(Math.pow(sweepXStart - sweepXEnd, 2)
+                    + Math.pow(sweepYStart - sweepYEnd, 2));
         }
-        
-        Vector2f direction = new Vector2f(sweepXStart - sweepXEnd, 
+
+        direction = new Vector2f(sweepXStart - sweepXEnd,
                 sweepYStart - sweepYEnd);
-        
-        if (sweepSpeed >= sweepAttack && sweepSpeed <= sweepLimit &&
-                attackCoolDown <= 0) { // Attack movement here
+
+        if (sweepSpeed >= sweepAttack && sweepSpeed <= sweepLimit
+                && attackCoolDown <= 0) { // Attack movement here
             System.out.println("attack " + sweepSpeed);
             x_velocity = (float) (attackVelocity * Math.cos(Math.toRadians(direction.getTheta())));
             y_velocity = (float) (attackVelocity * Math.sin(Math.toRadians(direction.getTheta())));
@@ -348,7 +351,7 @@ public class Character extends LevelObject {
         sweepXEnd = sweepXStart;
         sweepYEnd = sweepYStart;
     }
-    
+
     /**
      * updates the state of character, update is called every frame
      *
@@ -386,32 +389,34 @@ public class Character extends LevelObject {
 
     /**
      * renders the character
+     *
      * @throws SlickException
      */
     @Override
     public void render() throws SlickException {
-        sprite.draw(x , y);
-        
+        sprite.draw(x, y);
+
         healthSystem.render();
-        
+
         renderJumpIndicator(currentPositionX, currentPositionY);
         renderAttackIndicator();
     }
-    
-    public void renderJumpIndicator(float x, float y) {
-            jumpIndicator = new Rectangle(x, y, sprite.getWidth() + 4, 2);
-            Graphics g = new Graphics();
-            g.setColor(new Color(1.0f, 1.0f, 1.0f, jumpIndicatorTransp));
 
-            g.fill(jumpIndicator);
-            jumpIndicatorTransp -= 0.002f;
+    public void renderJumpIndicator(float x, float y) {
+        jumpIndicator = new Rectangle(x, y, sprite.getWidth() + 4, 2);
+        Graphics g = new Graphics();
+        g.setColor(new Color(1.0f, 1.0f, 1.0f, jumpIndicatorTransp));
+
+        g.fill(jumpIndicator);
+        jumpIndicatorTransp -= 0.002f;
     }
+
     public void renderAttackIndicator() {
-        attackIndicator = new Rectangle(sprite.getWidth()/2, sprite.getHeight()/2, sprite.getWidth(), 4);
-        Graphics a = new Graphics();
-        a.setColor(new Color (1.0f, 1.0f, 1.0f, attackIndicatorTransp));
-        
-        a.fill(attackIndicator);
+        attackIndicator = new Rectangle(x+15, y+15, sprite.getWidth() + 20, 4);
+        Graphics g = new Graphics();
+        g.setColor(new Color(1.0f, 1.0f, 1.0f, attackIndicatorTransp));
+
+        g.fill(attackIndicator);
         attackIndicatorTransp -= 0.001f;
     }
 }
