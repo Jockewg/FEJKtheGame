@@ -53,6 +53,7 @@ public class Character extends LevelObject {
     private double sweepAttack, sweepLimit;
     private float attackVelocity;
     private Vector2f direction;
+    private float rotateDirection;
 
     private float playerWidth, playerHeight;
 
@@ -345,6 +346,7 @@ public class Character extends LevelObject {
             System.out.println("attack " + sweepSpeed);
             x_velocity = (float) (attackVelocity * Math.cos(Math.toRadians(direction.getTheta())));
             y_velocity = (float) (attackVelocity * Math.sin(Math.toRadians(direction.getTheta())));
+            rotateDirection = (float) direction.getTheta();
             attackIndicatorTransp = 1.0f;
             attackCoolDown = 1000;
         }
@@ -400,7 +402,7 @@ public class Character extends LevelObject {
 
         renderJumpIndicator(currentPositionX, currentPositionY);
         renderAttackIndicator();
-    }
+    } 
 
     public void renderJumpIndicator(float x, float y) {
         jumpIndicator = new Rectangle(x, y, sprite.getWidth() + 4, 2);
@@ -415,7 +417,7 @@ public class Character extends LevelObject {
         attackIndicator = new Rectangle(x+15, y+15, sprite.getWidth() + 20, 4);
         Graphics g = new Graphics();
         g.setColor(new Color(1.0f, 1.0f, 1.0f, attackIndicatorTransp));
-
+        g.rotate(x+15, y+15, (float) Math.toDegrees(rotateDirection));
         g.fill(attackIndicator);
         attackIndicatorTransp -= 0.001f;
     }
