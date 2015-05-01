@@ -16,11 +16,13 @@ public class HostScreen {
     private Font font;
     
     public HostScreen(String name, GameContainer gc) throws SlickException {
-        font = new UnicodeFont(new java.awt.Font("Arial", java.awt.Font.PLAIN, 26));
+        font = gc.getDefaultFont();
         playerName = new TextField(gc, font, gc.getWidth() / 2 - 150, gc.getHeight() / 2 - 80, 300, 40);
         playerName.setBackgroundColor(Color.white);
         ipField = new TextField(gc, font, gc.getWidth() / 2 - 150, gc.getHeight() / 2, 300, 40);
         ipField.setBackgroundColor(Color.white);
+        playerName.setTextColor(Color.black);
+        ipField.setTextColor(Color.black);
         connect = new Image("data/img/buttons/connect.png");
     }
     

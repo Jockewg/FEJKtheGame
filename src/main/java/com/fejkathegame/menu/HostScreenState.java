@@ -45,9 +45,10 @@ public class HostScreenState extends BasicGameState {
     }
     
     public void checkIfConnectIsClicked(int x, int y, Input i) {
-        if((x > 300 && x < 600) && (y < 331 && y > 371) && i.isMousePressed(Input.MOUSE_LEFT_BUTTON)) {
-                System.out.println("PRESSED CONNECT");
-            
+        if((x > 300 && x < 600) && (y > 331 && y < 371)) {
+            if(i.isMousePressed(Input.MOUSE_LEFT_BUTTON)) {
+                //Logic for clicking connect
+            }
         }
     }
 
