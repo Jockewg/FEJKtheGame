@@ -29,5 +29,6 @@ public class HostScreen {
         ipField.render(gc, g);
         connect.draw(gc.getWidth() / 2 - 150, gc.getHeight() / 2 + 80);
     }
+    
 
 }

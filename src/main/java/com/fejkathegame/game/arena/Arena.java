@@ -60,7 +60,6 @@ public class Arena {
                         break;
                 }
                 tiles[x][y] = tile;
-                System.out.println(tile.toString());
             }
         }
     }
