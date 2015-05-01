@@ -63,6 +63,12 @@ public class HealthSystem {
             character.setAlive(false);
         }
     }
+    
+    public void render() {
+        for(int i = 0; i < hearts.size(); i ++) {
+            hearts.get(i).getGraphicImage().draw((character.getX() - 9) + (i * 10), character.getY() - 16);
+        }
+    }
 }
 
 class Heart {
