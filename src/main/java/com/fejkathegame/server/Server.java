@@ -1,7 +1,5 @@
 package com.fejkathegame.server;
 
-import com.fejkathegame.game.Character.Character;
-
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -16,7 +14,7 @@ public class Server {
     protected BufferedReader bufferedReader;
     protected String inputLine;
     protected int port = 6112;
-    protected ArrayList<Character> players = new ArrayList<>();
+    protected ArrayList<Socket> players = new ArrayList<>();
 
 
     public void connect() {
@@ -32,6 +30,7 @@ public class Server {
         while (true) {
             try {
                 clientSocket = serverSocket.accept();
+                players.add(clientSocket);
             } catch (IOException e) {
                 System.out.println(e);
             }
@@ -40,20 +39,32 @@ public class Server {
 
 
     }
+    public void sendToAllPlayers(){
 
+        for (Socket player : players) {
+            try {
+                DataOutputStream out = new DataOutputStream(player.getOutputStream());
+                out.writeChars("Test");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 }
+
+
 
 class ServerThread extends Thread {
     protected Socket clientSocket;
 
-    public ServerThread (Socket clientSocket) {
+    public ServerThread(Socket clientSocket) {
         this.clientSocket = clientSocket;
     }
 
     public void run() {
-        InputStream inp = null;
-        BufferedReader brinp = null;
-        DataOutputStream out = null;
+        InputStream inp;
+        BufferedReader brinp;
+        DataOutputStream out;
         try {
             inp = clientSocket.getInputStream();
             brinp = new BufferedReader(new InputStreamReader(inp));
@@ -78,5 +89,5 @@ class ServerThread extends Thread {
             }
         }
     }
-    }
+}
 

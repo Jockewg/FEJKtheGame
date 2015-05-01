@@ -1,28 +1,51 @@
 package com.fejkathegame.client;
 
 import java.io.PrintWriter;
+import java.net.InetAddress;
 import java.net.Socket;
+import java.net.UnknownHostException;
 
 /**
  * Created by Swartt on 2015-04-30.
  */
 public class Client {
-    protected static Socket socket;
-    protected static PrintWriter printWriter;
-    protected static int port = 6112;
+    protected Socket socket;
+    protected PrintWriter printWriter;
+    protected InetAddress address;
+    protected String playerName;
+    protected int port = 6112;
 
-    public static void main(String[] args) {
-        connect();
+    /**
+     * Constructor, requires A correct Ip address in order to connect
+     * @param ipAddress
+     * @param playerName
+     * @throws UnknownHostException
+     */
+    public Client(int ipAddress, String playerName) {
+        try {
+            address = InetAddress.getByName(String.valueOf(ipAddress));
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
+            System.out.println("incorrect IP address");
+        }
+        this.playerName = playerName;
     }
 
-    public static void connect() {
+    /**
+     * Connects a user to the server
+     */
+    public void connect() {
         try {
-            socket = new Socket("localhost", port);
+            socket = new Socket(address, port);
+            /*socket.setKeepAlive(true);*/
             printWriter = new PrintWriter(socket.getOutputStream(), true);
-            printWriter.println("Hello Socket");
-            printWriter.println("EYYYYYAAAAAAAA!!!!");
+            sendUserName();
+            printWriter.println("has connected");
         } catch (Exception e) {
             System.out.println(e);
         }
+    }
+    public void sendUserName () {
+        printWriter.println(playerName);
     }
 }
