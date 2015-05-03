@@ -93,7 +93,7 @@ public class Character extends LevelObject {
         attackSound = AudioLoader.getAudio("WAV", ResourceLoader.getResourceAsStream("data/sound/Attack.wav"));
         sweepAttack = 4;
         sweepLimit = 10;
-        attackVelocity = 1.0f;
+        attackVelocity = 1.4f;
     }
 
     public boolean isGrounded() {
@@ -353,7 +353,7 @@ public class Character extends LevelObject {
             float angleX = (float) Math.cos(Math.toRadians(direction.getTheta()));
             float angleY = (float) Math.sin(Math.toRadians(direction.getTheta()));
             x_velocity = angleX * attackVelocity;
-            y_velocity = angleY * attackVelocity;
+            y_velocity = angleY * (attackVelocity * gravity);
             rotateDirection = (float) direction.getTheta();
             attackIndicatorTransp = 1.0f;
             attackCoolDown = 1000;
