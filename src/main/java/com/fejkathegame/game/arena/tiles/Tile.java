@@ -1,6 +1,6 @@
-package com.fejkathegame.game.tiles;
+package com.fejkathegame.game.arena.tiles;
 
-import com.fejkathegame.game.collision.BoundingShape;
+import com.fejkathegame.game.arena.collision.BoundingShape;
 
 public class Tile {
     

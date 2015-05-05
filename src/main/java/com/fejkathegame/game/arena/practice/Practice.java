@@ -3,12 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.fejkathegame.game.arena;
+package com.fejkathegame.game.arena.practice;
 
-import com.fejkathegame.game.Character.PracticeTarget;
-import com.fejkathegame.game.tiles.AirTile;
-import com.fejkathegame.game.tiles.SolidTile;
-import com.fejkathegame.game.tiles.Tile;
+import com.fejkathegame.game.entities.PracticeTarget;
+import com.fejkathegame.game.arena.Level;
+import com.fejkathegame.game.entities.LevelObject;
+import com.fejkathegame.game.arena.tiles.AirTile;
+import com.fejkathegame.game.arena.tiles.SolidTile;
+import com.fejkathegame.game.arena.tiles.Tile;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.logging.Logger;
@@ -19,7 +21,7 @@ import org.newdawn.slick.tiled.TiledMap;
  *
  * @author Swartt
  */
-public class PracticeArena extends Level {
+public class Practice extends Level {
 
    private TiledMap map;
 
@@ -37,7 +39,7 @@ public class PracticeArena extends Level {
     * @param levelObject
     * @throws SlickException
     */
-   public PracticeArena(String name, LevelObject levelObject) throws SlickException {
+   public Practice(String name, LevelObject levelObject) throws SlickException {
       map = new TiledMap("data/levels/" + name + ".tmx", "data/img");
       players = new ArrayList<LevelObject>();
       targets = new ArrayList<LevelObject>();
@@ -105,9 +107,9 @@ public class PracticeArena extends Level {
 //      PracticeTarget target7 = new PracticeTarget(160, 200);
 //      PracticeTarget target8 = new PracticeTarget(160, 200);
        } catch (SlickException ex) {
-           Logger.getLogger(PracticeArena.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+           Logger.getLogger(Practice.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
        } catch (IOException ex) {
-           Logger.getLogger(PracticeArena.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+           Logger.getLogger(Practice.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
        }
    }
 

@@ -1,14 +1,16 @@
-package com.fejkathegame.game.arena;
+package com.fejkathegame.game.arena.versus;
 
-import com.fejkathegame.game.tiles.AirTile;
-import com.fejkathegame.game.tiles.SolidTile;
-import com.fejkathegame.game.tiles.Tile;
+import com.fejkathegame.game.arena.Level;
+import com.fejkathegame.game.entities.LevelObject;
+import com.fejkathegame.game.arena.tiles.AirTile;
+import com.fejkathegame.game.arena.tiles.SolidTile;
+import com.fejkathegame.game.arena.tiles.Tile;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.tiled.TiledMap;
 
 import java.util.ArrayList;
 
-public class Arena extends Level {
+public class Versus extends Level {
     
     private TiledMap map;
     
@@ -22,7 +24,7 @@ public class Arena extends Level {
      * @param levelObject
      * @throws SlickException
      */
-    public Arena(String name, LevelObject levelObject) throws SlickException {
+    public Versus(String name, LevelObject levelObject) throws SlickException {
         map = new TiledMap("data/levels/" + name + ".tmx", "data/img");
         players = new ArrayList<LevelObject>();
         

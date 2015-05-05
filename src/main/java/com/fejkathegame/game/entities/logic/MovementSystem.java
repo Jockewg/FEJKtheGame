@@ -1,5 +1,6 @@
-package com.fejkathegame.game.Character;
+package com.fejkathegame.game.entities.logic;
 
+import com.fejkathegame.game.entities.Character;
 import org.newdawn.slick.Input;
 
 /**

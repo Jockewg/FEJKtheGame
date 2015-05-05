@@ -1,8 +1,7 @@
 package com.fejkathegame.game;
 
-import com.fejkathegame.game.game.Game;
-import com.fejkathegame.game.arena.ArenaState;
-import com.fejkathegame.game.arena.PracticeState;
+import com.fejkathegame.game.arena.versus.VersusState;
+import com.fejkathegame.game.arena.practice.PracticeState;
 import com.fejkathegame.menu.HostScreenState;
 import com.fejkathegame.menu.MenuState;
 
@@ -29,7 +28,7 @@ public class Main extends StateBasedGame {
     public void initStatesList(GameContainer gc) throws SlickException {
         addState(new HostScreenState("host"));
         addState(new MenuState("menu"));
-        addState(new ArenaState("arena"));
+        addState(new VersusState("arena"));
         addState(new PracticeState("arena"));
         
         this.enterState(0);
@@ -44,7 +43,7 @@ public class Main extends StateBasedGame {
                     appgc.setShowFPS(false);
                     appgc.start();
             } catch (SlickException ex) {
-                    Logger.getLogger(Game.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(ex.toString());
             }
 
     }

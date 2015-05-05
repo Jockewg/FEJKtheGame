@@ -1,7 +1,8 @@
-package com.fejkathegame.game.Character;
+package com.fejkathegame.game.entities;
 
-import com.fejkathegame.game.arena.LevelObject;
-import com.fejkathegame.game.collision.AABoundingRect;
+import com.fejkathegame.game.entities.logic.HealthSystem;
+import com.fejkathegame.game.entities.logic.MovementSystem;
+import com.fejkathegame.game.arena.collision.AABoundingRect;
 import org.newdawn.slick.*;
 import org.newdawn.slick.geom.Shape;
 

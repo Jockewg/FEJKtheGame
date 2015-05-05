@@ -1,6 +1,6 @@
-package com.fejkathegame.game.tiles;
+package com.fejkathegame.game.arena.tiles;
 
-import com.fejkathegame.game.collision.AABoundingRect;
+import com.fejkathegame.game.arena.collision.AABoundingRect;
 
 public class SolidTile extends Tile {
 

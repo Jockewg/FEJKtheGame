@@ -1,7 +1,7 @@
-package com.fejkathegame.game.arena;
+package com.fejkathegame.game.entities;
 
-import com.fejkathegame.game.collision.AABoundingRect;
-import com.fejkathegame.game.collision.BoundingShape;
+import com.fejkathegame.game.arena.collision.AABoundingRect;
+import com.fejkathegame.game.arena.collision.BoundingShape;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 

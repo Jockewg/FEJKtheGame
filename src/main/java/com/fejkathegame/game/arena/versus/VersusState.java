@@ -1,42 +1,36 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package com.fejkathegame.game.arena;
+package com.fejkathegame.game.arena.versus;
 
-import com.fejkathegame.game.Character.MovementSystem;
+import com.fejkathegame.game.entities.logic.MovementSystem;
 import com.fejkathegame.game.Main;
-import com.fejkathegame.game.physics.Physics;
-import java.io.IOException;
+import com.fejkathegame.game.arena.physics.Physics;
+import com.fejkathegame.game.entities.Character;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
-/**
- *
- * @author Swartt
- */
-public class PracticeState extends BasicGameState {
-    private PracticeArena arena;
+import java.io.IOException;
+
+public class VersusState extends BasicGameState {
+
+    private Versus arena;
     private String name;
     private MovementSystem movementSystem;
     private Physics physics;
-    private com.fejkathegame.game.Character.Character obj;
+    private Character obj;
 
     /**
      * Constructor for ArenaState
      * @param name of the stage
      */
-    public PracticeState(String name) {
+    public VersusState(String name) {
         this.name = name;
     }
 
     @Override
     public int getID() {
-        return 3;
+        return 1;
     }
 
     @Override
@@ -44,13 +38,13 @@ public class PracticeState extends BasicGameState {
 
         obj = null;
         try {
-            obj = new com.fejkathegame.game.Character.Character(800, 40);
+            obj = new Character(800, 40);
         } catch (IOException e) {
             e.printStackTrace();
         }
 
 
-        arena = new PracticeArena(name, obj);
+        arena = new Versus(name, obj);
         
         movementSystem = new MovementSystem(obj);
 

@@ -1,6 +1,6 @@
-package com.fejkathegame.game.Character;
+package com.fejkathegame.game.entities.logic;
 
-import com.fejkathegame.game.arena.LevelObject;
+import com.fejkathegame.game.entities.LevelObject;
 import java.io.IOException;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;

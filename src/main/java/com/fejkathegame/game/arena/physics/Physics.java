@@ -1,9 +1,9 @@
-package com.fejkathegame.game.physics;
+package com.fejkathegame.game.arena.physics;
 
-import com.fejkathegame.game.arena.Arena;
+import com.fejkathegame.game.arena.versus.Versus;
 import com.fejkathegame.game.arena.Level;
-import com.fejkathegame.game.arena.LevelObject;
-import com.fejkathegame.game.tiles.Tile;
+import com.fejkathegame.game.entities.LevelObject;
+import com.fejkathegame.game.arena.tiles.Tile;
 
 import java.util.ArrayList;
 

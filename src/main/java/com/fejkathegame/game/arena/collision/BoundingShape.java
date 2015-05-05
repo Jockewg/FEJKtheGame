@@ -1,6 +1,6 @@
-package com.fejkathegame.game.collision;
+package com.fejkathegame.game.arena.collision;
 
-import com.fejkathegame.game.tiles.Tile;
+import com.fejkathegame.game.arena.tiles.Tile;
 
 import java.util.ArrayList;
 

@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.fejkathegame.game.Character;
+package com.fejkathegame.game.entities;
 
-import com.fejkathegame.game.arena.LevelObject;
+import com.fejkathegame.game.entities.logic.HealthSystem;
 import java.io.IOException;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;

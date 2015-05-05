@@ -5,9 +5,10 @@
  */
 package com.fejkathegame.game.arena;
 
-import com.fejkathegame.game.tiles.AirTile;
-import com.fejkathegame.game.tiles.SolidTile;
-import com.fejkathegame.game.tiles.Tile;
+import com.fejkathegame.game.entities.LevelObject;
+import com.fejkathegame.game.arena.tiles.AirTile;
+import com.fejkathegame.game.arena.tiles.SolidTile;
+import com.fejkathegame.game.arena.tiles.Tile;
 import java.util.ArrayList;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.tiled.TiledMap;
