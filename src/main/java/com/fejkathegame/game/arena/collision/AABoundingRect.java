@@ -3,6 +3,7 @@ package com.fejkathegame.game.arena.collision;
 import com.fejkathegame.game.arena.tiles.Tile;
 
 import java.util.ArrayList;
+import org.newdawn.slick.geom.Shape;
 
 public class AABoundingRect extends BoundingShape {
     

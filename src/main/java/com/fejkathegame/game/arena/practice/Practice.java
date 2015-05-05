@@ -28,7 +28,7 @@ public class Practice extends Level {
    private Tile[][] tiles;
 
    private ArrayList<LevelObject> players;
-   private ArrayList<LevelObject> targets;
+   private ArrayList<PracticeTarget> targets;
    
 
    /**
@@ -42,7 +42,7 @@ public class Practice extends Level {
    public Practice(String name, LevelObject levelObject) throws SlickException {
       map = new TiledMap("data/levels/" + name + ".tmx", "data/img");
       players = new ArrayList<LevelObject>();
-      targets = new ArrayList<LevelObject>();
+      targets = new ArrayList<PracticeTarget>();
 
       addPlayer(levelObject);
       addPracticeTargets();
@@ -122,7 +122,7 @@ public class Practice extends Level {
       return players;
    }
    
-   public ArrayList<LevelObject> getTargets() {
+   public ArrayList<PracticeTarget> getTargets() {
        return targets;
    }
    

@@ -95,8 +95,17 @@ public class Character extends LevelObject {
         sweepAttack = 4;
         sweepLimit = 10;
         attackVelocity = 1.4f;
+        attackIndicator = new Rectangle(x+15, y+15, sprite.getWidth() + 20, 4);
     }
 
+    public Shape getAttackIndicator() {
+        return attackIndicator;
+    }
+    
+    public void setAttackIndicator(Shape shape) {
+        this.attackIndicator = shape;
+    }
+    
     public boolean isGrounded() {
         return grounded;
     }
@@ -337,7 +346,7 @@ public class Character extends LevelObject {
     public void attack(Input i, int delta) {
         sweepXStart = i.getMouseX();
         sweepYStart = i.getMouseY();
-
+        
         if (sweepXEnd != sweepXStart && sweepYStart != sweepYEnd) {
             sweepSpeed = (float) Math.sqrt(Math.pow(sweepXStart - sweepXEnd, 2)
                     + Math.pow(sweepYStart - sweepYEnd, 2));

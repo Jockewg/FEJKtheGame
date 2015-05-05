@@ -72,6 +72,17 @@ public class PracticeState extends BasicGameState {
 //        playerController.handleInput(gc.getInput(), i);
         movementSystem.handleInput(gc.getInput(), i);
         physics.handlePhysics(arena, i);
+        checkCollisionWithTarget();
+    }
+    
+    public void checkCollisionWithTarget() {
+        for(int i = 0; i < arena.getTargets().size(); i++) {
+            if(obj.getAttackIndicator().intersects(arena.getTargets().get(i).getHitbox())) {
+                System.out.println("HIT");
+                arena.getTargets().get(i).getHealthSystem().dealDamage(1);
+                arena.getTargets().remove(i);
+            }
+        }
     }
 
 }

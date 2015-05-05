@@ -32,13 +32,12 @@ public class HealthSystem {
      */
     public void dealDamage(int damage) {
         int currentHealth = object.getHealth();
-        if (currentHealth > 0 && object.isAlive()) {
+        if (object.isAlive()) {
             int newHealth = currentHealth - damage;
             object.setHealth(newHealth);
             isCharacterAlive();
             updateHealthBar();
             hurtSound.playAsSoundEffect(1.0f, 1.0f, false);
-            
         }
     }
 
@@ -81,7 +80,7 @@ public class HealthSystem {
      */
     public void isCharacterAlive() {
         int currentHealth = object.getHealth();
-        if (currentHealth < 0) {
+        if (currentHealth <= 0) {
             object.setAlive(false);
         }
     }
