@@ -5,9 +5,11 @@
  */
 package com.fejkathegame.game.arena;
 
+import com.fejkathegame.game.Character.PracticeTarget;
 import com.fejkathegame.game.tiles.AirTile;
 import com.fejkathegame.game.tiles.SolidTile;
 import com.fejkathegame.game.tiles.Tile;
+import java.io.IOException;
 import java.util.ArrayList;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.tiled.TiledMap;
@@ -24,7 +26,6 @@ public class PracticeArena {
 
    private ArrayList<LevelObject> players;
    
-   private ArrayList<LevelObject> targets;
 
    /**
     * Constructor for Arena, creates the playingfield and adds all players to
@@ -84,8 +85,15 @@ public class PracticeArena {
    public void addPlayer(LevelObject p) {
       players.add(p);
    }
-   public void addPracticeTargets(LevelObject t) {
-      targets.add(t);
+   public void addPracticeTargets(LevelObject t) throws SlickException, IOException {
+      PracticeTarget target1 = new PracticeTarget(160, 200);
+      PracticeTarget target2 = new PracticeTarget(100, 200);
+      PracticeTarget target3 = new PracticeTarget(200, 200);
+      PracticeTarget target4 = new PracticeTarget(300, 200);
+      PracticeTarget target5 = new PracticeTarget(500, 200);
+//      PracticeTarget target6 = new PracticeTarget(160, 200);
+//      PracticeTarget target7 = new PracticeTarget(160, 200);
+//      PracticeTarget target8 = new PracticeTarget(160, 200);
    }
 
    /**
@@ -97,9 +105,6 @@ public class PracticeArena {
       return players;
    }
    
-   public ArrayList<LevelObject> getPracticeTargets() {
-      return targets;
-   }
 
    /**
     * @return a multidimensional array of tiles
@@ -119,8 +124,6 @@ public class PracticeArena {
       for (LevelObject p : players) {
          p.render();
       }
-      for (LevelObject t : targets) {
-         t.render();
-      }
+     
    }
 }

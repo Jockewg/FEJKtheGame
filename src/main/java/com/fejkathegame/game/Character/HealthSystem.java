@@ -14,13 +14,13 @@ import org.newdawn.slick.util.ResourceLoader;
  * Created by Swartt on 2015-04-28.
  */
 public class HealthSystem {
-    LevelObject character;
+    LevelObject object;
     private Image heartImage = new Image("data/img/heartcontainer/health2.png");
     ArrayList<Heart> hearts = new ArrayList<>();
     private Audio hurtSound;
 
     public HealthSystem(LevelObject levelObj) throws SlickException, IOException {
-        this.character = levelObj;
+        this.object = levelObj;
         setHealthbar();
         hurtSound = AudioLoader.getAudio("WAV", ResourceLoader.getResourceAsStream("data/sound/Hurt.wav"));
     }
@@ -31,10 +31,10 @@ public class HealthSystem {
      * @param damage - the damage that should be dealt
      */
     public void dealDamage(int damage) {
-        int currentHealth = character.getHealth();
-        if (currentHealth > 0 && character.isAlive()) {
+        int currentHealth = object.getHealth();
+        if (currentHealth > 0 && object.isAlive()) {
             int newHealth = currentHealth - damage;
-            character.setHealth(newHealth);
+            object.setHealth(newHealth);
             isCharacterAlive();
             updateHealthBar();
             hurtSound.playAsSoundEffect(1.0f, 1.0f, false);
@@ -43,19 +43,19 @@ public class HealthSystem {
     }
 
     public void setHealthbar() throws SlickException {
-        for (int i = 0; i < character.getHealth(); i++) {
+        for (int i = 0; i < object.getHealth(); i++) {
             //Old dot health system
-//            hearts.add(new Heart(heartImage, character.getX() + (i * 10), character.getY()));
+//            hearts.add(new Heart(heartImage, object.getX() + (i * 10), object.getY()));
             if(i == 0) {
-                hearts.add(new Heart(heartImage, character.getX(), character.getY()));
+                hearts.add(new Heart(heartImage, object.getX(), object.getY()));
             } else if(i == 1) {
-                hearts.add(new Heart(heartImage, character.getX() + 16, character.getY()));
+                hearts.add(new Heart(heartImage, object.getX() + 16, object.getY()));
             } else if(i == 2) {
-                hearts.add(new Heart(heartImage, character.getX(), character.getY() + 16));
+                hearts.add(new Heart(heartImage, object.getX(), object.getY() + 16));
             } else if(i == 3) {
-                hearts.add(new Heart(heartImage, character.getX() + 16, character.getY() + 16));
+                hearts.add(new Heart(heartImage, object.getX() + 16, object.getY() + 16));
             } else if(i == 4) {
-                hearts.add(new Heart(heartImage, character.getX() + 8, character.getY() + 8));
+                hearts.add(new Heart(heartImage, object.getX() + 8, object.getY() + 8));
             }
         }
     }
@@ -64,7 +64,7 @@ public class HealthSystem {
      */
     public void updateHealthBar() {
         //TODO: Implement graphical representation of a healthbar
-        int health = character.getHealth();
+        int health = object.getHealth();
         if(getHearts().size() > health) {
             getHearts().remove(health);
         }
@@ -80,28 +80,28 @@ public class HealthSystem {
      * {@code isAlive} boolean to false
      */
     public void isCharacterAlive() {
-        int currentHealth = character.getHealth();
+        int currentHealth = object.getHealth();
         if (currentHealth < 0) {
-            character.setAlive(false);
+            object.setAlive(false);
         }
     }
     
     public void render() {
         for(int i = 0; i < hearts.size(); i ++) {
             //Dot health system
-//            hearts.get(i).getGraphicImage().draw((character.getX() - 9) + (i * 10), character.getY() - 16);
+//            hearts.get(i).getGraphicImage().draw((object.getX() - 9) + (i * 10), object.getY() - 16);
             if(hearts.get(i) == null)
                 break;
             if(i == 0)
-            hearts.get(i).getGraphicImage().draw(character.getX(), character.getY());
+            hearts.get(i).getGraphicImage().draw(object.getX(), object.getY());
             else if(i == 1)
-                hearts.get(i).getGraphicImage().draw(character.getX() + 16, character.getY());
+                hearts.get(i).getGraphicImage().draw(object.getX() + 16, object.getY());
             else if(i == 2)
-                hearts.get(i).getGraphicImage().draw(character.getX(), character.getY() + 16);
+                hearts.get(i).getGraphicImage().draw(object.getX(), object.getY() + 16);
             else if(i == 3)
-                hearts.get(i).getGraphicImage().draw(character.getX() + 16, character.getY() + 16);
+                hearts.get(i).getGraphicImage().draw(object.getX() + 16, object.getY() + 16);
             else if(i == 4)
-                hearts.get(i).getGraphicImage().draw(character.getX() + 8, character.getY() + 8);
+                hearts.get(i).getGraphicImage().draw(object.getX() + 8, object.getY() + 8);
         }
     }
 }
