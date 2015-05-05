@@ -1,9 +1,13 @@
 package com.fejkathegame.game.Character;
 
+import java.io.IOException;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 
 import java.util.ArrayList;
+import org.newdawn.slick.openal.Audio;
+import org.newdawn.slick.openal.AudioLoader;
+import org.newdawn.slick.util.ResourceLoader;
 
 /**
  * Created by Swartt on 2015-04-28.
@@ -12,10 +16,12 @@ public class HealthSystem {
     Character character;
     private Image heartImage = new Image("data/img/heartcontainer/health2.png");
     ArrayList<Heart> hearts = new ArrayList<>();
+    private Audio hurtSound;
 
-    public HealthSystem(Character character) throws SlickException {
+    public HealthSystem(Character character) throws SlickException, IOException {
         this.character = character;
         setHealthbar();
+        hurtSound = AudioLoader.getAudio("WAV", ResourceLoader.getResourceAsStream("data/sound/Hurt.wav"));
     }
 
     /**
@@ -30,6 +36,8 @@ public class HealthSystem {
             character.setHealth(newHealth);
             isCharacterAlive();
             updateHealthBar();
+            hurtSound.playAsSoundEffect(1.0f, 1.0f, false);
+            
         }
     }
 
