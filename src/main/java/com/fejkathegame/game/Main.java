@@ -2,6 +2,7 @@ package com.fejkathegame.game;
 
 import com.fejkathegame.game.game.Game;
 import com.fejkathegame.game.arena.ArenaState;
+import com.fejkathegame.game.arena.PracticeState;
 import com.fejkathegame.menu.HostScreenState;
 import com.fejkathegame.menu.MenuState;
 
@@ -29,6 +30,7 @@ public class Main extends StateBasedGame {
         addState(new HostScreenState("host"));
         addState(new MenuState("menu"));
         addState(new ArenaState("arena"));
+        addState(new PracticeState("arena"));
         
         this.enterState(0);
 

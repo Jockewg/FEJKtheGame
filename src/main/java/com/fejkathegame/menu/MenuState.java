@@ -55,6 +55,10 @@ public class MenuState extends BasicGameState {
             if(i.isMousePressed(Input.MOUSE_LEFT_BUTTON)) {
                 sbg.enterState(2);
             }
+        } else if((x > 325 && x < 500) && (y < 100 && y > 25)) {
+            if(i.isMousePressed(Input.MOUSE_LEFT_BUTTON)) {
+                sbg.enterState(3);
+            }
         }
     }
 

@@ -11,6 +11,7 @@ import com.fejkathegame.game.tiles.SolidTile;
 import com.fejkathegame.game.tiles.Tile;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.logging.Logger;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.tiled.TiledMap;
 
@@ -25,6 +26,7 @@ public class PracticeArena extends Level {
    private Tile[][] tiles;
 
    private ArrayList<LevelObject> players;
+   private ArrayList<LevelObject> targets;
    
 
    /**
@@ -38,9 +40,10 @@ public class PracticeArena extends Level {
    public PracticeArena(String name, LevelObject levelObject) throws SlickException {
       map = new TiledMap("data/levels/" + name + ".tmx", "data/img");
       players = new ArrayList<LevelObject>();
+      targets = new ArrayList<LevelObject>();
 
       addPlayer(levelObject);
-
+      addPracticeTargets();
       loadTileMap();
    }
 
@@ -85,15 +88,27 @@ public class PracticeArena extends Level {
    public void addPlayer(LevelObject p) {
       players.add(p);
    }
-   public void addPracticeTargets(LevelObject t) throws SlickException, IOException {
-      PracticeTarget target1 = new PracticeTarget(160, 200);
-      PracticeTarget target2 = new PracticeTarget(100, 200);
-      PracticeTarget target3 = new PracticeTarget(200, 200);
-      PracticeTarget target4 = new PracticeTarget(300, 200);
-      PracticeTarget target5 = new PracticeTarget(500, 200);
+   public void addPracticeTargets() {
+     
+       try {
+           PracticeTarget target1 = new PracticeTarget(160, 200);
+           targets.add(target1);
+           PracticeTarget target2 = new PracticeTarget(100, 200);
+           targets.add(target2);
+           PracticeTarget target3 = new PracticeTarget(200, 200);
+           targets.add(target3);
+           PracticeTarget target4 = new PracticeTarget(300, 200);
+           targets.add(target4);
+           PracticeTarget target5 = new PracticeTarget(500, 200);
+           targets.add(target5);
 //      PracticeTarget target6 = new PracticeTarget(160, 200);
 //      PracticeTarget target7 = new PracticeTarget(160, 200);
 //      PracticeTarget target8 = new PracticeTarget(160, 200);
+       } catch (SlickException ex) {
+           Logger.getLogger(PracticeArena.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+       } catch (IOException ex) {
+           Logger.getLogger(PracticeArena.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+       }
    }
 
    /**
@@ -103,6 +118,10 @@ public class PracticeArena extends Level {
     */
    public ArrayList<LevelObject> getPlayers() {
       return players;
+   }
+   
+   public ArrayList<LevelObject> getTargets() {
+       return targets;
    }
    
 
@@ -123,6 +142,10 @@ public class PracticeArena extends Level {
 
       for (LevelObject p : players) {
          p.render();
+      }
+      
+      for(LevelObject t : targets) {
+          t.render();
       }
      
    }
