@@ -18,6 +18,8 @@ public abstract class LevelObject {
     protected int storedJumps;
     protected boolean onGround = true;
     protected int storedAttacks;
+    private int health;
+    private boolean isAlive;
 
     /**
      * Constructor for a {@code LevelObject}, creates a new level entity with standard values
@@ -136,6 +138,24 @@ public abstract class LevelObject {
     public void setStoredAttacks(int storedAttacks) {
         this.storedAttacks = storedAttacks;
     }
+
+   public int getHealth() {
+      return health;
+   }
+
+   public void setHealth(int health) {
+      this.health = health;
+   }
+
+   public boolean isAlive() {
+      return isAlive;
+   }
+
+   public void setAlive(boolean isAlive) {
+      this.isAlive = isAlive;
+   }
+    
+    
     
     /**
      * Applies deceleration to the object

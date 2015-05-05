@@ -66,6 +66,7 @@ public class ArenaState extends BasicGameState {
 //        playerController.handleInput(gc.getInput(), i);
         movementSystem.handleInput(gc.getInput(), i);
         physics.handlePhysics(arena, i);
+        System.out.println(obj.getAttackCoolDown());
     }
 
 }
