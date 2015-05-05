@@ -1,6 +1,7 @@
 package com.fejkathegame.game.physics;
 
 import com.fejkathegame.game.arena.Arena;
+import com.fejkathegame.game.arena.Level;
 import com.fejkathegame.game.arena.LevelObject;
 import com.fejkathegame.game.tiles.Tile;
 
@@ -10,16 +11,16 @@ public class Physics {
     
     private final float gravity = 0.0015f;
     
-    public void handlePhysics(Arena arena, int delta) {
+    public void handlePhysics(Level arena, int delta) {
         handleCharacters(arena, delta);
     }
     
-    private void handleCharacters(Arena arena, int delta) {
-        for(LevelObject p : arena.getPlayers()) {
+    private void handleCharacters(Level level, int delta) {
+        for(LevelObject p : level.getPlayers()) {
             if(!p.isMoving()) {
                 p.decelerate(delta);
             }
-            handleGameObject(p, arena, delta);
+            handleGameObject(p, level, delta);
         }
     }
     
@@ -52,8 +53,8 @@ public class Physics {
         return false;
     }
     
-    private void handleGameObject(LevelObject obj, Arena arena, int delta) {
-        obj.setOnGround(isOnGround(obj, arena.getTiles()));
+    private void handleGameObject(LevelObject obj, Level level, int delta) {
+        obj.setOnGround(isOnGround(obj, level.getTiles()));
         
         if(!obj.isOnGround() || obj.getY_velocity() < 0) {
             obj.applyGravity(gravity * delta);
@@ -105,7 +106,7 @@ public class Physics {
                 
                 obj.setX(obj.getX() + step_x);
                 
-                if(checkCollision(obj, arena.getTiles())) {
+                if(checkCollision(obj, level.getTiles())) {
                     obj.setX(obj.getX() - step_x);
                     obj.setX_velocity(0);
                     x_movement = 0;
@@ -121,7 +122,7 @@ public class Physics {
                 
                 obj.setY(obj.getY() + step_y);
                 
-                if(checkCollision(obj, arena.getTiles())) {
+                if(checkCollision(obj, level.getTiles())) {
                     obj.setY(obj.getY() - step_y);
                     obj.setY_velocity(0);
                     y_movement = 0;

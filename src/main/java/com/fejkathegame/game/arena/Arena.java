@@ -8,7 +8,7 @@ import org.newdawn.slick.tiled.TiledMap;
 
 import java.util.ArrayList;
 
-public class Arena {
+public class Arena extends Level {
     
     private TiledMap map;
     
@@ -91,6 +91,7 @@ public class Arena {
      * Renders the arena
      * @throws SlickException
      */
+    
     public void render() throws SlickException {
         map.render(0, 0, 0, 0, 36, 20);
         

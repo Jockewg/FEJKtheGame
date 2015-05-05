@@ -18,7 +18,7 @@ import org.newdawn.slick.tiled.TiledMap;
  *
  * @author Swartt
  */
-public class PracticeArena {
+public class PracticeArena extends Level {
 
    private TiledMap map;
 
