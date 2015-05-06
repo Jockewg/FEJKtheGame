@@ -32,12 +32,11 @@ public class Server {
                 new ServerThread(clientSocket).run();
             } catch (IOException e) {
                 System.out.println("derp");
-                System.out.println("handleConnection says: "+e);
+                System.out.println("handleConnection says: " + e);
             }
-
-
         }
-    }
+        }
+
 
     public void sendToAllPlayers() {
 
@@ -51,7 +50,6 @@ public class Server {
         }
     }
 }
-
 
 class ServerThread implements Runnable {
     protected Socket clientSocket;
