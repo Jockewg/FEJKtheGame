@@ -1,22 +1,15 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.fejkathegame.game.arena.practice;
 
 import com.fejkathegame.game.entities.logic.MovementSystem;
 import com.fejkathegame.game.Main;
 import com.fejkathegame.game.arena.physics.Physics;
 
-import java.awt.*;
 import java.io.IOException;
 
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
-import org.newdawn.slick.TrueTypeFont;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
@@ -43,9 +36,6 @@ public class PracticeState extends BasicGameState {
     public int getID() {
         return 3;
     }
-
-    String score;
-
 
     @Override
     public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {
