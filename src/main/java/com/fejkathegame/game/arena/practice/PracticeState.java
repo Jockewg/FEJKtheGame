@@ -8,10 +8,15 @@ package com.fejkathegame.game.arena.practice;
 import com.fejkathegame.game.entities.logic.MovementSystem;
 import com.fejkathegame.game.Main;
 import com.fejkathegame.game.arena.physics.Physics;
+
+import java.awt.*;
 import java.io.IOException;
+
+
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.TrueTypeFont;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
@@ -39,6 +44,9 @@ public class PracticeState extends BasicGameState {
         return 3;
     }
 
+    String score;
+
+
     @Override
     public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {
 
@@ -54,9 +62,9 @@ public class PracticeState extends BasicGameState {
         
         movementSystem = new MovementSystem(obj);
 
-        /*playerController = new MouseAndKeyBoardPlayerController(player);*/
-
         physics = new Physics();
+
+
 
     }
 
@@ -64,12 +72,12 @@ public class PracticeState extends BasicGameState {
     public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
         g.scale(Main.SCALE, Main.SCALE);
         arena.render();
+
     }
 
 
     @Override
     public void update(GameContainer gc, StateBasedGame sbg, int i) throws SlickException {
-//        playerController.handleInput(gc.getInput(), i);
         movementSystem.handleInput(gc.getInput(), i);
         physics.handlePhysics(arena, i);
         checkCollisionWithTarget();
@@ -82,6 +90,7 @@ public class PracticeState extends BasicGameState {
                 System.out.println("HIT");
                 arena.getTargets().get(i).getHealthSystem().dealDamage(1);
                 arena.getTargets().remove(i);
+                arena.updateScore();
             }
         }
     }

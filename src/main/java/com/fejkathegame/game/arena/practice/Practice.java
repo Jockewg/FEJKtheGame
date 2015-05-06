@@ -12,11 +12,13 @@ import com.fejkathegame.game.arena.tiles.AirTile;
 import com.fejkathegame.game.arena.tiles.SolidTile;
 import com.fejkathegame.game.arena.tiles.Tile;
 
+import java.awt.Font;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.logging.Logger;
 
-import org.newdawn.slick.SlickException;
+import org.newdawn.slick.*;
+import org.newdawn.slick.Color;
 import org.newdawn.slick.tiled.TiledMap;
 
 /**
@@ -31,23 +33,30 @@ public class Practice extends Level {
     private ArrayList<LevelObject> players;
     private ArrayList<PracticeTarget> targets;
 
+    Font font;
+    TrueTypeFont ttf;
+    String score;
 
     /**
      * Constructor for Arena, creates the playingfield and adds all players to
      * the field
      *
-     * @param name
      * @param levelObject
      * @throws SlickException
      */
     public Practice(String name, LevelObject levelObject) throws SlickException {
         map = new TiledMap("src/main/resources/data/levels/" + name + ".tmx", "src/main/resources/data/img");
-        players = new ArrayList<LevelObject>();
-        targets = new ArrayList<PracticeTarget>();
+        players = new ArrayList<>();
+        targets = new ArrayList<>();
 
         addPlayer(levelObject);
         addPracticeTargets();
+
         loadTileMap();
+        font = new Font("Verdana", Font.BOLD, 20);
+        ttf = new TrueTypeFont(font, true);
+
+        score = "Targets Left: " + String.valueOf(targets.size());
     }
 
     /**
@@ -122,6 +131,10 @@ public class Practice extends Level {
         }
     }
 
+    public void updateScore() {
+        score = "Targets Left: " + String.valueOf(targets.size());
+    }
+
     /**
      * returns the player array
      *
@@ -151,6 +164,7 @@ public class Practice extends Level {
     public void render() throws SlickException {
         map.render(0, 0, 0, 0, 36, 20);
 
+
         for (LevelObject p : players) {
             p.render();
         }
@@ -159,5 +173,6 @@ public class Practice extends Level {
             t.render();
         }
 
+        ttf.drawString(700, -1, score, Color.green);
     }
 }
