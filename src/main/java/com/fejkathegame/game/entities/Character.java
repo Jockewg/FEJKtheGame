@@ -8,6 +8,7 @@ import org.newdawn.slick.geom.Shape;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import org.newdawn.slick.geom.Polygon;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Transform;
 import org.newdawn.slick.geom.Vector2f;
@@ -48,13 +49,15 @@ public class Character extends LevelObject {
     protected boolean moving = false;
     protected Image sprite;
     protected Audio jumpSound, attackSound;
-    private Shape jumpIndicator, attackIndicator;
+    private Shape jumpIndicator;
+    private Polygon attackIndicator;
     private float jumpIndicatorTransp = 0.0f;
     private float attackIndicatorTransp = 0.0f;
     private float sweepXStart, sweepYStart, sweepXEnd, sweepYEnd, sweepSpeed;
     private double sweepAttack, sweepLimit;
     private float attackVelocity;
     private Vector2f direction;
+    private float oldRotate;
     private float rotateDirection;
 
     private float playerWidth, playerHeight;
@@ -95,14 +98,19 @@ public class Character extends LevelObject {
         sweepAttack = 4;
         sweepLimit = 10;
         attackVelocity = 1.4f;
-        attackIndicator = new Rectangle(x+15, y+15, sprite.getWidth() + 20, 4);
+        attackIndicator = new Polygon();
+        attackIndicator.addPoint(0, 0);
+        attackIndicator.addPoint(0, 4);
+        attackIndicator.addPoint(52, 4);
+        attackIndicator.addPoint(52, 0);
+        jumpIndicator = new Rectangle(x, y, sprite.getWidth() + 4, 2);
     }
 
-    public Shape getAttackIndicator() {
+    public Polygon getAttackIndicator() {
         return attackIndicator;
     }
     
-    public void setAttackIndicator(Shape shape) {
+    public void setAttackIndicator(Polygon shape) {
         this.attackIndicator = shape;
     }
     
@@ -338,24 +346,27 @@ public class Character extends LevelObject {
 
         direction = new Vector2f(sweepXStart - sweepXEnd,
                 sweepYStart - sweepYEnd);
-
+        
         if (sweepSpeed >= sweepAttack && sweepSpeed <= sweepLimit
                 && attackCoolDown <= 0) { // Attack movement here
             System.out.println("attack " + sweepSpeed);
-//            x_velocity = (float) (attackVelocity * Math.cos(Math.toRadians(direction.getTheta())));
-//            y_velocity = (float) (attackVelocity * Math.sin(Math.toRadians(direction.getTheta())));
-            float angleX = (float) Math.cos(Math.toRadians(direction.getTheta()));
-            float angleY = (float) Math.sin(Math.toRadians(direction.getTheta()));
-            x_velocity = angleX * attackVelocity;
-            y_velocity = angleY * (attackVelocity * gravity);
+            x_velocity = (float) (attackVelocity * Math.cos(Math.toRadians(direction.getTheta())));
+            y_velocity = (float) ((attackVelocity * gravity) * Math.sin(Math.toRadians(direction.getTheta())));
+            
             rotateDirection = (float) direction.getTheta();
             attackIndicatorTransp = 1.0f;
             attackCoolDown = 1000;
+            
+            attackIndicator.setLocation(0, 0);
+            attackIndicator = (Polygon) attackIndicator.transform(Transform.createRotateTransform((float) Math.toRadians(rotateDirection - oldRotate)));
+            attackIndicator.setLocation(x + 16, y + 16);
+            
             storedAttacks--;
             attackSound.playAsSoundEffect(1.0f, 1.0f, false);
         }
         sweepXEnd = sweepXStart;
         sweepYEnd = sweepYStart;
+        oldRotate = rotateDirection;
     }
 
     /**
@@ -374,17 +385,20 @@ public class Character extends LevelObject {
     } 
 
     public void renderJumpIndicator(float x, float y) {
-        jumpIndicator = new Rectangle(x, y, sprite.getWidth() + 4, 2);
         g.setColor(new Color(1.0f, 1.0f, 1.0f, jumpIndicatorTransp));
-
+        jumpIndicator.setX(x);
+        jumpIndicator.setY(y);
         g.fill(jumpIndicator);
-        jumpIndicatorTransp -= 0.002f;
+        jumpIndicatorTransp -= 0.02f;
     }
 
     public void renderAttackIndicator() {
-        attackIndicator = new Rectangle(x+15, y+15, sprite.getWidth() + 20, 4);
+        attackIndicator.setX(x + 16);
+        attackIndicator.setY(y + 16);
         g.setColor(new Color(1.0f, 1.0f, 1.0f, attackIndicatorTransp));
-        g.fill(attackIndicator.transform(Transform.createRotateTransform((float) Math.toRadians(rotateDirection), x+15, y+15)));
-        attackIndicatorTransp -= 0.001f;
+        g.fill(attackIndicator);
+        
+        attackIndicatorTransp -= 0.01f;
+        System.out.println(rotateDirection);
     }
 }
