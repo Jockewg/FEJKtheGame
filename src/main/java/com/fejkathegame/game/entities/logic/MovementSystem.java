@@ -26,7 +26,7 @@ public class MovementSystem {
         character.setAttackCoolDown(character.getAttackCoolDown()-delta);
         if(i.isMousePressed(Input.MOUSE_LEFT_BUTTON) && character.getStoredJumps() > 0||
                 i.isKeyPressed(Input.KEY_SPACE) && character.getStoredJumps() > 0) {
-            character.jump();
+            character.jump(delta);
         }
         if( i.isMouseButtonDown(Input.MOUSE_RIGHT_BUTTON) && character.getStoredAttacks() > 0) {
             character.attack(i, delta);

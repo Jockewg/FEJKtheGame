@@ -306,7 +306,7 @@ public class Character extends LevelObject {
         jumpIndicatorTransp = 1.0f;
     }
 
-    public void jump() {
+    public void jump(int delta) {
         currentPositionX = getX() - 2;
         currentPositionY = getY() + 32;
 
@@ -314,7 +314,7 @@ public class Character extends LevelObject {
             jumpIndicatorTransp = 1.0f;
         }
 
-        y_velocity = -0.50f;
+        y_velocity = -0.055f * (float) Math.sqrt(Math.pow(delta, 2));
         storedJumps--;
         jumpSound.playAsSoundEffect(1.0f, 1.0f, false);
 
