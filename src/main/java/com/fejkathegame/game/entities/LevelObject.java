@@ -33,7 +33,7 @@ public abstract class LevelObject {
         this.x = x;
         this.y = y;
         g = new Graphics();
-        sprite = new Image("data/img/placeholder.png");
+        sprite = new Image("src/main/resources/data/img/placeholder.png");
 
         storedJumps = 0;
         

@@ -40,7 +40,7 @@ public class Practice extends Level {
     * @throws SlickException
     */
    public Practice(String name, LevelObject levelObject) throws SlickException {
-      map = new TiledMap("data/levels/" + name + ".tmx", "data/img");
+      map = new TiledMap("src/main/resources/data/levels/" + name + ".tmx", "src/main/resources/data/img");
       players = new ArrayList<LevelObject>();
       targets = new ArrayList<PracticeTarget>();
 

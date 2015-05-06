@@ -11,10 +11,10 @@ public class Menu {
     private Image buttonJoin, buttonHost, logo, buttonPractice;
     
     public Menu(String name) throws SlickException {
-        buttonJoin = new Image("data/img/buttons/joinButton.png");
-        buttonHost = new Image("data/img/buttons/hostButton.png");
-        buttonPractice = new Image("data/img/buttons/practiceButton.png");
-        logo = new Image("data/img/logo/logo.png");
+        buttonJoin = new Image("src/main/resources/data/img/buttons/joinButton.png");
+        buttonHost = new Image("src/main/resources/data/img/buttons/hostButton.png");
+        buttonPractice = new Image("src/main/resources/data/img/buttons/practiceButton.png");
+        logo = new Image("src/main/resources/data/img/logo/logo.png");
     }
     
     public void render() {

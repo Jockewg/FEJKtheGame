@@ -25,7 +25,7 @@ public class Versus extends Level {
      * @throws SlickException
      */
     public Versus(String name, LevelObject levelObject) throws SlickException {
-        map = new TiledMap("data/levels/" + name + ".tmx", "data/img");
+        map = new TiledMap("src/main/resources/data/levels/" + name + ".tmx", "src/main/resources/data/img");
         players = new ArrayList<LevelObject>();
         
         addPlayer(levelObject);

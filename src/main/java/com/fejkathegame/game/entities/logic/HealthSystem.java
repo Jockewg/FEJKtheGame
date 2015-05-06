@@ -15,14 +15,14 @@ import org.newdawn.slick.util.ResourceLoader;
  */
 public class HealthSystem {
     LevelObject object;
-    private Image heartImage = new Image("data/img/heartcontainer/health2.png");
+    private Image heartImage = new Image("src/main/resources/data/img/heartcontainer/health2.png");
     ArrayList<Heart> hearts = new ArrayList<>();
     private Audio hurtSound;
 
     public HealthSystem(LevelObject levelObj) throws SlickException, IOException {
         this.object = levelObj;
         setHealthbar();
-        hurtSound = AudioLoader.getAudio("WAV", ResourceLoader.getResourceAsStream("data/sound/Hurt.wav"));
+        hurtSound = AudioLoader.getAudio("WAV", ResourceLoader.getResourceAsStream("src/main/resources/data/sound/Hurt.wav"));
     }
 
     /**

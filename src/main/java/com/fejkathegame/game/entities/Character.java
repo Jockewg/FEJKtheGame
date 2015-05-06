@@ -74,7 +74,7 @@ public class Character extends LevelObject {
         maximumSpeed = 0.40f;
         maxFallSpeed = 0.75f;
         decelerationSpeed = 0.005f;
-        sprite = new Image("data/img/placeholder.png");
+        sprite = new Image("src/main/resources/data/img/placeholder.png");
         
         boundingShape = new AABoundingRect(x, y, 32, 32);
         
@@ -95,8 +95,8 @@ public class Character extends LevelObject {
         updateRate = 5;
         jumpCoolDownTick = 60;
         jumpCoolDownDefault = 60;
-        jumpSound = AudioLoader.getAudio("WAV", ResourceLoader.getResourceAsStream("data/sound/Jump5.wav"));
-        attackSound = AudioLoader.getAudio("WAV", ResourceLoader.getResourceAsStream("data/sound/Attack.wav"));
+        jumpSound = AudioLoader.getAudio("WAV", ResourceLoader.getResourceAsStream("src/main/resources/data/sound/Jump5.wav"));
+        attackSound = AudioLoader.getAudio("WAV", ResourceLoader.getResourceAsStream("src/main/resources/data/sound/Attack.wav"));
         sweepAttack = 4;
         sweepLimit = 10;
         attackVelocity = 1.4f;
@@ -311,10 +311,6 @@ public class Character extends LevelObject {
         y_velocity = -0.055f * (float) Math.sqrt(Math.pow(delta, 2));
         storedJumps--;
         jumpSound.playAsSoundEffect(1.0f, 1.0f, false);
-
-        System.out.println(storedJumps);
-        System.out.println("X: " + currentPositionX);
-        System.out.println("Y: " + currentPositionY);
     }
 
     public void moveLeft(int delta) {
@@ -379,7 +375,6 @@ public class Character extends LevelObject {
     }
     
     public void update() {
-        System.out.println("HEJ");
     }
 
     /**

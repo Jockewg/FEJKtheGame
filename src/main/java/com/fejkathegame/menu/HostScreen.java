@@ -23,7 +23,7 @@ public class HostScreen {
         ipField.setBackgroundColor(Color.white);
         playerName.setTextColor(Color.black);
         ipField.setTextColor(Color.black);
-        connect = new Image("data/img/buttons/connect.png");
+        connect = new Image("src/main/resources/data/img/buttons/connect.png");
     }
     
     public void render(GameContainer gc, Graphics g) {
