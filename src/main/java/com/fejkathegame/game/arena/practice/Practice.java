@@ -138,7 +138,11 @@ public class Practice extends Level {
      * Updates the scoreboard
      */
     public void updateScore() {
-        score = "Targets Left: " + String.valueOf(targets.size());
+        if (targets.size() > 0){
+            score = "Targets Left: " + String.valueOf(targets.size());
+        } else {
+            score = "You won!";
+        }
     }
 
     /**
