@@ -101,6 +101,9 @@ public class Practice extends Level {
         players.add(p);
     }
 
+    /**
+     * Creates and adds Practice targets to the {@code targets} array
+     */
     public void addPracticeTargets() {
 
         try {
@@ -131,19 +134,23 @@ public class Practice extends Level {
         }
     }
 
+    /**
+     * Updates the scoreboard
+     */
     public void updateScore() {
         score = "Targets Left: " + String.valueOf(targets.size());
     }
 
     /**
-     * returns the player array
-     *
-     * @return
+     * @return the player array which includes all player objects
      */
     public ArrayList<LevelObject> getPlayers() {
         return players;
     }
 
+    /**
+     * @return the player array which includes all {@code targetPractice} objects
+     */
     public ArrayList<PracticeTarget> getTargets() {
         return targets;
     }
