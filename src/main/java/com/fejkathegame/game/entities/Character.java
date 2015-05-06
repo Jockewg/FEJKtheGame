@@ -290,22 +290,6 @@ public class Character extends LevelObject {
         }
     }
 
-    /**
-     * initializes all variables the character needs when added to the games
-     * arena.
-     *
-     * @param gc
-     * @throws SlickException
-     */
-    public void init(GameContainer gc) throws SlickException {
-        Input input = gc.getInput();
-        jumpIndicatorTransp = 1f;
-        currentPositionX = getX();
-        mousePositionX = input.getMouseX();
-        previousMousePositionX = mousePositionX;
-        jumpIndicatorTransp = 1.0f;
-    }
-
     public void jump(int delta) {
         currentPositionX = getX() - 2;
         currentPositionY = getY() + 32;
@@ -375,41 +359,6 @@ public class Character extends LevelObject {
     }
 
     /**
-     * updates the state of character, update is called every frame
-     *
-     * @param gc
-     * @param i
-     * @throws SlickException
-     */
-    public void update(GameContainer gc, int i) throws SlickException {
-//        Input input = gc.getInput();
-//        
-//        if(jumpCoolDownTick > 0)
-//            jumpCoolDownTick --;
-//        else if(jumpCoolDownTick < 0)
-//            jumpCoolDownTick = 0;
-//
-//       /* movementSystem.gravity();*/
-//
-//        mousePositionX = input.getMouseX();
-//
-//
-//        if (jumpCoolDownTick == 0 && input.isMousePressed(Input.MOUSE_LEFT_BUTTON)) {
-//            jump();
-//            jumpCoolDownTick = jumpCoolDownDefault;
-//        }
-//
-//        if (input.isMousePressed(Input.MOUSE_RIGHT_BUTTON)) {
-//            previousMousePositionX = input.getMouseX();
-//        }
-//
-//        if (input.isMouseButtonDown(Input.MOUSE_RIGHT_BUTTON)) {
-//            
-//        }
-
-    }
-
-    /**
      * renders the character
      *
      * @throws SlickException
@@ -426,7 +375,6 @@ public class Character extends LevelObject {
 
     public void renderJumpIndicator(float x, float y) {
         jumpIndicator = new Rectangle(x, y, sprite.getWidth() + 4, 2);
-        Graphics g = new Graphics();
         g.setColor(new Color(1.0f, 1.0f, 1.0f, jumpIndicatorTransp));
 
         g.fill(jumpIndicator);
@@ -435,7 +383,6 @@ public class Character extends LevelObject {
 
     public void renderAttackIndicator() {
         attackIndicator = new Rectangle(x+15, y+15, sprite.getWidth() + 20, 4);
-        Graphics g = new Graphics();
         g.setColor(new Color(1.0f, 1.0f, 1.0f, attackIndicatorTransp));
         g.fill(attackIndicator.transform(Transform.createRotateTransform((float) Math.toRadians(rotateDirection), x+15, y+15)));
         attackIndicatorTransp -= 0.001f;

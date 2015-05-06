@@ -2,6 +2,7 @@ package com.fejkathegame.game.entities;
 
 import com.fejkathegame.game.arena.collision.AABoundingRect;
 import com.fejkathegame.game.arena.collision.BoundingShape;
+import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 
@@ -20,6 +21,7 @@ public abstract class LevelObject {
     protected int storedAttacks;
     private int health;
     private boolean isAlive;
+    public Graphics g;
 
     /**
      * Constructor for a {@code LevelObject}, creates a new level entity with standard values
@@ -30,7 +32,7 @@ public abstract class LevelObject {
     public LevelObject(float x, float y) throws SlickException {
         this.x = x;
         this.y = y;
-
+        g = new Graphics();
         sprite = new Image("data/img/placeholder.png");
 
         storedJumps = 0;
