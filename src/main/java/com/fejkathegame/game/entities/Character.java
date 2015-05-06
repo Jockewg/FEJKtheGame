@@ -14,13 +14,14 @@ import org.newdawn.slick.geom.Transform;
 import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.openal.Audio;
 import org.newdawn.slick.openal.AudioLoader;
+import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.util.ResourceLoader;
 
 /**
  * Created by Swartt on 2015-04-28.
  */
 public class Character extends LevelObject {
-
+    private boolean isAttacking;
     private boolean grounded;
     private int health;
     private float attackCoolDown;
@@ -76,7 +77,8 @@ public class Character extends LevelObject {
         sprite = new Image("data/img/placeholder.png");
         
         boundingShape = new AABoundingRect(x, y, 32, 32);
-
+        
+        isAttacking = false;
         grounded = false;
         health = 5;
         attackCoolDown = 100;
@@ -349,7 +351,9 @@ public class Character extends LevelObject {
         
         if (sweepSpeed >= sweepAttack && sweepSpeed <= sweepLimit
                 && attackCoolDown <= 0) { // Attack movement here
-            System.out.println("attack " + sweepSpeed);
+            
+            isAttacking = true;
+            
             x_velocity = (float) (attackVelocity * Math.cos(Math.toRadians(direction.getTheta())));
             y_velocity = (float) ((attackVelocity * gravity) * Math.sin(Math.toRadians(direction.getTheta())));
             
@@ -364,9 +368,18 @@ public class Character extends LevelObject {
             storedAttacks--;
             attackSound.playAsSoundEffect(1.0f, 1.0f, false);
         }
+        
         sweepXEnd = sweepXStart;
         sweepYEnd = sweepYStart;
         oldRotate = rotateDirection;
+    }
+    
+    public void whileAttacking() {
+        
+    }
+    
+    public void update() {
+        System.out.println("HEJ");
     }
 
     /**
@@ -399,6 +412,5 @@ public class Character extends LevelObject {
         g.fill(attackIndicator);
         
         attackIndicatorTransp -= 0.01f;
-        System.out.println(rotateDirection);
     }
 }
