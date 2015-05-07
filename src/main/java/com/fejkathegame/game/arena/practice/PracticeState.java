@@ -23,6 +23,11 @@ public class PracticeState extends BasicGameState {
     private MovementSystem movementSystem;
     private Physics physics;
     private com.fejkathegame.game.entities.Character obj;
+    
+    private float offsetMaxX = Main.WINDOW_WIDTH - 900;
+    private float offsetMaxY = Main.WINDOW_HEIGHT - 500;
+    private float offsetMinX, offsetMinY = 0;
+    private float camX, camY = 0;
 
     /**
      * Constructor for ArenaState
@@ -61,16 +66,17 @@ public class PracticeState extends BasicGameState {
     @Override
     public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
         g.setAntiAlias(false);
-        g.scale(0.3555f, 0.3555f);
+        g.scale(0.85f, 0.85f);
+        g.translate(-camX, -camY);
         arena.render();
         g.resetTransform();
-        g.translate(obj.getX() + 50, obj.getY() + 50);
-
     }
 
 
     @Override
     public void update(GameContainer gc, StateBasedGame sbg, int i) throws SlickException {
+        camX = obj.getX() - 450;
+        camY = obj.getY() - 250;
         movementSystem.handleInput(gc.getInput(), i);
         physics.handlePhysics(arena, i);
         checkCollisionWithTarget();
