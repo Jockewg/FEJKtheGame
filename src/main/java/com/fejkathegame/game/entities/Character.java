@@ -174,23 +174,63 @@ public class Character extends LevelObject {
         moving = true;
     }
 
+    /**
+     * Charges the super attack.
+     * 
+     * Charges the attack as long as not interrupted.
+     * If interrupted, the charge will be reset.
+     * 
+     * @param i
+     * @param delta 
+     */
     public void chargeSuperAttack(Input i, int delta) {
-        isCharging = true;
-        if (!chargeSound.isPlaying()) {
-            chargeSound.playAsSoundEffect(1.0f, 1.0f, false);
-        }
+//        if (!chargeSound.isPlaying()) {
+//            chargeSound.playAsSoundEffect(1.0f, 1.0f, false);
+//        }
         float shrinking1 = superAttackIndicator.getRadius1() - (0.75f / delta);
         superAttackIndicator.setRadius1(shrinking1);
         superAttackIndicator.setRadius2(shrinking1);
         superAttackIndicator.setCenterX(getX() + 16);
         superAttackIndicator.setCenterY(getY() + 16);
-
+        
         if (superAttackIndicator.getRadius1() < 16) {
             isFullyCharged = true;
             chargeSound.stop();
         }
+        
+    }
+    
+    /**
+     * Plays the sound effect of charging the super attack.
+     * 
+     */
+    public void playChargeSound() {
+        if(isCharging) {
+            if(!chargeSound.isPlaying()) {
+            chargeSound.playAsSoundEffect(1.0f, 0.1f, false);
+            }
+        }
+    }
+    
+    /**
+     * Stops the charge effect of the super attack.
+     * 
+     */
+    public void stopChargeSound() {
+        if(!isCharging) {
+            if(chargeSound.isPlaying()) {
+                chargeSound.stop();
+            }
+        }
     }
 
+    /**
+     * Called when the super attack is fully charged.
+     * 
+     * Activates an attack that damages everthing within 900 radius
+     * 
+     * @param delta 
+     */
     public void activateSuperAttack(int delta) {
         float expanding = superAttackIndicator.getRadius1() + (2 * delta);
         superAttackIndicator.setCenterX(getX());
@@ -270,6 +310,8 @@ public class Character extends LevelObject {
                 setIsAttacking(false);
             }
         }
+        
+        
         if (!isCharging && !isFullyCharged) {
             superAttackIndicator.setRadii(32, 32);
         }
