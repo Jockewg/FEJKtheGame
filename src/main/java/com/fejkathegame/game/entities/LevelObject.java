@@ -22,6 +22,7 @@ public abstract class LevelObject {
     private int health;
     private boolean isAlive;
     public Graphics g;
+    private boolean isAttacking = false;
 
     /**
      * Constructor for a {@code LevelObject}, creates a new level entity with standard values
@@ -155,6 +156,14 @@ public abstract class LevelObject {
 
    public void setAlive(boolean isAlive) {
       this.isAlive = isAlive;
+   }
+   
+   public void setIsAttacking(boolean isAttacking) {
+       this.isAttacking = isAttacking;
+   }
+   
+   public boolean getIsAttacking() {
+       return isAttacking;
    }
     
     

@@ -3,6 +3,7 @@ package com.fejkathegame.game.entities;
 import com.fejkathegame.game.entities.logic.HealthSystem;
 import com.fejkathegame.game.entities.logic.MovementSystem;
 import com.fejkathegame.game.arena.collision.AABoundingRect;
+import com.fejkathegame.game.arena.physics.Physics;
 import org.newdawn.slick.*;
 import org.newdawn.slick.geom.Shape;
 
@@ -64,6 +65,8 @@ public class Character extends LevelObject {
     private float calculatedXAttack, calculatedYAttack;
 
     private float playerWidth, playerHeight;
+    private Physics physics;
+    
 
     /**
      * Constructor for creating a character, gives it the default values for a
@@ -109,6 +112,7 @@ public class Character extends LevelObject {
         attackIndicator.addPoint(52, 0);
         jumpIndicator = new Rectangle(x, y, sprite.getWidth() + 4, 2);
         current = new Vector2f(x, y);
+        physics = new Physics();
     }
 
     public Polygon getAttackIndicator() {
@@ -350,7 +354,7 @@ public class Character extends LevelObject {
 
         if (sweepSpeed >= sweepAttack && sweepSpeed <= sweepLimit
                 && attackCoolDown <= 0) { // Attack movement here
-            isAttacking = true;
+            setIsAttacking(true);
             attackStart = new Vector2f(x, y);
 
             calculatedXAttack = (float) ((attackVelocity) * Math.cos(Math.toRadians(attackDirection.getTheta())));
@@ -381,7 +385,7 @@ public class Character extends LevelObject {
      * @param delta
      */
     public void update(int delta) {
-        if (isAttacking == true) {
+        if (getIsAttacking()) {
             current = new Vector2f(x, y);
             
             x_velocity = calculatedXAttack;
@@ -395,7 +399,7 @@ public class Character extends LevelObject {
                 } else if (x_velocity > maximumSpeed) {
                     x_velocity = maximumSpeed;
                 }
-                isAttacking = false;
+                setIsAttacking(false);
             }
         }
     }
