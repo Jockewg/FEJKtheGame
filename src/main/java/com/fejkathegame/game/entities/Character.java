@@ -1,5 +1,6 @@
 package com.fejkathegame.game.entities;
 
+import com.fejkathegame.game.Main;
 import com.fejkathegame.game.arena.collision.AABoundingRect;
 import com.fejkathegame.game.entities.logic.HealthSystem;
 import com.fejkathegame.game.entities.logic.MovementSystem;
@@ -62,6 +63,7 @@ public class Character extends LevelObject {
     private Polygon attackIndicator;
     private Ellipse superAttackIndicator;
     private boolean isCharging = false;
+    private boolean isFullyCharged = false;
 
 
     /**
@@ -174,7 +176,21 @@ public class Character extends LevelObject {
             superAttackIndicator.setRadius1(shrinking1);
             superAttackIndicator.setRadius2(shrinking1);
             superAttackIndicator.setCenterX(getX() + 16);
-            superAttackIndicator.setCenterY(getY() + 16);
+            superAttackIndicator.setCenterY(getY() + 16); 
+            
+            if(superAttackIndicator.getRadius1() < 16)
+                isFullyCharged = true;
+    }
+    
+    public void activateSuperAttack(int delta) {
+        float expanding = superAttackIndicator.getRadius1() + (2 * delta);
+        superAttackIndicator.setCenterX(getX());
+        superAttackIndicator.setCenterY(getY());
+        superAttackIndicator.setRadii(expanding, expanding);
+        if(superAttackIndicator.getRadius1() > Main.WINDOW_WIDTH) {
+            isFullyCharged = false;
+            superAttackIndicator.setRadii(32, 32);
+        }
     }
 
     /**
@@ -245,6 +261,9 @@ public class Character extends LevelObject {
         }
         if(!isCharging)
             superAttackIndicator.setRadii(32, 32);
+        
+        if(isFullyCharged)
+            activateSuperAttack(delta);
     }
 
     /**
@@ -256,16 +275,18 @@ public class Character extends LevelObject {
     public void render() throws SlickException {
         renderJumpIndicator(currentPositionX, currentPositionY);
         renderAttackIndicator();
+        
+            
+        sprite.draw(x, y);
+        
+        
+
+        healthSystem.render();
+
         if(isCharging) {
             g.setColor(new Color(1.0f, 1.0f, 1.0f, 1.0f));
             g.draw(superAttackIndicator);
         }
-            
-        sprite.draw(x, y);
-
-        healthSystem.render();
-
-        
     }
 
     /**
@@ -310,6 +331,14 @@ public class Character extends LevelObject {
 
     public void setGrounded(boolean grounded) {
         this.grounded = grounded;
+    }
+    
+    public void setIsFullyCharged(boolean isFullyCharged) {
+        this.isFullyCharged = isFullyCharged;
+    }
+    
+    public boolean getIsFullyCharged() {
+        return isFullyCharged;
     }
 
     @Override
