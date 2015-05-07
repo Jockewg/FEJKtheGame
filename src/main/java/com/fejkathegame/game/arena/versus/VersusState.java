@@ -66,6 +66,7 @@ public class VersusState extends BasicGameState {
 //        playerController.handleInput(gc.getInput(), i);
         movementSystem.handleInput(gc.getInput(), i);
         physics.handlePhysics(arena, i);
+        obj.update(i);
     }
 
 }

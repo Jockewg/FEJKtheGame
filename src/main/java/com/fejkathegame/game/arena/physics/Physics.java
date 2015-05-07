@@ -56,7 +56,7 @@ public class Physics {
         for(Tile t : tiles) {
             if(t.getBoundingShape() != null) {
                 if(t.getBoundingShape().checkCollision(obj.getBoundingShape())) {
-                    obj.setIsAttacking(false);
+                        obj.setIsAttacking(false);
                     return true;
                 }
             }
