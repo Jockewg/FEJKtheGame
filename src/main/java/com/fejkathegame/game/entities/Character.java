@@ -1,72 +1,66 @@
 package com.fejkathegame.game.entities;
 
+import com.fejkathegame.game.arena.collision.AABoundingRect;
 import com.fejkathegame.game.entities.logic.HealthSystem;
 import com.fejkathegame.game.entities.logic.MovementSystem;
-import com.fejkathegame.game.arena.collision.AABoundingRect;
-import com.fejkathegame.game.arena.physics.Physics;
-import org.newdawn.slick.*;
-import org.newdawn.slick.geom.Shape;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import org.newdawn.slick.geom.Polygon;
-import org.newdawn.slick.geom.Rectangle;
-import org.newdawn.slick.geom.Transform;
-import org.newdawn.slick.geom.Vector2f;
+import org.newdawn.slick.Color;
+import org.newdawn.slick.Image;
+import org.newdawn.slick.Input;
+import org.newdawn.slick.SlickException;
+import org.newdawn.slick.geom.*;
 import org.newdawn.slick.openal.Audio;
 import org.newdawn.slick.openal.AudioLoader;
-import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.util.ResourceLoader;
+
+import java.io.IOException;
 
 /**
  * Created by Swartt on 2015-04-28.
  */
 public class Character extends LevelObject {
 
-    private boolean isAttacking;
     private boolean grounded;
-    private int health;
-    private float attackCoolDown;
-    private int storedAttacks;
-    private int storedJumps;
+    private boolean isAlive;
+    private boolean moving = false;
+
+    private double sweepAttack, sweepLimit;
+
     private float jumpStrength;
     private float size;
     private float velocityY;
     private float velocityX;
     private float currentPositionX;
     private float currentPositionY;
-    private boolean isAlive;
-    private HealthSystem healthSystem;
-    private MovementSystem movementSystem;
-    private Shape player;
+    private float attackCoolDown;
     private float gravity;
-    private Color color;
-    private static int updateRate;
     private float mousePositionX;
     private float previousMousePositionX;
-    private long jumpCoolDownTick;
-    private long jumpCoolDownDefault;
-    protected float accelerationSpeed = 1;
-    protected float decelerationSpeed = 1;
-    protected float maximumSpeed = 2;
-    protected boolean moving = false;
-    protected Image sprite;
-    protected Audio jumpSound, attackSound;
-    private Shape jumpIndicator;
-    private Polygon attackIndicator;
+    private float accelerationSpeed = 1;
+    private float decelerationSpeed = 1;
+    private float maximumSpeed = 2;
+    private float playerWidth, playerHeight;
     private float jumpIndicatorTransp = 0.0f;
     private float attackIndicatorTransp = 0.0f;
     private float sweepXStart, sweepYStart, sweepXEnd, sweepYEnd, sweepSpeed;
-    private double sweepAttack, sweepLimit;
-    private float attackVelocity;
-    private Vector2f attackDirection, attackStart, current;
     private float oldRotate;
     private float rotateDirection;
     private float calculatedXAttack, calculatedYAttack;
+    private float attackVelocity;
 
-    private float playerWidth, playerHeight;
-    private Physics physics;
-    
+    private int health;
+    private int storedAttacks;
+    private int storedJumps;
+
+    private Vector2f attackDirection, attackStart, current;
+    private HealthSystem healthSystem;
+    private MovementSystem movementSystem;
+    private Shape player;
+    private Color color;
+    private Image sprite;
+    private Audio jumpSound, attackSound;
+    private Shape jumpIndicator;
+    private Polygon attackIndicator;
+
 
     /**
      * Constructor for creating a character, gives it the default values for a
@@ -83,7 +77,7 @@ public class Character extends LevelObject {
 
         boundingShape = new AABoundingRect(x, y, 32, 32);
 
-        isAttacking = false;
+
         grounded = false;
         health = 5;
         attackCoolDown = 100;
@@ -97,9 +91,7 @@ public class Character extends LevelObject {
         this.movementSystem = new MovementSystem(this);
         gravity = 0.5f;
         jumpStrength = -15;
-        updateRate = 5;
-        jumpCoolDownTick = 60;
-        jumpCoolDownDefault = 60;
+
         jumpSound = AudioLoader.getAudio("WAV", ResourceLoader.getResourceAsStream("src/main/resources/data/sound/Jump5.wav"));
         attackSound = AudioLoader.getAudio("WAV", ResourceLoader.getResourceAsStream("src/main/resources/data/sound/Attack.wav"));
         sweepAttack = 4;
@@ -112,186 +104,9 @@ public class Character extends LevelObject {
         attackIndicator.addPoint(52, 0);
         jumpIndicator = new Rectangle(x, y, sprite.getWidth() + 4, 2);
         current = new Vector2f(x, y);
-        physics = new Physics();
+
     }
 
-    public Polygon getAttackIndicator() {
-        return attackIndicator;
-    }
-
-    public void setAttackIndicator(Polygon shape) {
-        this.attackIndicator = shape;
-    }
-
-    public boolean isGrounded() {
-        return grounded;
-    }
-
-    public void setGrounded(boolean grounded) {
-        this.grounded = grounded;
-    }
-
-    public int getHealth() {
-        return health;
-    }
-
-    public void setHealth(int health) {
-        this.health = health;
-    }
-
-    public float getAttackCoolDown() {
-        return attackCoolDown;
-    }
-
-    public void setAttackCoolDown(float attackCoolDown) {
-        this.attackCoolDown = attackCoolDown;
-    }
-
-    public int getStoredAttacks() {
-        return storedAttacks;
-    }
-
-    public void setStoredAttacks(int storedAttacks) {
-        this.storedAttacks = storedAttacks;
-    }
-
-    public int getStoredJumps() {
-        return storedJumps;
-    }
-
-    public void setStoredJumps(int storedJumps) {
-        this.storedJumps = storedJumps;
-    }
-
-    public float getSize() {
-        return size;
-    }
-
-    public void setSize(float size) {
-        this.size = size;
-    }
-
-    public float getVelocityY() {
-        return velocityY;
-    }
-
-    public void setVelocityY(float velocityY) {
-        this.velocityY = velocityY;
-    }
-
-    public float getVelocityX() {
-        return velocityX;
-    }
-
-    public void setVelocityX(float velocityX) {
-        this.velocityX = velocityX;
-    }
-
-    public float getCurrentPositionX() {
-        return currentPositionX;
-    }
-
-    public void setCurrentPositionX(float currentPositionX) {
-        this.currentPositionX = currentPositionX;
-    }
-
-    public float getCurrentPositionY() {
-        return currentPositionY;
-    }
-
-    public void setCurrentPositionY(float currentPositionY) {
-        this.currentPositionY = currentPositionY;
-    }
-
-    public boolean isAlive() {
-        return isAlive;
-    }
-
-    public void setAlive(boolean alive) {
-        this.isAlive = alive;
-    }
-
-    public HealthSystem getHealthSystem() {
-        return healthSystem;
-    }
-
-    public MovementSystem getMovementSystem() {
-        return movementSystem;
-    }
-
-    public Shape getPlayer() {
-        return player;
-    }
-
-    public void setPlayer(Shape player) {
-        this.player = player;
-    }
-
-    public float getGravity() {
-        return gravity;
-    }
-
-    public void setGravity(float gravity) {
-        this.gravity = gravity;
-    }
-
-    public Color getColor() {
-        return color;
-    }
-
-    public void setColor(Color color) {
-        this.color = color;
-    }
-
-    public float getJumpStrength() {
-        return jumpStrength;
-    }
-
-    public void setJumpStrength(float jumpStrength) {
-        this.jumpStrength = jumpStrength;
-    }
-
-    public float getMousePositionX() {
-        return mousePositionX;
-    }
-
-    public void setMousePositionX(float mousePositionX) {
-        this.mousePositionX = mousePositionX;
-    }
-
-    public float getPreviousMousePositionX() {
-        return previousMousePositionX;
-    }
-
-    public void setPreviousMousePositionX(float previousMousePositionX) {
-        this.previousMousePositionX = previousMousePositionX;
-    }
-
-    @Override
-    public boolean isMoving() {
-        return moving;
-    }
-
-    @Override
-    public void setMoving(boolean moving) {
-        this.moving = moving;
-    }
-
-    public float getPlayerWidth() {
-        return playerWidth;
-    }
-
-    public void setPlayerWidth(float width) {
-        this.playerWidth = width;
-    }
-
-    public float getPlayerHeight() {
-        return playerHeight;
-    }
-
-    public void setPlayerHeight(float height) {
-        this.playerHeight = height;
-    }
 
     public void decelerate(int delta) {
         if (x_velocity > 0) {
@@ -379,15 +194,15 @@ public class Character extends LevelObject {
     }
 
     /**
-     *  sets a current location on every update and calculates distance
+     * sets a current location on every update and calculates distance
      * before slowing the player down.
-     * 
+     *
      * @param delta
      */
     public void update(int delta) {
         if (getIsAttacking()) {
             current = new Vector2f(x, y);
-            
+
             x_velocity = calculatedXAttack;
             y_velocity = calculatedYAttack;
             gravity = 0.0f;
@@ -434,5 +249,393 @@ public class Character extends LevelObject {
         g.fill(attackIndicator);
 
         attackIndicatorTransp -= 0.01f;
+    }
+
+    //Getters and Setters
+
+    public boolean isGrounded() {
+        return grounded;
+    }
+
+    public void setGrounded(boolean grounded) {
+        this.grounded = grounded;
+    }
+
+    @Override
+    public boolean isAlive() {
+        return isAlive;
+    }
+
+    @Override
+    public void setAlive(boolean isAlive) {
+        this.isAlive = isAlive;
+    }
+
+    @Override
+    public boolean isMoving() {
+        return moving;
+    }
+
+    @Override
+    public void setMoving(boolean moving) {
+        this.moving = moving;
+    }
+
+    public double getSweepAttack() {
+        return sweepAttack;
+    }
+
+    public void setSweepAttack(double sweepAttack) {
+        this.sweepAttack = sweepAttack;
+    }
+
+    public double getSweepLimit() {
+        return sweepLimit;
+    }
+
+    public void setSweepLimit(double sweepLimit) {
+        this.sweepLimit = sweepLimit;
+    }
+
+    public float getJumpStrength() {
+        return jumpStrength;
+    }
+
+    public void setJumpStrength(float jumpStrength) {
+        this.jumpStrength = jumpStrength;
+    }
+
+    public float getSize() {
+        return size;
+    }
+
+    public void setSize(float size) {
+        this.size = size;
+    }
+
+    public float getVelocityY() {
+        return velocityY;
+    }
+
+    public void setVelocityY(float velocityY) {
+        this.velocityY = velocityY;
+    }
+
+    public float getVelocityX() {
+        return velocityX;
+    }
+
+    public void setVelocityX(float velocityX) {
+        this.velocityX = velocityX;
+    }
+
+    public float getCurrentPositionX() {
+        return currentPositionX;
+    }
+
+    public void setCurrentPositionX(float currentPositionX) {
+        this.currentPositionX = currentPositionX;
+    }
+
+    public float getCurrentPositionY() {
+        return currentPositionY;
+    }
+
+    public void setCurrentPositionY(float currentPositionY) {
+        this.currentPositionY = currentPositionY;
+    }
+
+    public float getAttackCoolDown() {
+        return attackCoolDown;
+    }
+
+    public void setAttackCoolDown(float attackCoolDown) {
+        this.attackCoolDown = attackCoolDown;
+    }
+
+    public float getGravity() {
+        return gravity;
+    }
+
+    public void setGravity(float gravity) {
+        this.gravity = gravity;
+    }
+
+    public float getMousePositionX() {
+        return mousePositionX;
+    }
+
+    public void setMousePositionX(float mousePositionX) {
+        this.mousePositionX = mousePositionX;
+    }
+
+    public float getPreviousMousePositionX() {
+        return previousMousePositionX;
+    }
+
+    public void setPreviousMousePositionX(float previousMousePositionX) {
+        this.previousMousePositionX = previousMousePositionX;
+    }
+
+    public float getAccelerationSpeed() {
+        return accelerationSpeed;
+    }
+
+    public void setAccelerationSpeed(float accelerationSpeed) {
+        this.accelerationSpeed = accelerationSpeed;
+    }
+
+    public float getDecelerationSpeed() {
+        return decelerationSpeed;
+    }
+
+    public void setDecelerationSpeed(float decelerationSpeed) {
+        this.decelerationSpeed = decelerationSpeed;
+    }
+
+    public float getMaximumSpeed() {
+        return maximumSpeed;
+    }
+
+    public void setMaximumSpeed(float maximumSpeed) {
+        this.maximumSpeed = maximumSpeed;
+    }
+
+    public float getPlayerWidth() {
+        return playerWidth;
+    }
+
+    public void setPlayerWidth(float playerWidth) {
+        this.playerWidth = playerWidth;
+    }
+
+    public float getPlayerHeight() {
+        return playerHeight;
+    }
+
+    public void setPlayerHeight(float playerHeight) {
+        this.playerHeight = playerHeight;
+    }
+
+    public float getJumpIndicatorTransp() {
+        return jumpIndicatorTransp;
+    }
+
+    public void setJumpIndicatorTransp(float jumpIndicatorTransp) {
+        this.jumpIndicatorTransp = jumpIndicatorTransp;
+    }
+
+    public float getAttackIndicatorTransp() {
+        return attackIndicatorTransp;
+    }
+
+    public void setAttackIndicatorTransp(float attackIndicatorTransp) {
+        this.attackIndicatorTransp = attackIndicatorTransp;
+    }
+
+    public float getSweepXStart() {
+        return sweepXStart;
+    }
+
+    public void setSweepXStart(float sweepXStart) {
+        this.sweepXStart = sweepXStart;
+    }
+
+    public float getSweepYStart() {
+        return sweepYStart;
+    }
+
+    public void setSweepYStart(float sweepYStart) {
+        this.sweepYStart = sweepYStart;
+    }
+
+    public float getSweepXEnd() {
+        return sweepXEnd;
+    }
+
+    public void setSweepXEnd(float sweepXEnd) {
+        this.sweepXEnd = sweepXEnd;
+    }
+
+    public float getSweepYEnd() {
+        return sweepYEnd;
+    }
+
+    public void setSweepYEnd(float sweepYEnd) {
+        this.sweepYEnd = sweepYEnd;
+    }
+
+    public float getSweepSpeed() {
+        return sweepSpeed;
+    }
+
+    public void setSweepSpeed(float sweepSpeed) {
+        this.sweepSpeed = sweepSpeed;
+    }
+
+    public float getOldRotate() {
+        return oldRotate;
+    }
+
+    public void setOldRotate(float oldRotate) {
+        this.oldRotate = oldRotate;
+    }
+
+    public float getRotateDirection() {
+        return rotateDirection;
+    }
+
+    public void setRotateDirection(float rotateDirection) {
+        this.rotateDirection = rotateDirection;
+    }
+
+    public float getCalculatedXAttack() {
+        return calculatedXAttack;
+    }
+
+    public void setCalculatedXAttack(float calculatedXAttack) {
+        this.calculatedXAttack = calculatedXAttack;
+    }
+
+    public float getCalculatedYAttack() {
+        return calculatedYAttack;
+    }
+
+    public void setCalculatedYAttack(float calculatedYAttack) {
+        this.calculatedYAttack = calculatedYAttack;
+    }
+
+    public float getAttackVelocity() {
+        return attackVelocity;
+    }
+
+    public void setAttackVelocity(float attackVelocity) {
+        this.attackVelocity = attackVelocity;
+    }
+
+    @Override
+    public int getHealth() {
+        return health;
+    }
+
+    @Override
+    public void setHealth(int health) {
+        this.health = health;
+    }
+
+    @Override
+    public int getStoredAttacks() {
+        return storedAttacks;
+    }
+
+    @Override
+    public void setStoredAttacks(int storedAttacks) {
+        this.storedAttacks = storedAttacks;
+    }
+
+    @Override
+    public int getStoredJumps() {
+        return storedJumps;
+    }
+
+    @Override
+    public void setStoredJumps(int storedJumps) {
+        this.storedJumps = storedJumps;
+    }
+
+    public Vector2f getAttackDirection() {
+        return attackDirection;
+    }
+
+    public void setAttackDirection(Vector2f attackDirection) {
+        this.attackDirection = attackDirection;
+    }
+
+    public Vector2f getAttackStart() {
+        return attackStart;
+    }
+
+    public void setAttackStart(Vector2f attackStart) {
+        this.attackStart = attackStart;
+    }
+
+    public Vector2f getCurrent() {
+        return current;
+    }
+
+    public void setCurrent(Vector2f current) {
+        this.current = current;
+    }
+
+    public HealthSystem getHealthSystem() {
+        return healthSystem;
+    }
+
+    public void setHealthSystem(HealthSystem healthSystem) {
+        this.healthSystem = healthSystem;
+    }
+
+    public MovementSystem getMovementSystem() {
+        return movementSystem;
+    }
+
+    public void setMovementSystem(MovementSystem movementSystem) {
+        this.movementSystem = movementSystem;
+    }
+
+    public Shape getPlayer() {
+        return player;
+    }
+
+    public void setPlayer(Shape player) {
+        this.player = player;
+    }
+
+    public Color getColor() {
+        return color;
+    }
+
+    public void setColor(Color color) {
+        this.color = color;
+    }
+
+    public Image getSprite() {
+        return sprite;
+    }
+
+    public void setSprite(Image sprite) {
+        this.sprite = sprite;
+    }
+
+    public Audio getJumpSound() {
+        return jumpSound;
+    }
+
+    public void setJumpSound(Audio jumpSound) {
+        this.jumpSound = jumpSound;
+    }
+
+    public Audio getAttackSound() {
+        return attackSound;
+    }
+
+    public void setAttackSound(Audio attackSound) {
+        this.attackSound = attackSound;
+    }
+
+    public Shape getJumpIndicator() {
+        return jumpIndicator;
+    }
+
+    public void setJumpIndicator(Shape jumpIndicator) {
+        this.jumpIndicator = jumpIndicator;
+    }
+
+    public Polygon getAttackIndicator() {
+        return attackIndicator;
+    }
+
+    public void setAttackIndicator(Polygon attackIndicator) {
+        this.attackIndicator = attackIndicator;
     }
 }
