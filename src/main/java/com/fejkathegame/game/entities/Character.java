@@ -58,13 +58,12 @@ public class Character extends LevelObject {
     private Shape player;
     private Color color;
     private Image sprite;
-    private Audio jumpSound, attackSound;
+    private Audio jumpSound, attackSound, chargeSound;
     private Shape jumpIndicator;
     private Polygon attackIndicator;
     private Ellipse superAttackIndicator;
     private boolean isCharging = false;
     private boolean isFullyCharged = false;
-
 
     /**
      * Constructor for creating a character, gives it the default values for a
@@ -94,6 +93,7 @@ public class Character extends LevelObject {
         jumpStrength = -15;
         jumpSound = AudioLoader.getAudio("WAV", ResourceLoader.getResourceAsStream("src/main/resources/data/sound/Jump5.wav"));
         attackSound = AudioLoader.getAudio("WAV", ResourceLoader.getResourceAsStream("src/main/resources/data/sound/Attack.wav"));
+        chargeSound = AudioLoader.getAudio("WAV", ResourceLoader.getResourceAsStream("src/main/resources/data/sound/Charge.wav"));
         sweepAttack = 4;
         sweepLimit = 10;
         attackVelocity = 1.4f;
@@ -109,6 +109,7 @@ public class Character extends LevelObject {
 
     /**
      * Decelerates the Character, avoiding jerky movement
+     *
      * @param delta
      */
     public void decelerate(int delta) {
@@ -127,6 +128,7 @@ public class Character extends LevelObject {
 
     /**
      * Launches the Character into the air upwards
+     *
      * @param delta
      */
     public void jump(int delta) {
@@ -144,6 +146,7 @@ public class Character extends LevelObject {
 
     /**
      * Moves the character to the left
+     *
      * @param delta
      */
     public void moveLeft(int delta) {
@@ -158,6 +161,7 @@ public class Character extends LevelObject {
 
     /**
      * moves the character to the right
+     *
      * @param delta
      */
     public void moveRight(int delta) {
@@ -169,32 +173,39 @@ public class Character extends LevelObject {
         }
         moving = true;
     }
-    
+
     public void chargeSuperAttack(Input i, int delta) {
         isCharging = true;
+        if (!chargeSound.isPlaying()) {
+            chargeSound.playAsSoundEffect(1.0f, 1.0f, false);
+        }
         float shrinking1 = superAttackIndicator.getRadius1() - (0.75f / delta);
-            superAttackIndicator.setRadius1(shrinking1);
-            superAttackIndicator.setRadius2(shrinking1);
-            superAttackIndicator.setCenterX(getX() + 16);
-            superAttackIndicator.setCenterY(getY() + 16); 
-            
-            if(superAttackIndicator.getRadius1() < 16)
-                isFullyCharged = true;
+        superAttackIndicator.setRadius1(shrinking1);
+        superAttackIndicator.setRadius2(shrinking1);
+        superAttackIndicator.setCenterX(getX() + 16);
+        superAttackIndicator.setCenterY(getY() + 16);
+
+        if (superAttackIndicator.getRadius1() < 16) {
+            isFullyCharged = true;
+            chargeSound.stop();
+        }
     }
-    
+
     public void activateSuperAttack(int delta) {
         float expanding = superAttackIndicator.getRadius1() + (2 * delta);
         superAttackIndicator.setCenterX(getX());
         superAttackIndicator.setCenterY(getY());
         superAttackIndicator.setRadii(expanding, expanding);
-        if(superAttackIndicator.getRadius1() > Main.WINDOW_WIDTH) {
+        if (superAttackIndicator.getRadius1() > Main.WINDOW_WIDTH) {
             isFullyCharged = false;
             superAttackIndicator.setRadii(32, 32);
         }
     }
 
     /**
-     * Preforms an attack, launching the Character in the direction of the attack
+     * Preforms an attack, launching the Character in the direction of the
+     * attack
+     *
      * @param i
      * @param delta
      */
@@ -236,8 +247,8 @@ public class Character extends LevelObject {
     }
 
     /**
-     * sets a current location on every update and calculates distance
-     * before slowing the player down.
+     * sets a current location on every update and calculates distance before
+     * slowing the player down.
      *
      * @param delta
      */
@@ -259,11 +270,13 @@ public class Character extends LevelObject {
                 setIsAttacking(false);
             }
         }
-        if(!isCharging && !isFullyCharged)
+        if (!isCharging && !isFullyCharged) {
             superAttackIndicator.setRadii(32, 32);
-        
-        if(isFullyCharged)
+        }
+
+        if (isFullyCharged) {
             activateSuperAttack(delta);
+        }
     }
 
     /**
@@ -275,15 +288,12 @@ public class Character extends LevelObject {
     public void render() throws SlickException {
         renderJumpIndicator(currentPositionX, currentPositionY);
         renderAttackIndicator();
-        
-            
+
         sprite.draw(x, y);
-        
-        
 
         healthSystem.render();
 
-        if(isCharging || isFullyCharged) {
+        if (isCharging || isFullyCharged) {
             g.setColor(new Color(1.0f, 1.0f, 1.0f, 1.0f));
             g.draw(superAttackIndicator);
         }
@@ -291,6 +301,7 @@ public class Character extends LevelObject {
 
     /**
      * Displays a white line under the character when he jumps in the air
+     *
      * @param x
      * @param y
      */
@@ -320,11 +331,11 @@ public class Character extends LevelObject {
     public boolean getIsCharging() {
         return isCharging;
     }
-    
+
     public void setIsCharging(boolean isCharging) {
         this.isCharging = isCharging;
     }
-    
+
     public boolean isGrounded() {
         return grounded;
     }
@@ -332,15 +343,15 @@ public class Character extends LevelObject {
     public void setGrounded(boolean grounded) {
         this.grounded = grounded;
     }
-    
+
     public void setIsFullyCharged(boolean isFullyCharged) {
         this.isFullyCharged = isFullyCharged;
     }
-    
+
     public boolean getIsFullyCharged() {
         return isFullyCharged;
     }
-    
+
     public Ellipse getSuperAttackIndicator() {
         return superAttackIndicator;
     }
