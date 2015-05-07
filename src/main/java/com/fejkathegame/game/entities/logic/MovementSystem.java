@@ -23,8 +23,10 @@ public class MovementSystem {
      * @param delta
      */
     public void handleInput(Input i, int delta) {
-        handleMouseInput(i, delta);
-        handleKeyBoardInput(i, delta);
+        if(!character.getIsAttacking()) {
+            handleMouseInput(i, delta);
+            handleKeyBoardInput(i, delta);
+        }
     }
 
     /**

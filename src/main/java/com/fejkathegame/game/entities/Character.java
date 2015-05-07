@@ -96,8 +96,8 @@ public class Character extends LevelObject {
         attackIndicator = new Polygon();
         attackIndicator.addPoint(0, 0);
         attackIndicator.addPoint(0, 4);
-        attackIndicator.addPoint(52, 4);
-        attackIndicator.addPoint(52, 0);
+        attackIndicator.addPoint(48, 4);
+        attackIndicator.addPoint(48, 0);
         jumpIndicator = new Rectangle(x, y, sprite.getWidth() + 4, 2);
         current = new Vector2f(x, y);
     }
@@ -221,7 +221,7 @@ public class Character extends LevelObject {
             x_velocity = calculatedXAttack;
             y_velocity = calculatedYAttack;
             gravity = 0.0f;
-            if (attackStart.distance(current) >= 300) {
+            if (attackStart.distance(current) >= 150) {
                 gravity = 0.0015f * delta;
                 y_velocity = 0;
                 if (x_velocity < -maximumSpeed) {
@@ -241,12 +241,14 @@ public class Character extends LevelObject {
      */
     @Override
     public void render() throws SlickException {
+        renderJumpIndicator(currentPositionX, currentPositionY);
+        renderAttackIndicator();
+        
         sprite.draw(x, y);
 
         healthSystem.render();
 
-        renderJumpIndicator(currentPositionX, currentPositionY);
-        renderAttackIndicator();
+        
     }
 
     /**
