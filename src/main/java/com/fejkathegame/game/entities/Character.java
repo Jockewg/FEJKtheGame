@@ -340,6 +340,10 @@ public class Character extends LevelObject {
     public boolean getIsFullyCharged() {
         return isFullyCharged;
     }
+    
+    public Ellipse getSuperAttackIndicator() {
+        return superAttackIndicator;
+    }
 
     @Override
     public boolean isAlive() {

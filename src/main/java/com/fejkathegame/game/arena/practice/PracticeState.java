@@ -106,7 +106,8 @@ public class PracticeState extends BasicGameState {
     
     public void checkCollisionWithTarget() {
         for(int i = 0; i < arena.getTargets().size(); i++) {
-            if(obj.getAttackIndicator().intersects(arena.getTargets().get(i).getHitbox()) && obj.getIsAttacking()) {
+            if(obj.getAttackIndicator().intersects(arena.getTargets().get(i).getHitbox()) && obj.getIsAttacking()
+                    || obj.getSuperAttackIndicator().intersects(arena.getTargets().get(i).getHitbox())) {
                 System.out.println("HIT");
                 arena.getTargets().get(i).getHealthSystem().dealDamage(1);
                 arena.getTargets().remove(i);
