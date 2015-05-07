@@ -191,7 +191,6 @@ public class Character extends LevelObject {
             calculatedYAttack = (float) ((attackVelocity) * Math.sin(Math.toRadians(attackDirection.getTheta())));
 
             rotateDirection = (float) attackDirection.getTheta();
-            attackIndicatorTransp = 1.0f;
             attackCoolDown = 1000;
 
             attackIndicator.setLocation(0, 0);
@@ -217,7 +216,7 @@ public class Character extends LevelObject {
     public void update(int delta) {
         if (getIsAttacking()) {
             current = new Vector2f(x, y);
-
+            attackIndicatorTransp = 1.0f;
             x_velocity = calculatedXAttack;
             y_velocity = calculatedYAttack;
             gravity = 0.0f;
@@ -273,7 +272,7 @@ public class Character extends LevelObject {
         g.setColor(new Color(1.0f, 1.0f, 1.0f, attackIndicatorTransp));
         g.fill(attackIndicator);
 
-        attackIndicatorTransp -= 0.01f;
+        attackIndicatorTransp -= 0.07f;
     }
 //      *******************************
 //      *    Getters and Setters      *
