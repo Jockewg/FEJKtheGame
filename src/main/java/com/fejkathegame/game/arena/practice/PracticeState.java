@@ -65,19 +65,7 @@ public class PracticeState extends BasicGameState {
 
     }
     
-
-    @Override
-    public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
-        g.setAntiAlias(false);
-        g.scale(Main.SCALE, Main.SCALE);
-        g.translate(-camX, -camY);
-        arena.render();
-        g.resetTransform();
-    }
-
-
-    @Override
-    public void update(GameContainer gc, StateBasedGame sbg, int i) throws SlickException {
+    public void checkCameraOffset() {
         if(obj.getX() <= offsetMinX + 450)
             camX = offsetMinX;
         else if(obj.getX() >= offsetMaxX)
@@ -91,11 +79,27 @@ public class PracticeState extends BasicGameState {
             camY = offsetMaxY - 250;
         else
         camY = obj.getY() - 250.0f;
+    }
+    
+
+    @Override
+    public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
+        g.setAntiAlias(false);
+        g.scale(Main.SCALE, Main.SCALE);
+        g.translate(-camX, -camY);
+        arena.render();
+        g.resetTransform();
+    }
+
+
+    @Override
+    public void update(GameContainer gc, StateBasedGame sbg, int i) throws SlickException {
+        checkCameraOffset();
         movementSystem.handleInput(gc.getInput(), i);
         physics.handlePhysics(arena, i);
         checkCollisionWithTarget();
         obj.update();
-        arena.moveTarget();
+//        arena.moveTarget();
     }
     
     public void checkCollisionWithTarget() {
