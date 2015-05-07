@@ -64,6 +64,7 @@ public class Character extends LevelObject {
     private Ellipse superAttackIndicator;
     private boolean isCharging = false;
     private boolean isFullyCharged = false;
+    private Shape hitBox;
 
     /**
      * Constructor for creating a character, gives it the default values for a
@@ -106,6 +107,7 @@ public class Character extends LevelObject {
         jumpIndicator = new Rectangle(x, y, sprite.getWidth() + 4, 2);
         current = new Vector2f(x, y);
         superAttackIndicator = new Ellipse(x + 16, y + 16, 32, 32);
+        hitBox = new Rectangle(x, y, 32, 32);
     }
 
     /**
@@ -332,6 +334,7 @@ public class Character extends LevelObject {
     public void render() throws SlickException {
         renderJumpIndicator(currentPositionX, currentPositionY);
         renderAttackIndicator();
+        updateHitBox();
 
         sprite.draw(x, y);
 
@@ -368,10 +371,27 @@ public class Character extends LevelObject {
 
         attackIndicatorTransp -= 0.07f;
     }
+    
+    @Override
+    public void updateHitBox() {
+        hitBox.setX(x);
+        hitBox.setY(y);
+    }
+    
 //      *******************************
 //      *    Getters and Setters      *
 //      *******************************
 
+    @Override
+    public Shape getHitBox() {
+        return hitBox;
+    }
+    
+    @Override
+    public void setHitBox(Shape hitBox) {
+        this.hitBox = hitBox;
+    }
+    
     public boolean getIsCharging() {
         return isCharging;
     }

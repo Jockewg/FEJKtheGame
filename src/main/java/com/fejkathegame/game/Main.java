@@ -34,7 +34,7 @@ public class Main extends StateBasedGame {
     public void initStatesList(GameContainer gc) throws SlickException {
         addState(new HostScreenState("host"));
         addState(new MenuState("menu"));
-        addState(new VersusState("arena"));
+        addState(new VersusState("arena2"));
         addState(new PracticeState("practice"));
         
         this.enterState(0);

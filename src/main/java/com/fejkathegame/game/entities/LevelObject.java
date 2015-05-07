@@ -2,9 +2,13 @@ package com.fejkathegame.game.entities;
 
 import com.fejkathegame.game.arena.collision.AABoundingRect;
 import com.fejkathegame.game.arena.collision.BoundingShape;
+import com.fejkathegame.game.entities.logic.HealthSystem;
+import java.io.IOException;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.geom.Rectangle;
+import org.newdawn.slick.geom.Shape;
 
 public abstract class LevelObject {
 
@@ -23,6 +27,8 @@ public abstract class LevelObject {
     private boolean isAlive;
     public Graphics g;
     private boolean isAttacking = false;
+    private Shape hitBox;
+    private HealthSystem healthSystem;
 
     /**
      * Constructor for a {@code LevelObject}, creates a new level entity with standard values
@@ -30,17 +36,19 @@ public abstract class LevelObject {
      * @param y coordinate for spawing the object
      * @throws SlickException
      */
-    public LevelObject(float x, float y) throws SlickException {
+    public LevelObject(float x, float y) throws SlickException, IOException {
         this.x = x;
         this.y = y;
         g = new Graphics();
         sprite = new Image("src/main/resources/data/img/placeholder.png");
-
+        
         storedJumps = 0;
         
         storedAttacks = 0;
+        healthSystem = new HealthSystem(this);
         
         boundingShape = new AABoundingRect(x, y, 32, 31);
+        hitBox = new Rectangle(x, y, 32, 32);
     }
 
     /**
@@ -62,6 +70,27 @@ public abstract class LevelObject {
      */
     public void updateBoundingShape() {
         boundingShape.updatePosition(x, y);
+    }
+    
+    public void updateHitBox() {
+        hitBox.setX(x);
+        hitBox.setY(y);
+    }
+    
+    public Shape getHitBox() {
+        return hitBox;
+    }
+    
+    public void setHitBox(Shape hitBox) {
+        this.hitBox = hitBox;
+    }
+    
+    public void setHealthSystem(HealthSystem hs) {
+        this.healthSystem = hs;
+    }
+    
+    public HealthSystem getHealthSystem() {
+        return healthSystem;
     }
 
     public float getX() {
@@ -116,6 +145,7 @@ public abstract class LevelObject {
 
     public void render() throws SlickException {
         sprite.draw(x, y);
+        updateHitBox();
     }
 
     public boolean isMoving() {

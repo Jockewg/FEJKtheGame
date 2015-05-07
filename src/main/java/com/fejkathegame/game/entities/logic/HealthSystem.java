@@ -88,11 +88,13 @@ public class HealthSystem {
      * checks the players health, if the players health is 0 or less it changes the
      * {@code isAlive} boolean to false
      */
-    public void isCharacterAlive() {
+    public boolean isCharacterAlive() {
         int currentHealth = object.getHealth();
         if (currentHealth <= 0) {
             object.setAlive(false);
+            return false;
         }
+        return true;
     }
     
     public void render() {

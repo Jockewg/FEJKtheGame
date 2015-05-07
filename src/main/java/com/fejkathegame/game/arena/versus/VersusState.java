@@ -19,6 +19,7 @@ public class VersusState extends BasicGameState {
     private MovementSystem movementSystem;
     private Physics physics;
     private Character obj;
+    private Character player2;
 
     /**
      * Constructor for ArenaState
@@ -37,36 +38,61 @@ public class VersusState extends BasicGameState {
     public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {
 
         obj = null;
+        player2 = null;
         try {
             obj = new Character(800, 40);
+            player2 = new Character(200, 40);
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-
         arena = new Versus(name, obj);
+        arena.addPlayer(player2);
         
         movementSystem = new MovementSystem(obj);
 
-        /*playerController = new MouseAndKeyBoardPlayerController(player);*/
-
         physics = new Physics();
 
+    }
+    
+    public void checkCollisionWithTarget() {
+        
+        if(obj.getAttackIndicator().intersects(player2.getHitBox()) && obj.getIsAttacking()
+                || obj.getIsFullyCharged() && obj.getSuperAttackIndicator().intersects(player2.getHitBox())) {
+            System.out.println("Player 1 hit Player 2 omfg");
+            player2.getHealthSystem().dealDamage(1);
+            if(player2.getHealth() <= 0) {
+                arena.getPlayers().remove(player2);
+            }
+        }
+        
+        if(player2.getAttackIndicator().intersects(obj.getHitBox()) && player2.getIsAttacking()
+                || player2.getIsFullyCharged() && player2.getSuperAttackIndicator().intersects(obj.getHitBox())) {
+            System.out.println("Player 2 hit Player 1 omfg");
+            obj.getHealthSystem().dealDamage(1);
+            if(obj.getHealth() <= 0) {
+                arena.getPlayers().remove(obj);
+            }
+        }
+        
     }
 
     @Override
     public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
         g.scale(Main.SCALE, Main.SCALE);
+        arena.getAnimation().draw(200, 50);
         arena.render();
+        
     }
 
 
     @Override
     public void update(GameContainer gc, StateBasedGame sbg, int i) throws SlickException {
-//        playerController.handleInput(gc.getInput(), i);
         movementSystem.handleInput(gc.getInput(), i);
         physics.handlePhysics(arena, i);
+        player2.update(i);
         obj.update(i);
+        checkCollisionWithTarget();
     }
 
 }

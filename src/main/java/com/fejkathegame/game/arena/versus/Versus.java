@@ -9,6 +9,8 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.tiled.TiledMap;
 
 import java.util.ArrayList;
+import org.newdawn.slick.Animation;
+import org.newdawn.slick.Image;
 
 public class Versus extends Level {
     
@@ -17,6 +19,10 @@ public class Versus extends Level {
     private Tile[][] tiles;
     
     private ArrayList<LevelObject> players;
+    
+    private Image[] crankAnim;
+    
+    private Animation animation;
 
     /**
      * Constructor for Arena, creates the playingfield and adds all players to the field
@@ -28,9 +34,30 @@ public class Versus extends Level {
         map = new TiledMap("src/main/resources/data/levels/" + name + ".tmx", "src/main/resources/data/img");
         players = new ArrayList<LevelObject>();
         
+        
         addPlayer(levelObject);
         
         loadTileMap();
+        
+        loadCrankAnim();
+        animation = new Animation(crankAnim, 30);
+    }
+    
+    public void loadCrankAnim() throws SlickException {
+        crankAnim = new Image[12];
+        
+        crankAnim[0] = new Image("src/main/resources/data/img/animations/crankAnim1.png");
+        crankAnim[1] = new Image("src/main/resources/data/img/animations/crankAnim2.png");
+        crankAnim[2] = new Image("src/main/resources/data/img/animations/crankAnim3.png");
+        crankAnim[3] = new Image("src/main/resources/data/img/animations/crankAnim4.png");
+        crankAnim[4] = new Image("src/main/resources/data/img/animations/crankAnim5.png");
+        crankAnim[5] = new Image("src/main/resources/data/img/animations/crankAnim6.png");
+        crankAnim[6] = new Image("src/main/resources/data/img/animations/crankAnim7.png");
+        crankAnim[7] = new Image("src/main/resources/data/img/animations/crankAnim8.png");
+        crankAnim[8] = new Image("src/main/resources/data/img/animations/crankAnim9.png");
+        crankAnim[9] = new Image("src/main/resources/data/img/animations/crankAnim10.png");
+        crankAnim[10] = new Image("src/main/resources/data/img/animations/crankAnim11.png");
+        crankAnim[11] = new Image("src/main/resources/data/img/animations/crankAnim12.png");
     }
 
     /**
@@ -100,5 +127,9 @@ public class Versus extends Level {
         for(LevelObject p : players) {
             p.render();
         }
+    }
+    
+    public Animation getAnimation() {
+        return animation;
     }
 }
