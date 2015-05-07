@@ -10,18 +10,28 @@ public class MovementSystem {
     Character character;
 
     /**
-     * Constructor, needs to know what character it has to apply the movement too
+     * Constructor, needs to know what {@code LevelObject} it has to apply the movement too
      * @param character
      */
     public MovementSystem(Character character) {
         this.character = character;
     }
-    
+
+    /**
+     * Handles the player input from mouse and keyboard
+     * @param i
+     * @param delta
+     */
     public void handleInput(Input i, int delta) {
         handleMouseInput(i, delta);
         handleKeyBoardInput(i, delta);
     }
-    
+
+    /**
+     * handles the mouse input from the player
+     * @param i
+     * @param delta
+     */
     public void handleMouseInput(Input i, int delta) {
         character.setAttackCoolDown(character.getAttackCoolDown()-delta);
         if(i.isMousePressed(Input.MOUSE_LEFT_BUTTON) && character.getStoredJumps() > 0||
@@ -32,7 +42,12 @@ public class MovementSystem {
             character.attack(i, delta);
         }
     }
-    
+
+    /**
+     * handles the keyboard input from the player
+     * @param i
+     * @param delta
+     */
     public void handleKeyBoardInput(Input i, int delta) {
         if(i.isKeyDown(Input.KEY_A) || i.isKeyDown(Input.KEY_LEFT)) {
             character.moveLeft(delta);
