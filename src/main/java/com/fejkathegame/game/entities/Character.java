@@ -21,6 +21,7 @@ import org.newdawn.slick.util.ResourceLoader;
  * Created by Swartt on 2015-04-28.
  */
 public class Character extends LevelObject {
+
     private boolean isAttacking;
     private boolean grounded;
     private int health;
@@ -57,7 +58,7 @@ public class Character extends LevelObject {
     private float sweepXStart, sweepYStart, sweepXEnd, sweepYEnd, sweepSpeed;
     private double sweepAttack, sweepLimit;
     private float attackVelocity;
-    private Vector2f direction;
+    private Vector2f attackDirection, attackStart, current;
     private float oldRotate;
     private float rotateDirection;
 
@@ -75,9 +76,9 @@ public class Character extends LevelObject {
         maxFallSpeed = 0.75f;
         decelerationSpeed = 0.005f;
         sprite = new Image("src/main/resources/data/img/placeholder.png");
-        
+
         boundingShape = new AABoundingRect(x, y, 32, 32);
-        
+
         isAttacking = false;
         grounded = false;
         health = 5;
@@ -106,16 +107,17 @@ public class Character extends LevelObject {
         attackIndicator.addPoint(52, 4);
         attackIndicator.addPoint(52, 0);
         jumpIndicator = new Rectangle(x, y, sprite.getWidth() + 4, 2);
+        current = new Vector2f(x, y);
     }
 
     public Polygon getAttackIndicator() {
         return attackIndicator;
     }
-    
+
     public void setAttackIndicator(Polygon shape) {
         this.attackIndicator = shape;
     }
-    
+
     public boolean isGrounded() {
         return grounded;
     }
@@ -336,45 +338,64 @@ public class Character extends LevelObject {
     public void attack(Input i, int delta) {
         sweepXStart = i.getMouseX();
         sweepYStart = i.getMouseY();
-        
+
         if (sweepXEnd != sweepXStart && sweepYStart != sweepYEnd) {
             sweepSpeed = (float) Math.sqrt(Math.pow(sweepXStart - sweepXEnd, 2)
                     + Math.pow(sweepYStart - sweepYEnd, 2));
         }
 
-        direction = new Vector2f(sweepXStart - sweepXEnd,
+        attackDirection = new Vector2f(sweepXStart - sweepXEnd,
                 sweepYStart - sweepYEnd);
-        
+
         if (sweepSpeed >= sweepAttack && sweepSpeed <= sweepLimit
                 && attackCoolDown <= 0) { // Attack movement here
-            
             isAttacking = true;
+            attackStart = new Vector2f(x, y);
+
             
-            x_velocity = (float) (attackVelocity * Math.cos(Math.toRadians(direction.getTheta())));
-            y_velocity = (float) ((attackVelocity * gravity) * Math.sin(Math.toRadians(direction.getTheta())));
-            
-            rotateDirection = (float) direction.getTheta();
+
+            rotateDirection = (float) attackDirection.getTheta();
             attackIndicatorTransp = 1.0f;
             attackCoolDown = 1000;
-            
+
             attackIndicator.setLocation(0, 0);
-            attackIndicator = (Polygon) attackIndicator.transform(Transform.createRotateTransform((float) Math.toRadians(rotateDirection - oldRotate)));
+            attackIndicator = (Polygon) attackIndicator.transform(
+                    Transform.createRotateTransform((float) Math.toRadians(rotateDirection - oldRotate)));
             attackIndicator.setLocation(x + 16, y + 16);
-            
+
             storedAttacks--;
             attackSound.playAsSoundEffect(1.0f, 1.0f, false);
         }
-        
+
         sweepXEnd = sweepXStart;
         sweepYEnd = sweepYStart;
         oldRotate = rotateDirection;
     }
-    
-    public void whileAttacking() {
-        
-    }
-    
-    public void update() {
+
+    /**
+     *  sets a current location on every update and calculates distance
+     * before slowing the player down.
+     * 
+     * @param delta
+     */
+    public void update(int delta) {
+        if (isAttacking == true) {
+            current = new Vector2f(x, y);
+            
+            x_velocity = (float) ((attackVelocity) * Math.cos(Math.toRadians(attackDirection.getTheta())));
+            y_velocity = (float) ((attackVelocity) * Math.sin(Math.toRadians(attackDirection.getTheta())));
+            gravity = 0.0f;
+            if (attackStart.distance(current) >= 300) {
+                gravity = 0.0015f * delta;
+                y_velocity = 0;
+                if (x_velocity < -maximumSpeed) {
+                    x_velocity = -maximumSpeed;
+                } else if (x_velocity > maximumSpeed) {
+                    x_velocity = maximumSpeed;
+                }
+                isAttacking = false;
+            }
+        }
     }
 
     /**
@@ -390,7 +411,7 @@ public class Character extends LevelObject {
 
         renderJumpIndicator(currentPositionX, currentPositionY);
         renderAttackIndicator();
-    } 
+    }
 
     public void renderJumpIndicator(float x, float y) {
         g.setColor(new Color(1.0f, 1.0f, 1.0f, jumpIndicatorTransp));
@@ -405,7 +426,7 @@ public class Character extends LevelObject {
         attackIndicator.setY(y + 16);
         g.setColor(new Color(1.0f, 1.0f, 1.0f, attackIndicatorTransp));
         g.fill(attackIndicator);
-        
+
         attackIndicatorTransp -= 0.01f;
     }
 }
