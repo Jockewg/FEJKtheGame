@@ -61,6 +61,7 @@ public class Character extends LevelObject {
     private Vector2f attackDirection, attackStart, current;
     private float oldRotate;
     private float rotateDirection;
+    private float calculatedXAttack, calculatedYAttack;
 
     private float playerWidth, playerHeight;
 
@@ -352,7 +353,8 @@ public class Character extends LevelObject {
             isAttacking = true;
             attackStart = new Vector2f(x, y);
 
-            
+            calculatedXAttack = (float) ((attackVelocity) * Math.cos(Math.toRadians(attackDirection.getTheta())));
+            calculatedYAttack = (float) ((attackVelocity) * Math.sin(Math.toRadians(attackDirection.getTheta())));
 
             rotateDirection = (float) attackDirection.getTheta();
             attackIndicatorTransp = 1.0f;
@@ -382,8 +384,8 @@ public class Character extends LevelObject {
         if (isAttacking == true) {
             current = new Vector2f(x, y);
             
-            x_velocity = (float) ((attackVelocity) * Math.cos(Math.toRadians(attackDirection.getTheta())));
-            y_velocity = (float) ((attackVelocity) * Math.sin(Math.toRadians(attackDirection.getTheta())));
+            x_velocity = calculatedXAttack;
+            y_velocity = calculatedYAttack;
             gravity = 0.0f;
             if (attackStart.distance(current) >= 300) {
                 gravity = 0.0015f * delta;
