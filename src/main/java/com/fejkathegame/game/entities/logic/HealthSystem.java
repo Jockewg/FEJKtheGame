@@ -19,9 +19,16 @@ public class HealthSystem {
     ArrayList<Heart> hearts = new ArrayList<>();
     private Audio hurtSound;
 
+    /**
+     * Constructor for the health system, Requires a {@code LevelObject} to attach to, initializes {@code healthBar}
+     * based on the amount of health of the {@code LevelObject}
+     * @param levelObj
+     * @throws SlickException
+     * @throws IOException
+     */
     public HealthSystem(LevelObject levelObj) throws SlickException, IOException {
         this.object = levelObj;
-        setHealthbar();
+        setHealthBar();
         hurtSound = AudioLoader.getAudio("WAV", ResourceLoader.getResourceAsStream("src/main/resources/data/sound/Hurt.wav"));
     }
 
@@ -41,7 +48,11 @@ public class HealthSystem {
         }
     }
 
-    public void setHealthbar() throws SlickException {
+    /**
+     * initiates the {@code healthBar} for the {@code LevelObject}
+     * @throws SlickException
+     */
+    public void setHealthBar() throws SlickException {
         for (int i = 0; i < object.getHealth(); i++) {
             //Old dot health system
 //            hearts.add(new Heart(heartImage, object.getX() + (i * 10), object.getY()));
@@ -59,10 +70,9 @@ public class HealthSystem {
         }
     }
     /**
-     *
+     * updates the HealthBar based on the current health of the {@code LevelObject}
      */
     public void updateHealthBar() {
-        //TODO: Implement graphical representation of a healthbar
         int health = object.getHealth();
         if(getHearts().size() > health) {
             getHearts().remove(health);

@@ -21,3 +21,6 @@ target/classes/com/khamekaze/fejkathegame/game/Game.class
 target/classes/com/khamekaze/fejkathegame/game/Game.class
 nbactions.xml
 nbactions.xml
+.idea/libraries/Maven__org_apache_mina_mina_codec_3_0_0_M2.xml
+.idea/libraries/Maven__org_apache_mina_mina_core_3_0_0_M2.xml
+.idea/libraries/Maven__org_newdawn_slick_jinput_1.xml
