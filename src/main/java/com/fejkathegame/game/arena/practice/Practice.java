@@ -10,6 +10,7 @@ import com.fejkathegame.game.arena.Level;
 import com.fejkathegame.game.entities.LevelObject;
 import com.fejkathegame.game.arena.tiles.AirTile;
 import com.fejkathegame.game.arena.tiles.SolidTile;
+import com.fejkathegame.game.arena.tiles.TargetTile;
 import com.fejkathegame.game.arena.tiles.Tile;
 
 import java.awt.Font;
@@ -61,6 +62,7 @@ public class Practice extends Level {
 
     /**
      * populates the arena with tiles
+     * @throws org.newdawn.slick.SlickException
      */
     public void loadTileMap() {
         tiles = new Tile[map.getWidth() + 1][map.getHeight() + 1];
@@ -75,19 +77,31 @@ public class Practice extends Level {
         for (int x = 0; x < map.getWidth(); x++) {
             for (int y = 0; y < map.getHeight(); y++) {
 
-                int tileID = map.getTileId(x, y, layerIndex);
-
-                Tile tile = null;
-
-                switch (map.getTileProperty(tileID, "tileType", "solid")) {
-                    case "air":
-                        tile = new AirTile(x, y);
-                        break;
-                    default:
-                        tile = new SolidTile(x, y);
-                        break;
+                try {
+                    int tileID = map.getTileId(x, y, layerIndex);
+                    
+                    Tile tile = null;
+                    PracticeTarget target = null;
+                    
+                    switch (map.getTileProperty(tileID, "tileType", "solid")) {
+                        case "air":
+                            tile = new AirTile(x, y);
+                            break;
+                        case "target":
+                            tile = new TargetTile(x, y);
+                            target = new PracticeTarget(tile.getX() * 25 - 1, tile.getY() * 25 - 1);
+                            targets.add(target);
+                            break;
+                        default:
+                            tile = new SolidTile(x, y);
+                            break;
+                    }
+                    tiles[x][y] = tile;
+                } catch (SlickException ex) {
+                    Logger.getLogger(Practice.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+                } catch (IOException ex) {
+                    Logger.getLogger(Practice.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
                 }
-                tiles[x][y] = tile;
             }
         }
     }
@@ -105,33 +119,34 @@ public class Practice extends Level {
      * Creates and adds Practice targets to the {@code targets} array
      */
     public void addPracticeTargets() {
+        
 
-        try {
-            PracticeTarget target1 = new PracticeTarget(60, 70);
-            targets.add(target1);
-            PracticeTarget target2 = new PracticeTarget(100, 300);
-            targets.add(target2);
-            PracticeTarget target3 = new PracticeTarget(200, 50);
-            targets.add(target3);
-            PracticeTarget target4 = new PracticeTarget(400, 30);
-            targets.add(target4);
-            PracticeTarget target5 = new PracticeTarget(600, 50);
-            targets.add(target5);
-            PracticeTarget target6 = new PracticeTarget(400, 400);
-            targets.add(target6);
-            PracticeTarget target7 = new PracticeTarget(400, 200);
-            targets.add(target7);
-            PracticeTarget target8 = new PracticeTarget(750, 80);
-            targets.add(target8);
-            PracticeTarget target9 = new PracticeTarget(800, 435);
-            targets.add(target9);
-            PracticeTarget target10 = new PracticeTarget(160, 200);
-            targets.add(target10);
-        } catch (SlickException ex) {
-            Logger.getLogger(Practice.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(Practice.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
+//        try {
+//            PracticeTarget target1 = new PracticeTarget(60, 70);
+//            targets.add(target1);
+//            PracticeTarget target2 = new PracticeTarget(100, 300);
+//            targets.add(target2);
+//            PracticeTarget target3 = new PracticeTarget(200, 50);
+//            targets.add(target3);
+//            PracticeTarget target4 = new PracticeTarget(400, 30);
+//            targets.add(target4);
+//            PracticeTarget target5 = new PracticeTarget(600, 50);
+//            targets.add(target5);
+//            PracticeTarget target6 = new PracticeTarget(400, 400);
+//            targets.add(target6);
+//            PracticeTarget target7 = new PracticeTarget(400, 200);
+//            targets.add(target7);
+//            PracticeTarget target8 = new PracticeTarget(750, 80);
+//            targets.add(target8);
+//            PracticeTarget target9 = new PracticeTarget(800, 435);
+//            targets.add(target9);
+//            PracticeTarget target10 = new PracticeTarget(160, 200);
+//            targets.add(target10);
+//        } catch (SlickException ex) {
+//            Logger.getLogger(Practice.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (IOException ex) {
+//            Logger.getLogger(Practice.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        }
     }
 
     /**
