@@ -89,8 +89,8 @@ public class PracticeState extends BasicGameState {
         g.scale(Main.SCALE, Main.SCALE);
         g.translate(-camX, -camY);
         arena.render();
+        arena.updateText(camX + 745, camY);
         g.resetTransform();
-        arena.updateText(camX, camY);
     }
 
 
