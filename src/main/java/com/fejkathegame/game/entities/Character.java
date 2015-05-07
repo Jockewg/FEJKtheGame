@@ -259,7 +259,7 @@ public class Character extends LevelObject {
                 setIsAttacking(false);
             }
         }
-        if(!isCharging)
+        if(!isCharging && !isFullyCharged)
             superAttackIndicator.setRadii(32, 32);
         
         if(isFullyCharged)
@@ -283,7 +283,7 @@ public class Character extends LevelObject {
 
         healthSystem.render();
 
-        if(isCharging) {
+        if(isCharging || isFullyCharged) {
             g.setColor(new Color(1.0f, 1.0f, 1.0f, 1.0f));
             g.draw(superAttackIndicator);
         }
