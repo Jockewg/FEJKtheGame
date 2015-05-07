@@ -125,6 +125,8 @@ public class Practice extends Level {
 
     /**
      * Creates and adds Practice targets to the {@code targets} array
+     *
+     * DEPRECATED
      */
     public void addPracticeTargets() {
         
@@ -167,9 +169,8 @@ public class Practice extends Level {
             score = "You are a winrar!";
         }
     }
-//  doesnt work
+
     public void moveTarget() {
-        
     movableTarget.setY(movableTarget.getY() + targetVelY);
 
     if(movableTarget.getY() > (movableTargetStartingPos + 100) && targetVelY > 0) {
