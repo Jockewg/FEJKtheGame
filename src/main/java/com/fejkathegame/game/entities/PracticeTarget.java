@@ -67,6 +67,6 @@ public class PracticeTarget extends LevelObject {
     
     public void updateHitBox() {
         hitBox.setX(x);
-        hitBox.setY(x);
+        hitBox.setY(y);
     }
 }
