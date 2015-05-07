@@ -60,6 +60,8 @@ public class Character extends LevelObject {
     private Audio jumpSound, attackSound;
     private Shape jumpIndicator;
     private Polygon attackIndicator;
+    private Ellipse superAttackIndicator;
+    private boolean isCharging = false;
 
 
     /**
@@ -100,6 +102,7 @@ public class Character extends LevelObject {
         attackIndicator.addPoint(48, 0);
         jumpIndicator = new Rectangle(x, y, sprite.getWidth() + 4, 2);
         current = new Vector2f(x, y);
+        superAttackIndicator = new Ellipse(x + 16, y + 16, 32, 32);
     }
 
     /**
@@ -163,6 +166,15 @@ public class Character extends LevelObject {
             }
         }
         moving = true;
+    }
+    
+    public void chargeSuperAttack(Input i, int delta) {
+        isCharging = true;
+        float shrinking1 = superAttackIndicator.getRadius1() - (0.75f / delta);
+            superAttackIndicator.setRadius1(shrinking1);
+            superAttackIndicator.setRadius2(shrinking1);
+            superAttackIndicator.setCenterX(getX() + 16);
+            superAttackIndicator.setCenterY(getY() + 16);
     }
 
     /**
@@ -231,6 +243,8 @@ public class Character extends LevelObject {
                 setIsAttacking(false);
             }
         }
+        if(!isCharging)
+            superAttackIndicator.setRadii(32, 32);
     }
 
     /**
@@ -242,7 +256,11 @@ public class Character extends LevelObject {
     public void render() throws SlickException {
         renderJumpIndicator(currentPositionX, currentPositionY);
         renderAttackIndicator();
-        
+        if(isCharging) {
+            g.setColor(new Color(1.0f, 1.0f, 1.0f, 1.0f));
+            g.draw(superAttackIndicator);
+        }
+            
         sprite.draw(x, y);
 
         healthSystem.render();
@@ -278,6 +296,14 @@ public class Character extends LevelObject {
 //      *    Getters and Setters      *
 //      *******************************
 
+    public boolean getIsCharging() {
+        return isCharging;
+    }
+    
+    public void setIsCharging(boolean isCharging) {
+        this.isCharging = isCharging;
+    }
+    
     public boolean isGrounded() {
         return grounded;
     }

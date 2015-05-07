@@ -23,7 +23,8 @@ public class MovementSystem {
      * @param delta
      */
     public void handleInput(Input i, int delta) {
-        if(!character.getIsAttacking()) {
+        handleChargeAttack(i, delta);
+        if(!character.getIsAttacking() && !character.getIsCharging()) {
             handleMouseInput(i, delta);
             handleKeyBoardInput(i, delta);
         }
@@ -61,6 +62,14 @@ public class MovementSystem {
         
         if(i.isKeyPressed(Input.KEY_Q)) {
             character.getHealthSystem().dealDamage(1);
+        }
+    }
+    
+    public void handleChargeAttack(Input i, int delta) {
+        if(i.isKeyDown(Input.KEY_E)) {
+            character.chargeSuperAttack(i, delta);
+        } else {
+            character.setIsCharging(false);
         }
     }
 }
