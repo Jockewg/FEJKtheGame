@@ -74,10 +74,7 @@ public class Character extends LevelObject {
         maxFallSpeed = 0.75f;
         decelerationSpeed = 0.005f;
         sprite = new Image("src/main/resources/data/img/placeholder.png");
-
         boundingShape = new AABoundingRect(x, y, 32, 32);
-
-
         grounded = false;
         health = 5;
         attackCoolDown = 100;
@@ -91,7 +88,6 @@ public class Character extends LevelObject {
         this.movementSystem = new MovementSystem(this);
         gravity = 0.5f;
         jumpStrength = -15;
-
         jumpSound = AudioLoader.getAudio("WAV", ResourceLoader.getResourceAsStream("src/main/resources/data/sound/Jump5.wav"));
         attackSound = AudioLoader.getAudio("WAV", ResourceLoader.getResourceAsStream("src/main/resources/data/sound/Attack.wav"));
         sweepAttack = 4;
@@ -104,10 +100,12 @@ public class Character extends LevelObject {
         attackIndicator.addPoint(52, 0);
         jumpIndicator = new Rectangle(x, y, sprite.getWidth() + 4, 2);
         current = new Vector2f(x, y);
-
     }
 
-
+    /**
+     * Decelerates the Character, avoiding jerky movement
+     * @param delta
+     */
     public void decelerate(int delta) {
         if (x_velocity > 0) {
             x_velocity -= decelerationSpeed * delta;
@@ -122,6 +120,10 @@ public class Character extends LevelObject {
         }
     }
 
+    /**
+     * Launches the Character into the air upwards
+     * @param delta
+     */
     public void jump(int delta) {
         currentPositionX = getX() - 2;
         currentPositionY = getY() + 32;
@@ -135,6 +137,10 @@ public class Character extends LevelObject {
         jumpSound.playAsSoundEffect(1.0f, 1.0f, false);
     }
 
+    /**
+     * Moves the character to the left
+     * @param delta
+     */
     public void moveLeft(int delta) {
         if (x_velocity > -maximumSpeed) {
             x_velocity -= accelerationSpeed * delta;
@@ -145,6 +151,10 @@ public class Character extends LevelObject {
         moving = true;
     }
 
+    /**
+     * moves the character to the right
+     * @param delta
+     */
     public void moveRight(int delta) {
         if (x_velocity < maximumSpeed) {
             x_velocity += accelerationSpeed * delta;
@@ -155,6 +165,11 @@ public class Character extends LevelObject {
         moving = true;
     }
 
+    /**
+     * Preforms an attack, launching the Character in the direction of the attack
+     * @param i
+     * @param delta
+     */
     public void attack(Input i, int delta) {
         sweepXStart = i.getMouseX();
         sweepYStart = i.getMouseY();
@@ -234,6 +249,11 @@ public class Character extends LevelObject {
         renderAttackIndicator();
     }
 
+    /**
+     * Displays a white line under the character when he jumps in the air
+     * @param x
+     * @param y
+     */
     public void renderJumpIndicator(float x, float y) {
         g.setColor(new Color(1.0f, 1.0f, 1.0f, jumpIndicatorTransp));
         jumpIndicator.setX(x);
@@ -242,6 +262,9 @@ public class Character extends LevelObject {
         jumpIndicatorTransp -= 0.02f;
     }
 
+    /**
+     * Shows an indicator of the characters attack
+     */
     public void renderAttackIndicator() {
         attackIndicator.setX(x + 16);
         attackIndicator.setY(y + 16);
@@ -250,8 +273,9 @@ public class Character extends LevelObject {
 
         attackIndicatorTransp -= 0.01f;
     }
-
-    //Getters and Setters
+//      *******************************
+//      *    Getters and Setters      *
+//      *******************************
 
     public boolean isGrounded() {
         return grounded;
