@@ -64,6 +64,7 @@ public class PracticeState extends BasicGameState {
         g.scale(0.3555f, 0.3555f);
         arena.render();
         g.resetTransform();
+        g.translate(obj.getX() + 50, obj.getY() + 50);
 
     }
 
