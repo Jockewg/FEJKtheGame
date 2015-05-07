@@ -36,6 +36,7 @@ public class Practice extends Level {
 
     private PracticeTarget movableTarget;
     float movableTargetStartingPos;
+    private float targetVelY = 1.0f;
 
     Font font;
     TrueTypeFont ttf;
@@ -168,10 +169,13 @@ public class Practice extends Level {
     }
 //  doesnt work
     public void moveTarget() {
+        
+    movableTarget.setY(movableTarget.getY() + targetVelY);
 
-
-    if (movableTarget.getY() <= movableTargetStartingPos) {
-        movableTarget.setY(movableTargetStartingPos++);
+    if(movableTarget.getY() > (movableTargetStartingPos + 100) && targetVelY > 0) {
+        targetVelY = -1.0f;
+    } else if(movableTarget.getY() < movableTargetStartingPos && targetVelY < 0) {
+        targetVelY = 1.0f;
     }
 
     }

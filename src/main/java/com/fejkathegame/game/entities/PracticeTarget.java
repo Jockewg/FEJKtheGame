@@ -57,11 +57,16 @@ public class PracticeTarget extends LevelObject {
     }
     @Override
     public void render() throws SlickException {
-        
+        updateHitBox();
         sprite.draw(x, y);
     } 
     
     public HealthSystem getHealthSystem() {
         return healthSystem;
+    }
+    
+    public void updateHitBox() {
+        hitBox.setX(x);
+        hitBox.setY(x);
     }
 }
