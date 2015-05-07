@@ -58,7 +58,7 @@ public class Character extends LevelObject {
     private Shape player;
     private Color color;
     private Image sprite;
-    private Audio jumpSound, attackSound, chargeSound;
+    private Audio jumpSound, attackSound, chargeActivationSound, chargeAttackSound;
     private Shape jumpIndicator;
     private Polygon attackIndicator;
     private Ellipse superAttackIndicator;
@@ -93,7 +93,8 @@ public class Character extends LevelObject {
         jumpStrength = -15;
         jumpSound = AudioLoader.getAudio("WAV", ResourceLoader.getResourceAsStream("src/main/resources/data/sound/Jump5.wav"));
         attackSound = AudioLoader.getAudio("WAV", ResourceLoader.getResourceAsStream("src/main/resources/data/sound/Attack.wav"));
-        chargeSound = AudioLoader.getAudio("WAV", ResourceLoader.getResourceAsStream("src/main/resources/data/sound/Charge.wav"));
+        chargeActivationSound = AudioLoader.getAudio("WAV", ResourceLoader.getResourceAsStream("src/main/resources/data/sound/Charge.wav"));
+        chargeAttackSound = AudioLoader.getAudio("WAV", ResourceLoader.getResourceAsStream("src/main/resources/data/sound/ChargeExplosion.wav"));
         sweepAttack = 4;
         sweepLimit = 10;
         attackVelocity = 1.4f;
@@ -195,7 +196,7 @@ public class Character extends LevelObject {
         
         if (superAttackIndicator.getRadius1() < 16) {
             isFullyCharged = true;
-            chargeSound.stop();
+            chargeActivationSound.stop();
         }
         
     }
@@ -206,8 +207,8 @@ public class Character extends LevelObject {
      */
     public void playChargeSound() {
         if(isCharging) {
-            if(!chargeSound.isPlaying()) {
-            chargeSound.playAsSoundEffect(1.0f, 0.1f, false);
+            if(!chargeActivationSound.isPlaying()) {
+            chargeActivationSound.playAsSoundEffect(1.0f, 1.0f, false);
             }
         }
     }
@@ -218,8 +219,8 @@ public class Character extends LevelObject {
      */
     public void stopChargeSound() {
         if(!isCharging) {
-            if(chargeSound.isPlaying()) {
-                chargeSound.stop();
+            if(chargeActivationSound.isPlaying()) {
+                chargeActivationSound.stop();
             }
         }
     }
@@ -232,6 +233,7 @@ public class Character extends LevelObject {
      * @param delta 
      */
     public void activateSuperAttack(int delta) {
+        chargeAttackSound.playAsSoundEffect(1.0f, 1.0f, false);
         float expanding = superAttackIndicator.getRadius1() + (2 * delta);
         superAttackIndicator.setCenterX(getX());
         superAttackIndicator.setCenterY(getY());
