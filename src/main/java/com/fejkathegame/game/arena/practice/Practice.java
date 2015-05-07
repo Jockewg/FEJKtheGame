@@ -35,6 +35,7 @@ public class Practice extends Level {
     private ArrayList<PracticeTarget> targets;
 
     private PracticeTarget movableTarget;
+    float movableTargetStartingPos;
 
     Font font;
     TrueTypeFont ttf;
@@ -62,6 +63,7 @@ public class Practice extends Level {
         score = "Targets Left: " + String.valueOf(targets.size());
 
         movableTarget = targets.get(15);
+        movableTargetStartingPos = movableTarget.getY();
     }
 
     /**
@@ -164,14 +166,14 @@ public class Practice extends Level {
             score = "You are a winrar!";
         }
     }
-
+//  doesnt work
     public void moveTarget() {
-        for (int i = 0; i > 50; i++) {
-            movableTarget.setY(i);
-        }
-        for (int i = 0; i < 50; i--) {
-            movableTarget.setY(i);
-        }
+
+
+    if (movableTarget.getY() <= movableTargetStartingPos) {
+        movableTarget.setY(movableTargetStartingPos++);
+    }
+
     }
 
     /**
@@ -214,9 +216,9 @@ public class Practice extends Level {
         }
 
         //for debugging
-        for (int i = 0; i < targets.size(); i++) {
+        /*for (int i = 0; i < targets.size(); i++) {
             ttf.drawString(targets.get(i).getX(), targets.get(i).getY(), String.valueOf(i));
-        }
+        }*/
 
         ttf.drawString(700, -1, score, Color.green);
     }

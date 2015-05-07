@@ -99,7 +99,7 @@ public class PracticeState extends BasicGameState {
         physics.handlePhysics(arena, i);
         checkCollisionWithTarget();
         obj.update();
-//        arena.moveTarget();
+        arena.moveTarget();
     }
     
     public void checkCollisionWithTarget() {
