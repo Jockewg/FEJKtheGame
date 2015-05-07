@@ -71,7 +71,7 @@ public class PracticeState extends BasicGameState {
         movementSystem.handleInput(gc.getInput(), i);
         physics.handlePhysics(arena, i);
         checkCollisionWithTarget();
-        obj.update();
+        obj.update(i);
     }
     
     public void checkCollisionWithTarget() {
