@@ -349,11 +349,10 @@ public class Character extends LevelObject {
 
         if (sweepSpeed >= sweepAttack && sweepSpeed <= sweepLimit
                 && attackCoolDown <= 0) { // Attack movement here
-            attackStart = new Vector2f(x, y);
             isAttacking = true;
+            attackStart = new Vector2f(x, y);
 
-            x_velocity = (float) ((attackVelocity) * Math.cos(Math.toRadians(attackDirection.getTheta())));
-            y_velocity = (float) ((attackVelocity) * Math.sin(Math.toRadians(attackDirection.getTheta())));
+            
 
             rotateDirection = (float) attackDirection.getTheta();
             attackIndicatorTransp = 1.0f;
@@ -382,8 +381,11 @@ public class Character extends LevelObject {
     public void update(int delta) {
         if (isAttacking == true) {
             current = new Vector2f(x, y);
+            
+            x_velocity = (float) ((attackVelocity) * Math.cos(Math.toRadians(attackDirection.getTheta())));
+            y_velocity = (float) ((attackVelocity) * Math.sin(Math.toRadians(attackDirection.getTheta())));
             gravity = 0.0f;
-            if (attackStart.distance(current) >= 200) {
+            if (attackStart.distance(current) >= 300) {
                 gravity = 0.0015f * delta;
                 y_velocity = 0;
                 if (x_velocity < -maximumSpeed) {
