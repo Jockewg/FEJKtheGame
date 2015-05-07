@@ -42,7 +42,7 @@ public class PracticeState extends BasicGameState {
 
         obj = null;
         try {
-            obj = new com.fejkathegame.game.entities.Character(800, 40);
+            obj = new com.fejkathegame.game.entities.Character(32, 40);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -60,7 +60,8 @@ public class PracticeState extends BasicGameState {
 
     @Override
     public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
-        g.scale(Main.SCALE, Main.SCALE);
+        g.setAntiAlias(true);
+        g.scale(0.3555f, 0.3555f);
         arena.render();
 
     }

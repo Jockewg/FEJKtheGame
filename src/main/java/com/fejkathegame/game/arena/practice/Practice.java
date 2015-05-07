@@ -173,7 +173,7 @@ public class Practice extends Level {
      * @throws SlickException
      */
     public void render() throws SlickException {
-        map.render(0, 0, 0, 0, 36, 20);
+        map.render(0, 0, 0, 0, 100, 40);
 
 
         for (LevelObject p : players) {

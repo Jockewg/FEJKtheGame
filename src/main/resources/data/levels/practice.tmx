@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="100" height="40" tilewidth="25" tileheight="25" nextobjectid="1">
+ <tileset firstgid="1" name="Arena" tilewidth="25" tileheight="25">
+  <image source="../img/tilesets/backgroundArena.png" width="900" height="500"/>
+  <tile id="0">
+   <properties>
+    <property name="tileType" value="solid"/>
+   </properties>
+  </tile>
+  <tile id="37">
+   <properties>
+    <property name="tileType" value="air"/>
+   </properties>
+  </tile>
+ </tileset>
+ <layer name="CollisionLayer" width="100" height="40">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC+2ZQQ6DMAwE4TP9/xN7qoQqggjE2Vk7hz20FXQ34xon3bdt25dQ+ohF8EDIvniwVJEHqS+88RXZ42hro2ai9jGLCSWrA4+WH+L8UYXHz9PV69Z77qLW2x0ekUyUv0VnHk/u1XsNkcfsvWQvj8hZj8jj6T1n7ynceWTbS9D67hsmFJZvfBD8qHgcr1dnyCSH50eGules2/G+6myucn9+3PGp9jCDh2teuhxqvIpcek4lZePhnmUEj0z7MbVUZ8rq3EQpz/jV2anKxsP9PGvU86NnrZ3XKyMPYgaCRtXoqvfxTNQ+qviumstVi0ffOkXOb5Se38pIml1b3x31X56SRysjyddZjVTiQfP172Umj1E9gtJrImokgkeWtZrNJYrHkYk6J1mtWePss1F7a3VmN0XNW1dz9ZJGXw8yHjyAPgAA
+  </data>
+ </layer>
+</map>

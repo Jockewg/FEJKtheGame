@@ -29,7 +29,7 @@ public class Main extends StateBasedGame {
         addState(new HostScreenState("host"));
         addState(new MenuState("menu"));
         addState(new VersusState("arena"));
-        addState(new PracticeState("arena"));
+        addState(new PracticeState("practice"));
         
         this.enterState(0);
 
