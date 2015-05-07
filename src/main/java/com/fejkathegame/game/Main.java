@@ -5,7 +5,6 @@ import com.fejkathegame.game.arena.practice.PracticeState;
 import com.fejkathegame.menu.HostScreenState;
 import com.fejkathegame.menu.MenuState;
 
-import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.GameContainer;
@@ -24,6 +23,13 @@ public class Main extends StateBasedGame {
         super("FEJKA the game");
     }
     
+    /**
+     * Loads the different states(screens/modes/menus) available nad
+     * enters the state specified with an id.
+     * 
+     * @param gc - The container given by Slick
+     * @throws SlickException 
+     */
     @Override
     public void initStatesList(GameContainer gc) throws SlickException {
         addState(new HostScreenState("host"));
@@ -37,6 +43,7 @@ public class Main extends StateBasedGame {
     
     public static void main(String[] args) {
         try {
+                    //The gamecontainer used by Slick, this is where everything will be contained
                     AppGameContainer appgc = new AppGameContainer(new Main());
                     appgc.setDisplayMode(WINDOW_WIDTH, WINDOW_HEIGHT, FULLSCREEN);
                     appgc.setDisplayMode(900, 500, false);

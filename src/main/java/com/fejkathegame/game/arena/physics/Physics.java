@@ -7,14 +7,31 @@ import com.fejkathegame.game.arena.tiles.Tile;
 
 import java.util.ArrayList;
 
+/**
+ * Handles collisiondetection and gravity.
+ * 
+ * @author Kim Göransson
+ */
 public class Physics {
     
     private final float gravity = 0.0015f;
     
+    /**
+     * Handles physics for a level.
+     * 
+     * @param arena the level that will utilize physics
+     * @param delta the time between two updates 
+     */
     public void handlePhysics(Level arena, int delta) {
         handleCharacters(arena, delta);
     }
     
+    /**
+     * Handles physics for objects in the game.
+     * 
+     * @param level the level that the objects are in
+     * @param delta the time between two updates
+     */
     private void handleCharacters(Level level, int delta) {
         for(LevelObject p : level.getPlayers()) {
             if(!p.isMoving()) {
@@ -24,6 +41,16 @@ public class Physics {
         }
     }
     
+    /**
+     * Checks if a hitbox is colliding with a tile.
+     * 
+     * If an object is occupying a solid tile, this method will return true,
+     * indicating a collision between an object and a tile.
+     * 
+     * @param obj the player
+     * @param mapTiles the tiles that make up the level
+     * @return true if a collision is detected, else false
+     */
     private boolean checkCollision(LevelObject obj, Tile[][] mapTiles) {
         ArrayList<Tile> tiles = obj.getBoundingShape().getTilesOccupying(mapTiles);
         for(Tile t : tiles) {
@@ -36,6 +63,16 @@ public class Physics {
         return false;
     }
     
+    /**
+     * Checks if an object is touching a ground tile.
+     * 
+     * If an object is located directly above a tile, that tile is considered
+     * a ground tile.
+     * 
+     * @param obj the player
+     * @param mapTiles the tiles that make up the level
+     * @return true if the player is directly above a ground tile, else false
+     */
     private boolean isOnGround(LevelObject obj, Tile[][] mapTiles) {
         ArrayList<Tile> tiles = obj.getBoundingShape().getGroundTiles(mapTiles);
         
@@ -53,6 +90,16 @@ public class Physics {
         return false;
     }
     
+    /**
+     * Handles the gravity for players.
+     * 
+     * If a player is not touching a ground tile, this method applies
+     * gravity on the player.
+     * 
+     * @param obj the player
+     * @param level the level that the player is in
+     * @param delta the time between two updates
+     */
     private void handleGameObject(LevelObject obj, Level level, int delta) {
         obj.setOnGround(isOnGround(obj, level.getTiles()));
         

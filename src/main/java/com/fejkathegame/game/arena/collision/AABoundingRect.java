@@ -5,6 +5,12 @@ import com.fejkathegame.game.arena.tiles.Tile;
 import java.util.ArrayList;
 import org.newdawn.slick.geom.Shape;
 
+
+/**
+ * This class is used to create hitboxes for objects in the game.
+ * 
+ * @author Kim Göransson
+ */
 public class AABoundingRect extends BoundingShape {
     
     public float x, y, width, height;
@@ -15,7 +21,14 @@ public class AABoundingRect extends BoundingShape {
         this.width = width;
         this.height = height;
     }
-
+    
+    /**
+     * Checks if a hitbox is colliding with another hitbox
+     * 
+     * @param box - the hitbox to check collision against
+     * @return 
+     */
+    
     @Override
     public boolean checkCollision(AABoundingRect box) {
         return !(box.x > this.x+width ||
@@ -36,6 +49,12 @@ public class AABoundingRect extends BoundingShape {
         this.y += y;
     }
 
+    /**
+     * Checks the tiles that a hitbox is occupying.
+     * 
+     * @param tiles - The tiles that make up the level
+     * @return the tiles that are occupied by a hitbox
+     */
     @Override
     public ArrayList<Tile> getTilesOccupying(Tile[][] tiles) {
         ArrayList<Tile> occupiedTiles = new ArrayList<Tile>();
@@ -48,6 +67,12 @@ public class AABoundingRect extends BoundingShape {
         return occupiedTiles;
     }
 
+    /**
+     * Checks if a hitbox is beneath a hitbox.
+     * 
+     * @param tiles - The tiles that make up the level
+     * @return the tiles that are directly beneath the hitbox
+     */
     @Override
     public ArrayList<Tile> getGroundTiles(Tile[][] tiles) {
         ArrayList<Tile> tilesUnderneath = new ArrayList<>();
