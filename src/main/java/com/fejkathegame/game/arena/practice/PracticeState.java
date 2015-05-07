@@ -60,9 +60,10 @@ public class PracticeState extends BasicGameState {
 
     @Override
     public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
-        g.setAntiAlias(true);
+        g.setAntiAlias(false);
         g.scale(0.3555f, 0.3555f);
         arena.render();
+        g.resetTransform();
 
     }
 
