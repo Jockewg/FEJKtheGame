@@ -24,10 +24,12 @@ public class PracticeState extends BasicGameState {
     private Physics physics;
     private com.fejkathegame.game.entities.Character obj;
     
-    private float offsetMaxX = Main.WINDOW_WIDTH - 900;
-    private float offsetMaxY = Main.WINDOW_HEIGHT - 500;
-    private float offsetMinX, offsetMinY = 0;
+    private float offsetMaxX = 2050;
+    private float offsetMaxY = 750;
+    private float offsetMinX = 0;
+    private float offsetMinY = 0;
     private float camX, camY = 0;
+    private float acc = 5.0f;
 
     /**
      * Constructor for ArenaState
@@ -62,11 +64,12 @@ public class PracticeState extends BasicGameState {
 
 
     }
+    
 
     @Override
     public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
         g.setAntiAlias(false);
-        g.scale(0.85f, 0.85f);
+        g.scale(Main.SCALE, Main.SCALE);
         g.translate(-camX, -camY);
         arena.render();
         g.resetTransform();
@@ -75,8 +78,19 @@ public class PracticeState extends BasicGameState {
 
     @Override
     public void update(GameContainer gc, StateBasedGame sbg, int i) throws SlickException {
-        camX = obj.getX() - 450;
-        camY = obj.getY() - 250;
+        if(obj.getX() <= offsetMinX + 450)
+            camX = offsetMinX;
+        else if(obj.getX() >= offsetMaxX)
+            camX = offsetMaxX - 450;
+        else
+            camX = obj.getX() - 450.0f;
+        
+        if(obj.getY() <= offsetMinY + 250)
+            camY = offsetMinY;
+        else if(obj.getY() >= offsetMaxY)
+            camY = offsetMaxY - 250;
+        else
+        camY = obj.getY() - 250.0f;
         movementSystem.handleInput(gc.getInput(), i);
         physics.handlePhysics(arena, i);
         checkCollisionWithTarget();
