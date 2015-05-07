@@ -90,6 +90,7 @@ public class PracticeState extends BasicGameState {
         g.translate(-camX, -camY);
         arena.render();
         g.resetTransform();
+        arena.updateText(camX, camY);
     }
 
 
@@ -101,7 +102,7 @@ public class PracticeState extends BasicGameState {
         checkCollisionWithTarget();
         obj.update();
         arena.moveTarget();
-        arena.updateText(camX, camY);
+
     }
     
     public void checkCollisionWithTarget() {
