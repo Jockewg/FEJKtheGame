@@ -34,6 +34,8 @@ public class Practice extends Level {
     private ArrayList<LevelObject> players;
     private ArrayList<PracticeTarget> targets;
 
+    private PracticeTarget movableTarget;
+
     Font font;
     TrueTypeFont ttf;
     String score;
@@ -58,6 +60,8 @@ public class Practice extends Level {
         ttf = new TrueTypeFont(font, true);
 
         score = "Targets Left: " + String.valueOf(targets.size());
+
+        movableTarget = targets.get(15);
     }
 
     /**
@@ -91,6 +95,7 @@ public class Practice extends Level {
                             tile = new TargetTile(x, y);
                             target = new PracticeTarget(tile.getX() * 25 - 1, tile.getY() * 25 - 1);
                             targets.add(target);
+
                             break;
                         default:
                             tile = new SolidTile(x, y);
@@ -160,6 +165,15 @@ public class Practice extends Level {
         }
     }
 
+    public void moveTarget() {
+        for (int i = 0; i > 50; i++) {
+            movableTarget.setY(i);
+        }
+        for (int i = 0; i < 50; i--) {
+            movableTarget.setY(i);
+        }
+    }
+
     /**
      * @return the player array which includes all player objects
      */
@@ -199,6 +213,12 @@ public class Practice extends Level {
             t.render();
         }
 
+        //for debugging
+        for (int i = 0; i < targets.size(); i++) {
+            ttf.drawString(targets.get(i).getX(), targets.get(i).getY(), String.valueOf(i));
+        }
+
         ttf.drawString(700, -1, score, Color.green);
     }
+
 }
