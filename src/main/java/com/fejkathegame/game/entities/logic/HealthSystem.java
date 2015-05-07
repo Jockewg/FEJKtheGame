@@ -70,10 +70,9 @@ public class HealthSystem {
         }
     }
     /**
-     * 
+     * updates the HealthBar based on the current health of the {@code LevelObject}
      */
     public void updateHealthBar() {
-        //TODO: Implement graphical representation of a healthbar
         int health = object.getHealth();
         if(getHearts().size() > health) {
             getHearts().remove(health);
