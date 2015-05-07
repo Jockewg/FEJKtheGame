@@ -15,6 +15,13 @@ public class HostScreen {
     private Image connect;
     private Font font;
     
+    /**
+     * Initiates the gui for this screen.
+     * 
+     * @param name name of the state
+     * @param gc the container to be used
+     * @throws SlickException 
+     */
     public HostScreen(String name, GameContainer gc) throws SlickException {
         font = gc.getDefaultFont();
         playerName = new TextField(gc, font, gc.getWidth() / 2 - 150, gc.getHeight() / 2 - 80, 300, 40);
@@ -26,6 +33,12 @@ public class HostScreen {
         connect = new Image("src/main/resources/data/img/buttons/connect.png");
     }
     
+    /**
+     * Renders the objects on the screen.
+     * 
+     * @param gc
+     * @param g
+     */
     public void render(GameContainer gc, Graphics g) {
         playerName.render(gc, g);
         ipField.render(gc, g);

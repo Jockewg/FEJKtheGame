@@ -46,6 +46,17 @@ public class MenuState extends BasicGameState {
 
     }
     
+    /**
+     * Checks if a GUI button is being pressed.
+     * 
+     * If the cursor is above a button and left mouse button is pressed,
+     * the corresponding state will be entered.
+     * 
+     * @param x x position of the cursor
+     * @param y y position of the cursor
+     * @param i the Input that handles mouse movement
+     * @param sbg context of the game that calls for new states
+     */
     public void checkIfButtonIsPressed(int x, int y, Input i, StateBasedGame sbg) {
         if((x > 250 && x < 400) && (y < 200 && y > 125)) {
             if(i.isMousePressed(Input.MOUSE_LEFT_BUTTON)) {

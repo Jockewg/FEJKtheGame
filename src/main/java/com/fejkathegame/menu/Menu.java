@@ -10,6 +10,12 @@ public class Menu {
 
     private Image buttonJoin, buttonHost, logo, buttonPractice;
     
+    /**
+     * Constructor for menu, populates the state.
+     * 
+     * @param name
+     * @throws SlickException 
+     */
     public Menu(String name) throws SlickException {
         buttonJoin = new Image("src/main/resources/data/img/buttons/joinButton.png");
         buttonHost = new Image("src/main/resources/data/img/buttons/hostButton.png");
@@ -17,6 +23,10 @@ public class Menu {
         logo = new Image("src/main/resources/data/img/logo/logo.png");
     }
     
+    /**
+     * Renders the items to the screen.
+     * 
+     */
     public void render() {
         
         buttonJoin.draw(Main.WINDOW_WIDTH / 2 - buttonJoin.getWidth() - 30, 300);

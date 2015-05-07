@@ -40,6 +40,14 @@ public class HostScreenState extends BasicGameState {
 
     }
 
+    /**
+     * Updates the state.
+     * 
+     * @param gc
+     * @param sbg
+     * @param i
+     * @throws SlickException 
+     */
     @Override
     public void update(GameContainer gc, StateBasedGame sbg, int i) throws SlickException {
         int x = input.getMouseX();
@@ -47,6 +55,16 @@ public class HostScreenState extends BasicGameState {
         checkIfConnectIsClicked(x, y, input);
     }
     
+    /**
+     * Checks if the mosue is on the connect button.
+     * 
+     * If the mouse is above the connect button and the left mouse button is
+     * clicked, connection to server will be attempted.
+     * 
+     * @param x x position of the mouse
+     * @param y y position of the mouse
+     * @param i the Input to be used to read mouse position
+     */
     public void checkIfConnectIsClicked(int x, int y, Input i) {
         if((x > 300 && x < 600) && (y > 331 && y < 371)) {
             if(i.isMousePressed(Input.MOUSE_LEFT_BUTTON)) {
