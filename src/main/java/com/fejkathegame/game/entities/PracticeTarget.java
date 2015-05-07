@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.fejkathegame.game.entities;
 
 import com.fejkathegame.game.entities.logic.HealthSystem;
@@ -13,7 +8,6 @@ import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Shape;
 
 /**
- *
  * @author Swartt
  */
 public class PracticeTarget extends LevelObject {
@@ -24,6 +18,12 @@ public class PracticeTarget extends LevelObject {
    private Image sprite;
    private Shape hitBox;
 
+    /**
+     * @param x the X coordinate of the object
+     * @param y the Y coordinate of the object
+     * @throws SlickException
+     * @throws IOException
+     */
    public PracticeTarget(float x, float y) throws SlickException, IOException {
       super(x, y);
       healthSystem = new HealthSystem(this);
@@ -64,7 +64,10 @@ public class PracticeTarget extends LevelObject {
     public HealthSystem getHealthSystem() {
         return healthSystem;
     }
-    
+
+    /**
+     * moves the hitbox to the position of the {@code PracticeTarget}
+     */
     public void updateHitBox() {
         hitBox.setX(x);
         hitBox.setY(y);
