@@ -219,8 +219,10 @@ public class Practice extends Level {
         /*for (int i = 0; i < targets.size(); i++) {
             ttf.drawString(targets.get(i).getX(), targets.get(i).getY(), String.valueOf(i));
         }*/
-
-        ttf.drawString(700, -1, score, Color.green);
+        ttf.drawString(0, 0, score, Color.green);
     }
 
+    public void updateText(float x, float y) {
+        ttf.drawString(x, y, score, Color.green);
+    }
 }

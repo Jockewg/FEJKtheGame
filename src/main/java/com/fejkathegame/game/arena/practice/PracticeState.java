@@ -61,6 +61,7 @@ public class PracticeState extends BasicGameState {
 
         physics = new Physics();
 
+ 
 
 
     }
@@ -100,6 +101,7 @@ public class PracticeState extends BasicGameState {
         checkCollisionWithTarget();
         obj.update();
         arena.moveTarget();
+        arena.updateText(camX, camY);
     }
     
     public void checkCollisionWithTarget() {
