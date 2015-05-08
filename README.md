@@ -15,7 +15,7 @@ Joakim
 
 --Installation--
 
-  - download the .rar at https://drive.google.com/file/d/0ByAHj9OmTqIKN0VZNnk5Q0Z6ekk/view?usp=sharing.
+  - download the latest .rar at https://drive.google.com/file/d/0ByAHj9OmTqIKRFFyNkk0dDNwbkk/view?usp=sharing
   - unzip and play.
   
 --Known Bugs--
