@@ -12,3 +12,12 @@ Filip
 Aizic
 Björn
 Joakim
+
+--Installation--
+
+  - download the .rar at https://drive.google.com/file/d/0ByAHj9OmTqIKN0VZNnk5Q0Z6ekk/view?usp=sharing.
+  - unzip and play.
+  
+--Known Bugs--
+  - Wall and floor gliding/boosting while attacking towars a floor/wall
+  - Player getes stuck when attacking the floor at a stright angle.
