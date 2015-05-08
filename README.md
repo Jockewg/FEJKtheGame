@@ -12,3 +12,11 @@ Filip
 Aizic
 Björn
 Joakim
+
+--Installation--
+
+  Unrar and play.
+  
+--Known Bugs--
+  - Wall and floor gliding/boosting while attacking towars a floor/wall
+  - Player getes stuck when attacking the floor at a stright angle.
