@@ -15,7 +15,7 @@ Joakim
 
 --Installation--
 
-  - download the latest .rar at https://drive.google.com/file/d/0ByAHj9OmTqIKRFFyNkk0dDNwbkk/view?usp=sharing
+  - download the latest .rar at https://github.com/Jockewg/FEJKtheGame/wiki/Playable-Builds
   - unzip and play.
   
 --Known Bugs--
