@@ -14,6 +14,8 @@ import org.newdawn.slick.openal.AudioLoader;
 import org.newdawn.slick.util.ResourceLoader;
 
 import java.io.IOException;
+import org.newdawn.slick.Animation;
+import org.newdawn.slick.SpriteSheet;
 
 /**
  * Created by Swartt on 2015-04-28.
@@ -23,6 +25,12 @@ public class Character extends LevelObject {
     private boolean grounded;
     private boolean isAlive;
     private boolean moving = false;
+    private boolean flipped = false;
+    
+    private SpriteSheet runningSheet;
+    private Animation runningAnimation;
+    private SpriteSheet stanceSheet;
+    private Animation stanceAnimation;
 
     private double sweepAttack, sweepLimit;
 
@@ -78,7 +86,7 @@ public class Character extends LevelObject {
         maxFallSpeed = 0.75f;
         decelerationSpeed = 0.005f;
         sprite = new Image("src/main/resources/data/img/placeholder.png");
-        boundingShape = new AABoundingRect(x, y, 32, 32);
+        boundingShape = new AABoundingRect(x, y, 19, 25);
         grounded = false;
         health = 5;
         attackCoolDown = 100;
@@ -88,7 +96,7 @@ public class Character extends LevelObject {
         velocityY = 0;
         velocityX = 0;
         isAlive = true;
-        this.healthSystem = new HealthSystem(this);
+//        this.healthSystem = new HealthSystem(this);
         this.movementSystem = new MovementSystem(this);
         gravity = 0.5f;
         jumpStrength = -15;
@@ -104,10 +112,16 @@ public class Character extends LevelObject {
         attackIndicator.addPoint(0, 4);
         attackIndicator.addPoint(48, 4);
         attackIndicator.addPoint(48, 0);
-        jumpIndicator = new Rectangle(x, y, sprite.getWidth() + 4, 2);
+//        jumpIndicator = new Rectangle(x, y, sprite.getWidth() + 4, 2);
         current = new Vector2f(x, y);
         superAttackIndicator = new Ellipse(x + 16, y + 16, 32, 32);
         hitBox = new Rectangle(x, y, 32, 32);
+        
+        runningSheet = new SpriteSheet("src/main/resources/data/img/spritesheets/spritesheet2.png", 32, 32);
+        runningAnimation = new Animation(runningSheet, 30);
+        runningAnimation.setAutoUpdate(false);
+        stanceSheet = new SpriteSheet("src/main/resources/data/img/spritesheets/charStance.png", 32, 32);
+        stanceAnimation = new Animation(stanceSheet, 30);
     }
 
     /**
@@ -175,6 +189,7 @@ public class Character extends LevelObject {
             }
         }
         moving = true;
+        
     }
 
     /**
@@ -315,6 +330,8 @@ public class Character extends LevelObject {
             }
         }
         
+        runningAnimation.update(delta);
+        
         
         if (!isCharging && !isFullyCharged) {
             superAttackIndicator.setRadii(32, 32);
@@ -322,6 +339,21 @@ public class Character extends LevelObject {
 
         if (isFullyCharged) {
             activateSuperAttack(delta);
+        }
+    }
+    
+    public void renderCharacterAnimation() {
+        if(x_velocity > 0) {
+            flipped = false;
+            runningAnimation.draw(x - 4, y - 2);
+        } else if(x_velocity < 0) {
+            flipped = true;
+            runningAnimation.getCurrentFrame().getFlippedCopy(true, false).draw(x - 9, y - 2);
+        } else if(x_velocity == 0) {
+            if(flipped)
+                stanceAnimation.getCurrentFrame().getFlippedCopy(true, false).draw(x - 9, y - 2);
+            else
+                stanceAnimation.draw(x - 4, y - 2);
         }
     }
 
@@ -332,13 +364,16 @@ public class Character extends LevelObject {
      */
     @Override
     public void render() throws SlickException {
-        renderJumpIndicator(currentPositionX, currentPositionY);
+//        renderJumpIndicator(currentPositionX, currentPositionY);
         renderAttackIndicator();
         updateHitBox();
+        
+        renderCharacterAnimation();
 
-        sprite.draw(x, y);
+//        sprite.draw(x, y);
+        
 
-        healthSystem.render();
+//        healthSystem.render();
 
         if (isCharging || isFullyCharged) {
             g.setColor(new Color(1.0f, 1.0f, 1.0f, 1.0f));
