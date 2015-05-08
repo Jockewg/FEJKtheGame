@@ -10,7 +10,7 @@ Björn,
 Joakim
 
 --Installation--
-
+  - Make sure you have the latest java at https://www.java.com/sv/download/
   - download the latest .rar at https://github.com/Jockewg/FEJKtheGame/wiki/Playable-Builds
   - unzip and play.
   
