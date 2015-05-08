@@ -7,10 +7,10 @@ We´ve chosen the network type of Peer to Peer for this project because of the o
 
 Team:
 
-Kim 
-Filip
-Aizic
-Björn
+Kim, 
+Filip,
+Aizic,
+Björn,
 Joakim
 
 --Installation--
