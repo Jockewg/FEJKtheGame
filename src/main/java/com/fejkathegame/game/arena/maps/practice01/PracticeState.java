@@ -1,6 +1,7 @@
 package com.fejkathegame.game.arena.maps.practice01;
 
-import com.fejkathegame.game.arena.maps.StateHelper;
+import com.fejkathegame.game.arena.maps.PracticeCamera;
+import com.fejkathegame.game.arena.maps.PracticeStateHelper;
 import com.fejkathegame.game.entities.logic.MovementSystem;
 import com.fejkathegame.game.Main;
 import com.fejkathegame.game.arena.physics.Physics;
@@ -24,14 +25,11 @@ public class PracticeState extends BasicGameState {
     private MovementSystem movementSystem;
     private Physics physics;
     private com.fejkathegame.game.entities.Character obj;
-    private StateHelper helper;
+    private PracticeStateHelper helper;
+    private PracticeCamera camera;
     
     private float offsetMaxX = 2050;
     private float offsetMaxY = 750;
-    private float offsetMinX = 0;
-    private float offsetMinY = 0;
-    private float camX, camY = 0;
-    private float acc = 5.0f;
 
     /**
      * Constructor for ArenaState
@@ -63,42 +61,29 @@ public class PracticeState extends BasicGameState {
 
         physics = new Physics();
 
-        helper = new StateHelper(arena, obj);
+        camera = new PracticeCamera(offsetMaxX, offsetMaxY);
+
+        helper = new PracticeStateHelper(arena, obj, camera);
 
 
     }
-    
-    public void checkCameraOffset() {
-        if(obj.getX() <= offsetMinX + 450)
-            camX = offsetMinX;
-        else if(obj.getX() >= offsetMaxX)
-            camX = offsetMaxX - 450;
-        else
-            camX = obj.getX() - 450.0f;
-        
-        if(obj.getY() <= offsetMinY + 250)
-            camY = offsetMinY;
-        else if(obj.getY() >= offsetMaxY)
-            camY = offsetMaxY - 250;
-        else
-        camY = obj.getY() - 250.0f;
-    }
+
     
 
     @Override
     public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
         g.setAntiAlias(false);
         g.scale(Main.SCALE, Main.SCALE);
-        g.translate(-camX, -camY);
+        g.translate(-camera.getCamX(), -camera.getCamY());
         arena.render();
-        arena.helper.updateText(camX, camY);
+        arena.helper.updateText(camera.getCamX(), camera.getCamY());
         g.resetTransform();
     }
 
 
     @Override
     public void update(GameContainer gc, StateBasedGame sbg, int i) throws SlickException {
-        checkCameraOffset();
+        helper.checkCameraOffset();
         movementSystem.handleInput(gc.getInput(), i);
         physics.handlePhysics(arena, i);
         helper.checkCollisionWithTarget();

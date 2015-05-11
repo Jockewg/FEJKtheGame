@@ -1,7 +1,7 @@
 package com.fejkathegame.game.arena.maps.versus01;
 
-import com.fejkathegame.game.arena.Level;
-import com.fejkathegame.game.arena.maps.MapHelper;
+import com.fejkathegame.game.arena.PracticeLevel;
+import com.fejkathegame.game.arena.maps.PracticeLevelHelper;
 import com.fejkathegame.game.entities.LevelObject;
 import com.fejkathegame.game.arena.tiles.AirTile;
 import com.fejkathegame.game.arena.tiles.SolidTile;
@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.Image;
 
-public class Versus extends Level {
+public class Versus extends PracticeLevel {
     
     private TiledMap map;
     
@@ -134,7 +134,7 @@ public class Versus extends Level {
     }
 
     @Override
-    public MapHelper getMapHelper() {
+    public PracticeLevelHelper getMapHelper() {
         return null;
     }
 

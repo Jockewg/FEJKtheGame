@@ -1,28 +1,16 @@
 package com.fejkathegame.game.arena.maps;
 
-import com.fejkathegame.game.arena.Level;
-import com.fejkathegame.game.arena.tiles.AirTile;
-import com.fejkathegame.game.arena.tiles.SolidTile;
-import com.fejkathegame.game.arena.tiles.TargetTile;
-import com.fejkathegame.game.arena.tiles.Tile;
-import com.fejkathegame.game.entities.LevelObject;
 import com.fejkathegame.game.entities.PracticeTarget;
 import com.fejkathegame.game.timer.PracticeTimer;
 import org.newdawn.slick.*;
-import org.newdawn.slick.tiled.TiledMap;
 
-import java.awt.*;
-import java.awt.Color;
 import java.awt.Font;
-import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.logging.Logger;
 
 /**
  * Created by Swartt on 2015-05-11.
  */
-public class MapHelper {
+public class PracticeLevelHelper {
 
     Font font;
     TrueTypeFont ttf;
@@ -34,7 +22,7 @@ public class MapHelper {
     float targetVelY;
 
 
-    public MapHelper(PracticeTimer timer, ArrayList<PracticeTarget> targets) {
+    public PracticeLevelHelper(PracticeTimer timer, ArrayList<PracticeTarget> targets) {
         this.timer = timer;
         font = new Font("Verdana", Font.BOLD, 20);
         ttf = new TrueTypeFont(font, true);

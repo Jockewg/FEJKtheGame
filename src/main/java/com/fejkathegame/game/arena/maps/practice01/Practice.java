@@ -5,8 +5,8 @@
  */
 package com.fejkathegame.game.arena.maps.practice01;
 
-import com.fejkathegame.game.arena.Level;
-import com.fejkathegame.game.arena.maps.MapHelper;
+import com.fejkathegame.game.arena.PracticeLevel;
+import com.fejkathegame.game.arena.maps.PracticeLevelHelper;
 import com.fejkathegame.game.arena.tiles.AirTile;
 import com.fejkathegame.game.arena.tiles.SolidTile;
 import com.fejkathegame.game.arena.tiles.TargetTile;
@@ -24,7 +24,7 @@ import java.util.logging.Logger;
 /**
  * @author Swartt
  */
-public class Practice extends Level {
+public class Practice extends PracticeLevel {
 
     private TiledMap map;
 
@@ -33,7 +33,7 @@ public class Practice extends Level {
     private ArrayList<LevelObject> players;
     private ArrayList<PracticeTarget> targets;
 
-    MapHelper helper;
+    PracticeLevelHelper helper;
     PracticeTimer timer;
 
 
@@ -57,7 +57,7 @@ public class Practice extends Level {
         timer = new PracticeTimer();
         timer.startTimer();
 
-        helper = new MapHelper(timer, targets);
+        helper = new PracticeLevelHelper(timer, targets);
 
 
         PracticeTarget movableTarget = targets.get(15);
@@ -151,7 +151,7 @@ public class Practice extends Level {
     }
 
     @Override
-    public MapHelper getMapHelper() {
+    public PracticeLevelHelper getMapHelper() {
         return helper;
     }
 

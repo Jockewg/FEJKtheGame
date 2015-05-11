@@ -1,24 +1,21 @@
 package com.fejkathegame.game.arena.maps;
 
-import com.fejkathegame.game.arena.Level;
+import com.fejkathegame.game.arena.PracticeLevel;
 import com.fejkathegame.game.entities.Character;
 
 
 /**
  * Created by Swartt on 2015-05-11.
  */
-public class StateHelper {
-    Level arena;
+public class PracticeStateHelper {
+    PracticeLevel arena;
     Character obj;
-/*    private float offsetMaxX;
-    private float offsetMaxY;
-    private float offsetMinX = 0;
-    private float offsetMinY = 0;
-    private float camX, camY = 0;*/
+    PracticeCamera camera;
 
-    public StateHelper (Level arena, Character obj) {
+    public PracticeStateHelper(PracticeLevel arena, Character obj, PracticeCamera camera) {
         this.arena = arena;
         this.obj = obj;
+        this.camera = camera;
     }
 
     public void checkCollisionWithTarget() {
@@ -33,21 +30,21 @@ public class StateHelper {
         }
     }
 
-    //Waiting for Kim to finish his dynamic camera
-    /*public void checkCameraOffset() {
-        if (obj.getX() <= offsetMinX + 450)
-            camX = offsetMinX;
-        else if (obj.getX() >= offsetMaxX)
-            camX = offsetMaxX - 450;
-        else
-            camX = obj.getX() - 450.0f;
 
-        if (obj.getY() <= offsetMinY + 250)
-            camY = offsetMinY;
-        else if (obj.getY() >= offsetMaxY)
-            camY = offsetMaxY - 250;
+    public void checkCameraOffset() {
+        if (obj.getX() <= camera.getOffsetMinX() + 450)
+            camera.setCamX(camera.getOffsetMinX());
+        else if (obj.getX() >= camera.getOffsetMaxX())
+            camera.setCamX(camera.getOffsetMaxX() - 450);
         else
-            camY = obj.getY() - 250.0f;
-    }*/
+            camera.setCamX(obj.getX() - 450.0f);
+
+        if (obj.getY() <= camera.getOffsetMinY() + 250)
+            camera.setCamY(camera.getOffsetMinY());
+        else if (obj.getY() >= camera.getOffsetMaxY())
+            camera.setCamY(camera.getOffsetMaxY() - 250);
+        else
+            camera.setCamY(obj.getY() - 250.0f);
+    }
 
 }

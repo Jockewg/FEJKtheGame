@@ -1,21 +1,18 @@
 package com.fejkathegame.game.arena;
 
-import com.fejkathegame.game.arena.maps.MapHelper;
+import com.fejkathegame.game.arena.maps.PracticeLevelHelper;
 import com.fejkathegame.game.entities.LevelObject;
-import com.fejkathegame.game.arena.tiles.AirTile;
-import com.fejkathegame.game.arena.tiles.SolidTile;
 import com.fejkathegame.game.arena.tiles.Tile;
 
 import java.util.ArrayList;
 
 import com.fejkathegame.game.entities.PracticeTarget;
-import org.newdawn.slick.SlickException;
 import org.newdawn.slick.tiled.TiledMap;
 
 /**
  * @author Swartt
  */
-public abstract class Level {
+public abstract class PracticeLevel {
 
     private TiledMap map;
 
@@ -33,7 +30,7 @@ public abstract class Level {
 
     public abstract Tile[][] getTiles();
 
-    public abstract MapHelper getMapHelper();
+    public abstract PracticeLevelHelper getMapHelper();
 
     public abstract TiledMap getMap();
 }
