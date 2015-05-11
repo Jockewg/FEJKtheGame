@@ -47,7 +47,7 @@ public class Tower01State extends BasicGameState {
 
         obj = null;
         try {
-            obj = new com.fejkathegame.game.entities.Character(450, 2424);
+            obj = new com.fejkathegame.game.entities.Character(32, 32);
         } catch (IOException e) {
             e.printStackTrace();
         }
