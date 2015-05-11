@@ -179,7 +179,6 @@ public class Tower01 extends Level {
      */
     public void render() throws SlickException {
         map.render(0, 0, 0, 0, 36, 100);
-        System.out.println("Targets: " + targets.size());
 
         for (LevelObject p : players) {
             p.render();
