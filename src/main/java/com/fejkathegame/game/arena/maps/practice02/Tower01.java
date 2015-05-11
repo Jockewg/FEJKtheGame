@@ -68,48 +68,61 @@ public class Tower01 extends Level {
 
     /**
      * populates the arena with tiles
+     *
      * @throws org.newdawn.slick.SlickException
      */
     public void loadTileMap() {
         tiles = new Tile[map.getWidth() + 1][map.getHeight() + 1];
 
-        int layerIndex = map.getLayerIndex("CollisionLayer");
+        int collisionLayer = map.getLayerIndex("CollisionLayer");
+        int targetLayer = map.getLayerIndex("TargetLayer");
+        int noLayer = -1;
 
-        if (layerIndex == -1) {
-            System.err.println("Map does not conatin CollisionLayer");
+        if (collisionLayer == noLayer) {
+            System.err.println("Map does not contain CollisionLayer");
             System.exit(0);
         }
+        if (targetLayer == noLayer) {
+            System.err.println("Map does not contain TargetLayer");
+            System.exit(0);
+        }
+
 
         for (int x = 0; x < map.getWidth(); x++) {
             for (int y = 0; y < map.getHeight(); y++) {
 
-                try {
-                    int tileID = map.getTileId(x, y, layerIndex);
 
-                    Tile tile = null;
-                    PracticeTarget target = null;
+                int tileID = map.getTileId(x, y, collisionLayer);
 
-                    switch (map.getTileProperty(tileID, "tileType", "solid")) {
-                        case "air":
-                            tile = new AirTile(x, y);
-                            break;
-                        case "target":
-                            tile = new TargetTile(x, y);
-                            target = new PracticeTarget(tile.getX() * 25 - 1, tile.getY() * 25 - 1);
-                            targets.add(target);
-                            break;
-                            
-                        default:
-                            tile = new SolidTile(x, y);
-                            break;
-                    }
-                    tiles[x][y] = tile;
-                } catch (SlickException ex) {
-                    Logger.getLogger(Tower01.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-                } catch (IOException ex) {
-                    Logger.getLogger(Tower01.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+                Tile tile = null;
+                PracticeTarget target = null;
+
+                switch (map.getTileProperty(tileID, "tileType", "solid")) {
+                    case "air":
+                        tile = new AirTile(x, y);
+                        break;
+
+
+                    default:
+                        tile = new SolidTile(x, y);
+                        break;
+                }
+                tiles[x][y] = tile;
+
+            }
+        }
+        for (int x = 0; x < map.getHeight(); x++) {
+            for (int y = 0; y < map.getWidth(); y++) {
+                int tileID = map.getTileId(x, y, targetLayer);
+
+                Tile tile = null;
+                PracticeTarget target = null;
+
+                switch (map.getTileProperty(tileID, "tileType", "target")) {
+
                 }
             }
+
         }
     }
 
@@ -134,13 +147,13 @@ public class Tower01 extends Level {
     }
 
     public void moveTarget() {
-    movableTarget.setY(movableTarget.getY() + targetVelY);
+        movableTarget.setY(movableTarget.getY() + targetVelY);
 
-    if(movableTarget.getY() > (movableTargetStartingPos + 100) && targetVelY > 0) {
-        targetVelY = -1.0f;
-    } else if(movableTarget.getY() < movableTargetStartingPos && targetVelY < 0) {
-        targetVelY = 1.0f;
-    }
+        if (movableTarget.getY() > (movableTargetStartingPos + 100) && targetVelY > 0) {
+            targetVelY = -1.0f;
+        } else if (movableTarget.getY() < movableTargetStartingPos && targetVelY < 0) {
+            targetVelY = 1.0f;
+        }
 
     }
 
