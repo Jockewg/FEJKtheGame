@@ -26,6 +26,7 @@ public class Main extends StateBasedGame {
     public static final int LEVELSELECTSTATE = 3;
     public static final int TOWER1STATE = 4;
     public static final int BIGBLUESTATE = 5;
+    public static final int FIRSTPRACTICE = 6;
 
     
     public static final float SCALE = (float) (1 * ((double) WINDOW_WIDTH / 900));

@@ -31,7 +31,7 @@ public class VersusState extends BasicGameState {
 
     @Override
     public int getID() {
-        return 1;
+        return Main.VERSUSSTATE;
     }
 
     @Override

@@ -41,7 +41,7 @@ public class PracticeState extends BasicGameState {
 
     @Override
     public int getID() {
-        return 3;
+        return Main.FIRSTPRACTICE;
     }
 
     @Override

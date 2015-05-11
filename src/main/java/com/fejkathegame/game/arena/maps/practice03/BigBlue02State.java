@@ -39,7 +39,7 @@ public class BigBlue02State extends BasicGameState {
 
     @Override
     public int getID() {
-        return 5;
+        return Main.BIGBLUESTATE;
     }
 
     @Override
