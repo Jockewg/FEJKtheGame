@@ -12,4 +12,5 @@ package com.fejkathegame.server;
 class PacketMessage {
     
     public String message;
+    public String message2;
 }

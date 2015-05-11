@@ -40,9 +40,8 @@ public class ServerProgram  extends Listener{
     @Override
     public void received(Connection connection, Object object) {
         if (object instanceof PacketMessage) {
-            PacketMessage packet = (PacketMessage) object;
-            System.out.println("recived a packade from the client: " + packet.message);
-            
+            PacketMessage packet2 = (PacketMessage) object;
+            System.out.println("recived a packade from the client: " + packet2.message2); //Playername here. somehow its value us null
         }
     }
 

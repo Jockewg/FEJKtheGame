@@ -17,17 +17,19 @@ public class ClientProgram extends Listener implements Runnable {
     String serverIp, playerName;
     int tcpPort = 27960, updPort = 27960;
     boolean messageReceived = false;
-    
+
     public ClientProgram(String serverIp, String playerName) {
         this.serverIp = serverIp;
         this.playerName = playerName;
     }
-    
-    public ClientProgram() {}
+
+    public ClientProgram() {
+    }
 
     @Override
     public void run() {
         System.out.println("Connecting to the server...");
+        System.out.println("playername: " + playerName);
         client = new Client();
 
         client.getKryo().register(PacketMessage.class);
@@ -44,13 +46,14 @@ public class ClientProgram extends Listener implements Runnable {
 
         System.out.println("Connected! The client program is now waiting for a packet...\n");
 
-        while (messageReceived == false) {
+        while (messageReceived != true) { //The program will crash here.
             try {
-                Thread.sleep(1000);
+                Thread.sleep(100);
             } catch (InterruptedException ex) {
                 Logger.getLogger(ClientProgram.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+        
         System.out.println("Client will now exit");
         System.exit(0);
     }
@@ -60,8 +63,9 @@ public class ClientProgram extends Listener implements Runnable {
         if (object instanceof PacketMessage) {
             PacketMessage packet = (PacketMessage) object;
             System.out.println("recived a packade from the host: " + packet.message);
-            
+
             messageReceived = true;
+            System.out.println(messageReceived);
         }
     }
 
@@ -70,12 +74,12 @@ public class ClientProgram extends Listener implements Runnable {
     }
 
     @Override
-    public void connected(Connection c) {
-        System.out.println("Received a connection from: " + c.getRemoteAddressTCP().getHostString());
-        
-        PacketMessage packetMessage = new PacketMessage();
-        packetMessage.message = "PlayerName: " + playerName;
-        
-        c.sendTCP(packetMessage);
+    public void connected(Connection connection) {
+        System.out.println("Received a connection from server at: " + connection.getRemoteAddressTCP().getHostString());
+
+        PacketMessage packetMessage2 = new PacketMessage();
+        packetMessage2.message2 = "PlayerName: " + playerName;
+
+        connection.sendTCP(packetMessage2);
     }
 }
