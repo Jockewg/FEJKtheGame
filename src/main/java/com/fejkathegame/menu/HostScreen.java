@@ -44,6 +44,14 @@ public class HostScreen {
         ipField.render(gc, g);
         connect.draw(gc.getWidth() / 2 - 150, gc.getHeight() / 2 + 80);
     }
+
+    public String getPlayerName() {
+        return playerName.getText();
+    }
+
+    public String getIpField() {
+        return ipField.getText();
+    }
     
 
 }
