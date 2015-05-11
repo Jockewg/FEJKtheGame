@@ -1,5 +1,6 @@
 package com.fejkathegame.menu;
 
+import com.esotericsoftware.kryonet.Client;
 import com.fejkathegame.client.ClientProgram;
 import com.fejkathegame.server.ServerProgram;
 import org.newdawn.slick.Color;
@@ -68,9 +69,11 @@ public class HostScreenState extends BasicGameState {
     public void checkIfConnectIsClicked(int x, int y, Input i) {
         if((x > 300 && x < 600) && (y > 331 && y < 371)) {
             if(i.isMousePressed(Input.MOUSE_LEFT_BUTTON)) {
+                ClientProgram client = new ClientProgram(
+                        hostScreen.getIpField().getText(),
+                        hostScreen.getPlayerName().getText());
                 
-
-                
+                client.run();
             }
         }
     }

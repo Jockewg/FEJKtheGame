@@ -45,13 +45,11 @@ public class HostScreen {
         connect.draw(gc.getWidth() / 2 - 150, gc.getHeight() / 2 + 80);
     }
 
-    public String getPlayerName() {
-        return playerName.getText();
+    public TextField getPlayerName() {
+        return playerName;
     }
 
-    public String getIpField() {
-        return ipField.getText();
+    public TextField getIpField() {
+        return ipField;
     }
-    
-
 }

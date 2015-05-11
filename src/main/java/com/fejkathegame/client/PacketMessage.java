@@ -5,7 +5,6 @@
  */
 package com.fejkathegame.client;
 
-
 /**
  *
  * @author Filip

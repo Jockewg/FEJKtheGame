@@ -32,13 +32,18 @@ public class ServerProgram  extends Listener{
         System.out.println("Received a connection from: " + c.getRemoteAddressTCP().getHostString());
         
         PacketMessage packetMessage = new PacketMessage();
-        packetMessage.message = "Hello friend! the tome is: " + new Date().toString();
+        packetMessage.message = "Hello friend! the time is: " + new Date().toString();
         
         c.sendTCP(packetMessage);
     }
 
     @Override
     public void received(Connection connection, Object object) {
+        if (object instanceof PacketMessage) {
+            PacketMessage packet = (PacketMessage) object;
+            System.out.println("recived a packade from the client: " + packet.message);
+            
+        }
     }
 
     @Override
