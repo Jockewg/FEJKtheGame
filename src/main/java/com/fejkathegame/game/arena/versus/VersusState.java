@@ -31,7 +31,7 @@ public class VersusState extends BasicGameState {
     private float cameraX, cameraY;
     private float cameraWidth = 900;
     private float cameraHeight = cameraWidth * 0.55f;
-    private float cameraCenterY, cameraCenterX;
+    private float cameraScale = 1.0f;
     
     //Camera stuff
     private float offsetMaxX = 2050;
@@ -131,8 +131,6 @@ public class VersusState extends BasicGameState {
         }
         
         
-        System.out.println("Width: " + cameraWidth);
-        
         cameraX = line.getCenterX() - (cameraWidth / 2);
         cameraY = line.getCenterY() - (cameraHeight / 2);
         
@@ -150,6 +148,9 @@ public class VersusState extends BasicGameState {
             cameraY = 1;
         }
         
+        cameraScale = 900 / cameraWidth;
+        
+        System.out.println(cameraScale);
         
         cameraRect = null;
         cameraRect = new Rectangle(cameraX, cameraY, cameraWidth, cameraHeight);
@@ -168,12 +169,8 @@ public class VersusState extends BasicGameState {
 
     @Override
     public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
-//        if(offsetX < 1)
-            g.scale(Main.SCALE, Main.SCALE);
-//        else
-//            g.scale(Main.SCALE - offsetX, Main.SCALE - offsetY);
-//            System.out.println(Main.SCALE - offsetY);
-//        g.translate(-camX, -camY);
+            g.scale(cameraScale, cameraScale);
+        g.translate(-cameraX, -cameraY);
         arena.getAnimation().draw(200, 50);
         arena.render();
         g.drawLine(obj.getX() + 9.5f, obj.getY() + 12.5f, player2.getX() + 9.5f, player2.getY() + 12.5f);
