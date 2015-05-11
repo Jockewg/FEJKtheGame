@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="36" height="100" tilewidth="25" tileheight="25" nextobjectid="1">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="36" height="100" tilewidth="25" tileheight="25" nextobjectid="5">
  <tileset firstgid="1" name="White and Trans" tilewidth="25" tileheight="25">
   <image source="../img/tilesets/whiteAndTransp.png" width="50" height="25"/>
   <tile id="0">
@@ -23,7 +23,12 @@
  </tileset>
  <layer name="CollisionLayer" width="36" height="100">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC+3VSwrCQBBAwQne/85uko3IwyDRRutB74tmPttaaxs2U+LpeDqejqfj6Xg6no6n4+l4Op6Op+PpeDqejqfj6Xg6no6n4+l4Op6Op+PpeDqejqfj6Xg6no6n4+l4Op6Op+PpHj23b0H2pu7nzPyjZ0rOc8fTveO54l7+kueKeJ53vHtTPEef9Ez5I6d6Xomn4+mmeibNHSZGEnBAOAAA
+   H4sIAAAAAAAAC+3VsQ0AIAwDwcD+QzMDBcSCK74/yYoyqmqENUPi4eHh4eHh4eHh4eHh4UmIh4eHh4eHh4eHh4eHhychHh4eHh4eHh4eHh4enruenX70dO/Ew9PtOXGXL3nS9uJ525PyI1M9aXvx8NzyJLUA5FwxzUA4AAA=
+  </data>
+ </layer>
+ <layer name="TargetLayer" width="36" height="100">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC+3UwQkAAAgDMcH9d3YJoYLJBPcorQIAAAAAAAAAAACAjE4HwCJ7Br7xewD3DfjyYFpAOAAA
   </data>
  </layer>
 </map>
