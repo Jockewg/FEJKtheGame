@@ -89,7 +89,7 @@ public class BigBlue02State extends BasicGameState {
         g.scale(Main.SCALE, Main.SCALE);
         g.translate(-camX, -camY);
         arena.render();
-        arena.updateText(camX, camY);
+        arena.helper.updateText(camX, camY);
         g.resetTransform();
     }
 
@@ -111,7 +111,7 @@ public class BigBlue02State extends BasicGameState {
                 System.out.println("HIT");
                 arena.getTargets().get(i).getHealthSystem().dealDamage(1);
                 arena.getTargets().remove(i);
-                arena.updateScore();
+                arena.helper.updateScore();
             }
         }
     }

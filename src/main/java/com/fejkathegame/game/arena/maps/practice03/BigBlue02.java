@@ -6,6 +6,7 @@
 package com.fejkathegame.game.arena.maps.practice03;
 
 import com.fejkathegame.game.arena.Level;
+import com.fejkathegame.game.arena.maps.MapHelper;
 import com.fejkathegame.game.arena.tiles.AirTile;
 import com.fejkathegame.game.arena.tiles.SolidTile;
 import com.fejkathegame.game.arena.tiles.TargetTile;
@@ -36,15 +37,9 @@ public class BigBlue02 extends Level {
     private ArrayList<LevelObject> players;
     private ArrayList<PracticeTarget> targets;
 
-    private PracticeTarget movableTarget;
-    float movableTargetStartingPos;
-    private float targetVelY = 1.0f;
+    MapHelper helper;
 
     PracticeTimer timer;
-
-    Font font;
-    TrueTypeFont ttf;
-    String score;
 
     /**
      * Constructor for Arena, creates the playingfield and adds all players to
@@ -57,19 +52,14 @@ public class BigBlue02 extends Level {
         map = new TiledMap("src/main/resources/data/levels/" + name + ".tmx", "src/main/resources/data/img");
         players = new ArrayList<>();
         targets = new ArrayList<>();
-
         addPlayer(levelObject);
-
         loadTileMap();
-        font = new Font("Verdana", Font.BOLD, 20);
-        ttf = new TrueTypeFont(font, true);
-
-        score = "Targets Left: " + String.valueOf(targets.size());
-
         timer = new PracticeTimer();
         timer.startTimer();
 
 
+
+        helper = new MapHelper(timer, targets);
         /*movableTarget = targets.get(15);*/
         /*movableTargetStartingPos = movableTarget.getY();*/
     }
@@ -136,28 +126,8 @@ public class BigBlue02 extends Level {
         players.add(p);
     }
 
-    /**
-     * Updates the scoreboard
-     */
-    public void updateScore() {
-        if (targets.size() > 0) {
-            score = "Targets Left: " + String.valueOf(targets.size());
-        } else {
-            score = "You are a winrar!";
-            timer.stopTimer();
-        }
-    }
 
-    public void moveTarget() {
-        movableTarget.setY(movableTarget.getY() + targetVelY);
 
-        if (movableTarget.getY() > (movableTargetStartingPos + 100) && targetVelY > 0) {
-            targetVelY = -1.0f;
-        } else if (movableTarget.getY() < movableTargetStartingPos && targetVelY < 0) {
-            targetVelY = 1.0f;
-        }
-
-    }
 
     /**
      * @return the player array which includes all player objects
@@ -208,8 +178,8 @@ public class BigBlue02 extends Level {
 
     }
 
-    public void updateText(float x, float y) {
+ /*   public void updateText(float x, float y) {
         ttf.drawString(x, y, score, Color.green);
         ttf.drawString(x + 200, y, "Time: " + String.valueOf(timer.getElapsedTimeSecs()), Color.red);
-    }
+    }*/
 }
