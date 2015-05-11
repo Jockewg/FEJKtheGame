@@ -81,10 +81,10 @@ public class Character extends LevelObject {
     public Character(float x, float y) throws SlickException, IOException {
         super(x, y);
 
-        accelerationSpeed = 0.010f;
+        accelerationSpeed = 0.005f;
         maximumSpeed = 0.40f;
         maxFallSpeed = 0.75f;
-        decelerationSpeed = 0.005f;
+        decelerationSpeed = 0.003f;
         sprite = new Image("src/main/resources/data/img/placeholder.png");
         boundingShape = new AABoundingRect(x, y, 19, 25);
         grounded = false;
@@ -208,8 +208,8 @@ public class Character extends LevelObject {
         float shrinking1 = superAttackIndicator.getRadius1() - (0.75f / delta);
         superAttackIndicator.setRadius1(shrinking1);
         superAttackIndicator.setRadius2(shrinking1);
-        superAttackIndicator.setCenterX(getX() + 16);
-        superAttackIndicator.setCenterY(getY() + 16);
+        superAttackIndicator.setCenterX(getX() + 9);
+        superAttackIndicator.setCenterY(getY() + 13);
         
         if (superAttackIndicator.getRadius1() < 16) {
             isFullyCharged = true;
