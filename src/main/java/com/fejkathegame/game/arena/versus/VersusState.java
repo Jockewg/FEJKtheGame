@@ -130,10 +130,26 @@ public class VersusState extends BasicGameState {
             cameraWidth = cameraHeight / 0.55f;
         }
         
+        
         System.out.println("Width: " + cameraWidth);
         
         cameraX = line.getCenterX() - (cameraWidth / 2);
         cameraY = line.getCenterY() - (cameraHeight / 2);
+        
+        if((cameraX + cameraWidth) > 900) {
+            float newX = (cameraX + cameraWidth) - 900;
+            cameraX -= newX;
+        } else if(cameraX < 1) {
+            cameraX = 1;
+        }
+        
+        if((cameraY + cameraHeight) > 499) {
+            float newY = (cameraY + cameraHeight) - 499;
+            cameraY -= newY;
+        } else if(cameraY < 1) {
+            cameraY = 1;
+        }
+        
         
         cameraRect = null;
         cameraRect = new Rectangle(cameraX, cameraY, cameraWidth, cameraHeight);
