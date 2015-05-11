@@ -23,12 +23,7 @@
  </tileset>
  <layer name="CollisionLayer" width="36" height="100">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC+3VsQ0AIAwDwcD+QzMDBcSCK74/yYoyqmqENUPi4eHh4eHh4eHh4eHh4UmIh4eHh4eHh4eHh4eHhychHh4eHh4eHh4eHh4enruenX70dO/Ew9PtOXGXL3nS9uJ525PyI1M9aXvx8NzyJLUA5FwxzUA4AAA=
-  </data>
- </layer>
- <layer name="TargetLayer" width="36" height="100">
-  <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC+3UwQkAAAgDMcH9d3YJoYLJBPcorQIAAAAAAAAAAACAjE4HwCJ7Br7xewD3DfjyYFpAOAAA
+   H4sIAAAAAAAAC+3VMQ7AIAwEQZz8/8+pUqZBAp/IFNuPMOAaY1RYV0g8PDw8PDw8PDw8PDw8PAnx8PDw8PDw8PDw8PDw8CTEw8PDw8PDw8PDw8OzynOHebqrif7o6Z7Tl8d95tnlWfEuT/Kkzetkz/vvpXg6zidlR6Z60ubFw7PLk9QDSrPHREA4AAA=
   </data>
  </layer>
 </map>

@@ -75,15 +75,10 @@ public class Tower01 extends Level {
         tiles = new Tile[map.getWidth() + 1][map.getHeight() + 1];
 
         int collisionLayer = map.getLayerIndex("CollisionLayer");
-        int targetLayer = map.getLayerIndex("TargetLayer");
         int noLayer = -1;
 
         if (collisionLayer == noLayer) {
             System.err.println("Map does not contain CollisionLayer");
-            System.exit(0);
-        }
-        if (targetLayer == noLayer) {
-            System.err.println("Map does not contain TargetLayer");
             System.exit(0);
         }
 
@@ -92,37 +87,35 @@ public class Tower01 extends Level {
             for (int y = 0; y < map.getHeight(); y++) {
 
 
-                int tileID = map.getTileId(x, y, collisionLayer);
-
-                Tile tile = null;
-                PracticeTarget target = null;
-
-                switch (map.getTileProperty(tileID, "tileType", "solid")) {
-                    case "air":
-                        tile = new AirTile(x, y);
-                        break;
-
-
-                    default:
-                        tile = new SolidTile(x, y);
-                        break;
+                try {
+                    int tileID = map.getTileId(x, y, collisionLayer);
+                    
+                    Tile tile = null;
+                    PracticeTarget target = null;
+                    
+                    switch (map.getTileProperty(tileID, "tileType", "solid")) {
+                        case "air":
+                            tile = new AirTile(x, y);
+                            break;
+                            
+                        case "target":
+                            tile = new TargetTile(x, y);
+                            target = new PracticeTarget(x * 25, y * 25);
+                            targets.add(target);
+                            break;
+                            
+                        default:
+                            tile = new SolidTile(x, y);
+                            break;
+                    }
+                    tiles[x][y] = tile;
+                } catch (SlickException ex) {
+                    Logger.getLogger(Tower01.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+                } catch (IOException ex) {
+                    Logger.getLogger(Tower01.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
                 }
-                tiles[x][y] = tile;
 
             }
-        }
-        for (int x = 0; x < map.getHeight(); x++) {
-            for (int y = 0; y < map.getWidth(); y++) {
-                int tileID = map.getTileId(x, y, targetLayer);
-
-                Tile tile = null;
-                PracticeTarget target = null;
-
-                switch (map.getTileProperty(tileID, "tileType", "target")) {
-
-                }
-            }
-
         }
     }
 
@@ -186,7 +179,7 @@ public class Tower01 extends Level {
      */
     public void render() throws SlickException {
         map.render(0, 0, 0, 0, 36, 100);
-
+        System.out.println("Targets: " + targets.size());
 
         for (LevelObject p : players) {
             p.render();
