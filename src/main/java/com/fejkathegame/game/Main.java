@@ -1,6 +1,7 @@
 package com.fejkathegame.game;
 
 import com.fejkathegame.game.arena.maps.practice02.Tower01State;
+import com.fejkathegame.game.arena.maps.practice03.BigBlue02State;
 import com.fejkathegame.game.arena.maps.versus01.VersusState;
 import com.fejkathegame.game.arena.maps.practice01.PracticeState;
 import com.fejkathegame.menu.HostScreenState;
@@ -20,10 +21,12 @@ public class Main extends StateBasedGame {
     public static final boolean FULLSCREEN = false;
     
     public static final int MENU = 0;
-    public static final int HOSTSTATE = 2;
     public static final int VERSUSSTATE = 1;
-    public static final int TOWER1STATE = 3;
-    public static final int LEVELSELECTSTATE = 4;
+    public static final int HOSTSTATE = 2;
+    public static final int LEVELSELECTSTATE = 3;
+    public static final int TOWER1STATE = 4;
+    public static final int BIGBLUESTATE = 5;
+
     
     public static final float SCALE = (float) (1 * ((double) WINDOW_WIDTH / 900));
     
@@ -44,6 +47,7 @@ public class Main extends StateBasedGame {
         addState(new MenuState("menu"));
         addState(new VersusState("arena2"));
         addState(new Tower01State("tower_1"));
+        addState(new BigBlue02State("big_blue"));
         addState(new LevelSelectState());
         
         this.enterState(MENU);

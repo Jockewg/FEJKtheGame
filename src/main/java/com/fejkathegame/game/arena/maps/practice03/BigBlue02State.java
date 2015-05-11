@@ -1,4 +1,4 @@
-package com.fejkathegame.game.arena.maps.practice02;
+package com.fejkathegame.game.arena.maps.practice03;
 
 import com.fejkathegame.game.Main;
 import com.fejkathegame.game.arena.physics.Physics;
@@ -12,18 +12,17 @@ import org.newdawn.slick.state.StateBasedGame;
 import java.io.IOException;
 
 /**
- *
  * @author Swartt
  */
-public class Tower01State extends BasicGameState {
-    private Tower01 arena;
+public class BigBlue02State extends BasicGameState {
+    private BigBlue02 arena;
     private String name;
     private MovementSystem movementSystem;
     private Physics physics;
     private com.fejkathegame.game.entities.Character obj;
-    
-    private float offsetMaxX = 450;
-    private float offsetMaxY = 2250;
+
+    private float offsetMaxX;
+    private float offsetMaxY;
     private float offsetMinX = 0;
     private float offsetMinY = 0;
     private float camX, camY = 0;
@@ -31,15 +30,16 @@ public class Tower01State extends BasicGameState {
 
     /**
      * Constructor for ArenaState
+     *
      * @param name of the stage
      */
-    public Tower01State(String name) {
+    public BigBlue02State(String name) {
         this.name = name;
     }
 
     @Override
     public int getID() {
-        return Main.TOWER1STATE;
+        return 5;
     }
 
     @Override
@@ -47,39 +47,41 @@ public class Tower01State extends BasicGameState {
 
         obj = null;
         try {
-            obj = new com.fejkathegame.game.entities.Character(450, 2424);
+            obj = new com.fejkathegame.game.entities.Character(50, 1100);
         } catch (IOException e) {
             e.printStackTrace();
         }
 
+        arena = new BigBlue02(name, obj);
 
-        arena = new Tower01(name, obj);
-        
+        setCameraBoundaries();
+
         movementSystem = new MovementSystem(obj);
 
         physics = new Physics();
-
- 
-
-
     }
-    
+
     public void checkCameraOffset() {
-        if(obj.getX() <= offsetMinX + 450)
+        if (obj.getX() <= offsetMinX + 450)
             camX = offsetMinX;
-        else if(obj.getX() >= offsetMaxX)
+        else if (obj.getX() >= offsetMaxX)
             camX = offsetMaxX - 450;
         else
             camX = obj.getX() - 450.0f;
-        
-        if(obj.getY() <= offsetMinY + 250)
+
+        if (obj.getY() <= offsetMinY + 250)
             camY = offsetMinY;
-        else if(obj.getY() >= offsetMaxY)
+        else if (obj.getY() >= offsetMaxY)
             camY = offsetMaxY - 250;
         else
-        camY = obj.getY() - 250.0f;
+            camY = obj.getY() - 250.0f;
     }
-    
+
+    public void setCameraBoundaries() {
+        offsetMaxX = arena.getMap().getWidth() * 22;
+        offsetMaxY = arena.getMap().getHeight() * 20;
+    }
+
 
     @Override
     public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
@@ -87,7 +89,7 @@ public class Tower01State extends BasicGameState {
         g.scale(Main.SCALE, Main.SCALE);
         g.translate(-camX, -camY);
         arena.render();
-        arena.updateText(camX , camY);
+        arena.updateText(camX, camY);
         g.resetTransform();
     }
 
@@ -101,10 +103,10 @@ public class Tower01State extends BasicGameState {
         obj.update(i);
         /*arena.moveTarget();*/
     }
-    
+
     public void checkCollisionWithTarget() {
-        for(int i = 0; i < arena.getTargets().size(); i++) {
-            if(obj.getAttackIndicator().intersects(arena.getTargets().get(i).getHitbox()) && obj.getIsAttacking()
+        for (int i = 0; i < arena.getTargets().size(); i++) {
+            if (obj.getAttackIndicator().intersects(arena.getTargets().get(i).getHitbox()) && obj.getIsAttacking()
                     || obj.getIsFullyCharged() && obj.getSuperAttackIndicator().intersects(arena.getTargets().get(i).getHitbox())) {
                 System.out.println("HIT");
                 arena.getTargets().get(i).getHealthSystem().dealDamage(1);

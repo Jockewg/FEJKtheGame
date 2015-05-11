@@ -13,9 +13,17 @@
    </properties>
   </tile>
  </tileset>
+ <tileset firstgid="3" name="targetTiles" tilewidth="25" tileheight="25">
+  <image source="../img/tilesets/targetTile.png" width="25" height="25"/>
+  <tile id="0">
+   <properties>
+    <property name="tileType" value="target"/>
+   </properties>
+  </tile>
+ </tileset>
  <layer name="CollisionLayer" width="150" height="50">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC+3a0Y6CMBRFUfz/n/bdoALtKfR2raRvhtDbnQHjvLZte1lWYEFPuiJBVyToigRdkaArEnRFQoWuKuyhmgpnUmEP1VQ4kwp7qKbCmVTYQzV3nEnv35f8pvU8utJVwp1dtX7mymcZQ1fHru3v2jm6OnZtXZ2zN6P0e8lMXXHNCl392iMZPearKz7pigRdkZDq6tf7l67qu6Or3nT1PHc8B3vT1fPoigRdkaArEnRFQrKrve+ErevKHo52NeK76yp0tX+/tKnwHPzHc3A8XZGgKxJ0RYKuSNAVCboiQVck6IqEFearq/FWmK+uxlthvroab4X56mq8M/Pt+X8ILdc624OuxtMVCbPNV1dzmG2+s93vqmY7p9nud1Wt7zmW9W29AcQgo1gwdQAA
+   H4sIAAAAAAAAC+2byw6DMAwEofz/P/eKELSl2Ot1Moc5tVon9ihAH+uyLCtAAi+AQPAKMjh6xZkHEeAVZBDhBF7BEbyCDK6c2AIyYF5GOK+q60POTKrnWl0fcmZSPdd9/TvXb9DMpDKjc33ImcndjOjPxPhOyw+8wqvRvIrKxAc/XLw63m+7eMW5pnEiIqPTeYVXGiciMjp5BRonIjLUXp29jou54BVkgFeQwWxebX/kQ74Tv2Z8en7ivBqfCq/Ue8ArPRXXQfUe8MpvJqqMzPp45TcTVUZmfbzym4kqI7M+XvnNRJWRWR+v/GbyJOPsmfApmV4pnl1nAa/wqptXLnAd9Oh5RYZ6j+5r7g5egarnFRnqPbqvuTt4BaqeV2So9+i+5u7gFah6XpGh3qP7mruDV6Dq+WjglUfPRwOvPHo+Gvs98r8Jfc9HhfPKo+ff3hvxO4QnWXd9wCu8wqsx6NZfvOpBt/52W++sdJtTt/XOytP7HIAr3hHQHp0wdQAA
   </data>
  </layer>
 </map>

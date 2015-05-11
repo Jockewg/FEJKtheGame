@@ -13,7 +13,7 @@ import org.newdawn.slick.state.StateBasedGame;
  * @author Khamekaze
  */
 public class LevelSelectState extends BasicGameState {
-    
+
     private LevelSelect levelSelect;
     private String name;
     private Input input;
@@ -40,15 +40,20 @@ public class LevelSelectState extends BasicGameState {
         int mouseY = input.getMouseY();
         selectLevel(mouseX, mouseY, input, sbg);
     }
-    
+
     public void selectLevel(int x, int y, Input i, StateBasedGame sbg) {
-        
-        if((x >= 150 && x <= 300) && (y >= 150 && y <= 300)) {
-            if(i.isMousePressed(Input.MOUSE_LEFT_BUTTON)) {
+
+        if ((x >= 150 && x <= 300) && (y >= 150 && y <= 300)) {
+            if (i.isMousePressed(Input.MOUSE_LEFT_BUTTON)) {
                 sbg.enterState(Main.TOWER1STATE);
             }
         }
-        
-    }
+        if ((x >= 350 && x <= 550) && (y >= 150 && y <= 300)) {
+            if (i.isMousePressed(Input.MOUSE_LEFT_BUTTON)) {
+                sbg.enterState(Main.BIGBLUESTATE);
+            }
 
+        }
+
+    }
 }
