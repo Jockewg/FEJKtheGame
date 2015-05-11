@@ -5,22 +5,21 @@
  */
 package com.fejkathegame.game.arena.maps.practice01;
 
-import com.fejkathegame.game.entities.PracticeTarget;
 import com.fejkathegame.game.arena.Level;
-import com.fejkathegame.game.entities.LevelObject;
+import com.fejkathegame.game.arena.maps.MapHelper;
 import com.fejkathegame.game.arena.tiles.AirTile;
 import com.fejkathegame.game.arena.tiles.SolidTile;
 import com.fejkathegame.game.arena.tiles.TargetTile;
 import com.fejkathegame.game.arena.tiles.Tile;
+import com.fejkathegame.game.entities.LevelObject;
+import com.fejkathegame.game.entities.PracticeTarget;
+import com.fejkathegame.game.timer.PracticeTimer;
+import org.newdawn.slick.SlickException;
+import org.newdawn.slick.tiled.TiledMap;
 
-import java.awt.Font;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.logging.Logger;
-
-import org.newdawn.slick.*;
-import org.newdawn.slick.Color;
-import org.newdawn.slick.tiled.TiledMap;
 
 /**
  * @author Swartt
@@ -34,13 +33,9 @@ public class Practice extends Level {
     private ArrayList<LevelObject> players;
     private ArrayList<PracticeTarget> targets;
 
-    private PracticeTarget movableTarget;
-    float movableTargetStartingPos;
-    private float targetVelY = 1.0f;
+    MapHelper helper;
+    PracticeTimer timer;
 
-    Font font;
-    TrueTypeFont ttf;
-    String score;
 
     /**
      * Constructor for Arena, creates the playingfield and adds all players to
@@ -55,20 +50,25 @@ public class Practice extends Level {
         targets = new ArrayList<>();
 
         addPlayer(levelObject);
-        addPracticeTargets();
+
 
         loadTileMap();
-        font = new Font("Verdana", Font.BOLD, 20);
-        ttf = new TrueTypeFont(font, true);
 
-        score = "Targets Left: " + String.valueOf(targets.size());
+        timer = new PracticeTimer();
+        timer.startTimer();
 
-        movableTarget = targets.get(15);
-        movableTargetStartingPos = movableTarget.getY();
+        helper = new MapHelper(timer, targets);
+
+
+        PracticeTarget movableTarget = targets.get(15);
+        float movableTargetStartingPos = movableTarget.getY();
+        helper.moveTargetConstructor(movableTarget, movableTargetStartingPos, 1.0f);
+
     }
 
     /**
      * populates the arena with tiles
+     *
      * @throws org.newdawn.slick.SlickException
      */
     public void loadTileMap() {
@@ -86,10 +86,10 @@ public class Practice extends Level {
 
                 try {
                     int tileID = map.getTileId(x, y, layerIndex);
-                    
+
                     Tile tile = null;
                     PracticeTarget target = null;
-                    
+
                     switch (map.getTileProperty(tileID, "tileType", "solid")) {
                         case "air":
                             tile = new AirTile(x, y);
@@ -121,64 +121,6 @@ public class Practice extends Level {
      */
     public void addPlayer(LevelObject p) {
         players.add(p);
-    }
-
-    /**
-     * Creates and adds Practice targets to the {@code targets} array
-     *
-     * DEPRECATED
-     */
-    public void addPracticeTargets() {
-        
-
-//        try {
-//            PracticeTarget target1 = new PracticeTarget(60, 70);
-//            targets.add(target1);
-//            PracticeTarget target2 = new PracticeTarget(100, 300);
-//            targets.add(target2);
-//            PracticeTarget target3 = new PracticeTarget(200, 50);
-//            targets.add(target3);
-//            PracticeTarget target4 = new PracticeTarget(400, 30);
-//            targets.add(target4);
-//            PracticeTarget target5 = new PracticeTarget(600, 50);
-//            targets.add(target5);
-//            PracticeTarget target6 = new PracticeTarget(400, 400);
-//            targets.add(target6);
-//            PracticeTarget target7 = new PracticeTarget(400, 200);
-//            targets.add(target7);
-//            PracticeTarget target8 = new PracticeTarget(750, 80);
-//            targets.add(target8);
-//            PracticeTarget target9 = new PracticeTarget(800, 435);
-//            targets.add(target9);
-//            PracticeTarget target10 = new PracticeTarget(160, 200);
-//            targets.add(target10);
-//        } catch (SlickException ex) {
-//            Logger.getLogger(Practice.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (IOException ex) {
-//            Logger.getLogger(Practice.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        }
-    }
-
-    /**
-     * Updates the scoreboard
-     */
-    public void updateScore() {
-        if (targets.size() > 0) {
-            score = "Targets Left: " + String.valueOf(targets.size());
-        } else {
-            score = "You are a winrar!";
-        }
-    }
-
-    public void moveTarget() {
-    movableTarget.setY(movableTarget.getY() + targetVelY);
-
-    if(movableTarget.getY() > (movableTargetStartingPos + 100) && targetVelY > 0) {
-        targetVelY = -1.0f;
-    } else if(movableTarget.getY() < movableTargetStartingPos && targetVelY < 0) {
-        targetVelY = 1.0f;
-    }
-
     }
 
     /**
@@ -219,15 +161,6 @@ public class Practice extends Level {
         for (LevelObject t : targets) {
             t.render();
         }
-
-        //for debugging
-        /*for (int i = 0; i < targets.size(); i++) {
-            ttf.drawString(targets.get(i).getX(), targets.get(i).getY(), String.valueOf(i));
-        }*/
-
     }
 
-    public void updateText(float x, float y) {
-        ttf.drawString(x, y, score, Color.green);
-    }
 }

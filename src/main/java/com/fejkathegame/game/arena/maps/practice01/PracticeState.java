@@ -89,7 +89,7 @@ public class PracticeState extends BasicGameState {
         g.scale(Main.SCALE, Main.SCALE);
         g.translate(-camX, -camY);
         arena.render();
-        arena.updateText(camX , camY);
+        arena.helper.updateText(camX , camY);
         g.resetTransform();
     }
 
@@ -101,7 +101,7 @@ public class PracticeState extends BasicGameState {
         physics.handlePhysics(arena, i);
         checkCollisionWithTarget();
         obj.update(i);
-        arena.moveTarget();
+        arena.helper.moveTarget();
     }
     
     public void checkCollisionWithTarget() {
@@ -111,7 +111,7 @@ public class PracticeState extends BasicGameState {
                 System.out.println("HIT");
                 arena.getTargets().get(i).getHealthSystem().dealDamage(1);
                 arena.getTargets().remove(i);
-                arena.updateScore();
+                arena.helper.updateScore();
             }
         }
     }

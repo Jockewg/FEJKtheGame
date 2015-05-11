@@ -14,13 +14,9 @@ import com.fejkathegame.game.arena.tiles.Tile;
 import com.fejkathegame.game.entities.LevelObject;
 import com.fejkathegame.game.entities.PracticeTarget;
 import com.fejkathegame.game.timer.PracticeTimer;
-import org.lwjgl.util.Timer;
-import org.newdawn.slick.Color;
 import org.newdawn.slick.SlickException;
-import org.newdawn.slick.TrueTypeFont;
 import org.newdawn.slick.tiled.TiledMap;
 
-import java.awt.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.logging.Logger;
@@ -58,7 +54,6 @@ public class BigBlue02 extends Level {
         timer.startTimer();
 
 
-
         helper = new MapHelper(timer, targets);
         /*movableTarget = targets.get(15);*/
         /*movableTargetStartingPos = movableTarget.getY();*/
@@ -87,21 +82,21 @@ public class BigBlue02 extends Level {
 
                 try {
                     int tileID = map.getTileId(x, y, collisionLayer);
-                    
+
                     Tile tile = null;
                     PracticeTarget target = null;
-                    
+
                     switch (map.getTileProperty(tileID, "tileType", "solid")) {
                         case "air":
                             tile = new AirTile(x, y);
                             break;
-                            
+
                         case "target":
                             tile = new TargetTile(x, y);
                             target = new PracticeTarget(x * 25, y * 25);
                             targets.add(target);
                             break;
-                            
+
                         default:
                             tile = new SolidTile(x, y);
                             break;
@@ -127,8 +122,6 @@ public class BigBlue02 extends Level {
     }
 
 
-
-
     /**
      * @return the player array which includes all player objects
      */
@@ -151,7 +144,7 @@ public class BigBlue02 extends Level {
         return tiles;
     }
 
-    public TiledMap getMap () {
+    public TiledMap getMap() {
         return map;
     }
 
@@ -170,16 +163,6 @@ public class BigBlue02 extends Level {
         for (LevelObject t : targets) {
             t.render();
         }
-
-        //for debugging
-        /*for (int i = 0; i < targets.size(); i++) {
-            ttf.drawString(targets.get(i).getX(), targets.get(i).getY(), String.valueOf(i));
-        }*/
-
     }
 
- /*   public void updateText(float x, float y) {
-        ttf.drawString(x, y, score, Color.green);
-        ttf.drawString(x + 200, y, "Time: " + String.valueOf(timer.getElapsedTimeSecs()), Color.red);
-    }*/
 }

@@ -24,14 +24,15 @@ import java.util.logging.Logger;
  */
 public class MapHelper {
 
-    private PracticeTarget movableTarget;
-    float movableTargetStartingPos;
-    private float targetVelY = 1.0f;
     Font font;
     TrueTypeFont ttf;
     String score;
     PracticeTimer timer;
     ArrayList<PracticeTarget> targets;
+    PracticeTarget movableTarget;
+    float movableTargetStartingPos;
+    float targetVelY;
+
 
     public MapHelper(PracticeTimer timer, ArrayList<PracticeTarget> targets) {
         this.timer = timer;
@@ -54,6 +55,11 @@ public class MapHelper {
             timer.stopTimer();
         }
     }
+    public void moveTargetConstructor(PracticeTarget movableTarget, float movableTargetStartingPos, float targetVelY) {
+        this.movableTarget = movableTarget;
+        this.movableTargetStartingPos = movableTargetStartingPos;
+        this.targetVelY = targetVelY;
+    }
     public void moveTarget() {
         movableTarget.setY(movableTarget.getY() + targetVelY);
 
@@ -63,6 +69,11 @@ public class MapHelper {
             targetVelY = 1.0f;
         }
 
+    }
+    public void showTargetNumber() {
+        for (int i = 0; i < targets.size(); i++) {
+            ttf.drawString(targets.get(i).getX(), targets.get(i).getY(), String.valueOf(i));
+        }
     }
 }
 
