@@ -49,6 +49,7 @@ public class Main extends StateBasedGame {
         addState(new VersusState("arena2"));
         addState(new Tower01State("tower_1"));
         addState(new BigBlue02State("big_blue"));
+        addState(new PracticeState("practice"));
         addState(new LevelSelectState());
         
         this.enterState(MENU);
