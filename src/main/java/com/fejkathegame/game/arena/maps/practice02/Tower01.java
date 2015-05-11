@@ -97,8 +97,8 @@ public class Tower01 extends Level {
                             tile = new TargetTile(x, y);
                             target = new PracticeTarget(tile.getX() * 25 - 1, tile.getY() * 25 - 1);
                             targets.add(target);
-
                             break;
+                            
                         default:
                             tile = new SolidTile(x, y);
                             break;
@@ -172,7 +172,7 @@ public class Tower01 extends Level {
      * @throws org.newdawn.slick.SlickException
      */
     public void render() throws SlickException {
-        map.render(0, 0, 0, 0, 100, 40);
+        map.render(0, 0, 0, 0, 36, 100);
 
 
         for (LevelObject p : players) {

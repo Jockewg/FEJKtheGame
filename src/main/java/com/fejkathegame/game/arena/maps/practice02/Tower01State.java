@@ -22,8 +22,8 @@ public class Tower01State extends BasicGameState {
     private Physics physics;
     private com.fejkathegame.game.entities.Character obj;
     
-    private float offsetMaxX = 2050;
-    private float offsetMaxY = 2000;
+    private float offsetMaxX = 450;
+    private float offsetMaxY = 2250;
     private float offsetMinX = 0;
     private float offsetMinY = 0;
     private float camX, camY = 0;
@@ -47,7 +47,7 @@ public class Tower01State extends BasicGameState {
 
         obj = null;
         try {
-            obj = new com.fejkathegame.game.entities.Character(250, 1950);
+            obj = new com.fejkathegame.game.entities.Character(32, 32);
         } catch (IOException e) {
             e.printStackTrace();
         }
