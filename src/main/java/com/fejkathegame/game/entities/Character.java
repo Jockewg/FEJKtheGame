@@ -121,7 +121,8 @@ public class Character extends LevelObject {
         runningAnimation = new Animation(runningSheet, 30);
         runningAnimation.setAutoUpdate(false);
         stanceSheet = new SpriteSheet("src/main/resources/data/img/spritesheets/charStance.png", 32, 32);
-        stanceAnimation = new Animation(stanceSheet, 30);
+        stanceAnimation = new Animation(stanceSheet, 100);
+        stanceAnimation.setAutoUpdate(false);
     }
 
     /**
@@ -331,6 +332,7 @@ public class Character extends LevelObject {
         }
         
         runningAnimation.update(delta);
+        stanceAnimation.update(delta);
         
         
         if (!isCharging && !isFullyCharged) {
@@ -831,5 +833,13 @@ public class Character extends LevelObject {
 
     public void setAttackIndicator(Polygon attackIndicator) {
         this.attackIndicator = attackIndicator;
+    }
+    
+    public float getX() {
+        return x;
+    }
+    
+    public float getY() {
+        return y;
     }
 }

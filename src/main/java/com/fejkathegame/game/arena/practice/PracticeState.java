@@ -5,11 +5,16 @@ import com.fejkathegame.game.Main;
 import com.fejkathegame.game.arena.physics.Physics;
 
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.newdawn.slick.Color;
 
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.geom.Line;
+import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
@@ -23,6 +28,7 @@ public class PracticeState extends BasicGameState {
     private MovementSystem movementSystem;
     private Physics physics;
     private com.fejkathegame.game.entities.Character obj;
+    private com.fejkathegame.game.entities.Character player2;
     
     private float offsetMaxX = 2050;
     private float offsetMaxY = 750;
@@ -30,6 +36,7 @@ public class PracticeState extends BasicGameState {
     private float offsetMinY = 0;
     private float camX, camY = 0;
     private float acc = 5.0f;
+    private Line line;
 
     /**
      * Constructor for ArenaState
@@ -53,9 +60,18 @@ public class PracticeState extends BasicGameState {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        
+        try {
+            player2 = new com.fejkathegame.game.entities.Character(64, 40);
+        } catch (IOException ex) {
+            Logger.getLogger(PracticeState.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        line = new Line(obj.getX(), obj.getY(), player2.getX(), player2.getY());
 
 
         arena = new Practice(name, obj);
+        arena.addPlayer(player2);
         
         movementSystem = new MovementSystem(obj);
 
@@ -67,19 +83,31 @@ public class PracticeState extends BasicGameState {
     }
     
     public void checkCameraOffset() {
-        if(obj.getX() <= offsetMinX + 450)
-            camX = offsetMinX;
-        else if(obj.getX() >= offsetMaxX)
-            camX = offsetMaxX - 450;
-        else
-            camX = obj.getX() - 450.0f;
         
-        if(obj.getY() <= offsetMinY + 250)
-            camY = offsetMinY;
-        else if(obj.getY() >= offsetMaxY)
-            camY = offsetMaxY - 250;
-        else
-        camY = obj.getY() - 250.0f;
+        
+        
+        Vector2f objVector = new Vector2f(obj.getX(), obj.getY());
+        Vector2f player2Vector = new Vector2f(player2.getX(), player2.getY());
+        
+        line = new Line(objVector, player2Vector);
+        
+        camX = line.getCenterX() - 450;
+        camY = line.getCenterY() - 250;
+        
+        
+//        if(obj.getX() <= offsetMinX + 450)
+//            camX = offsetMinX;
+//        else if(obj.getX() >= offsetMaxX)
+//            camX = offsetMaxX - 450;
+//        else
+//            camX = obj.getX() - 450.0f;
+//        
+//        if(obj.getY() <= offsetMinY + 250)
+//            camY = offsetMinY;
+//        else if(obj.getY() >= offsetMaxY)
+//            camY = offsetMaxY - 250;
+//        else
+//        camY = obj.getY() - 250.0f;
     }
     
 
@@ -88,8 +116,11 @@ public class PracticeState extends BasicGameState {
         g.setAntiAlias(false);
         g.scale(Main.SCALE, Main.SCALE);
         g.translate(-camX, -camY);
+        
         arena.render();
         arena.updateText(camX , camY);
+        g.setColor(Color.yellow);
+        g.drawLine(obj.getX() + 9.5f, obj.getY() + 12.5f, player2.getX() + 9.5f, player2.getY() + 12.5f);
         g.resetTransform();
     }
 
@@ -102,6 +133,8 @@ public class PracticeState extends BasicGameState {
         checkCollisionWithTarget();
         obj.update(i);
         arena.moveTarget();
+        System.out.println(line.getX2());
+        System.out.println(line.getX1());
     }
     
     public void checkCollisionWithTarget() {
