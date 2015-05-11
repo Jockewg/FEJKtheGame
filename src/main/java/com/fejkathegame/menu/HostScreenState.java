@@ -15,11 +15,11 @@ import org.newdawn.slick.state.StateBasedGame;
 import sun.security.x509.IPAddressName;
 
 public class HostScreenState extends BasicGameState {
-    
+
     private HostScreen hostScreen;
     private String name;
     private Input input;
-    
+
     public HostScreenState(String name) {
         this.name = name;
     }
@@ -38,18 +38,18 @@ public class HostScreenState extends BasicGameState {
     @Override
     public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
         g.setBackground(Color.decode("#655d5d"));
-        
+
         hostScreen.render(gc, g);
 
     }
 
     /**
      * Updates the state.
-     * 
+     *
      * @param gc
      * @param sbg
      * @param i
-     * @throws SlickException 
+     * @throws SlickException
      */
     @Override
     public void update(GameContainer gc, StateBasedGame sbg, int i) throws SlickException {
@@ -57,27 +57,22 @@ public class HostScreenState extends BasicGameState {
         int y = input.getMouseY();
         checkIfConnectIsClicked(x, y, input);
     }
-    
+
     /**
      * Checks if the mosue is on the connect button.
-     * 
+     *
      * If the mouse is above the connect button and the left mouse button is
      * clicked, connection to server will be attempted.
-     * 
+     *
      * @param x x position of the mouse
      * @param y y position of the mouse
      * @param i the Input to be used to read mouse position
      */
     public void checkIfConnectIsClicked(int x, int y, Input i) {
-        if((x > 300 && x < 600) && (y > 331 && y < 371)) {
-            if(i.isMousePressed(Input.MOUSE_LEFT_BUTTON)) {
-                try {
-                    Server server = new Server(6112);
-
-                server.start();
-                } catch (IOException ex) {
-                    Logger.getLogger(HostScreenState.class.getName()).log(Level.SEVERE, null, ex);
-                }
+        if ((x > 300 && x < 600) && (y > 331 && y < 371)) {
+            if (i.isMousePressed(Input.MOUSE_LEFT_BUTTON)) {
+                Client client = new Client();
+                client.run();
             }
         }
     }

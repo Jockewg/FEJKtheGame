@@ -48,7 +48,7 @@ public class Server extends Thread {
     }
 
     public static void main(String[] args) {
-        int port = 6066;
+        int port = 6112;
         try {
             Thread t = new Server(port);
             t.start();
