@@ -44,6 +44,22 @@ public class HostScreen {
         ipField.render(gc, g);
         connect.draw(gc.getWidth() / 2 - 150, gc.getHeight() / 2 + 80);
     }
+
+    public TextField getPlayerName() {
+        return playerName;
+    }
+
+    public void setPlayerName(TextField playerName) {
+        this.playerName = playerName;
+    }
+
+    public TextField getIpField() {
+        return ipField;
+    }
+
+    public void setIpField(TextField ipField) {
+        this.ipField = ipField;
+    }
     
 
 }

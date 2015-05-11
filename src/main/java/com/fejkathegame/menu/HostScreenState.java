@@ -71,7 +71,7 @@ public class HostScreenState extends BasicGameState {
     public void checkIfConnectIsClicked(int x, int y, Input i) {
         if ((x > 300 && x < 600) && (y > 331 && y < 371)) {
             if (i.isMousePressed(Input.MOUSE_LEFT_BUTTON)) {
-                Client client = new Client();
+                Client client = new Client(hostScreen.getIpField().getText(), hostScreen.getPlayerName().getText());
                 client.run();
             }
         }

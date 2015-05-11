@@ -12,7 +12,7 @@ public class Server extends Thread {
 
     public Server(int port) throws IOException {
         serverSocket = new ServerSocket(port);
-        serverSocket.setSoTimeout(10000);
+        serverSocket.setSoTimeout(1000000);
     }
 
     public void run() {
@@ -36,9 +36,10 @@ public class Server extends Thread {
                         + server.getLocalSocketAddress() + "\nGoodbye!");
                 
                 server.close();
-                
+               
             } catch (SocketTimeoutException s) {
                 System.out.println("Socket timed out!");
+                System.exit(0);
                 break;
             } catch (IOException e) {
                 e.printStackTrace();
