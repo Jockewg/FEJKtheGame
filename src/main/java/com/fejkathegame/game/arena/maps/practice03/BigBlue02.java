@@ -55,8 +55,6 @@ public class BigBlue02 extends Level {
 
 
         helper = new MapHelper(timer, targets);
-        /*movableTarget = targets.get(15);*/
-        /*movableTargetStartingPos = movableTarget.getY();*/
     }
 
     /**

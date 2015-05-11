@@ -60,8 +60,6 @@ public class Tower01 extends Level {
         timer.startTimer();
 
         helper = new MapHelper(timer, targets);
-        /*movableTarget = targets.get(15);*/
-        /*movableTargetStartingPos = movableTarget.getY();*/
     }
 
     /**
