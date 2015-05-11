@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package network.server;
+package network.mina.server;
 
 import java.util.Date;
 import org.apache.mina.core.service.IoHandlerAdapter;

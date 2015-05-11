@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package network.client;
+package network.mina.client;
 
 import java.net.InetSocketAddress;
 import org.apache.mina.core.RuntimeIoException;
@@ -27,7 +27,7 @@ public class Client {
     private static final long CONNECT_TIMEOUT = 30 * 1000L; // 30 seconds
 
     // Set this to false to use object serialization instead of custom codec.
-    private static final boolean USE_CUSTOM_CODEC = true;
+    private static final boolean USE_CUSTOM_CODEC = false;
 
     public static void main(String[] args) throws Throwable {
 
@@ -77,15 +77,9 @@ public class Client {
                 Thread.sleep(5000);
             }
         }
-
-        //
-        
         
         // wait until the summation is done
         session.getCloseFuture().awaitUninterruptibly();
-        
-        // Sending message
-        session.write("hej");
         
         connector.dispose();
 
