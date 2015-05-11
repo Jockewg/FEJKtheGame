@@ -138,11 +138,21 @@ public class Practice extends Level {
     }
 
 
+    @Override
+    public TiledMap getMap() {
+        return null;
+    }
+
     /**
      * @return a multidimensional array of tiles
      */
     public Tile[][] getTiles() {
         return tiles;
+    }
+
+    @Override
+    public MapHelper getMapHelper() {
+        return helper;
     }
 
     /**

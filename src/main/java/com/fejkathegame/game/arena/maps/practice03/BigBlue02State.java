@@ -1,6 +1,7 @@
 package com.fejkathegame.game.arena.maps.practice03;
 
 import com.fejkathegame.game.Main;
+import com.fejkathegame.game.arena.maps.StateHelper;
 import com.fejkathegame.game.arena.physics.Physics;
 import com.fejkathegame.game.entities.logic.MovementSystem;
 import org.newdawn.slick.GameContainer;
@@ -8,6 +9,7 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
+import com.fejkathegame.game.entities.Character;
 
 import java.io.IOException;
 
@@ -19,7 +21,8 @@ public class BigBlue02State extends BasicGameState {
     private String name;
     private MovementSystem movementSystem;
     private Physics physics;
-    private com.fejkathegame.game.entities.Character obj;
+    private Character obj;
+    private StateHelper helper;
 
     private float offsetMaxX;
     private float offsetMaxY;
@@ -59,6 +62,8 @@ public class BigBlue02State extends BasicGameState {
         movementSystem = new MovementSystem(obj);
 
         physics = new Physics();
+
+        helper = new StateHelper(arena, obj);
     }
 
     public void checkCameraOffset() {
@@ -99,21 +104,10 @@ public class BigBlue02State extends BasicGameState {
         checkCameraOffset();
         movementSystem.handleInput(gc.getInput(), i);
         physics.handlePhysics(arena, i);
-        checkCollisionWithTarget();
+        helper.checkCollisionWithTarget();
         obj.update(i);
-        /*arena.moveTarget();*/
     }
 
-    public void checkCollisionWithTarget() {
-        for (int i = 0; i < arena.getTargets().size(); i++) {
-            if (obj.getAttackIndicator().intersects(arena.getTargets().get(i).getHitbox()) && obj.getIsAttacking()
-                    || obj.getIsFullyCharged() && obj.getSuperAttackIndicator().intersects(arena.getTargets().get(i).getHitbox())) {
-                System.out.println("HIT");
-                arena.getTargets().get(i).getHealthSystem().dealDamage(1);
-                arena.getTargets().remove(i);
-                arena.helper.updateScore();
-            }
-        }
-    }
+
 
 }

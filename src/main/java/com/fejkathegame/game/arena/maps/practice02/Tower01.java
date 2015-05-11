@@ -33,10 +33,6 @@ public class Tower01 extends Level {
     private ArrayList<LevelObject> players;
     private ArrayList<PracticeTarget> targets;
 
-    private PracticeTarget movableTarget;
-    float movableTargetStartingPos;
-    private float targetVelY = 1.0f;
-
     MapHelper helper;
     PracticeTimer timer;
 
@@ -145,6 +141,16 @@ public class Tower01 extends Level {
      */
     public Tile[][] getTiles() {
         return tiles;
+    }
+
+    @Override
+    public TiledMap getMap() {
+        return null;
+    }
+
+    @Override
+    public MapHelper getMapHelper() {
+        return helper;
     }
 
     /**

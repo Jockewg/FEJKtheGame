@@ -1,5 +1,6 @@
 package com.fejkathegame.game.arena.maps.practice01;
 
+import com.fejkathegame.game.arena.maps.StateHelper;
 import com.fejkathegame.game.entities.logic.MovementSystem;
 import com.fejkathegame.game.Main;
 import com.fejkathegame.game.arena.physics.Physics;
@@ -23,6 +24,7 @@ public class PracticeState extends BasicGameState {
     private MovementSystem movementSystem;
     private Physics physics;
     private com.fejkathegame.game.entities.Character obj;
+    private StateHelper helper;
     
     private float offsetMaxX = 2050;
     private float offsetMaxY = 750;
@@ -61,7 +63,7 @@ public class PracticeState extends BasicGameState {
 
         physics = new Physics();
 
- 
+        helper = new StateHelper(arena, obj);
 
 
     }
@@ -89,7 +91,7 @@ public class PracticeState extends BasicGameState {
         g.scale(Main.SCALE, Main.SCALE);
         g.translate(-camX, -camY);
         arena.render();
-        arena.helper.updateText(camX , camY);
+        arena.helper.updateText(camX, camY);
         g.resetTransform();
     }
 
@@ -99,21 +101,11 @@ public class PracticeState extends BasicGameState {
         checkCameraOffset();
         movementSystem.handleInput(gc.getInput(), i);
         physics.handlePhysics(arena, i);
-        checkCollisionWithTarget();
+        helper.checkCollisionWithTarget();
         obj.update(i);
         arena.helper.moveTarget();
     }
     
-    public void checkCollisionWithTarget() {
-        for(int i = 0; i < arena.getTargets().size(); i++) {
-            if(obj.getAttackIndicator().intersects(arena.getTargets().get(i).getHitbox()) && obj.getIsAttacking()
-                    || obj.getIsFullyCharged() && obj.getSuperAttackIndicator().intersects(arena.getTargets().get(i).getHitbox())) {
-                System.out.println("HIT");
-                arena.getTargets().get(i).getHealthSystem().dealDamage(1);
-                arena.getTargets().remove(i);
-                arena.helper.updateScore();
-            }
-        }
-    }
+
 
 }

@@ -1,10 +1,12 @@
 package com.fejkathegame.game.arena.maps.versus01;
 
 import com.fejkathegame.game.arena.Level;
+import com.fejkathegame.game.arena.maps.MapHelper;
 import com.fejkathegame.game.entities.LevelObject;
 import com.fejkathegame.game.arena.tiles.AirTile;
 import com.fejkathegame.game.arena.tiles.SolidTile;
 import com.fejkathegame.game.arena.tiles.Tile;
+import com.fejkathegame.game.entities.PracticeTarget;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.tiled.TiledMap;
 
@@ -24,6 +26,8 @@ public class Versus extends Level {
     
     private Animation animation;
 
+
+
     /**
      * Constructor for Arena, creates the playingfield and adds all players to the field
      * @param name name of the file containing the tilemap
@@ -32,7 +36,7 @@ public class Versus extends Level {
      */
     public Versus(String name, LevelObject levelObject) throws SlickException {
         map = new TiledMap("src/main/resources/data/levels/" + name + ".tmx", "src/main/resources/data/img");
-        players = new ArrayList<LevelObject>();
+        players = new ArrayList<>();
         
         
         addPlayer(levelObject);
@@ -41,6 +45,8 @@ public class Versus extends Level {
         
         loadCrankAnim();
         animation = new Animation(crankAnim, 30);
+
+
     }
     
     public void loadCrankAnim() throws SlickException {
@@ -109,11 +115,27 @@ public class Versus extends Level {
         return players;
     }
 
+    @Override
+    public ArrayList<PracticeTarget> getTargets() {
+        ArrayList<PracticeTarget> targets = new ArrayList<>();
+        return targets;
+    }
+
     /**
      * @return a multidimensional array of tiles
      */
     public Tile[][] getTiles() {
         return tiles;
+    }
+
+    @Override
+    public TiledMap getMap() {
+        return map;
+    }
+
+    @Override
+    public MapHelper getMapHelper() {
+        return null;
     }
 
     /**

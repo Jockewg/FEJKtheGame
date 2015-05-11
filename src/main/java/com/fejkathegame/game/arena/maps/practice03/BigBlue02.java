@@ -130,6 +130,7 @@ public class BigBlue02 extends Level {
     /**
      * @return the player array which includes all {@code targetPractice} objects
      */
+    @Override
     public ArrayList<PracticeTarget> getTargets() {
         return targets;
     }
@@ -141,6 +142,12 @@ public class BigBlue02 extends Level {
     public Tile[][] getTiles() {
         return tiles;
     }
+
+    @Override
+    public MapHelper getMapHelper() {
+        return helper;
+    }
+
 
     public TiledMap getMap() {
         return map;
