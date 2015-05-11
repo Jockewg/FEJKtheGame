@@ -110,8 +110,6 @@ public class VersusState extends BasicGameState {
     }
     
     public void updateCameraRect() {
-        
-        
         float dY = line.getDY();
         float dX = +line.getDX();
         if(dX < 0) {
@@ -158,13 +156,10 @@ public class VersusState extends BasicGameState {
         
     }
     
-    public void updateCameraPos() {
+    public void updateVectorLine() {
         Vector2f objVector = new Vector2f(obj.getX(), obj.getY());
         Vector2f player2Vector = new Vector2f(player2.getX(), player2.getY());
-        
-        
         line = new Line(objVector, player2Vector);
-           
     }
 
     @Override
@@ -173,7 +168,7 @@ public class VersusState extends BasicGameState {
         g.translate(-cameraX, -cameraY);
         arena.getAnimation().draw(200, 50);
         arena.render();
-        g.drawLine(obj.getX() + 9.5f, obj.getY() + 12.5f, player2.getX() + 9.5f, player2.getY() + 12.5f);
+//        g.drawLine(obj.getX() + 9.5f, obj.getY() + 12.5f, player2.getX() + 9.5f, player2.getY() + 12.5f);
         g.draw(cameraRect);
         g.resetTransform();
         
@@ -182,7 +177,7 @@ public class VersusState extends BasicGameState {
 
     @Override
     public void update(GameContainer gc, StateBasedGame sbg, int i) throws SlickException {
-        updateCameraPos();
+        updateVectorLine();
         updateCameraRect();
         movementSystem.handleInput(gc.getInput(), i);
         physics.handlePhysics(arena, i);

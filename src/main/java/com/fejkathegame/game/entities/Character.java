@@ -117,11 +117,11 @@ public class Character extends LevelObject {
         superAttackIndicator = new Ellipse(x + 16, y + 16, 32, 32);
         hitBox = new Rectangle(x, y, 32, 32);
         
-        runningSheet = new SpriteSheet("src/main/resources/data/img/spritesheets/spritesheet2.png", 32, 32);
+        runningSheet = new SpriteSheet("src/main/resources/data/img/spritesheets/spritesheet3.png", 192, 192);
         runningAnimation = new Animation(runningSheet, 30);
         runningAnimation.setAutoUpdate(false);
-        stanceSheet = new SpriteSheet("src/main/resources/data/img/spritesheets/charStance.png", 32, 32);
-        stanceAnimation = new Animation(stanceSheet, 100);
+        stanceSheet = new SpriteSheet("src/main/resources/data/img/spritesheets/charStance.png", 112, 112);
+        stanceAnimation = new Animation(stanceSheet, 120);
         stanceAnimation.setAutoUpdate(false);
     }
 
@@ -347,15 +347,15 @@ public class Character extends LevelObject {
     public void renderCharacterAnimation() {
         if(x_velocity > 0) {
             flipped = false;
-            runningAnimation.draw(x - 4, y - 2);
+            runningAnimation.draw(x - 4, y - 2, 27, 27);
         } else if(x_velocity < 0) {
             flipped = true;
-            runningAnimation.getCurrentFrame().getFlippedCopy(true, false).draw(x - 9, y - 2);
+            runningAnimation.getCurrentFrame().getFlippedCopy(true, false).draw(x - 9, y - 2, 27, 27);
         } else if(x_velocity == 0) {
             if(flipped)
-                stanceAnimation.getCurrentFrame().getFlippedCopy(true, false).draw(x - 9, y - 2);
+                stanceAnimation.getCurrentFrame().getFlippedCopy(true, false).draw(x - 9, y - 2, 27, 27);
             else
-                stanceAnimation.draw(x - 4, y - 2);
+                stanceAnimation.draw(x - 4, y - 2, 27, 27);
         }
     }
 
