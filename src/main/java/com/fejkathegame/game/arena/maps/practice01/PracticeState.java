@@ -1,4 +1,4 @@
-package com.fejkathegame.game.arena.practice;
+package com.fejkathegame.game.arena.maps.practice01;
 
 import com.fejkathegame.game.entities.logic.MovementSystem;
 import com.fejkathegame.game.Main;

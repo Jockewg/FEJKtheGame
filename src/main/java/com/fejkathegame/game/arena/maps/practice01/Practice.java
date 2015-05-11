@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.fejkathegame.game.arena.practice;
+package com.fejkathegame.game.arena.maps.practice01;
 
 import com.fejkathegame.game.entities.PracticeTarget;
 import com.fejkathegame.game.arena.Level;

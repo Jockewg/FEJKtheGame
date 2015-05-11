@@ -1,4 +1,4 @@
-package com.fejkathegame.game.arena.versus;
+package com.fejkathegame.game.arena.maps.versus01;
 
 import com.fejkathegame.game.arena.Level;
 import com.fejkathegame.game.entities.LevelObject;

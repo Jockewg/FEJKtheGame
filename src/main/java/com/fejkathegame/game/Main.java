@@ -1,7 +1,8 @@
 package com.fejkathegame.game;
 
-import com.fejkathegame.game.arena.versus.VersusState;
-import com.fejkathegame.game.arena.practice.PracticeState;
+import com.fejkathegame.game.arena.maps.practice02.Tower01State;
+import com.fejkathegame.game.arena.maps.versus01.VersusState;
+import com.fejkathegame.game.arena.maps.practice01.PracticeState;
 import com.fejkathegame.menu.HostScreenState;
 import com.fejkathegame.menu.MenuState;
 
@@ -35,7 +36,7 @@ public class Main extends StateBasedGame {
         addState(new HostScreenState("host"));
         addState(new MenuState("menu"));
         addState(new VersusState("arena2"));
-        addState(new PracticeState("practice"));
+        addState(new Tower01State("tower_1"));
         
         this.enterState(0);
 

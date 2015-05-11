@@ -1,6 +1,5 @@
 package com.fejkathegame.game.arena.physics;
 
-import com.fejkathegame.game.arena.versus.Versus;
 import com.fejkathegame.game.arena.Level;
 import com.fejkathegame.game.entities.LevelObject;
 import com.fejkathegame.game.arena.tiles.Tile;

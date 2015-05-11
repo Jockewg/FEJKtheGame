@@ -13,9 +13,17 @@
    </properties>
   </tile>
  </tileset>
+ <tileset firstgid="3" name="targetTile" tilewidth="25" tileheight="25">
+  <image source="../img/tilesets/targetTile.png" width="25" height="25"/>
+  <tile id="0">
+   <properties>
+    <property name="tileType" value="target"/>
+   </properties>
+  </tile>
+ </tileset>
  <layer name="CollisionLayer" width="36" height="100">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC+3OoQ0AMBDEsO/+S3cD4wOxFJ53d2+sFf1YP9aP9WP9WD/Wj/Vj/Vg/1o/1Y/1YP9aP9WP9WD/Wj/Vj/Vg/1o/1Y/1YP9aP9WP9WD/Wj/Vj/Vg/1o/1Y/1YP9aP9WP9WD/Wj/Vj/Vg/1o/1Y6s/S32olpcaQDgAAA==
+   H4sIAAAAAAAAC+3VSwrCQBBAwQne/85uko3IwyDRRutB74tmPttaaxs2U+LpeDqejqfj6Xg6no6n4+l4Op6Op+PpeDqejqfj6Xg6no6n4+l4Op6Op+PpeDqejqfj6Xg6no6n4+l4Op6Op+PpHj23b0H2pu7nzPyjZ0rOc8fTveO54l7+kueKeJ53vHtTPEef9Ez5I6d6Xomn4+mmeibNHSZGEnBAOAAA
   </data>
  </layer>
 </map>
