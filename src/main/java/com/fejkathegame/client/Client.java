@@ -10,7 +10,7 @@ public class Client {
 
     public static void main(String[] args) {
         String serverName = "localhost";
-        int port = 6066;
+        int port = 6112;
         try {
             System.out.println("Connecting to " + serverName
                     + " on port " + port);
