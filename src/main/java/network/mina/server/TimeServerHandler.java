@@ -29,8 +29,10 @@ public class TimeServerHandler extends IoHandlerAdapter{
             session.close(true);
         }
         Date date = new Date();
-        session.write(date.toString());
+        session.write("Jockes Server ger dig här dagens datum!\n" + date.toString());
+        //session.write(date.toString());
         System.out.println("Message written...");
+        System.out.println(session.getRemoteAddress());
         
     }
 

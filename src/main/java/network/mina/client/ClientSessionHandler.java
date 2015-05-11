@@ -47,6 +47,7 @@ class ClientSessionHandler extends IoHandlerAdapter {
             // if received the result message which has the last sequence
             // number,
             // it is time to disconnect.
+            System.out.println("VARNIGNGNG");
             if (rm.getSequence() == values.length - 1) {
                 // print the sum and disconnect.
                 LOGGER.info("The sum: " + rm.getValue());
