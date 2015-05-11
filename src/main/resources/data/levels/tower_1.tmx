@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="36" height="100" tilewidth="25" tileheight="25" nextobjectid="1">
+ <tileset firstgid="1" name="White and Trans" tilewidth="25" tileheight="25">
+  <image source="../img/tilesets/whiteAndTransp.png" width="50" height="25"/>
+  <tile id="0">
+   <properties>
+    <property name="tileType" value="solid"/>
+   </properties>
+  </tile>
+  <tile id="1">
+   <properties>
+    <property name="tileType" value="air"/>
+   </properties>
+  </tile>
+ </tileset>
+ <layer name="CollisionLayer" width="36" height="100">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC+3OoQ0AMBDEsO/+S3cD4wOxFJ53d2+sFf1YP9aP9WP9WD/Wj/Vj/Vg/1o/1Y/1YP9aP9WP9WD/Wj/Vj/Vg/1o/1Y/1YP9aP9WP9WD/Wj/Vj/Vg/1o/1Y/1YP9aP9WP9WD/Wj/Vj/Vg/1o/1Y6s/S32olpcaQDgAAA==
+  </data>
+ </layer>
+</map>
