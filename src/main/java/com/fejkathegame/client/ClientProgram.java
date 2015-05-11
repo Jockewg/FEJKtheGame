@@ -52,6 +52,7 @@ public class ClientProgram extends Listener implements Runnable {
             }
         }
         System.out.println("Client will now exit");
+        System.exit(0);
     }
 
     @Override
