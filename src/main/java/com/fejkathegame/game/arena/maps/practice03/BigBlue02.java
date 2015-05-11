@@ -12,6 +12,8 @@ import com.fejkathegame.game.arena.tiles.TargetTile;
 import com.fejkathegame.game.arena.tiles.Tile;
 import com.fejkathegame.game.entities.LevelObject;
 import com.fejkathegame.game.entities.PracticeTarget;
+import com.fejkathegame.game.timer.PracticeTimer;
+import org.lwjgl.util.Timer;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.TrueTypeFont;
@@ -38,6 +40,8 @@ public class BigBlue02 extends Level {
     float movableTargetStartingPos;
     private float targetVelY = 1.0f;
 
+    PracticeTimer timer;
+
     Font font;
     TrueTypeFont ttf;
     String score;
@@ -61,6 +65,10 @@ public class BigBlue02 extends Level {
         ttf = new TrueTypeFont(font, true);
 
         score = "Targets Left: " + String.valueOf(targets.size());
+
+        timer = new PracticeTimer();
+        timer.startTimer();
+
 
         /*movableTarget = targets.get(15);*/
         /*movableTargetStartingPos = movableTarget.getY();*/
@@ -136,6 +144,7 @@ public class BigBlue02 extends Level {
             score = "Targets Left: " + String.valueOf(targets.size());
         } else {
             score = "You are a winrar!";
+            timer.stopTimer();
         }
     }
 
@@ -201,5 +210,6 @@ public class BigBlue02 extends Level {
 
     public void updateText(float x, float y) {
         ttf.drawString(x, y, score, Color.green);
+        ttf.drawString(x + 200, y, "Time: " + String.valueOf(timer.getElapsedTimeSecs()), Color.red);
     }
 }
