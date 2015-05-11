@@ -68,9 +68,9 @@ public class HostScreenState extends BasicGameState {
     public void checkIfConnectIsClicked(int x, int y, Input i) {
         if((x > 300 && x < 600) && (y > 331 && y < 371)) {
             if(i.isMousePressed(Input.MOUSE_LEFT_BUTTON)) {
-                Server server = new Server();
-
-                server.handleConnection();
+//                Server server = new Server();
+//
+//                server.handleConnection();
             }
         }
     }
