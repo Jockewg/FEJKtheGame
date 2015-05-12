@@ -4,6 +4,7 @@ import com.fejkathegame.game.arena.maps.practice02.Tower01State;
 import com.fejkathegame.game.arena.maps.practice03.BigBlue02State;
 import com.fejkathegame.game.arena.maps.versus01.VersusState;
 import com.fejkathegame.game.arena.maps.practice01.PracticeState;
+import com.fejkathegame.game.arena.maps.tutorial04.Tutorial03State;
 import com.fejkathegame.menu.HostScreenState;
 import com.fejkathegame.menu.LevelSelectState;
 import com.fejkathegame.menu.MenuState;
@@ -27,6 +28,7 @@ public class Main extends StateBasedGame {
     public static final int TOWER1STATE = 4;
     public static final int BIGBLUESTATE = 5;
     public static final int FIRSTPRACTICE = 6;
+    public static final int TUTORIAL = 7;
 
     
     public static final float SCALE = (float) (1 * ((double) WINDOW_WIDTH / 900));
@@ -50,6 +52,7 @@ public class Main extends StateBasedGame {
         addState(new Tower01State("tower_1"));
         addState(new BigBlue02State("big_blue"));
         addState(new PracticeState("practice"));
+        addState(new Tutorial03State("tutorial"));
         addState(new LevelSelectState());
         
         this.enterState(MENU);

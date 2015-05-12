@@ -58,5 +58,10 @@ public class LevelSelectState extends BasicGameState {
                 sbg.enterState(Main.FIRSTPRACTICE);
             }
         }
+        if ((x >= 750 && x <= 800) && (y >= 150 && y <= 300)) {
+            if (i.isMousePressed(Input.MOUSE_LEFT_BUTTON)) {
+                sbg.enterState(Main.TUTORIAL);
+            }
+        }
     }
 }
