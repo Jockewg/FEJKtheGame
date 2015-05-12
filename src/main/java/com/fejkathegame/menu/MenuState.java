@@ -1,7 +1,7 @@
 package com.fejkathegame.menu;
 
 import com.fejkathegame.game.Main;
-import com.fejkathegame.menu.button.Button;
+import com.fejkathegame.menu.button.MenuButton;
 import org.lwjgl.input.Mouse;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
