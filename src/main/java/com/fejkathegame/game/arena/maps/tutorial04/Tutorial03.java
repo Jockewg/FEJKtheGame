@@ -9,6 +9,7 @@ import com.fejkathegame.game.arena.PracticeLevel;
 import com.fejkathegame.game.arena.maps.PracticeLevelHelper;
 import com.fejkathegame.game.arena.maps.practice03.BigBlue02;
 import com.fejkathegame.game.arena.tiles.AirTile;
+import com.fejkathegame.game.arena.tiles.PitTile;
 import com.fejkathegame.game.arena.tiles.SolidTile;
 import com.fejkathegame.game.arena.tiles.TargetTile;
 import com.fejkathegame.game.arena.tiles.Tile;
@@ -83,6 +84,10 @@ public class Tutorial03 extends PracticeLevel {
                      tile = new TargetTile(x, y);
                      target = new PracticeTarget(x * 25, y * 25);
                      targets.add(target);
+                     break;
+                     
+                  case "pit":
+                     tile = new PitTile(x, y);
                      break;
 
                   default:
