@@ -1,5 +1,6 @@
 package com.fejkathegame.menu;
 
+import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryonet.Client;
 import com.fejkathegame.client.ClientProgram;
 import com.fejkathegame.server.ServerProgram;
@@ -72,8 +73,9 @@ public class HostScreenState extends BasicGameState {
                 ClientProgram client = new ClientProgram(
                         hostScreen.getIpField().getText(),
                         hostScreen.getPlayerName().getText());
+                Thread thread = new Thread(client);
+                thread.start();
                 
-                client.run();
             }
         }
     }
