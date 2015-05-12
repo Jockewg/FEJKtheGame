@@ -73,6 +73,7 @@ public class Character extends LevelObject {
     private boolean isCharging = false;
     private boolean isFullyCharged = false;
     private Shape hitBox;
+    private Image[] numberOfJumps = new Image[2];
 
     /**
      * Constructor for creating a character, gives it the default values for a
@@ -117,6 +118,8 @@ public class Character extends LevelObject {
         superAttackIndicator = new Ellipse(x + 16, y + 16, 32, 32);
         hitBox = new Rectangle(x, y, 32, 32);
         
+        loadStoredJumpsIndicator();
+        
         runningSheet = new SpriteSheet("src/main/resources/data/img/spritesheets/spritesheet3.png", 192, 192);
         runningAnimation = new Animation(runningSheet, 30);
         runningAnimation.setAutoUpdate(false);
@@ -142,6 +145,11 @@ public class Character extends LevelObject {
                 x_velocity = 0;
             }
         }
+    }
+    
+    public void loadStoredJumpsIndicator() throws SlickException {
+        numberOfJumps[0] = new Image("src/main/resources/data/img/statusBar/jump/jumpCounter.png");
+        numberOfJumps[1] = new Image("src/main/resources/data/img/statusBar/jump/jumpCounterEmpty.png");
     }
 
     /**
@@ -341,6 +349,19 @@ public class Character extends LevelObject {
 
         if (isFullyCharged) {
             activateSuperAttack(delta);
+        }
+    }
+    
+    public void renderStoredJumpsIndicator(float x, float y) {
+        if(storedJumps == 2) {
+            numberOfJumps[0].getScaledCopy(0.1f).draw(x - 1, y);
+            numberOfJumps[0].getScaledCopy(0.1f).draw(x - 1, y + 16);
+        } else if(storedJumps == 1) {
+            numberOfJumps[0].getScaledCopy(0.1f).draw(x - 1, y);
+            numberOfJumps[1].getScaledCopy(0.1f).draw(x - 1, y + 16);
+        } else {
+            numberOfJumps[1].getScaledCopy(0.1f).draw(x - 1, y);
+            numberOfJumps[1].getScaledCopy(0.1f).draw(x - 1, y + 16);
         }
     }
     
