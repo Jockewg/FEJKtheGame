@@ -30,7 +30,7 @@ public class Tower01State extends BasicGameState {
     private float offsetMaxY = 2250;
     
     private boolean isCameraAnimationRunning = true;
-    private int cameraMotionY = 0;
+    private float cameraMotionY = 0;
 
     /**
      * Constructor for ArenaState
@@ -71,7 +71,7 @@ public class Tower01State extends BasicGameState {
     }
     
     public void cameraAnimation() {
-        cameraMotionY += 5;
+        cameraMotionY += arena.timer.getCurrentCountdownTimeInReverseIncrement();
         camera.setCamX(0);
         camera.setCamY(cameraMotionY);
         if(cameraMotionY >= offsetMaxY - 250) {
@@ -105,8 +105,8 @@ public class Tower01State extends BasicGameState {
             physics.handlePhysics(arena, i);
             helper.checkCollisionWithTarget();
             obj.update(i);
-            arena.timer.calculateSecond(i);
         }
+         arena.timer.calculateSecond(i);
         
     }
 
