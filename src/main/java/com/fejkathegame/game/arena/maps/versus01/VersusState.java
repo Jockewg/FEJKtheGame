@@ -125,7 +125,6 @@ public class VersusState extends BasicGameState {
             cameraWidth = cameraHeight / 0.55f;
         }
         
-        
         cameraX = line.getCenterX() - (cameraWidth / 2);
         cameraY = line.getCenterY() - (cameraHeight / 2);
         
