@@ -31,7 +31,7 @@ public class PracticeLevelHelper {
         font2 = new Font("Arial", Font.BOLD, 50);
         ttf2 = new TrueTypeFont(font2, true);
         this.targets = targets;
-        timer.startCountdown(10);
+        timer.startCountdown(3);
         
         score = "Targets Left: " + String.valueOf(targets.size());
         
