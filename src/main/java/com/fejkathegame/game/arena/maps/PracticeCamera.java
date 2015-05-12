@@ -9,10 +9,27 @@ public class PracticeCamera {
     private float offsetMinX = 0;
     private float offsetMinY = 0;
     private float camX, camY = 0;
+    private float cameraWidth, cameraHeight;
 
     public PracticeCamera(float offsetMaxX, float offsetMaxY) {
         this.offsetMaxX = offsetMaxX;
         this.offsetMaxY = offsetMaxY;
+    }
+    
+    public float getCameraWidth() {
+        return cameraWidth;
+    }
+    
+    public void setCameraWidth(float cameraWidth) {
+        this.cameraWidth = cameraWidth;
+    }
+    
+    public float getCameraHeight() {
+        return cameraHeight;
+    }
+    
+    public void setCameraHeight(float cameraHeight) {
+        this.cameraHeight = cameraHeight;
     }
 
     public float getOffsetMaxX() {

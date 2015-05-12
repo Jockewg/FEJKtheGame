@@ -28,6 +28,11 @@ public class BigBlue02State extends BasicGameState {
 
     private float offsetMaxX;
     private float offsetMaxY;
+    
+    private boolean isCameraAnimationRunning = true;
+    private float cameraMotionY = 0;
+    private float cameraMotionX = 3000;
+    private float scale;
 
     /**
      * Constructor for ArenaState
@@ -70,12 +75,49 @@ public class BigBlue02State extends BasicGameState {
         offsetMaxX = arena.getMap().getWidth() * 22;
         offsetMaxY = arena.getMap().getHeight() * 20;
     }
+    
+    public void cameraAnimation() {
+        cameraMotionX -= 10;
+        if(cameraMotionX <= 0) {
+            cameraMotionX = 0;
+        }
+        
+        if(cameraMotionX > 0) {
+            camera.setCamY(0);
+            camera.setCameraHeight((arena.getMap().getHeight() * 25));
+            float cameraMulti = camera.getCameraHeight() / 0.55f;
+            camera.setCameraWidth(cameraMulti);
+        }
+        camera.setCamX(cameraMotionX);
+        
+        if(cameraMotionX > 0) {
+            scale = 0.4f;
+        } else {
+            scale += 0.005f;
+            camera.setCamY(obj.getY());
+        }
+        
+        System.out.println("CamY + CamHeight: " + (camera.getCamY() + camera.getCameraHeight()));
+        
+        if(scale >= 1) {
+            scale = 1;
+            isCameraAnimationRunning = false;
+        }
+        
+        System.out.println(scale);
+        
+    }
 
 
     @Override
     public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
         g.setAntiAlias(false);
-        g.scale(Main.SCALE, Main.SCALE);
+        if(isCameraAnimationRunning) {
+            cameraAnimation();
+            g.scale(scale, scale);
+        } else {
+            g.scale(scale, scale);
+        }
         g.translate(-camera.getCamX(), -camera.getCamY());
         arena.render();
         arena.helper.updateText(camera.getCamX(), camera.getCamY());
