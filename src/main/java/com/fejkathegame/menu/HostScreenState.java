@@ -73,8 +73,7 @@ public class HostScreenState extends BasicGameState {
                 ClientProgram client = new ClientProgram(
                         hostScreen.getIpField().getText(),
                         hostScreen.getPlayerName().getText());
-                Thread thread = new Thread(client);
-                thread.start();
+                client.network();
                 
             }
         }
