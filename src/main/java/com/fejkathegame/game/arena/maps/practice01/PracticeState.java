@@ -99,6 +99,7 @@ public class PracticeState extends BasicGameState {
         helper.checkCollisionWithTarget();
         obj.update(i);
         arena.helper.moveTarget();
+        arena.timer.calculateSecond(i);
     }
     
 
