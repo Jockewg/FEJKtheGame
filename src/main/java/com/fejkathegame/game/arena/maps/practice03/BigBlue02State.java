@@ -32,7 +32,8 @@ public class BigBlue02State extends BasicGameState {
     private boolean isCameraAnimationRunning = true;
     private float cameraMotionY = 0;
     private float cameraMotionX = 3000;
-    private float scale;
+    private float scale = 0.24f;
+    private float scaleSmoothing = 0;
 
     /**
      * Constructor for ArenaState
@@ -77,27 +78,20 @@ public class BigBlue02State extends BasicGameState {
     }
     
     public void cameraAnimation() {
-        cameraMotionX -= 10;
-        if(cameraMotionX <= 0) {
-            cameraMotionX = 0;
-        }
         
-        if(cameraMotionX > 0) {
+        
+        
+        if(scale < 0.25f) {
+            scale += 0.00005f;
             camera.setCamY(0);
-            camera.setCameraHeight((arena.getMap().getHeight() * 25));
-            float cameraMulti = camera.getCameraHeight() / 0.55f;
-            camera.setCameraWidth(cameraMulti);
-        }
-        camera.setCamX(cameraMotionX);
-        
-        if(cameraMotionX > 0) {
-            scale = 0.4f;
         } else {
-            scale += 0.005f;
-            camera.setCamY(obj.getY());
+            scaleSmoothing += 0.00005;
+            scale += (0.005 + scaleSmoothing);
+            camera.setCamY(0);
+            float newCamY = (750 * scale);
+            camera.setCamY(newCamY);
+            System.out.println("cameraY: " + camera.getCamY());
         }
-        
-        System.out.println("CamY + CamHeight: " + (camera.getCamY() + camera.getCameraHeight()));
         
         if(scale >= 1) {
             scale = 1;
@@ -128,9 +122,11 @@ public class BigBlue02State extends BasicGameState {
     @Override
     public void update(GameContainer gc, StateBasedGame sbg, int i) throws SlickException {
         helper.checkCameraOffset();
-        movementSystem.handleInput(gc.getInput(), i);
-        physics.handlePhysics(arena, i);
-        helper.checkCollisionWithTarget();
+        if(!isCameraAnimationRunning) {
+            movementSystem.handleInput(gc.getInput(), i);
+            physics.handlePhysics(arena, i);
+            helper.checkCollisionWithTarget();
+        }
         obj.update(i);
         arena.timer.calculateSecond(i);
     }
