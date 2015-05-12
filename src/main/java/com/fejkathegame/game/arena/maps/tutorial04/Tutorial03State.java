@@ -73,8 +73,8 @@ public class Tutorial03State extends BasicGameState {
     }
 
     public void setCameraBoundaries() {
-        offsetMaxX = arena.getMap().getWidth() * 22;
-        offsetMaxY = arena.getMap().getHeight() * 20;
+        offsetMaxX = arena.getMap().getWidth() * 25 -450;
+        offsetMaxY = arena.getMap().getHeight() * 25 -275;
     }
 
 
