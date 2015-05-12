@@ -128,6 +128,7 @@ public class BigBlue02State extends BasicGameState {
             helper.checkCollisionWithTarget();
         }
         obj.update(i);
+        arena.timer.calculateSecond(i);
     }
 
 

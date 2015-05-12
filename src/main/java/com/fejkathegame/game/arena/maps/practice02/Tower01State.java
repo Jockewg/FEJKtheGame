@@ -105,6 +105,7 @@ public class Tower01State extends BasicGameState {
             physics.handlePhysics(arena, i);
             helper.checkCollisionWithTarget();
             obj.update(i);
+            arena.timer.calculateSecond(i);
         }
         
     }

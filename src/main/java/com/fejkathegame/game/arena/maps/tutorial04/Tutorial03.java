@@ -129,17 +129,23 @@ public class Tutorial03 extends PracticeLevel {
 
    @Override
    public TiledMap getMap() {
-         return map;
+      return map;
    }
-       public void render() throws SlickException {
-        map.render(0, 0, 0, 0, 100, 30);
 
-        for (LevelObject p : players) {
-            p.render();
-        }
+   public void render() throws SlickException {
+      map.render(0, 0, 0, 0, 100, 30);
 
-        for (LevelObject t : targets) {
-            t.render();
-        }
-    }
+      for (LevelObject p : players) {
+         p.render();
+      }
+
+      for (LevelObject t : targets) {
+         t.render();
+      }
+   }
+
+   public PracticeTimer getTimer() {
+      return timer;
+   }
+
 }

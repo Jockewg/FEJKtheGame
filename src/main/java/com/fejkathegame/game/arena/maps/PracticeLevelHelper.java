@@ -20,20 +20,29 @@ public class PracticeLevelHelper {
     PracticeTarget movableTarget;
     float movableTargetStartingPos;
     float targetVelY;
+    Font font2;
+    TrueTypeFont ttf2;
 
 
     public PracticeLevelHelper(PracticeTimer timer, ArrayList<PracticeTarget> targets) {
         this.timer = timer;
         font = new Font("Verdana", Font.BOLD, 20);
         ttf = new TrueTypeFont(font, true);
+        font2 = new Font("Arial", Font.BOLD, 50);
+        ttf2 = new TrueTypeFont(font2, true);
         this.targets = targets;
-
+        timer.startCountdown(10);
+        
         score = "Targets Left: " + String.valueOf(targets.size());
+        
     }
 
     public void updateText(float x, float y) {
         ttf.drawString(x, y, score, org.newdawn.slick.Color.green);
-        ttf.drawString(x + 200, y, "Time: " + String.valueOf(timer.getElapsedTimeSecs()), org.newdawn.slick.Color.red);
+        ttf.drawString(x + 200, y, "Time: " + String.valueOf(timer.getTimerDuration()), org.newdawn.slick.Color.red);
+        if (timer.isCountdownRunning()){
+        ttf2.drawString(x + 350, y + 250, "countdown: " + String.valueOf(timer.getCurrentCountdownTime()));
+        }
     }
     public void updateScore() {
         if (targets.size() > 0) {
@@ -63,5 +72,6 @@ public class PracticeLevelHelper {
             ttf.drawString(targets.get(i).getX(), targets.get(i).getY(), String.valueOf(i));
         }
     }
+   
 }
 

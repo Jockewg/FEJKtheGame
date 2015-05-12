@@ -96,5 +96,6 @@ public class Tutorial03State extends BasicGameState {
         physics.handlePhysics(arena, i);
         helper.checkCollisionWithTarget();
         obj.update(i);
+        arena.timer.calculateSecond(i);
     }
 }
