@@ -16,6 +16,7 @@ import org.newdawn.slick.util.ResourceLoader;
 public class HealthSystem {
     LevelObject object;
     private Image heartImage = new Image("src/main/resources/data/img/heartcontainer/health2.png");
+    private Image[] healthBar = new Image[6];
     ArrayList<Heart> hearts = new ArrayList<>();
     private Audio hurtSound;
 
@@ -28,8 +29,18 @@ public class HealthSystem {
      */
     public HealthSystem(LevelObject levelObj) throws SlickException, IOException {
         this.object = levelObj;
-        setHealthBar();
+//        setHealthBar();
+        initHealthBar();
         hurtSound = AudioLoader.getAudio("WAV", ResourceLoader.getResourceAsStream("src/main/resources/data/sound/Hurt.wav"));
+    }
+    
+    public void initHealthBar() throws SlickException {
+        healthBar[0] = new Image("src/main/resources/data/img/statusBar/health/health0.png");
+        healthBar[1] = new Image("src/main/resources/data/img/statusBar/health/health1.png");
+        healthBar[2] = new Image("src/main/resources/data/img/statusBar/health/health2.png");
+        healthBar[3] = new Image("src/main/resources/data/img/statusBar/health/health3.png");
+        healthBar[4] = new Image("src/main/resources/data/img/statusBar/health/health4.png");
+        healthBar[5] = new Image("src/main/resources/data/img/statusBar/health/health5.png");
     }
 
     /**
@@ -43,7 +54,7 @@ public class HealthSystem {
             int newHealth = currentHealth - damage;
             object.setHealth(newHealth);
             isCharacterAlive();
-            updateHealthBar();
+//            updateHealthBar();
             hurtSound.playAsSoundEffect(1.0f, 1.0f, false);
         }
     }
@@ -79,6 +90,10 @@ public class HealthSystem {
         }
 
     }
+    
+    public Image getHealthBar(int life) {
+        return healthBar[life];
+    }
 
     public ArrayList<Heart> getHearts() {
         return hearts;
@@ -97,23 +112,8 @@ public class HealthSystem {
         return true;
     }
     
-    public void render() {
-        for(int i = 0; i < hearts.size(); i ++) {
-            //Dot health system
-//            hearts.get(i).getGraphicImage().draw((object.getX() - 9) + (i * 10), object.getY() - 16);
-            if(hearts.get(i) == null)
-                break;
-            if(i == 0)
-            hearts.get(i).getGraphicImage().draw(object.getX(), object.getY());
-            else if(i == 1)
-                hearts.get(i).getGraphicImage().draw(object.getX() + 16, object.getY());
-            else if(i == 2)
-                hearts.get(i).getGraphicImage().draw(object.getX(), object.getY() + 16);
-            else if(i == 3)
-                hearts.get(i).getGraphicImage().draw(object.getX() + 16, object.getY() + 16);
-            else if(i == 4)
-                hearts.get(i).getGraphicImage().draw(object.getX() + 8, object.getY() + 8);
-        }
+    public void render(float x, float y) {
+        healthBar[object.getHealth()].getScaledCopy(0.15f).draw(x, y);
     }
 }
 

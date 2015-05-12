@@ -373,9 +373,6 @@ public class Character extends LevelObject {
         renderCharacterAnimation();
 
 //        sprite.draw(x, y);
-        
-
-//        healthSystem.render();
 
         if (isCharging || isFullyCharged) {
             g.setColor(new Color(1.0f, 1.0f, 1.0f, 1.0f));

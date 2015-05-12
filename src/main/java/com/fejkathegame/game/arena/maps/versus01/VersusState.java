@@ -155,12 +155,16 @@ public class VersusState extends BasicGameState {
 
     @Override
     public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
-            g.scale(cameraScale, cameraScale);
+        g.scale(cameraScale, cameraScale);
         g.translate(-cameraX, -cameraY);
         arena.getAnimation().draw(200, 50);
         arena.render();
-        g.resetTransform();
         
+        g.resetTransform();
+        g.translate(-cameraX, -cameraY);
+        obj.getHealthSystem().render(cameraX + 450 - 135 - 60, cameraY + 473);
+        player2.getHealthSystem().render(cameraX + 450 + 60, cameraY + 473);
+        g.resetTransform();
     }
 
 
@@ -172,7 +176,7 @@ public class VersusState extends BasicGameState {
         physics.handlePhysics(arena, i);
         player2.update(i);
         obj.update(i);
-//        checkCollisionWithTarget();
+        checkCollisionWithTarget();
     }
 
 }
