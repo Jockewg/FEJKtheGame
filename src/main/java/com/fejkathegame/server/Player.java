@@ -5,20 +5,14 @@
  */
 package com.fejkathegame.server;
 
+import com.esotericsoftware.kryonet.Connection;
+
 /**
  *
  * @author Filip
  */
-public class Message {
-    public String message;
-
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
-    }
-    
+public class Player {
+    public float x,y;
+    public Connection c;
     
 }

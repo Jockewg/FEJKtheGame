@@ -1,24 +1,23 @@
 package com.fejkathegame.client;
 
-import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryonet.Client;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
 import java.io.IOException;
-import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
  * Created by Swartt on 2015-04-30.
  */
-public class ClientProgram extends Listener implements Runnable {
+public class ClientProgram extends Listener {
 
-    Client client;
+    public static Client client;
     String serverIp, playerName;
     int tcpPort = 27960, updPort = 27960;
-    boolean messageReceived = false;
-    public Kryo getKryo;
+    public static Map<Integer,MPPlayer> players = new HashMap<>(); 
 
     public ClientProgram(String serverIp, String playerName) {
         this.serverIp = serverIp;
@@ -28,17 +27,17 @@ public class ClientProgram extends Listener implements Runnable {
     public ClientProgram() {
     }
 
-    @Override
-    public void run() {
+    public void network() {
         System.out.println("Connecting to the server...");
-        System.out.println("playername: " + playerName);
         client = new Client();
-
-        client.getKryo().register(PacketMessage.class);
-        client.getKryo().register(Message.class);
+        
+        client.getKryo().register(PacketUpdateX.class);
+        client.getKryo().register(PacketUpdateY.class);
+        client.getKryo().register(PacketAddPlayer.class);
+        client.getKryo().register(PacketRemovePlayer.class);
+        client.addListener(this);
 
         client.start();
-
         try {
             client.connect(5000, serverIp, tcpPort, updPort);
         } catch (IOException ex) {
@@ -46,44 +45,30 @@ public class ClientProgram extends Listener implements Runnable {
         }
 
         client.addListener(new ClientProgram());
-
         System.out.println("Connected! The client program is now waiting for a packet...\n");
 
-        while (!messageReceived) {
-            try {
-                Thread.sleep(100);
-            } catch (InterruptedException ex) {
-                Logger.getLogger(ClientProgram.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
         
-        System.out.println("Client will now exit");
-        System.exit(0);
     }
 
     @Override
     public void received(Connection connection, Object object) {
-        if (object instanceof PacketMessage) {
-            PacketMessage packet = (PacketMessage) object;
-            System.out.println("recived a packade from the host: " + packet.getMessage());
-
-            messageReceived = true;
-            System.out.println(messageReceived);
-        }
-    }
-
-    @Override
-    public void disconnected(Connection connection) {
-        System.out.println("Lost connection to the server");
-    }
-
-    @Override
-    public void connected(Connection connection) {
-        System.out.println("Received a connection from server at: " + connection.getRemoteAddressTCP().getHostString());
-
-        Message message = new Message();
-        message.setMessage(playerName);
-
-        connection.sendTCP(message);
+        if(object instanceof PacketAddPlayer){
+			PacketAddPlayer packet = (PacketAddPlayer) object;
+			MPPlayer newPlayer = new MPPlayer();
+			players.put(packet.id, newPlayer);
+			
+		}else if(object instanceof PacketRemovePlayer){
+			PacketRemovePlayer packet2 = (PacketRemovePlayer) object;
+			players.remove(packet2.id);
+			
+		}else if(object instanceof PacketUpdateX){
+			PacketUpdateX packet3 = (PacketUpdateX) object;
+			players.get(packet3.id).x = packet3.x;
+			
+		}else if(object instanceof PacketUpdateY){
+			PacketUpdateY packet4 = (PacketUpdateY) object;
+			players.get(packet4.id).y = packet4.y;
+			
+		}
     }
 }
