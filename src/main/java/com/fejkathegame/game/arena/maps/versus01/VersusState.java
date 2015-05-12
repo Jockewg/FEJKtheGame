@@ -164,8 +164,10 @@ public class VersusState extends BasicGameState {
         g.translate(-cameraX, -cameraY);
         obj.getHealthSystem().render(cameraX + 450 - 135 - 60, cameraY + 473);
         obj.renderStoredJumpsIndicator(cameraX + 450 - 135 - 60 - 10, cameraY + 473);
+        obj.renderAttackCharge(cameraX + 450 - 134.5f - 60, cameraY + 465);
         player2.getHealthSystem().render(cameraX + 450 + 60, cameraY + 473);
         player2.renderStoredJumpsIndicator(cameraX + 450 + 135 + 60 + 2, cameraY + 473);
+        player2.renderAttackChargeReversed(cameraX + 450 + 60 + 135.5f, cameraY + 465);
         g.resetTransform();
     }
 
@@ -178,6 +180,7 @@ public class VersusState extends BasicGameState {
         physics.handlePhysics(arena, i);
         player2.update(i);
         obj.update(i);
+        
         checkCollisionWithTarget();
     }
 

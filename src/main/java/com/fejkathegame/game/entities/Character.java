@@ -74,6 +74,8 @@ public class Character extends LevelObject {
     private boolean isFullyCharged = false;
     private Shape hitBox;
     private Image[] numberOfJumps = new Image[2];
+    private Image attackCharger;
+    private float attackChargeSize = 0;
 
     /**
      * Constructor for creating a character, gives it the default values for a
@@ -119,6 +121,7 @@ public class Character extends LevelObject {
         hitBox = new Rectangle(x, y, 32, 32);
         
         loadStoredJumpsIndicator();
+        attackCharger = new Image("src/main/resources/data/img/statusBar/attackCharge/attackCharge.png");
         
         runningSheet = new SpriteSheet("src/main/resources/data/img/spritesheets/spritesheet3.png", 192, 192);
         runningAnimation = new Animation(runningSheet, 30);
@@ -211,9 +214,6 @@ public class Character extends LevelObject {
      * @param delta 
      */
     public void chargeSuperAttack(Input i, int delta) {
-//        if (!chargeSound.isPlaying()) {
-//            chargeSound.playAsSoundEffect(1.0f, 1.0f, false);
-//        }
         float shrinking1 = superAttackIndicator.getRadius1() - (0.75f / delta);
         superAttackIndicator.setRadius1(shrinking1);
         superAttackIndicator.setRadius2(shrinking1);
@@ -365,6 +365,36 @@ public class Character extends LevelObject {
         }
     }
     
+    public void renderAttackCharge(float x, float y) {
+        if(attackCoolDown < 1000) {
+            attackChargeSize += 1.35f;
+        } else if(attackCoolDown <= 0) {
+            attackChargeSize = 135;
+        } else {
+            attackChargeSize = 0;
+        }
+        
+        if(attackChargeSize >= 135) {
+            attackChargeSize = 135;
+        }
+        attackCharger.draw(x, y, attackChargeSize, 8);
+    }
+    
+    public void renderAttackChargeReversed(float x, float y) {
+        if(attackCoolDown < 1000) {
+            attackChargeSize -= 1.35f;
+        } else if(attackCoolDown <= 0) {
+            attackChargeSize = -135;
+        } else {
+            attackChargeSize = 0;
+        }
+        
+        if(attackChargeSize <= -135) {
+            attackChargeSize = -135;
+        }
+        attackCharger.getFlippedCopy(true, false).draw(x, y, attackChargeSize, 8);
+    }
+    
     public void renderCharacterAnimation() {
         if(x_velocity > 0) {
             flipped = false;
@@ -392,8 +422,6 @@ public class Character extends LevelObject {
         updateHitBox();
         
         renderCharacterAnimation();
-
-//        sprite.draw(x, y);
 
         if (isCharging || isFullyCharged) {
             g.setColor(new Color(1.0f, 1.0f, 1.0f, 1.0f));
