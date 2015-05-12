@@ -1,7 +1,11 @@
-
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package com.fejkathegame.menu.button;
 
-import org.newdawn.slick.Image;
+import org.newdawn.slick.Graphics;
 
 /**
  *
@@ -13,25 +17,9 @@ public class Button {
     int posY;
     int width;
     int height;
-    Image img;
     
-    public Button(int x, int y, Image image){
-        this.img = image;
-        this.posX = x;
-        this.posY = y;
-        this.width = img.getWidth();
-        this.height = img.getHeight();
+    public Button(){
         
-    }
-    
-    public Button(Image image){
-        this.img = image;
-        this.width = img.getWidth();
-        this.height = img.getHeight();
-    }
-    
-    public void render(){
-        img.draw(posX, posY);
     }
     
     public boolean onHover(int x, int y){
