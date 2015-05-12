@@ -13,6 +13,7 @@ import org.newdawn.slick.tiled.TiledMap;
 import java.util.ArrayList;
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.Image;
+import org.newdawn.slick.geom.Rectangle;
 
 public class Versus extends PracticeLevel {
     
@@ -25,9 +26,6 @@ public class Versus extends PracticeLevel {
     private Image[] crankAnim;
     
     private Animation animation;
-
-
-
     /**
      * Constructor for Arena, creates the playingfield and adds all players to the field
      * @param name name of the file containing the tilemap
@@ -64,6 +62,14 @@ public class Versus extends PracticeLevel {
         crankAnim[9] = new Image("src/main/resources/data/img/animations/crankAnim10.png");
         crankAnim[10] = new Image("src/main/resources/data/img/animations/crankAnim11.png");
         crankAnim[11] = new Image("src/main/resources/data/img/animations/crankAnim12.png");
+    }
+    
+    public float getArenaWidth() {
+        return map.getWidth();
+    }
+    
+    public float getArenaHeight() {
+        return map.getHeight();
     }
 
     /**

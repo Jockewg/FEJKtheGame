@@ -5,13 +5,19 @@ import com.fejkathegame.game.arena.maps.PracticeStateHelper;
 import com.fejkathegame.game.entities.logic.MovementSystem;
 import com.fejkathegame.game.Main;
 import com.fejkathegame.game.arena.physics.Physics;
+import com.fejkathegame.game.entities.Character;
 
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.newdawn.slick.Color;
 
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.geom.Line;
+import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
@@ -24,12 +30,18 @@ public class PracticeState extends BasicGameState {
     private String name;
     private MovementSystem movementSystem;
     private Physics physics;
-    private com.fejkathegame.game.entities.Character obj;
+    private Character obj;
     private PracticeStateHelper helper;
     private PracticeCamera camera;
     
     private float offsetMaxX = 2050;
     private float offsetMaxY = 750;
+    
+    private float offsetMinX = 0;
+    private float offsetMinY = 0;
+    private float camX, camY = 0;
+    private float acc = 5.0f;
+    private Line line;
 
     /**
      * Constructor for ArenaState
@@ -49,12 +61,11 @@ public class PracticeState extends BasicGameState {
 
         obj = null;
         try {
-            obj = new com.fejkathegame.game.entities.Character(32, 40);
+            obj = new Character(32, 40);
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-
+        
         arena = new Practice(name, obj);
         
         movementSystem = new MovementSystem(obj);
@@ -68,8 +79,6 @@ public class PracticeState extends BasicGameState {
 
     }
 
-    
-
     @Override
     public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
         g.setAntiAlias(false);
@@ -77,6 +86,7 @@ public class PracticeState extends BasicGameState {
         g.translate(-camera.getCamX(), -camera.getCamY());
         arena.render();
         arena.helper.updateText(camera.getCamX(), camera.getCamY());
+        g.translate(-camX, -camY);
         g.resetTransform();
     }
 

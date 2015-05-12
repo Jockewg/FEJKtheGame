@@ -4,6 +4,7 @@ import com.fejkathegame.game.entities.logic.MovementSystem;
 import com.fejkathegame.game.Main;
 import com.fejkathegame.game.arena.physics.Physics;
 import com.fejkathegame.game.entities.Character;
+import com.fejkathegame.game.entities.LevelObject;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
@@ -11,6 +12,11 @@ import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import org.newdawn.slick.geom.Line;
+import org.newdawn.slick.geom.Rectangle;
+import org.newdawn.slick.geom.Shape;
+import org.newdawn.slick.geom.Vector2f;
 
 public class VersusState extends BasicGameState {
 
@@ -20,6 +26,24 @@ public class VersusState extends BasicGameState {
     private Physics physics;
     private Character obj;
     private Character player2;
+    
+    private Shape cameraRect;
+    private float cameraX, cameraY;
+    private float cameraWidth = 900;
+    private float cameraHeight = cameraWidth * 0.55f;
+    private float cameraScale = 1.0f;
+    
+    //Camera stuff
+    private float offsetMaxX = 2050;
+    private float offsetMaxY = 750;
+    private float offsetMinX = 0;
+    private float offsetMinY = 0;
+    private float offsetX = 0;
+    private float offsetY = 0;
+    private float camX, camY = 0;
+    private Line line;
+    
+    private ArrayList<Character> characters;
 
     /**
      * Constructor for ArenaState
@@ -45,9 +69,17 @@ public class VersusState extends BasicGameState {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        
+        characters = new ArrayList<>();
+        characters.add(obj);
+        characters.add(player2);
 
+        line = new Line(obj.getX(), obj.getY(), player2.getX(), player2.getY());
+        
         arena = new Versus(name, obj);
         arena.addPlayer(player2);
+        
+        cameraRect = new Rectangle(0, 500, cameraWidth, cameraHeight);
         
         movementSystem = new MovementSystem(obj);
 
@@ -76,23 +108,82 @@ public class VersusState extends BasicGameState {
         }
         
     }
+    
+    public void updateCameraRect() {
+        float dY = line.getDY();
+        float dX = +line.getDX();
+        if(dX < 0) {
+            dX = dX * -1;
+        }
+        if(dY < 0) {
+            dY = dY * -1;
+        }
+        cameraWidth = dX + 100;
+        if(cameraWidth < 364) {
+            cameraWidth = 364;
+        }
+        cameraHeight = cameraWidth * 0.55f;
+        if(cameraHeight < dY + 100) {
+            cameraHeight = dY + 100;
+            cameraWidth = cameraHeight / 0.55f;
+        }
+        
+        
+        cameraX = line.getCenterX() - (cameraWidth / 2);
+        cameraY = line.getCenterY() - (cameraHeight / 2);
+        
+        if((cameraX + cameraWidth) > 900) {
+            float newX = (cameraX + cameraWidth) - 900;
+            cameraX -= newX;
+        } else if(cameraX < 1) {
+            cameraX = 1;
+        }
+        
+        if((cameraY + cameraHeight) > 499) {
+            float newY = (cameraY + cameraHeight) - 499;
+            cameraY -= newY;
+        } else if(cameraY < 1) {
+            cameraY = 1;
+        }
+        
+        cameraScale = 900 / cameraWidth;
+        
+        System.out.println(cameraScale);
+        
+        cameraRect = null;
+        cameraRect = new Rectangle(cameraX, cameraY, cameraWidth, cameraHeight);
+        
+        
+    }
+    
+    public void updateVectorLine() {
+        Vector2f objVector = new Vector2f(obj.getX(), obj.getY());
+        Vector2f player2Vector = new Vector2f(player2.getX(), player2.getY());
+        line = new Line(objVector, player2Vector);
+    }
 
     @Override
     public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
-        g.scale(Main.SCALE, Main.SCALE);
+            g.scale(cameraScale, cameraScale);
+        g.translate(-cameraX, -cameraY);
         arena.getAnimation().draw(200, 50);
         arena.render();
+//        g.drawLine(obj.getX() + 9.5f, obj.getY() + 12.5f, player2.getX() + 9.5f, player2.getY() + 12.5f);
+        g.draw(cameraRect);
+        g.resetTransform();
         
     }
 
 
     @Override
     public void update(GameContainer gc, StateBasedGame sbg, int i) throws SlickException {
+        updateVectorLine();
+        updateCameraRect();
         movementSystem.handleInput(gc.getInput(), i);
         physics.handlePhysics(arena, i);
         player2.update(i);
         obj.update(i);
-        checkCollisionWithTarget();
+//        checkCollisionWithTarget();
     }
 
 }
