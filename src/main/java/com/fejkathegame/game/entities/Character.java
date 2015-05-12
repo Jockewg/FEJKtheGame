@@ -31,6 +31,10 @@ public class Character extends LevelObject {
     private Animation runningAnimation;
     private SpriteSheet stanceSheet;
     private Animation stanceAnimation;
+    private SpriteSheet jumpSheet;
+    private Animation jumpAnimation;
+    private SpriteSheet fallingSheet;
+    private Animation fallAnimation;
 
     private double sweepAttack, sweepLimit;
 
@@ -126,9 +130,19 @@ public class Character extends LevelObject {
         runningSheet = new SpriteSheet("src/main/resources/data/img/spritesheets/spritesheet3.png", 192, 192);
         runningAnimation = new Animation(runningSheet, 30);
         runningAnimation.setAutoUpdate(false);
+        
         stanceSheet = new SpriteSheet("src/main/resources/data/img/spritesheets/charStance.png", 112, 112);
         stanceAnimation = new Animation(stanceSheet, 120);
         stanceAnimation.setAutoUpdate(false);
+        
+        jumpSheet = new SpriteSheet("src/main/resources/data/img/spritesheets/spriteSheetJump1.png", 415, 415);
+        jumpAnimation = new Animation(jumpSheet, 30);
+        jumpAnimation.setAutoUpdate(false);
+        jumpAnimation.setLooping(false);
+        
+        fallingSheet = new SpriteSheet("src/main/resources/data/img/spritesheets/spriteSheetFalling1.png", 415, 415);
+        fallAnimation = new Animation(fallingSheet, 60);
+        fallAnimation.setAutoUpdate(false);
     }
 
     /**
@@ -163,10 +177,16 @@ public class Character extends LevelObject {
     public void jump(int delta) {
         currentPositionX = getX() - 2;
         currentPositionY = getY() + 32;
+        
+        fallAnimation.setCurrentFrame(0);
+        fallAnimation.stop();
 
         if (!isOnGround()) {
             jumpIndicatorTransp = 1.0f;
         }
+        
+        jumpAnimation.setCurrentFrame(0);
+        jumpAnimation.start();
 
         y_velocity = -0.055f * (float) Math.sqrt(Math.pow(delta, 2));
         storedJumps--;
@@ -341,6 +361,8 @@ public class Character extends LevelObject {
         
         runningAnimation.update(delta);
         stanceAnimation.update(delta);
+        jumpAnimation.update(delta);
+        fallAnimation.update(delta);
         
         
         if (!isCharging && !isFullyCharged) {
@@ -396,17 +418,45 @@ public class Character extends LevelObject {
     }
     
     public void renderCharacterAnimation() {
-        if(x_velocity > 0) {
+        if(x_velocity > 0 && y_velocity == 0) {
             flipped = false;
             runningAnimation.draw(x - 4, y - 2, 27, 27);
-        } else if(x_velocity < 0) {
+        } else if(x_velocity < 0 && y_velocity == 0) {
             flipped = true;
             runningAnimation.getCurrentFrame().getFlippedCopy(true, false).draw(x - 9, y - 2, 27, 27);
-        } else if(x_velocity == 0) {
+        } else if(x_velocity == 0 && y_velocity == 0) {
             if(flipped)
                 stanceAnimation.getCurrentFrame().getFlippedCopy(true, false).draw(x - 9, y - 2, 27, 27);
             else
                 stanceAnimation.draw(x - 4, y - 2, 27, 27);
+        } else if(y_velocity < 0) {
+            if(x_velocity > 0) {
+                flipped = false;
+            } else if(x_velocity < 0) {
+                flipped = true;
+            }
+            
+            if(flipped) {
+                jumpAnimation.getCurrentFrame().getFlippedCopy(true, false).draw(x - 9, y - 2, 27, 27);
+            } else {
+                jumpAnimation.draw(x - 4, y - 2, 27, 27);
+            }
+        } else if(y_velocity > 0) {
+            if(fallAnimation.isStopped()) {
+                fallAnimation.start();
+            }
+            
+            
+            if(x_velocity > 0) {
+                flipped = false;
+            } else if(x_velocity < 0) {
+                flipped = true;
+            }
+            if(flipped) {
+                fallAnimation.getCurrentFrame().getFlippedCopy(true, false).draw(x - 7, y - 2, 27, 27);
+            } else {
+                fallAnimation.draw(x - 6, y - 2, 27, 27);
+            }
         }
     }
 
@@ -422,6 +472,8 @@ public class Character extends LevelObject {
         updateHitBox();
         
         renderCharacterAnimation();
+        
+        
 
         if (isCharging || isFullyCharged) {
             g.setColor(new Color(1.0f, 1.0f, 1.0f, 1.0f));
