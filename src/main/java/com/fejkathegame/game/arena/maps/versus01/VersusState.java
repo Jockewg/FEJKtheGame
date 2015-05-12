@@ -27,7 +27,6 @@ public class VersusState extends BasicGameState {
     private Character obj;
     private Character player2;
     
-    private Shape cameraRect;
     private float cameraX, cameraY;
     private float cameraWidth = 900;
     private float cameraHeight = cameraWidth * 0.55f;
@@ -78,8 +77,6 @@ public class VersusState extends BasicGameState {
         
         arena = new Versus(name, obj);
         arena.addPlayer(player2);
-        
-        cameraRect = new Rectangle(0, 500, cameraWidth, cameraHeight);
         
         movementSystem = new MovementSystem(obj);
 
@@ -148,11 +145,6 @@ public class VersusState extends BasicGameState {
         
         cameraScale = 900 / cameraWidth;
         
-        System.out.println(cameraScale);
-        
-        cameraRect = null;
-        cameraRect = new Rectangle(cameraX, cameraY, cameraWidth, cameraHeight);
-        
         
     }
     
@@ -168,8 +160,6 @@ public class VersusState extends BasicGameState {
         g.translate(-cameraX, -cameraY);
         arena.getAnimation().draw(200, 50);
         arena.render();
-//        g.drawLine(obj.getX() + 9.5f, obj.getY() + 12.5f, player2.getX() + 9.5f, player2.getY() + 12.5f);
-        g.draw(cameraRect);
         g.resetTransform();
         
     }
