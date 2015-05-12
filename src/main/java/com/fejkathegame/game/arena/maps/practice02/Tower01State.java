@@ -28,6 +28,9 @@ public class Tower01State extends BasicGameState {
 
     private float offsetMaxX = 450;
     private float offsetMaxY = 2250;
+    
+    private boolean isCameraAnimationRunning = true;
+    private int cameraMotionY = 0;
 
     /**
      * Constructor for ArenaState
@@ -66,6 +69,15 @@ public class Tower01State extends BasicGameState {
 
 
     }
+    
+    public void cameraAnimation() {
+        cameraMotionY += 5;
+        camera.setCamX(0);
+        camera.setCamY(cameraMotionY);
+        if(cameraMotionY >= offsetMaxY - 250) {
+            isCameraAnimationRunning = false;
+        }
+    }
 
     
 
@@ -73,7 +85,12 @@ public class Tower01State extends BasicGameState {
     public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
         g.setAntiAlias(false);
         g.scale(Main.SCALE, Main.SCALE);
-        g.translate(-camera.getCamX(), -camera.getCamY());
+        if(isCameraAnimationRunning) {
+            cameraAnimation();
+            g.translate(-camera.getCamX(), -camera.getCamY());
+        } else {
+            g.translate(-camera.getCamX(), -camera.getCamY());
+        }
         arena.render();
         arena.helper.updateText(camera.getCamX(), camera.getCamY());
         g.resetTransform();
@@ -83,10 +100,13 @@ public class Tower01State extends BasicGameState {
     @Override
     public void update(GameContainer gc, StateBasedGame sbg, int i) throws SlickException {
         helper.checkCameraOffset();
-        movementSystem.handleInput(gc.getInput(), i);
-        physics.handlePhysics(arena, i);
-        helper.checkCollisionWithTarget();
-        obj.update(i);
+        if(!isCameraAnimationRunning) {
+            movementSystem.handleInput(gc.getInput(), i);
+            physics.handlePhysics(arena, i);
+            helper.checkCollisionWithTarget();
+            obj.update(i);
+        }
+        
     }
 
 
