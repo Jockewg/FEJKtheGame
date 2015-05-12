@@ -1,7 +1,6 @@
 package com.fejkathegame.game.arena.maps;
 
 import com.fejkathegame.game.entities.PracticeTarget;
-import com.fejkathegame.game.timer.CountdownTimer;
 import com.fejkathegame.game.timer.PracticeTimer;
 import org.newdawn.slick.*;
 
@@ -41,7 +40,9 @@ public class PracticeLevelHelper {
     public void updateText(float x, float y) {
         ttf.drawString(x, y, score, org.newdawn.slick.Color.green);
         ttf.drawString(x + 200, y, "Time: " + String.valueOf(timer.getTimerDuration()), org.newdawn.slick.Color.red);
+        if (timer.isCountdownRunning()){
         ttf2.drawString(x + 350, y + 250, "countdown: " + String.valueOf(timer.getCurrentCountdownTime()));
+        }
     }
     public void updateScore() {
         if (targets.size() > 0) {

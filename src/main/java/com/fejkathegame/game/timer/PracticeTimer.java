@@ -39,7 +39,7 @@ public class PracticeTimer {
       if (secondsPassed > 1000) {
          secondsPassed = 0;
          countDownLength--;
-         if(timerRunning) {
+         if(timerRunning && !countdownRunning) {
          timerDuration++;
          }
       }
