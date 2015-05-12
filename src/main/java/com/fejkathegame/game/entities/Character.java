@@ -96,7 +96,7 @@ public class Character extends LevelObject {
         velocityY = 0;
         velocityX = 0;
         isAlive = true;
-//        this.healthSystem = new HealthSystem(this);
+        this.healthSystem = new HealthSystem(this);
         this.movementSystem = new MovementSystem(this);
         gravity = 0.5f;
         jumpStrength = -15;
