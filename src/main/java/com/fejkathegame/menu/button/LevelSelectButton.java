@@ -16,6 +16,8 @@ public class LevelSelectButton extends Button{
     public LevelSelectButton(int x, int y, int width, int height, String name) {
         this.posX = x;
         this.posY = y;
+        this.hitPosX = x;
+        this.hitPosY = y;
         this.width = width;
         this.height = height;
         

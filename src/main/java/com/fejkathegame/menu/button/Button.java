@@ -13,6 +13,8 @@ public class Button {
     
     int posX;
     int posY;
+    int hitPosX;
+    int hitPosY;
     int width;
     int height;
     
@@ -21,8 +23,8 @@ public class Button {
     }
     
     public boolean onHover(int x, int y){
-        if(x > posX && x < (posX + width)){
-            if(y > posY && y < (posY + height)){
+        if(x > hitPosX && x < (hitPosX + width)){
+            if(y > hitPosY && y < (hitPosY + height)){
                 return true;
             }
             return false;
@@ -33,6 +35,8 @@ public class Button {
     public void setPos(int x, int y){
         this.posX = x;
         this.posY = y;
+        this.hitPosX = x;
+        this.hitPosY = y;
     }
 
     public int getPosX() {
@@ -49,6 +53,22 @@ public class Button {
 
     public void setPosY(int posY) {
         this.posY = posY;
+    }
+    
+    public int getHitPosX() {
+        return hitPosX;
+    }
+
+    public void setHitPosX(int hitPosX) {
+        this.hitPosX = hitPosX;
+    }
+
+    public int getHitPosY() {
+        return hitPosY;
+    }
+
+    public void setHitPosY(int hitPosY) {
+        this.hitPosY = hitPosY;
     }
 
     public int getWidth() {

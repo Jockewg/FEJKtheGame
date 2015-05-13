@@ -57,14 +57,14 @@ public class LevelSelectState extends BasicGameState {
         int mouseBefore = Mouse.getDWheel();
         
         if(mouseBefore < 0) {
-//            for(LevelSelectButton lvlbtn: lvlselect.getLevelButtons()){
-//                lvlbtn.setPosY(lvlbtn.getPosY() -20);
-//            }
+            for(LevelSelectButton lvlbtn: lvlselect.getLevelButtons()){
+                lvlbtn.setHitPosY(lvlbtn.getHitPosY() +20);
+            }
             camera.addToY(-20);
         } else if(mouseBefore > 0) {
-//            for(LevelSelectButton lvlbtn: lvlselect.getLevelButtons()){
-//                lvlbtn.setPosY(lvlbtn.getPosY() +20);
-//            }
+            for(LevelSelectButton lvlbtn: lvlselect.getLevelButtons()){
+                lvlbtn.setHitPosY(lvlbtn.getHitPosY() -20);
+            }
             camera.addToY(20);
         }
         
@@ -72,35 +72,39 @@ public class LevelSelectState extends BasicGameState {
 
     public void selectLevel(int x, int y, Input i, StateBasedGame sbg) {
         
-            if(levelSelect.getLevelButtons().get(0).onHover(x, y)){
-                if (i.isMousePressed(Input.MOUSE_LEFT_BUTTON)) {
-                    sbg.enterState(Main.VERSUSSTATE);
-                }
+        if(i.isKeyPressed(Input.KEY_ESCAPE)){
+            sbg.enterState(Main.MENU);
+        }
+        
+        if(levelSelect.getLevelButtons().get(0).onHover(x, y)){
+            if (i.isMousePressed(Input.MOUSE_LEFT_BUTTON)) {
+                sbg.enterState(Main.VERSUSSTATE);
             }
-            
-            if(levelSelect.getLevelButtons().get(1).onHover(x, y)){
-                if (i.isMousePressed(Input.MOUSE_LEFT_BUTTON)) {
-                    sbg.enterState(Main.BIGBLUESTATE);
-                }
+        }
+
+        if(levelSelect.getLevelButtons().get(1).onHover(x, y)){
+            if (i.isMousePressed(Input.MOUSE_LEFT_BUTTON)) {
+                sbg.enterState(Main.BIGBLUESTATE);
             }
-            
-            if(levelSelect.getLevelButtons().get(2).onHover(x, y)){
-                if (i.isMousePressed(Input.MOUSE_LEFT_BUTTON)) {
-                    sbg.enterState(Main.FIRSTPRACTICE);
-                }
+        }
+
+        if(levelSelect.getLevelButtons().get(2).onHover(x, y)){
+            if (i.isMousePressed(Input.MOUSE_LEFT_BUTTON)) {
+                sbg.enterState(Main.FIRSTPRACTICE);
             }
-            
-            if(levelSelect.getLevelButtons().get(3).onHover(x, y)){
-                if (i.isMousePressed(Input.MOUSE_LEFT_BUTTON)) {
-                    sbg.enterState(Main.TOWER1STATE);
-                }
+        }
+
+        if(levelSelect.getLevelButtons().get(3).onHover(x, y)){
+            if (i.isMousePressed(Input.MOUSE_LEFT_BUTTON)) {
+                sbg.enterState(Main.TOWER1STATE);
             }
-            
-            if(levelSelect.getLevelButtons().get(4).onHover(x, y)){
-                if (i.isMousePressed(Input.MOUSE_LEFT_BUTTON)) {
-                    sbg.enterState(Main.TUTORIAL);
-                }
+        }
+
+        if(levelSelect.getLevelButtons().get(4).onHover(x, y)){
+            if (i.isMousePressed(Input.MOUSE_LEFT_BUTTON)) {
+                sbg.enterState(Main.TUTORIAL);
             }
+        }
             
     }
 }
