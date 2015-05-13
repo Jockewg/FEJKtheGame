@@ -35,6 +35,7 @@ public class LevelSelectState extends BasicGameState {
     @Override
     public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
         //g.scale(900, 900);
+        g.translate(-cam.getX(), -cam.getY());
         scrollPage(input, cam, g);
         
         levelSelect.render(g);
@@ -53,10 +54,8 @@ public class LevelSelectState extends BasicGameState {
         
         if(i.isKeyPressed(Input.KEY_UP)){
             camera.addToY(50);
-            g.translate(-camera.getX(), -camera.getY());
         }else if(i.isKeyPressed(Input.KEY_DOWN)){
             camera.addToY(-50);
-            g.translate(-camera.getX(), -camera.getY());
         }
         
     }
