@@ -2,7 +2,6 @@ package com.fejkathegame.game.arena.versus;
 
 import com.fejkathegame.client.ClientProgram;
 import com.fejkathegame.client.MPPlayer;
-import com.fejkathegame.client.PacketAttackDirectionPlayer;
 import com.fejkathegame.client.PacketAttackPlayer;
 import com.fejkathegame.client.PacketChargePlayer;
 import com.fejkathegame.client.PacketFullyChargedPlayer;
@@ -128,18 +127,14 @@ public class VersusState extends BasicGameState {
         }
         if (obj.getIsAttacking()) {
             PacketAttackPlayer packet = new PacketAttackPlayer();
-            PacketAttackDirectionPlayer packet2 = new PacketAttackDirectionPlayer();
-            packet2.direction = (float) obj.getAttackDirection().getTheta();
+            packet.direction = (float) obj.getAttackDirection().getTheta();
             packet.isAttacking = true;
             client.getClient().sendUDP(packet);
-            client.getClient().sendUDP(packet2);
         } else {
             PacketAttackPlayer packet = new PacketAttackPlayer();
-            PacketAttackDirectionPlayer packet2 = new PacketAttackDirectionPlayer();
-            packet2.direction = (float) obj.getAttackDirection().getTheta();
+            packet.direction = (float) obj.getAttackDirection().getTheta();
             packet.isAttacking = false;
             client.getClient().sendUDP(packet);
-            client.getClient().sendUDP(packet2);
         }
         if (obj.getIsCharging()) {
             PacketChargePlayer packet = new PacketChargePlayer();

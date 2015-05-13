@@ -11,5 +11,6 @@ package com.fejkathegame.client;
  */
 public class PacketAttackPlayer {
     public int id;
+    public float direction;
     public boolean isAttacking;
 }
