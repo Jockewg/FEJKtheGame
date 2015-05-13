@@ -15,6 +15,8 @@ public class MenuButton extends Button {
     public MenuButton(int x, int y, Image image){
         this.posX = x;
         this.posY = y;
+        this.hitPosX = x;
+        this.hitPosY = y;
         this.img = image;
         this.width = img.getWidth();
         this.height = img.getHeight();
