@@ -1,7 +1,9 @@
 package com.fejkathegame.menu;
 
 import com.fejkathegame.game.Main;
+import com.fejkathegame.menu.button.LevelSelectButton;
 import com.fejkathegame.menu.camera.MenuCamera;
+import org.lwjgl.input.Mouse;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
@@ -36,8 +38,6 @@ public class LevelSelectState extends BasicGameState {
     public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
         //g.scale(900, 900);
         g.translate(-cam.getX(), -cam.getY());
-        scrollPage(input, cam, g);
-        
         levelSelect.render(g);
         g.resetTransform();
     }
@@ -46,16 +46,26 @@ public class LevelSelectState extends BasicGameState {
     public void update(GameContainer gc, StateBasedGame sbg, int i) throws SlickException {
         int mouseX = input.getMouseX();
         int mouseY = input.getMouseY();
+        
+        scrollPage(input, cam, levelSelect);
         selectLevel(mouseX, mouseY, input, sbg);
         
     }
     
-    public void scrollPage(Input i, MenuCamera camera, Graphics g){
+    public void scrollPage(Input i, MenuCamera camera, LevelSelect lvlselect){
         
-        if(i.isKeyPressed(Input.KEY_UP)){
-            camera.addToY(50);
-        }else if(i.isKeyPressed(Input.KEY_DOWN)){
-            camera.addToY(-50);
+        int mouseBefore = Mouse.getDWheel();
+        
+        if(mouseBefore < 0) {
+//            for(LevelSelectButton lvlbtn: lvlselect.getLevelButtons()){
+//                lvlbtn.setPosY(lvlbtn.getPosY() -20);
+//            }
+            camera.addToY(-20);
+        } else if(mouseBefore > 0) {
+//            for(LevelSelectButton lvlbtn: lvlselect.getLevelButtons()){
+//                lvlbtn.setPosY(lvlbtn.getPosY() +20);
+//            }
+            camera.addToY(20);
         }
         
     }

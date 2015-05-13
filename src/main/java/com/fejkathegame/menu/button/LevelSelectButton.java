@@ -10,7 +10,7 @@ import org.newdawn.slick.Graphics;
  */
 public class LevelSelectButton extends Button{
 
-    String name;
+    String title;
     double bestTime = 0.0;
     
     public LevelSelectButton(int x, int y, int width, int height, String name) {
@@ -19,13 +19,13 @@ public class LevelSelectButton extends Button{
         this.width = width;
         this.height = height;
         
-        this.name = name;
+        this.title = name;
     }
     
     public void render(Graphics g){
         g.setColor(Color.orange);
         g.drawRect(posX, posY, width, height);
-        g.drawString(name, posX + 20, posY + (height / 2));
+        g.drawString(title, posX + 20, posY + (height / 2));
         g.drawString(bestTime + "", posX + 300, posY + (height / 2));
     }
     
