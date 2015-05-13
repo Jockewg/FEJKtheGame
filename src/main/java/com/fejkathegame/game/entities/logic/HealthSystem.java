@@ -19,6 +19,8 @@ public class HealthSystem {
     private Image[] healthBar = new Image[6];
     ArrayList<Heart> hearts = new ArrayList<>();
     private Audio hurtSound;
+    
+    private boolean isDamaged = false;
 
     /**
      * Constructor for the health system, Requires a {@code LevelObject} to attach to, initializes {@code healthBar}
@@ -29,7 +31,6 @@ public class HealthSystem {
      */
     public HealthSystem(LevelObject levelObj) throws SlickException, IOException {
         this.object = levelObj;
-//        setHealthBar();
         initHealthBar();
         hurtSound = AudioLoader.getAudio("WAV", ResourceLoader.getResourceAsStream("src/main/resources/data/sound/Hurt.wav"));
     }
@@ -50,55 +51,17 @@ public class HealthSystem {
      */
     public void dealDamage(int damage) {
         int currentHealth = object.getHealth();
-        if (object.isAlive()) {
+        if (object.isAlive() && !isDamaged) {
             int newHealth = currentHealth - damage;
             object.setHealth(newHealth);
             isCharacterAlive();
-//            updateHealthBar();
             hurtSound.playAsSoundEffect(1.0f, 1.0f, false);
+            isDamaged = true;
         }
-    }
-
-    /**
-     * initiates the {@code healthBar} for the {@code LevelObject}
-     * @throws SlickException
-     */
-    public void setHealthBar() throws SlickException {
-        for (int i = 0; i < object.getHealth(); i++) {
-            //Old dot health system
-//            hearts.add(new Heart(heartImage, object.getX() + (i * 10), object.getY()));
-            if(i == 0) {
-                hearts.add(new Heart(heartImage, object.getX(), object.getY()));
-            } else if(i == 1) {
-                hearts.add(new Heart(heartImage, object.getX() + 16, object.getY()));
-            } else if(i == 2) {
-                hearts.add(new Heart(heartImage, object.getX(), object.getY() + 16));
-            } else if(i == 3) {
-                hearts.add(new Heart(heartImage, object.getX() + 16, object.getY() + 16));
-            } else if(i == 4) {
-                hearts.add(new Heart(heartImage, object.getX() + 8, object.getY() + 8));
-            }
-        }
-    }
-    /**
-     * updates the HealthBar based on the current health of the {@code LevelObject}
-     */
-    public void updateHealthBar() {
-        int health = object.getHealth();
-        if(getHearts().size() > health) {
-            getHearts().remove(health);
-        }
-
     }
     
-    public Image getHealthBar(int life) {
-        return healthBar[life];
-    }
-
-    public ArrayList<Heart> getHearts() {
-        return hearts;
-    }
-
+    
+    
     /**
      * checks the players health, if the players health is 0 or less it changes the
      * {@code isAlive} boolean to false
@@ -114,6 +77,22 @@ public class HealthSystem {
     
     public void render(float x, float y) {
         healthBar[object.getHealth()].getScaledCopy(0.15f).draw(x, y);
+    }
+    
+    public void setIsDamaged(boolean isDamaged) {
+        this.isDamaged = isDamaged;
+    }
+    
+    public boolean getIsDamaged() {
+        return isDamaged;
+    }
+    
+    public Image getHealthBar(int life) {
+        return healthBar[life];
+    }
+
+    public ArrayList<Heart> getHearts() {
+        return hearts;
     }
 }
 

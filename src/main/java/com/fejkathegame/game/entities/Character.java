@@ -442,19 +442,16 @@ public class Character extends LevelObject {
                 jumpAnimation.draw(x - 4, y - 2, 27, 27);
             }
         } else if(y_velocity > 0) {
-            if(fallAnimation.isStopped()) {
-                fallAnimation.start();
-            }
-            
-            
             if(x_velocity > 0) {
                 flipped = false;
             } else if(x_velocity < 0) {
                 flipped = true;
             }
             if(flipped) {
+                fallAnimation.setCurrentFrame(0);
                 fallAnimation.getCurrentFrame().getFlippedCopy(true, false).draw(x - 7, y - 2, 27, 27);
             } else {
+                fallAnimation.setCurrentFrame(0);
                 fallAnimation.draw(x - 6, y - 2, 27, 27);
             }
         }
