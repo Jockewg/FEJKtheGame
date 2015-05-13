@@ -1,5 +1,6 @@
 package com.fejkathegame.game.arena.maps;
 
+import com.fejkathegame.game.arena.maps.highscore.HighscoreAdapter;
 import com.fejkathegame.game.entities.PracticeTarget;
 import com.fejkathegame.game.timer.PracticeTimer;
 import org.newdawn.slick.*;
@@ -22,9 +23,12 @@ public class PracticeLevelHelper {
     float targetVelY;
     Font font2;
     TrueTypeFont ttf2;
+    HighscoreAdapter adapter;
+    boolean writtenToFile = false;
 
 
     public PracticeLevelHelper(PracticeTimer timer, ArrayList<PracticeTarget> targets) {
+        adapter = new HighscoreAdapter();
         this.timer = timer;
         font = new Font("Verdana", Font.BOLD, 20);
         ttf = new TrueTypeFont(font, true);
@@ -44,12 +48,16 @@ public class PracticeLevelHelper {
         ttf2.drawString(x + 350, y + 250, "countdown: " + String.valueOf(timer.getCurrentCountdownTime()));
         }
     }
-    public void updateScore() {
+    public void updateScore(int map) {
         if (targets.size() > 0) {
             score = "Targets Left: " + String.valueOf(targets.size());
         } else {
             score = "You are a winrar!";
+
             timer.stopTimer();
+            saveScore(map);
+
+
         }
     }
     public void moveTargetConstructor(PracticeTarget movableTarget, float movableTargetStartingPos, float targetVelY) {
@@ -72,6 +80,14 @@ public class PracticeLevelHelper {
             ttf.drawString(targets.get(i).getX(), targets.get(i).getY(), String.valueOf(i));
         }
     }
+    public void saveScore(int map){
+        if (!writtenToFile) {
+            adapter.saveScore(map, timer.getTimerDuration());
+            writtenToFile = true;
+        }
+
+    }
+
    
 }
 

@@ -18,13 +18,13 @@ public class PracticeStateHelper {
         this.camera = camera;
     }
 
-    public void checkCollisionWithTarget() {
+    public void checkCollisionWithTarget(int map) {
         for (int i = 0; i < arena.getTargets().size(); i++) {
             if (obj.getAttackIndicator().intersects(arena.getTargets().get(i).getHitbox()) && obj.getIsAttacking()
                     || obj.getIsFullyCharged() && obj.getSuperAttackIndicator().intersects(arena.getTargets().get(i).getHitbox())) {
                 arena.getTargets().get(i).getHealthSystem().dealDamage(1);
                 arena.getTargets().remove(i);
-                arena.getMapHelper().updateScore();
+                arena.getMapHelper().updateScore(map);
             }
         }
     }
