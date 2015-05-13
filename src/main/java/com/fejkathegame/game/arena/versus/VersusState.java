@@ -132,6 +132,7 @@ public class VersusState extends BasicGameState {
             client.getClient().sendUDP(packet);
         } else {
             PacketAttackPlayer packet = new PacketAttackPlayer();
+            packet.direction = (float) obj.getAttackDirection().getTheta();
             packet.isAttacking = false;
             client.getClient().sendUDP(packet);
         }
