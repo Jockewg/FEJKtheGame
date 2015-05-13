@@ -5,11 +5,13 @@
  */
 package com.fejkathegame.server;
 
+
 /**
  *
  * @author Filip
  */
-public class PacketAttackPlayer {
+public class PacketAttackDirectionPlayer {
     public int id;
-    public boolean isAttacking;
+    public float direction;
+    
 }

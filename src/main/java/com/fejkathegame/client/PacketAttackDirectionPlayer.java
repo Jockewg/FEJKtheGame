@@ -3,13 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.fejkathegame.server;
+package com.fejkathegame.client;
 
 /**
  *
  * @author Filip
  */
-public class PacketAttackPlayer {
+public class PacketAttackDirectionPlayer {
     public int id;
-    public boolean isAttacking;
+    public float direction;
+    
 }
