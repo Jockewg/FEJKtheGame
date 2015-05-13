@@ -84,7 +84,7 @@ public class Tutorial03State extends BasicGameState {
         g.scale(Main.SCALE, Main.SCALE);
         g.translate(-camera.getCamX(), -camera.getCamY());
         arena.render();
-        arena.helper.updateText(camera.getCamX(), camera.getCamY());
+        /*arena.helper.updateText(camera.getCamX(), camera.getCamY());*/
         g.resetTransform();
     }
 

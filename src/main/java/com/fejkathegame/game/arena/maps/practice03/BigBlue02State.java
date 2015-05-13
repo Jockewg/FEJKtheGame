@@ -122,7 +122,7 @@ public class BigBlue02State extends BasicGameState {
     @Override
     public void update(GameContainer gc, StateBasedGame sbg, int i) throws SlickException {
         helper.checkCameraOffset();
-        if(!isCameraAnimationRunning) {
+        if(!arena.timer.isCountdownRunning()) {
             movementSystem.handleInput(gc.getInput(), i);
             physics.handlePhysics(arena, i);
             helper.checkCollisionWithTarget();

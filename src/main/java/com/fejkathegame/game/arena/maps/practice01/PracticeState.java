@@ -94,11 +94,13 @@ public class PracticeState extends BasicGameState {
     @Override
     public void update(GameContainer gc, StateBasedGame sbg, int i) throws SlickException {
         helper.checkCameraOffset();
-        movementSystem.handleInput(gc.getInput(), i);
-        physics.handlePhysics(arena, i);
-        helper.checkCollisionWithTarget();
-        obj.update(i);
-        arena.helper.moveTarget();
+        if(!arena.timer.isCountdownRunning()) {
+            movementSystem.handleInput(gc.getInput(), i);
+            physics.handlePhysics(arena, i);
+            helper.checkCollisionWithTarget();
+            obj.update(i);
+            arena.helper.moveTarget();
+        }
         arena.timer.calculateSecond(i);
     }
     
