@@ -129,6 +129,4 @@ public class BigBlue02State extends BasicGameState {
         arena.timer.calculateSecond(i);
     }
 
-
-
 }
