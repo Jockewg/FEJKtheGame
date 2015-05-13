@@ -86,7 +86,7 @@ public class PracticeState extends BasicGameState {
         if(!arena.timer.isCountdownRunning()) {
             movementSystem.handleInput(gc.getInput(), i);
             physics.handlePhysics(arena, i);
-            helper.checkCollisionWithTarget();
+            helper.checkCollisionWithTarget(getID());
             obj.update(i);
             arena.helper.moveTarget();
         }
