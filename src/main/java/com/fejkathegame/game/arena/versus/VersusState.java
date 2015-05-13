@@ -2,6 +2,7 @@ package com.fejkathegame.game.arena.versus;
 
 import com.fejkathegame.client.ClientProgram;
 import com.fejkathegame.client.MPPlayer;
+import com.fejkathegame.client.PacketAttackPlayer;
 import com.fejkathegame.client.PacketUpdateX;
 import com.fejkathegame.client.PacketUpdateY;
 import com.fejkathegame.game.entities.logic.MovementSystem;
@@ -90,6 +91,7 @@ public class VersusState extends BasicGameState {
         arena.render();
         for(MPPlayer mpPlayer : client.getPlayers().values()){
 			g.drawRect(mpPlayer.x, mpPlayer.y, 32, 32);
+                        
 		}
 
     }
@@ -117,6 +119,12 @@ public class VersusState extends BasicGameState {
             client.getClient().sendUDP(packet);
 
             obj.networkPosition.y = obj.getCurrentY();
+        }
+        if (obj.getIsAttacking() || !obj.getIsAttacking()) {
+            PacketAttackPlayer packet = new PacketAttackPlayer();
+            packet.direction = (float) obj.getAttackDirection().getTheta();
+            packet.isAttacking = true;
+            client.getClient().sendTCP(packet);
         }
     }
 

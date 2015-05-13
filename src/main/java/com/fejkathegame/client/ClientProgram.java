@@ -17,7 +17,7 @@ public class ClientProgram extends Listener {
     Client client;
     String serverIp, playerName;
     int tcpPort = 27960, updPort = 27960;
-    Map<Integer,MPPlayer> players = new HashMap<>(); 
+    Map<Integer, MPPlayer> players = new HashMap<>();
 
     public ClientProgram(String serverIp, String playerName) {
         this.serverIp = serverIp;
@@ -30,11 +30,12 @@ public class ClientProgram extends Listener {
     public void network() {
         System.out.println("Connecting to the server...");
         client = new Client();
-        
+
         client.getKryo().register(PacketUpdateX.class);
         client.getKryo().register(PacketUpdateY.class);
         client.getKryo().register(PacketAddPlayer.class);
         client.getKryo().register(PacketRemovePlayer.class);
+        client.getKryo().register(PacketAttackPlayer.class);
         client.addListener(this);
 
         client.start();
@@ -47,29 +48,32 @@ public class ClientProgram extends Listener {
         client.addListener(new ClientProgram());
         System.out.println("Connected! The client program is now waiting for a packet...\n");
 
-        
     }
 
     @Override
-    public void received(Connection connection, Object object) {
-        if(object instanceof PacketAddPlayer){
-			PacketAddPlayer packet = (PacketAddPlayer) object;
-			MPPlayer newPlayer = new MPPlayer();
-			players.put(packet.id, newPlayer);
-			
-		}else if(object instanceof PacketRemovePlayer){
-			PacketRemovePlayer packet2 = (PacketRemovePlayer) object;
-			players.remove(packet2.id);
-			
-		}else if(object instanceof PacketUpdateX){
-			PacketUpdateX packet3 = (PacketUpdateX) object;
-			players.get(packet3.id).x = packet3.x;
-			
-		}else if(object instanceof PacketUpdateY){
-			PacketUpdateY packet4 = (PacketUpdateY) object;
-			players.get(packet4.id).y = packet4.y;
-			
-		}
+    public void received(Connection c, Object o) {
+        if (o instanceof PacketAddPlayer) {
+            PacketAddPlayer packet = (PacketAddPlayer) o;
+            MPPlayer newPlayer = new MPPlayer();
+            players.put(packet.id, newPlayer);
+
+        } else if (o instanceof PacketRemovePlayer) {
+            PacketRemovePlayer packet2 = (PacketRemovePlayer) o;
+            players.remove(packet2.id);
+
+        } else if (o instanceof PacketUpdateX) {
+            PacketUpdateX packet = (PacketUpdateX) o;
+            players.get(packet.id).x = packet.x;
+
+        } else if (o instanceof PacketUpdateY) {
+            PacketUpdateY packet = (PacketUpdateY) o;
+            players.get(packet.id).y = packet.y;
+        } else if (o instanceof PacketAttackPlayer) {
+            PacketAttackPlayer packet = (PacketAttackPlayer) o;
+            players.get(packet.id).direction = packet.direction;
+            players.get(packet.id).isAttacking = packet.isAttacking;
+        }
+            
     }
 
     public Client getClient() {
@@ -87,6 +91,5 @@ public class ClientProgram extends Listener {
     public void setPlayers(Map<Integer, MPPlayer> players) {
         this.players = players;
     }
-    
-    
+
 }
