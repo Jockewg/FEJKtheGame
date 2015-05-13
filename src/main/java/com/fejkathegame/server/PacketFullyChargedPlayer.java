@@ -5,18 +5,12 @@
  */
 package com.fejkathegame.server;
 
-import com.esotericsoftware.kryonet.Connection;
 
 /**
  *
  * @author Filip
  */
-public class Player {
-    public float x, y;
-    public Connection c;
-    public float direction;
-    public boolean isAttacking;
-    public boolean isChargeing;
+public class PacketFullyChargedPlayer {
+    public int id;
     public boolean isFullyCharged;
-    
 }

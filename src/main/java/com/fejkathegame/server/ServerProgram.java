@@ -21,6 +21,9 @@ public class ServerProgram extends Listener {
         server.getKryo().register(PacketAddPlayer.class);
         server.getKryo().register(PacketRemovePlayer.class);
         server.getKryo().register(PacketAttackPlayer.class);
+        server.getKryo().register(PacketChargePlayer.class);
+        server.getKryo().register(PacketFullyChargedPlayer.class);
+
         server.bind(tcpPort, udpPort);
         server.start();
         server.addListener(new ServerProgram());
@@ -53,22 +56,35 @@ public class ServerProgram extends Listener {
         if (o instanceof PacketUpdateX) {
             PacketUpdateX packet = (PacketUpdateX) o;
             players.get(c.getID()).x = packet.x;
-
             packet.id = c.getID();
             server.sendToAllExceptUDP(c.getID(), packet);
-
         } else if (o instanceof PacketUpdateY) {
             PacketUpdateY packet = (PacketUpdateY) o;
             players.get(c.getID()).y = packet.y;
-
             packet.id = c.getID();
             server.sendToAllExceptUDP(c.getID(), packet);
-
         } else if (o instanceof PacketAttackPlayer) {
             PacketAttackPlayer packet = (PacketAttackPlayer) o;
             players.get(c.getID()).direction = packet.direction;
             players.get(c.getID()).isAttacking = packet.isAttacking;
             server.sendToAllExceptUDP(c.getID(), packet);
+            if (players.get(c.getID()).isAttacking == true) {
+                System.out.println("client it attacking: " + players.get(c.getID()).direction);
+            }
+        } else if (o instanceof PacketChargePlayer) {
+            PacketChargePlayer packet = (PacketChargePlayer) o;
+            players.get(c.getID()).isChargeing = packet.isChargeing;
+            server.sendToAllExceptUDP(c.getID(), packet);
+            if (players.get(c.getID()).isChargeing == true) {
+                System.out.println("client is chrageing");
+            }
+        } else if (o instanceof PacketFullyChargedPlayer) {
+            PacketFullyChargedPlayer packet = (PacketFullyChargedPlayer) o;
+            players.get(c.getID()).isFullyCharged = packet.isFullyCharged;
+            server.sendToAllExceptUDP(c.getID(), packet);
+            if (players.get(c.getID()).isFullyCharged == true) {
+                System.out.println("client it fully charged");
+            }
         }
     }
 

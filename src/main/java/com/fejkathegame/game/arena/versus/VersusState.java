@@ -3,6 +3,8 @@ package com.fejkathegame.game.arena.versus;
 import com.fejkathegame.client.ClientProgram;
 import com.fejkathegame.client.MPPlayer;
 import com.fejkathegame.client.PacketAttackPlayer;
+import com.fejkathegame.client.PacketChargePlayer;
+import com.fejkathegame.client.PacketFullyChargedPlayer;
 import com.fejkathegame.client.PacketUpdateX;
 import com.fejkathegame.client.PacketUpdateY;
 import com.fejkathegame.game.entities.logic.MovementSystem;
@@ -91,9 +93,7 @@ public class VersusState extends BasicGameState {
         arena.render();
         for (MPPlayer mpPlayer : client.getPlayers().values()) { //other player render here.
             g.drawRect(mpPlayer.x, mpPlayer.y, 32, 32);
-            
-            
-            
+
         }
 
     }
@@ -105,10 +105,10 @@ public class VersusState extends BasicGameState {
         player2.update(i);
         obj.update(i);
         checkCollisionWithTarget();
-        checkMultiplayerData();
+        sendClientData();
     }
 
-    private void checkMultiplayerData() {
+    private void sendClientData() {
         if (obj.networkPosition.x != obj.getCurrentX()) {
             //Send the player's X value
             PacketUpdateX packet = new PacketUpdateX();
@@ -125,10 +125,32 @@ public class VersusState extends BasicGameState {
 
             obj.networkPosition.y = obj.getCurrentY();
         }
-        if (obj.getIsAttacking() || !obj.getIsAttacking()) {
+        if (obj.getIsAttacking()) {
             PacketAttackPlayer packet = new PacketAttackPlayer();
             packet.direction = (float) obj.getAttackDirection().getTheta();
-            packet.isAttacking = obj.getIsAttacking();
+            packet.isAttacking = true;
+            client.getClient().sendUDP(packet);
+        } else {
+            PacketAttackPlayer packet = new PacketAttackPlayer();
+            packet.isAttacking = false;
+            client.getClient().sendUDP(packet);
+        }
+        if (obj.getIsCharging()) {
+            PacketChargePlayer packet = new PacketChargePlayer();
+            packet.isChargeing = true;
+            client.getClient().sendUDP(packet);
+        } else {
+            PacketChargePlayer packet = new PacketChargePlayer();
+            packet.isChargeing = false;
+            client.getClient().sendUDP(packet);
+        }
+        if (obj.getIsFullyCharged()) {
+            PacketFullyChargedPlayer packet = new PacketFullyChargedPlayer();
+            packet.isFullyCharged = true;
+            client.getClient().sendUDP(packet);
+        } else {
+            PacketFullyChargedPlayer packet = new PacketFullyChargedPlayer();
+            packet.isFullyCharged = false;
             client.getClient().sendUDP(packet);
         }
     }

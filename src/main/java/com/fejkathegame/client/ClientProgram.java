@@ -36,6 +36,8 @@ public class ClientProgram extends Listener {
         client.getKryo().register(PacketAddPlayer.class);
         client.getKryo().register(PacketRemovePlayer.class);
         client.getKryo().register(PacketAttackPlayer.class);
+        client.getKryo().register(PacketChargePlayer.class);
+        client.getKryo().register(PacketFullyChargedPlayer.class);
         client.addListener(this);
 
         client.start();
@@ -56,15 +58,12 @@ public class ClientProgram extends Listener {
             PacketAddPlayer packet = (PacketAddPlayer) o;
             MPPlayer newPlayer = new MPPlayer();
             players.put(packet.id, newPlayer);
-
         } else if (o instanceof PacketRemovePlayer) {
             PacketRemovePlayer packet2 = (PacketRemovePlayer) o;
             players.remove(packet2.id);
-
         } else if (o instanceof PacketUpdateX) {
             PacketUpdateX packet = (PacketUpdateX) o;
             players.get(packet.id).x = packet.x;
-
         } else if (o instanceof PacketUpdateY) {
             PacketUpdateY packet = (PacketUpdateY) o;
             players.get(packet.id).y = packet.y;
@@ -72,6 +71,12 @@ public class ClientProgram extends Listener {
             PacketAttackPlayer packet = (PacketAttackPlayer) o;
             players.get(packet.id).direction = packet.direction;
             players.get(packet.id).isAttacking = packet.isAttacking;
+        } else if (o instanceof PacketChargePlayer) {
+            PacketChargePlayer packet = (PacketChargePlayer) o;
+            players.get(packet.id).isChargeing = packet.isChargeing;
+        } else if (o instanceof PacketFullyChargedPlayer) {
+            PacketFullyChargedPlayer packet = (PacketFullyChargedPlayer) o;
+            players.get(packet.id).isFullyCharged = packet.isFullyCharged;
         }
             
     }
