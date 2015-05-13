@@ -1,9 +1,6 @@
 package com.fejkathegame.game.arena.maps.highscore;
 
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
+import java.io.*;
 import java.util.Properties;
 
 /**
@@ -12,18 +9,20 @@ import java.util.Properties;
 public class HighscoreAdapter {
     Properties properties = new Properties();
     OutputStream outputStream = null;
-
+    InputStream inputStream = null;
+    String configFilePath = "config.prop";
 
     public void saveScore(int map, int score) {
         String Smap = String.valueOf(map);
         String Sscore = String.valueOf(score);
-
+        System.out.println("wat");
         try {
-            outputStream = new FileOutputStream("config.prop");
+            outputStream = new FileOutputStream(configFilePath);
 
             properties.setProperty(Smap, Sscore);
 
             properties.store(outputStream, null);
+            System.out.println("shit worked");
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -31,5 +30,30 @@ public class HighscoreAdapter {
             e.printStackTrace();
         }
 
+    }
+    public int readScore(int map) {
+        String Smap = String.valueOf(map);
+
+        int score = 0;
+
+        try {
+            inputStream = new FileInputStream(configFilePath);
+            score = Integer.valueOf(properties.getProperty(Smap));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        finally {
+            if (inputStream != null) {
+                try {
+                    inputStream.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+
+        }
+
+
+        return score;
     }
 }
