@@ -21,6 +21,7 @@ public class HealthSystem {
     private Audio hurtSound;
     
     private boolean isDamaged = false;
+    private int damageCooldown = 0;
 
     /**
      * Constructor for the health system, Requires a {@code LevelObject} to attach to, initializes {@code healthBar}
@@ -57,6 +58,20 @@ public class HealthSystem {
             isCharacterAlive();
             hurtSound.playAsSoundEffect(1.0f, 1.0f, false);
             isDamaged = true;
+            damageCooldown = 1000;
+        }
+    }
+    
+    public void damageCooldown(int delta) {
+        if(damageCooldown != 0) {
+            damageCooldown -= delta;
+            if(damageCooldown < 0) {
+                damageCooldown = 0;
+            }
+        }
+        
+        if(damageCooldown == 0) {
+            isDamaged = false;
         }
     }
     

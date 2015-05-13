@@ -363,6 +363,7 @@ public class Character extends LevelObject {
         stanceAnimation.update(delta);
         jumpAnimation.update(delta);
         fallAnimation.update(delta);
+        healthSystem.damageCooldown(delta);
         
         
         if (!isCharging && !isFullyCharged) {
