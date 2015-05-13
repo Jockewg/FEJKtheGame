@@ -10,6 +10,7 @@ import com.fejkathegame.game.arena.maps.PracticeCamera;
 import com.fejkathegame.game.arena.maps.PracticeStateHelper;
 import com.fejkathegame.game.arena.maps.practice03.BigBlue02;
 import com.fejkathegame.game.arena.physics.Physics;
+import com.fejkathegame.game.arena.tiles.Tile;
 import com.fejkathegame.game.entities.logic.MovementSystem;
 import java.io.IOException;
 import org.newdawn.slick.GameContainer;
@@ -34,6 +35,8 @@ public class Tutorial03State extends BasicGameState {
 
     private float offsetMaxX;
     private float offsetMaxY;
+    
+    private boolean inPit = false;
 
     /**
      * Constructor for ArenaState
@@ -76,6 +79,17 @@ public class Tutorial03State extends BasicGameState {
         offsetMaxX = arena.getMap().getWidth() * 25 -450;
         offsetMaxY = arena.getMap().getHeight() * 25 -325;
     }
+    
+    public void checkIfInPit() {
+        int tileId = arena.getMap().getTileId((int) (obj.getX()) / 25, (int) (obj.getY() + 50) / 25, 0);
+        String property = arena.getMap().getTileProperty(tileId, "tileType", "pit");
+        
+        if("pit".equals(property)) {
+            inPit = true;
+        } else {
+            inPit = false;
+        }
+    }
 
 
     @Override
@@ -91,11 +105,16 @@ public class Tutorial03State extends BasicGameState {
 
     @Override
     public void update(GameContainer gc, StateBasedGame sbg, int i) throws SlickException {
+        checkIfInPit();
+        if(inPit) {
+            sbg.enterState(Main.TUTORIAL);
+        }
         helper.checkCameraOffset();
         movementSystem.handleInput(gc.getInput(), i);
         physics.handlePhysics(arena, i);
         helper.checkCollisionWithTarget();
         obj.update(i);
         arena.timer.calculateSecond(i);
+        
     }
 }
