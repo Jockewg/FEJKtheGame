@@ -71,13 +71,13 @@ public class ClientProgram extends Listener {
             PacketAttackPlayer packet = (PacketAttackPlayer) o;
             players.get(packet.id).direction = packet.direction;
             players.get(packet.id).isAttacking = packet.isAttacking;
-            if (players.get(c.getID()).isFullyCharged == true) {
+            if (players.get(c.getID()).isAttacking == true) {
                 System.out.println("client " + packet.id +"  is attacking");
             }
         } else if (o instanceof PacketChargePlayer) {
             PacketChargePlayer packet = (PacketChargePlayer) o;
             players.get(packet.id).isChargeing = packet.isChargeing;
-            if (players.get(c.getID()).isFullyCharged == true) {
+            if (players.get(c.getID()).isChargeing == true) {
                 System.out.println("client " + packet.id +"  is chargeing");
             }
         } else if (o instanceof PacketFullyChargedPlayer) {

@@ -53,7 +53,7 @@ public class Character extends LevelObject {
     private int storedAttacks;
     private int storedJumps;
 
-    private Vector2f attackDirection, attackStart, current;
+    private Vector2f attackDirection = new Vector2f(0,0), attackStart, current;
     private HealthSystem healthSystem;
     private MovementSystem movementSystem;
     private Shape player;
@@ -263,7 +263,7 @@ public class Character extends LevelObject {
                     + Math.pow(sweepYStart - sweepYEnd, 2));
         }
 
-        attackDirection = new Vector2f(sweepXStart - sweepXEnd,
+        attackDirection.set(sweepXStart - sweepXEnd,
                 sweepYStart - sweepYEnd);
 
         if (sweepSpeed >= sweepAttack && sweepSpeed <= sweepLimit
