@@ -103,7 +103,7 @@ public class Tower01State extends BasicGameState {
         if(!arena.timer.isCountdownRunning()) {
             movementSystem.handleInput(gc.getInput(), i);
             physics.handlePhysics(arena, i);
-            helper.checkCollisionWithTarget();
+            helper.checkCollisionWithTarget(getID());
             obj.update(i);
         }
          arena.timer.calculateSecond(i);

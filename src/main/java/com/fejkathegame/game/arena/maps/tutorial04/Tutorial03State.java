@@ -94,7 +94,7 @@ public class Tutorial03State extends BasicGameState {
         helper.checkCameraOffset();
         movementSystem.handleInput(gc.getInput(), i);
         physics.handlePhysics(arena, i);
-        helper.checkCollisionWithTarget();
+        helper.checkCollisionWithTarget(getID());
         obj.update(i);
         arena.timer.calculateSecond(i);
     }
