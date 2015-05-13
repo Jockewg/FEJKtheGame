@@ -18,14 +18,14 @@ public class HighscoreAdapter {
 
             String Smap = String.valueOf(map);
             String Sscore = String.valueOf(score);
-            System.out.println("wat");
+
             try {
                 outputStream = new FileOutputStream(configFilePath);
 
                 properties.setProperty(Smap, Sscore);
 
                 properties.store(outputStream, null);
-                System.out.println("shit worked");
+                System.out.println("the new highscore is: " + score);
 
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
@@ -41,7 +41,13 @@ public class HighscoreAdapter {
 
         try {
             inputStream = new FileInputStream(configFilePath);
-            score = Integer.valueOf(properties.getProperty(Smap));
+            if (properties.getProperty(Smap) != null) {
+                score = Integer.valueOf(properties.getProperty(Smap));
+                System.out.println("the highscore for " + map + "was: " + score);
+            } else {
+                System.out.println("value was null");
+                score = Integer.MAX_VALUE;
+            }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
