@@ -71,6 +71,7 @@ public class ServerProgram extends Listener {
         } else if (o instanceof PacketAttackPlayer) {
             PacketAttackPlayer packet = (PacketAttackPlayer) o;
             players.get(c.getID()).isAttacking = packet.isAttacking;
+            packet.id = c.getID();
             server.sendToAllExceptUDP(c.getID(), packet);
             if (players.get(c.getID()).isAttacking == true) {
                 System.out.println("client " + c.getID() + " is attacking");
@@ -78,6 +79,7 @@ public class ServerProgram extends Listener {
         } else if (o instanceof PacketAttackDirectionPlayer) {
             PacketAttackDirectionPlayer packet = (PacketAttackDirectionPlayer) o;
             players.get(c.getID()).direction = packet.direction;
+            packet.id = c.getID();
             server.sendToAllExceptUDP(c.getID(), packet);
             if (players.get(c.getID()).isAttacking == true) {
                 System.out.println("client " + c.getID() + " degree: " + packet.direction);
@@ -85,6 +87,7 @@ public class ServerProgram extends Listener {
         } else if (o instanceof PacketChargePlayer) {
             PacketChargePlayer packet = (PacketChargePlayer) o;
             players.get(c.getID()).isChargeing = packet.isChargeing;
+            packet.id = c.getID();
             server.sendToAllExceptUDP(c.getID(), packet);
             if (players.get(c.getID()).isChargeing == true) {
                 System.out.println("client " + c.getID() + "  is chrageing");
@@ -92,6 +95,7 @@ public class ServerProgram extends Listener {
         } else if (o instanceof PacketFullyChargedPlayer) {
             PacketFullyChargedPlayer packet = (PacketFullyChargedPlayer) o;
             players.get(c.getID()).isFullyCharged = packet.isFullyCharged;
+            packet.id = c.getID();
             server.sendToAllExceptUDP(c.getID(), packet);
             if (players.get(c.getID()).isFullyCharged == true) {
                 System.out.println("client " + c.getID() + "  it fully charged");

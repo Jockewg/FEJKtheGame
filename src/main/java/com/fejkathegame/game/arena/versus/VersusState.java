@@ -130,14 +130,14 @@ public class VersusState extends BasicGameState {
             PacketAttackPlayer packet = new PacketAttackPlayer();
             PacketAttackDirectionPlayer packet2 = new PacketAttackDirectionPlayer();
             packet2.direction = (float) obj.getAttackDirection().getTheta();
-            packet.isAttacking = true;
+            packet.isAttacking = obj.getIsAttacking();
             client.getClient().sendUDP(packet);
             client.getClient().sendUDP(packet2);
         } else {
             PacketAttackPlayer packet = new PacketAttackPlayer();
             PacketAttackDirectionPlayer packet2 = new PacketAttackDirectionPlayer();
             packet2.direction = (float) obj.getAttackDirection().getTheta();
-            packet.isAttacking = false;
+            packet.isAttacking = obj.getIsAttacking();
             client.getClient().sendUDP(packet);
             client.getClient().sendUDP(packet2);
         }
