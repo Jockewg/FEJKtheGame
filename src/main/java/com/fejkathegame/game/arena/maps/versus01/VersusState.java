@@ -110,8 +110,8 @@ public class VersusState extends BasicGameState {
             dY = dY * -1;
         }
         cameraWidth = dX + 100;
-        if(cameraWidth < 364) {
-            cameraWidth = 364;
+        if(cameraWidth < 404) {
+            cameraWidth = 404;
         }
         cameraHeight = cameraWidth * 0.55f;
         if(cameraHeight < dY + 100) {
