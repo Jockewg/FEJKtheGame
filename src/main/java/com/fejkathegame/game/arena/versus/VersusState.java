@@ -89,10 +89,12 @@ public class VersusState extends BasicGameState {
         g.scale(Main.SCALE, Main.SCALE);
         arena.getAnimation().draw(200, 50);
         arena.render();
-        for(MPPlayer mpPlayer : client.getPlayers().values()){
-			g.drawRect(mpPlayer.x, mpPlayer.y, 32, 32);
-                        
-		}
+        for (MPPlayer mpPlayer : client.getPlayers().values()) { //other player render here.
+            g.drawRect(mpPlayer.x, mpPlayer.y, 32, 32);
+            
+            
+            
+        }
 
     }
 
@@ -103,7 +105,10 @@ public class VersusState extends BasicGameState {
         player2.update(i);
         obj.update(i);
         checkCollisionWithTarget();
+        checkMultiplayerData();
+    }
 
+    private void checkMultiplayerData() {
         if (obj.networkPosition.x != obj.getCurrentX()) {
             //Send the player's X value
             PacketUpdateX packet = new PacketUpdateX();
@@ -124,7 +129,7 @@ public class VersusState extends BasicGameState {
             PacketAttackPlayer packet = new PacketAttackPlayer();
             packet.direction = (float) obj.getAttackDirection().getTheta();
             packet.isAttacking = obj.getIsAttacking();
-            client.getClient().sendTCP(packet);
+            client.getClient().sendUDP(packet);
         }
     }
 
