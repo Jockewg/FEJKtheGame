@@ -5,8 +5,6 @@
  */
 package com.fejkathegame.menu.button;
 
-import org.newdawn.slick.Graphics;
-
 /**
  *
  * @author Joakim
