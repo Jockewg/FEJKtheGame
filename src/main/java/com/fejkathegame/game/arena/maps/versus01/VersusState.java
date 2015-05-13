@@ -26,20 +26,14 @@ public class VersusState extends BasicGameState {
     private Physics physics;
     private Character obj;
     private Character player2;
-    
+
+    //Camera stuff
     private float cameraX, cameraY;
     private float cameraWidth = 900;
     private float cameraHeight = cameraWidth * 0.55f;
     private float cameraScale = 1.0f;
-    
-    //Camera stuff
-    private float offsetMaxX = 2050;
-    private float offsetMaxY = 750;
-    private float offsetMinX = 0;
-    private float offsetMinY = 0;
-    private float offsetX = 0;
-    private float offsetY = 0;
-    private float camX, camY = 0;
+
+
     private Line line;
     
     private ArrayList<Character> characters;

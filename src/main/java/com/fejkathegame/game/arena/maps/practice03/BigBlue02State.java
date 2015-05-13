@@ -30,8 +30,6 @@ public class BigBlue02State extends BasicGameState {
     private float offsetMaxY;
     
     private boolean isCameraAnimationRunning = true;
-    private float cameraMotionY = 0;
-    private float cameraMotionX = 3000;
     private float scale = 0.24f;
     private float scaleSmoothing = 0;
 

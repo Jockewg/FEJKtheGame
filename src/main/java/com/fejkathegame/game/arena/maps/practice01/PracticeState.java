@@ -1,25 +1,18 @@
 package com.fejkathegame.game.arena.maps.practice01;
 
+import com.fejkathegame.game.Main;
 import com.fejkathegame.game.arena.maps.PracticeCamera;
 import com.fejkathegame.game.arena.maps.PracticeStateHelper;
-import com.fejkathegame.game.entities.logic.MovementSystem;
-import com.fejkathegame.game.Main;
 import com.fejkathegame.game.arena.physics.Physics;
 import com.fejkathegame.game.entities.Character;
-
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import org.newdawn.slick.Color;
-
-
+import com.fejkathegame.game.entities.logic.MovementSystem;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
-import org.newdawn.slick.geom.Line;
-import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
+
+import java.io.IOException;
 
 /**
  *
@@ -36,12 +29,8 @@ public class PracticeState extends BasicGameState {
     
     private float offsetMaxX = 2050;
     private float offsetMaxY = 750;
-    
-    private float offsetMinX = 0;
-    private float offsetMinY = 0;
-    private float camX, camY = 0;
-    private float acc = 5.0f;
-    private Line line;
+
+    private float camX = 0, camY = 0;
 
     /**
      * Constructor for ArenaState
