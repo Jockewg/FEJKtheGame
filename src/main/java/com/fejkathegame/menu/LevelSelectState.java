@@ -1,6 +1,7 @@
 package com.fejkathegame.menu;
 
 import com.fejkathegame.game.Main;
+import com.fejkathegame.menu.camera.MenuCamera;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
@@ -17,6 +18,7 @@ public class LevelSelectState extends BasicGameState {
     private LevelSelect levelSelect;
     private String name;
     private Input input;
+    private MenuCamera cam;
 
     @Override
     public int getID() {
@@ -27,11 +29,16 @@ public class LevelSelectState extends BasicGameState {
     public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {
         levelSelect = new LevelSelect();
         input = gc.getInput();
+        cam = new MenuCamera(0, 0);
     }
 
     @Override
     public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
+        //g.scale(900, 900);
+        scrollPage(input, cam, g);
+        
         levelSelect.render(g);
+        g.resetTransform();
     }
 
     @Override
@@ -39,29 +46,52 @@ public class LevelSelectState extends BasicGameState {
         int mouseX = input.getMouseX();
         int mouseY = input.getMouseY();
         selectLevel(mouseX, mouseY, input, sbg);
+        
+    }
+    
+    public void scrollPage(Input i, MenuCamera camera, Graphics g){
+        
+        if(i.isKeyPressed(Input.KEY_UP)){
+            camera.addToY(50);
+            g.translate(-camera.getX(), -camera.getY());
+        }else if(i.isKeyPressed(Input.KEY_DOWN)){
+            camera.addToY(-50);
+            g.translate(-camera.getX(), -camera.getY());
+        }
+        
     }
 
     public void selectLevel(int x, int y, Input i, StateBasedGame sbg) {
-
-        if ((x >= 150 && x <= 300) && (y >= 150 && y <= 300)) {
-            if (i.isMousePressed(Input.MOUSE_LEFT_BUTTON)) {
-                sbg.enterState(Main.TOWER1STATE);
+        
+            if(levelSelect.getLevelButtons().get(0).onHover(x, y)){
+                if (i.isMousePressed(Input.MOUSE_LEFT_BUTTON)) {
+                    sbg.enterState(Main.VERSUSSTATE);
+                }
             }
-        }
-        if ((x >= 350 && x <= 450) && (y >= 150 && y <= 300)) {
-            if (i.isMousePressed(Input.MOUSE_LEFT_BUTTON)) {
-                sbg.enterState(Main.BIGBLUESTATE);
+            
+            if(levelSelect.getLevelButtons().get(1).onHover(x, y)){
+                if (i.isMousePressed(Input.MOUSE_LEFT_BUTTON)) {
+                    sbg.enterState(Main.BIGBLUESTATE);
+                }
             }
-        }
-        if ((x >= 550 && x <= 650) && (y >= 150 && y <= 300)) {
-            if (i.isMousePressed(Input.MOUSE_LEFT_BUTTON)) {
-                sbg.enterState(Main.FIRSTPRACTICE);
+            
+            if(levelSelect.getLevelButtons().get(2).onHover(x, y)){
+                if (i.isMousePressed(Input.MOUSE_LEFT_BUTTON)) {
+                    sbg.enterState(Main.FIRSTPRACTICE);
+                }
             }
-        }
-        if ((x >= 750 && x <= 800) && (y >= 150 && y <= 300)) {
-            if (i.isMousePressed(Input.MOUSE_LEFT_BUTTON)) {
-                sbg.enterState(Main.TUTORIAL);
+            
+            if(levelSelect.getLevelButtons().get(3).onHover(x, y)){
+                if (i.isMousePressed(Input.MOUSE_LEFT_BUTTON)) {
+                    sbg.enterState(Main.TOWER1STATE);
+                }
             }
-        }
+            
+            if(levelSelect.getLevelButtons().get(4).onHover(x, y)){
+                if (i.isMousePressed(Input.MOUSE_LEFT_BUTTON)) {
+                    sbg.enterState(Main.TUTORIAL);
+                }
+            }
+            
     }
 }

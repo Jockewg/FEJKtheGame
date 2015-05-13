@@ -24,7 +24,13 @@ public class LevelSelectButton extends Button{
     
     public void render(Graphics g){
         g.setColor(Color.orange);
-        g.drawRect(posX, posX, width, height);
+        g.drawRect(posX, posY, width, height);
+        g.drawString(name, posX + 20, posY + (height / 2));
+        g.drawString(bestTime + "", posX + 300, posY + (height / 2));
+    }
+    
+    public void setBestTime(double time){
+        bestTime = time;
     }
     
 }

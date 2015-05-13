@@ -4,7 +4,6 @@ import com.fejkathegame.menu.button.LevelSelectButton;
 import java.io.File;
 import java.util.ArrayList;
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 
 /**
@@ -13,17 +12,17 @@ import org.newdawn.slick.SlickException;
  */
 public class LevelSelect {
     
-    private int numberOfLevels = 3;
-    private Image[] levelImages;
+    //private int numberOfLevels = 3;
+    //private Image[] levelImages;
     private ArrayList<LevelSelectButton> levels;
-    private File levelDirr;
+    private final File levelDirr;
     
     public LevelSelect() throws SlickException {
         levelDirr = new File("src/main/resources/data/levels");
         levels = new ArrayList<>();
         for(int i = 0;i<levelDirr.list().length;i++){
             System.out.println(levelDirr.list()[i]);
-            //levels.add(new LevelSelectButton(100, 100, 400, 50, levelDirr.list()[i]));
+            levels.add(new LevelSelectButton(100, 100 + (i*60), 400, 50, levelDirr.list()[i]));
         }
     }
     
@@ -31,7 +30,7 @@ public class LevelSelect {
         
         for(LevelSelectButton lvlbtn : levels){
             
-            
+            lvlbtn.render(g);
             
         }
         
@@ -50,4 +49,9 @@ public class LevelSelect {
 //            x = x + 235;
 //        }
     }
+
+    public ArrayList<LevelSelectButton> getLevelButtons() {
+        return levels;
+    }
+    
 }
