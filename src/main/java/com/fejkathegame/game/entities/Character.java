@@ -19,13 +19,14 @@ import java.io.IOException;
  * Created by Swartt on 2015-04-28.
  */
 public class Character extends LevelObject {
-
+    public Vector2f networkPosition = new Vector2f(0,0);
     private boolean grounded;
     private boolean isAlive;
     private boolean moving = false;
 
     private double sweepAttack, sweepLimit;
-
+    
+    private float currentX = 0, currentY = 0;
     private float jumpStrength;
     private float size;
     private float velocityY;
@@ -297,6 +298,8 @@ public class Character extends LevelObject {
      * @param delta
      */
     public void update(int delta) {
+        currentX = x;
+        currentY = y;
         if (getIsAttacking()) {
             current = new Vector2f(x, y);
             attackIndicatorTransp = 1.0f;
@@ -797,4 +800,21 @@ public class Character extends LevelObject {
     public void setAttackIndicator(Polygon attackIndicator) {
         this.attackIndicator = attackIndicator;
     }
+
+    public float getCurrentX() {
+        return currentX;
+    }
+
+    public void setCurrentX(float currentX) {
+        this.currentX = currentX;
+    }
+
+    public float getCurrentY() {
+        return currentY;
+    }
+
+    public void setCurrentY(float currentY) {
+        this.currentY = currentY;
+    }
+    
 }

@@ -54,7 +54,7 @@ public class HostScreenState extends BasicGameState {
     public void update(GameContainer gc, StateBasedGame sbg, int i) throws SlickException {
         int x = input.getMouseX();
         int y = input.getMouseY();
-        checkIfConnectIsClicked(x, y, input);
+        checkIfConnectIsClicked(x, y, input, sbg);
     }
     
     /**
@@ -65,15 +65,14 @@ public class HostScreenState extends BasicGameState {
      * 
      * @param x x position of the mouse
      * @param y y position of the mouse
-     * @param i the Input to be used to read mouse position
+     * @param i the Input to be used to read mouse pos
+     * @param sbg
      */
-    public void checkIfConnectIsClicked(int x, int y, Input i) {
+    public void checkIfConnectIsClicked(int x, int y, Input i, StateBasedGame sbg) {
         if((x > 300 && x < 600) && (y > 331 && y < 371)) {
             if(i.isMousePressed(Input.MOUSE_LEFT_BUTTON)) {
-                ClientProgram client = new ClientProgram(
-                        hostScreen.getIpField().getText(),
-                        hostScreen.getPlayerName().getText());
-                client.network();
+                
+                sbg.enterState(1);
                 
             }
         }

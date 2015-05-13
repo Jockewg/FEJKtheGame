@@ -1,5 +1,9 @@
 package com.fejkathegame.game.arena.versus;
 
+import com.fejkathegame.client.ClientProgram;
+import com.fejkathegame.client.MPPlayer;
+import com.fejkathegame.client.PacketUpdateX;
+import com.fejkathegame.client.PacketUpdateY;
 import com.fejkathegame.game.entities.logic.MovementSystem;
 import com.fejkathegame.game.Main;
 import com.fejkathegame.game.arena.physics.Physics;
@@ -20,9 +24,11 @@ public class VersusState extends BasicGameState {
     private Physics physics;
     private Character obj;
     private Character player2;
+    ClientProgram client = new ClientProgram();
 
     /**
      * Constructor for ArenaState
+     *
      * @param name of the stage
      */
     public VersusState(String name) {
@@ -48,33 +54,33 @@ public class VersusState extends BasicGameState {
 
         arena = new Versus(name, obj);
         arena.addPlayer(player2);
-        
+
         movementSystem = new MovementSystem(obj);
 
         physics = new Physics();
-
+        client.network();
     }
-    
+
     public void checkCollisionWithTarget() {
-        
-        if(obj.getAttackIndicator().intersects(player2.getHitBox()) && obj.getIsAttacking()
+
+        if (obj.getAttackIndicator().intersects(player2.getHitBox()) && obj.getIsAttacking()
                 || obj.getIsFullyCharged() && obj.getSuperAttackIndicator().intersects(player2.getHitBox())) {
             System.out.println("Player 1 hit Player 2 omfg");
             player2.getHealthSystem().dealDamage(1);
-            if(player2.getHealth() <= 0) {
+            if (player2.getHealth() <= 0) {
                 arena.getPlayers().remove(player2);
             }
         }
-        
-        if(player2.getAttackIndicator().intersects(obj.getHitBox()) && player2.getIsAttacking()
+
+        if (player2.getAttackIndicator().intersects(obj.getHitBox()) && player2.getIsAttacking()
                 || player2.getIsFullyCharged() && player2.getSuperAttackIndicator().intersects(obj.getHitBox())) {
             System.out.println("Player 2 hit Player 1 omfg");
             obj.getHealthSystem().dealDamage(1);
-            if(obj.getHealth() <= 0) {
+            if (obj.getHealth() <= 0) {
                 arena.getPlayers().remove(obj);
             }
         }
-        
+
     }
 
     @Override
@@ -82,9 +88,11 @@ public class VersusState extends BasicGameState {
         g.scale(Main.SCALE, Main.SCALE);
         arena.getAnimation().draw(200, 50);
         arena.render();
-        
-    }
+        for(MPPlayer mpPlayer : client.getPlayers().values()){
+			g.drawRect(mpPlayer.x, mpPlayer.y, 32, 32);
+		}
 
+    }
 
     @Override
     public void update(GameContainer gc, StateBasedGame sbg, int i) throws SlickException {
@@ -93,6 +101,23 @@ public class VersusState extends BasicGameState {
         player2.update(i);
         obj.update(i);
         checkCollisionWithTarget();
+
+        if (obj.networkPosition.x != obj.getCurrentX()) {
+            //Send the player's X value
+            PacketUpdateX packet = new PacketUpdateX();
+            packet.x = obj.getCurrentX();
+            client.getClient().sendUDP(packet);
+
+            obj.networkPosition.x = obj.getCurrentX();
+        }
+        if (obj.networkPosition.y != obj.getCurrentY()) {
+            //Send the player's Y value
+            PacketUpdateY packet = new PacketUpdateY();
+            packet.y = obj.getCurrentY();
+            client.getClient().sendUDP(packet);
+
+            obj.networkPosition.y = obj.getCurrentY();
+        }
     }
 
 }

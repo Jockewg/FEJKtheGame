@@ -14,10 +14,10 @@ import java.util.logging.Logger;
  */
 public class ClientProgram extends Listener {
 
-    public static Client client;
+    Client client;
     String serverIp, playerName;
     int tcpPort = 27960, updPort = 27960;
-    public static Map<Integer,MPPlayer> players = new HashMap<>(); 
+    Map<Integer,MPPlayer> players = new HashMap<>(); 
 
     public ClientProgram(String serverIp, String playerName) {
         this.serverIp = serverIp;
@@ -39,7 +39,7 @@ public class ClientProgram extends Listener {
 
         client.start();
         try {
-            client.connect(5000, serverIp, tcpPort, updPort);
+            client.connect(5000, "localhost", tcpPort, updPort);
         } catch (IOException ex) {
             Logger.getLogger(ClientProgram.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -71,4 +71,22 @@ public class ClientProgram extends Listener {
 			
 		}
     }
+
+    public Client getClient() {
+        return client;
+    }
+
+    public void setClient(Client client) {
+        this.client = client;
+    }
+
+    public Map<Integer, MPPlayer> getPlayers() {
+        return players;
+    }
+
+    public void setPlayers(Map<Integer, MPPlayer> players) {
+        this.players = players;
+    }
+    
+    
 }

@@ -11,5 +11,5 @@ package com.fejkathegame.client;
  */
 public class PacketUpdateY {
     public int id;
-    public float y;
+    public float y = 0;
 }
