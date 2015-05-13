@@ -13,23 +13,26 @@ public class HighscoreAdapter {
     String configFilePath = "config.prop";
 
     public void saveScore(int map, int score) {
-        String Smap = String.valueOf(map);
-        String Sscore = String.valueOf(score);
-        System.out.println("wat");
-        try {
-            outputStream = new FileOutputStream(configFilePath);
+        if (readScore(map) > score) {
 
-            properties.setProperty(Smap, Sscore);
 
-            properties.store(outputStream, null);
-            System.out.println("shit worked");
+            String Smap = String.valueOf(map);
+            String Sscore = String.valueOf(score);
+            System.out.println("wat");
+            try {
+                outputStream = new FileOutputStream(configFilePath);
 
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
+                properties.setProperty(Smap, Sscore);
+
+                properties.store(outputStream, null);
+                System.out.println("shit worked");
+
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
-
     }
     public int readScore(int map) {
         String Smap = String.valueOf(map);
