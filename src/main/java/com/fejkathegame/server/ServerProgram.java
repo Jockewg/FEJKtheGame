@@ -90,43 +90,35 @@ public class ServerProgram extends Listener {
             PacketChargePlayer packet = (PacketChargePlayer) o;
             players.get(c.getID()).isChargeing = packet.isChargeing;
             packet.id = c.getID();
-            if (players.get(c.getID()).isChargeing != packet.isChargeing) {
-                server.sendToAllExceptUDP(c.getID(), packet);
-                if (players.get(c.getID()).isChargeing == true) {
-                    System.out.println("client " + c.getID() + "  is chrageing");
-                }
+            server.sendToAllExceptUDP(c.getID(), packet);
+            if (players.get(c.getID()).isChargeing == true) {
+                System.out.println("client " + c.getID() + "  is chrageing");
             }
         } else if (o instanceof PacketFullyChargedPlayer) {
             PacketFullyChargedPlayer packet = (PacketFullyChargedPlayer) o;
             players.get(c.getID()).isFullyCharged = packet.isFullyCharged;
             packet.id = c.getID();
-            if (players.get(c.getID()).isFullyCharged != packet.isFullyCharged) {
-                server.sendToAllExceptUDP(c.getID(), packet);
-                if (players.get(c.getID()).isFullyCharged == true) {
-                    System.out.println("client " + c.getID() + "  it fully charged");
-                }
+            server.sendToAllExceptUDP(c.getID(), packet);
+            if (players.get(c.getID()).isFullyCharged == true) {
+                System.out.println("client " + c.getID() + "  it fully charged");
             }
         } else if (o instanceof PacketMoveLeftPlayer) {
             PacketMoveLeftPlayer packet = (PacketMoveLeftPlayer) o;
             players.get(c.getID()).moveingLeft = packet.moveingLeft;
             packet.id = c.getID();
-            if (players.get(c.getID()).moveingLeft != packet.moveingLeft) {
-                server.sendToAllExceptUDP(c.getID(), packet);
-                if (players.get(c.getID()).moveingLeft == true) {
-                    System.out.println("client " + c.getID() + " moveing left");
-                }
+            server.sendToAllExceptUDP(c.getID(), packet);
+            if (players.get(c.getID()).moveingLeft == true) {
+                System.out.println("client " + c.getID() + " moveing left");
             }
         } else if (o instanceof PacketMoveRightPlayer) {
             PacketMoveRightPlayer packet = (PacketMoveRightPlayer) o;
             players.get(c.getID()).moveingRight = packet.moveingRight;
             packet.id = c.getID();
-            if (players.get(c.getID()).moveingRight != packet.moveingRight) {
-                server.sendToAllExceptUDP(c.getID(), packet);
-                if (players.get(c.getID()).moveingRight == true) {
-                    System.out.println("client " + c.getID() + " moveing right");
-                }
+            server.sendToAllExceptUDP(c.getID(), packet);
+            if (players.get(c.getID()).moveingRight == true) {
+                System.out.println("client " + c.getID() + " moveing right");
             }
-        }
+        } 
     }
 
     @Override
