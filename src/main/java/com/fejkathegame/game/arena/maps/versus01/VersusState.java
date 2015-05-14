@@ -174,6 +174,8 @@ public class VersusState extends BasicGameState {
         for (MPPlayer mpPlayer : client.getPlayers().values()) { //other player render here.
             player2.setX(mpPlayer.x);
             player2.setY(mpPlayer.y);
+            player2.setMovingLeft(mpPlayer.moveingLeft);
+            player2.setMovingRight(mpPlayer.moveingRight);
         }
     }
 
