@@ -62,7 +62,7 @@ public class HighscoreAdapter {
             properties.load(new FileInputStream(file));
             if (properties.getProperty(Smap) != null) {
                 score = Integer.valueOf(properties.getProperty(Smap));
-                System.out.println(score);
+                System.out.println("the score fetched was: " + score);
             } else {
                 System.out.println("value was null");
                 score = Integer.MAX_VALUE;

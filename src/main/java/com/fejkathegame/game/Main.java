@@ -26,10 +26,14 @@ public class Main extends StateBasedGame {
     public static final int HOSTSTATE = 2;
     public static final int LEVELSELECTSTATE = 3;
     //singelplayer constants
-    public static final int TUTORIAL01 = 4;
-    public static final int TOWER02 = 5;
-    public static final int BIG_BlUE03 = 6;
-    public static final int CITY04 = 7;
+    public static final int BIG_BlUE03 = 4;
+    public static final int CITY04 = 5;
+    public static final int TOWER02 = 6;
+    public static final int TUTORIAL01 = 7;
+
+
+
+
 
 
     
@@ -57,8 +61,8 @@ public class Main extends StateBasedGame {
         //add singelplayermaps
         addState(new Tutorial01State("tutorial01"));
         addState(new Tower02State("tower02"));
-        addState(new BigBlue02State("big_blue03"));
-        addState(new CityState04("city04"));
+        addState(new BigBlue02State("big_blue04"));
+        addState(new CityState04("city03"));
 
         
         this.enterState(MENU);

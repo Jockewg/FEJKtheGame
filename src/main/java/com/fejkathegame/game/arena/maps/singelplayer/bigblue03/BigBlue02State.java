@@ -88,7 +88,7 @@ public class BigBlue02State extends BasicGameState {
             camera.setCamY(0);
             float newCamY = (750 * scale);
             camera.setCamY(newCamY);
-            System.out.println("cameraY: " + camera.getCamY());
+            /*System.out.println("cameraY: " + camera.getCamY());*/
         }
         
         if(scale >= 1) {
@@ -96,7 +96,7 @@ public class BigBlue02State extends BasicGameState {
             isCameraAnimationRunning = false;
         }
         
-        System.out.println(scale);
+        /*System.out.println(scale);*/
         
     }
 

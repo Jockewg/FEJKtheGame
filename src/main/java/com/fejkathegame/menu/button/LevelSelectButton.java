@@ -23,12 +23,13 @@ public class LevelSelectButton extends Button{
         this.width = width;
         this.height = height;
         this.highScoreAdapt = new HighscoreAdapter();
-        
         this.title = name;
+
         if(highScoreAdapt.readScore(mapId) == Integer.MAX_VALUE){
-            this.bestTime = "No Score";
+            this.bestTime = "N/A";
         }else{
             this.bestTime = highScoreAdapt.readScore(mapId)+ "";
+
         }
         
     }
