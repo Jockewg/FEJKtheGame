@@ -7,7 +7,6 @@ import java.util.Properties;
  * Created by Swartt on 2015-05-13.
  */
 public class HighscoreAdapter {
-    OutputStream outputStream;
     InputStream inputStream;
     String configFilePath = "config.prop";
 
@@ -34,8 +33,8 @@ public class HighscoreAdapter {
                 properties.load(new FileInputStream(file));
                 properties.setProperty(Smap, Sscore);
 
-                properties.store(outputStream, null);
-                outputStream.close();
+                OutputStream out = new FileOutputStream(file);
+                properties.store(out, null);
                 int newScore = readScore(map);
                 System.out.println("the new highscore is: " + newScore);
 
@@ -58,7 +57,6 @@ public class HighscoreAdapter {
         int score = 0;
 
         try {
-            /*inputStream = new FileInputStream(configFilePath);*/
             File file = new File(configFilePath);
             Properties properties = new Properties();
             properties.load(new FileInputStream(file));
