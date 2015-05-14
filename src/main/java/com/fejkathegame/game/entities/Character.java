@@ -26,6 +26,8 @@ public class Character extends LevelObject {
     private boolean isAlive;
     private boolean moving = false;
     private boolean flipped = false;
+    private boolean movingRight = false;
+    private boolean movingLeft = false;
     
     private SpriteSheet runningSheet;
     private Animation runningAnimation;
@@ -201,9 +203,12 @@ public class Character extends LevelObject {
     public void moveLeft(int delta) {
         if (x_velocity > -maximumSpeed) {
             x_velocity -= accelerationSpeed * delta;
+            movingLeft = true;
             if (x_velocity < -maximumSpeed) {
                 x_velocity = -maximumSpeed;
             }
+        } else {
+            movingLeft = false;
         }
         moving = true;
     }
@@ -216,9 +221,12 @@ public class Character extends LevelObject {
     public void moveRight(int delta) {
         if (x_velocity < maximumSpeed) {
             x_velocity += accelerationSpeed * delta;
+            movingRight = true;
             if (x_velocity > maximumSpeed) {
                 x_velocity = maximumSpeed;
             }
+        } else {
+            movingRight = false;
         }
         moving = true;
         
@@ -421,13 +429,13 @@ public class Character extends LevelObject {
     }
     
     public void renderCharacterAnimation() {
-        if(x_velocity > 0 && y_velocity == 0) {
+        if(movingRight && y_velocity == 0) {
             flipped = false;
             runningAnimation.draw(x - 4, y - 2, 27, 27);
-        } else if(x_velocity < 0 && y_velocity == 0) {
+        } else if(movingLeft && y_velocity == 0) {
             flipped = true;
             runningAnimation.getCurrentFrame().getFlippedCopy(true, false).draw(x - 9, y - 2, 27, 27);
-        } else if(x_velocity == 0 && y_velocity == 0) {
+        } else if(!movingRight && !movingLeft && y_velocity == 0) {
             if(flipped)
                 stanceAnimation.getCurrentFrame().getFlippedCopy(true, false).draw(x - 9, y - 2, 27, 27);
             else
@@ -445,9 +453,9 @@ public class Character extends LevelObject {
                 jumpAnimation.draw(x - 4, y - 2, 27, 27);
             }
         } else if(y_velocity > 0) {
-            if(x_velocity > 0) {
+            if(movingRight) {
                 flipped = false;
-            } else if(x_velocity < 0) {
+            } else if(movingLeft) {
                 flipped = true;
             }
             if(flipped) {
@@ -517,6 +525,22 @@ public class Character extends LevelObject {
 //      *    Getters and Setters      *
 //      *******************************
 
+    public void setMovingRight(boolean movingRight) {
+        this.movingRight = movingRight;
+    }
+    
+    public boolean getMovingRight() {
+        return movingRight;
+    }
+    
+    public void setMovingLeft(boolean movingLeft) {
+        this.movingLeft = movingLeft;
+    }
+    
+    public boolean getMovingLeft() {
+        return movingLeft;
+    }
+    
     @Override
     public Shape getHitBox() {
         return hitBox;
