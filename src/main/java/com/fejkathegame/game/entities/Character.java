@@ -42,6 +42,8 @@ public class Character extends LevelObject {
     private SpriteSheet chargeReleaseSheet;
     private Animation chargeReleaseAnimation;
     private Image explosion;
+    private SpriteSheet charginParticleSheet;
+    private Animation chargingParticleAnimation;
 
     private double sweepAttack, sweepLimit;
     private float currentX = 0, currentY = 0;
@@ -180,10 +182,16 @@ public class Character extends LevelObject {
         chargingAnimation.setAutoUpdate(false);
         
         chargeReleaseSheet = new SpriteSheet("src/main/resources/data/img/spritesheets/chargeReleaseSheet.png", 415, 415);
-        chargeReleaseAnimation = new Animation(chargeReleaseSheet, 60);
+        chargeReleaseAnimation = new Animation(chargeReleaseSheet, 40);
         chargeReleaseAnimation.setAutoUpdate(false);
+//        chargeReleaseAnimation.setLooping(false);
+        chargeReleaseAnimation.setCurrentFrame(0);
         
         explosion = new Image("src/main/resources/data/img/spritesheets/explosion1.png");
+        
+        charginParticleSheet = new SpriteSheet("src/main/resources/data/img/spritesheets/chargingSheet.png", 434, 434);
+        chargingParticleAnimation = new Animation(charginParticleSheet, 30);
+        chargingParticleAnimation.setAutoUpdate(false);
     }
     
     public void loadStoredJumpsIndicator() throws SlickException {
@@ -323,9 +331,20 @@ public class Character extends LevelObject {
         superAttackIndicator.setCenterX(getX());
         superAttackIndicator.setCenterY(getY());
         superAttackIndicator.setRadii(expanding, expanding);
+        if(chargeReleaseAnimation.isStopped() && chargeReleaseAnimation.getFrame() == 0) {
+            chargeReleaseAnimation.start();
+        }
+        
+        if(chargeReleaseAnimation.getFrame() == 7) {
+            chargeReleaseAnimation.setCurrentFrame(7);
+            chargeReleaseAnimation.stop();
+        }
+        
         if (superAttackIndicator.getRadius1() > Main.WINDOW_WIDTH) {
             isFullyCharged = false;
             superAttackIndicator.setRadii(32, 32);
+            chargeReleaseAnimation.stop();
+            chargeReleaseAnimation.setCurrentFrame(0);
         }
     }
 
@@ -411,6 +430,7 @@ public class Character extends LevelObject {
         fallAnimation.update(delta);
         chargingAnimation.update(delta);
         chargeReleaseAnimation.update(delta);
+        chargingParticleAnimation.update(delta);
         healthSystem.damageCooldown(delta);
         
         
@@ -468,10 +488,19 @@ public class Character extends LevelObject {
     
     public void renderCharacterAnimation() {
         if(isCharging) {
-            if(!flipped)
+            if(!flipped) {
                 chargingAnimation.draw(x - 2, y, 32, 32);
-            else
+                chargingParticleAnimation.draw(x - 14, y - 6, 48, 48);
+            } else {
                 chargingAnimation.getCurrentFrame().getFlippedCopy(true, false).draw(x - 16, y, 32, 32);
+                chargingParticleAnimation.draw(x - 11, y - 6, 48, 48);
+            }
+        } else if(isFullyCharged) {
+            if(!flipped)
+                chargeReleaseAnimation.draw(x - 4, y - 6, 32, 32);
+            else
+                chargeReleaseAnimation.getCurrentFrame().getFlippedCopy(true, false).draw(x - 14, y - 6, 32, 32);
+            
         } else if(movingRight && y_velocity == 0) {
             runningAnimation.draw(x - 4, y - 2, 27, 27);
         } else if(movingLeft && y_velocity == 0) {
@@ -515,8 +544,8 @@ public class Character extends LevelObject {
         
 
         if (isCharging || isFullyCharged) {
-            g.setColor(new Color(1.0f, 1.0f, 1.0f, 1.0f));
-            g.draw(superAttackIndicator);
+//            g.setColor(new Color(1.0f, 1.0f, 1.0f, 1.0f));
+//            g.draw(superAttackIndicator);
         }
     }
 
