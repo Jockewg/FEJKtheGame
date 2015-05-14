@@ -1,5 +1,12 @@
 package com.fejkathegame.game.arena.maps.versus01;
 
+import com.fejkathegame.client.ClientProgram;
+import com.fejkathegame.client.PacketAttackDirectionPlayer;
+import com.fejkathegame.client.PacketAttackPlayer;
+import com.fejkathegame.client.PacketChargePlayer;
+import com.fejkathegame.client.PacketFullyChargedPlayer;
+import com.fejkathegame.client.PacketUpdateX;
+import com.fejkathegame.client.PacketUpdateY;
 import com.fejkathegame.game.entities.logic.MovementSystem;
 import com.fejkathegame.game.Main;
 import com.fejkathegame.game.arena.physics.Physics;
@@ -19,6 +26,8 @@ import org.newdawn.slick.geom.Shape;
 import org.newdawn.slick.geom.Vector2f;
 
 public class VersusState extends BasicGameState {
+    
+    ClientProgram client = new ClientProgram();
 
     private Versus arena;
     private String name;
@@ -176,6 +185,58 @@ public class VersusState extends BasicGameState {
         obj.update(i);
         
         checkCollisionWithTarget();
+    }
+    
+    private void sendClientData() {
+        if (obj.networkPosition.x != obj.getCurrentX()) {
+            //Send the player's X value
+            PacketUpdateX packet = new PacketUpdateX();
+            packet.x = obj.getCurrentX();
+            client.getClient().sendUDP(packet);
+
+            obj.networkPosition.x = obj.getCurrentX();
+        }
+        if (obj.networkPosition.y != obj.getCurrentY()) {
+            //Send the player's Y value
+            PacketUpdateY packet = new PacketUpdateY();
+            packet.y = obj.getCurrentY();
+            client.getClient().sendUDP(packet);
+
+            obj.networkPosition.y = obj.getCurrentY();
+        }
+        if (obj.getIsAttacking()) {
+            PacketAttackPlayer packet = new PacketAttackPlayer();
+            PacketAttackDirectionPlayer packet2 = new PacketAttackDirectionPlayer();
+            packet2.direction = (float) obj.getAttackDirection().getTheta();
+            packet.isAttacking = obj.getIsAttacking();
+            client.getClient().sendUDP(packet);
+            client.getClient().sendUDP(packet2);
+        } else {
+            PacketAttackPlayer packet = new PacketAttackPlayer();
+            PacketAttackDirectionPlayer packet2 = new PacketAttackDirectionPlayer();
+            packet2.direction = (float) obj.getAttackDirection().getTheta();
+            packet.isAttacking = obj.getIsAttacking();
+            client.getClient().sendUDP(packet);
+            client.getClient().sendUDP(packet2);
+        }
+        if (obj.getIsCharging()) {
+            PacketChargePlayer packet = new PacketChargePlayer();
+            packet.isChargeing = true;
+            client.getClient().sendUDP(packet);
+        } else {
+            PacketChargePlayer packet = new PacketChargePlayer();
+            packet.isChargeing = false;
+            client.getClient().sendUDP(packet);
+        }
+        if (obj.getIsFullyCharged()) {
+            PacketFullyChargedPlayer packet = new PacketFullyChargedPlayer();
+            packet.isFullyCharged = true;
+            client.getClient().sendUDP(packet);
+        } else {
+            PacketFullyChargedPlayer packet = new PacketFullyChargedPlayer();
+            packet.isFullyCharged = false;
+            client.getClient().sendUDP(packet);
+        }
     }
 
 }
