@@ -136,15 +136,26 @@ public class VersusState extends BasicGameState {
         if ((cameraX + cameraWidth) > 900) {
             float newX = (cameraX + cameraWidth) - 900;
             cameraX -= newX;
-        } else if (cameraX < 1) {
-            cameraX = 1;
+        } else if (cameraX < 0) {
+            cameraX = 0;
+        }
+        
+        if(cameraWidth > 900) {
+            cameraWidth = 900;
+            cameraHeight = cameraWidth * 0.55f;
+            cameraX = 0;
+            cameraY = 0;
+        } else if(cameraHeight > 500) {
+            cameraHeight = 500;
+            cameraWidth = cameraHeight / 0.55f;
+            cameraY = 0;
         }
 
-        if ((cameraY + cameraHeight) > 499) {
-            float newY = (cameraY + cameraHeight) - 499;
+        if ((cameraY + cameraHeight) > 495) {
+            float newY = (cameraY + cameraHeight) - 495;
             cameraY -= newY;
-        } else if (cameraY < 1) {
-            cameraY = 1;
+        } else if (cameraY < 0) {
+            cameraY = 0;
         }
 
         cameraScale = 900 / cameraWidth;
@@ -170,8 +181,8 @@ public class VersusState extends BasicGameState {
         g.translate(-cameraX, -cameraY);
         arena.getAnimation().draw(200, 50);
         arena.render();
-
         g.resetTransform();
+        
         g.translate(-cameraX, -cameraY);
         obj.getHealthSystem().render(cameraX + 450 - 135 - 60, cameraY + 473);
         obj.renderStoredJumpsIndicator(cameraX + 450 - 135 - 60 - 10, cameraY + 473);
