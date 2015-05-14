@@ -258,7 +258,7 @@ public class VersusState extends BasicGameState {
             packet.isFullyCharged = false;
             client.getClient().sendUDP(packet);
         }
-        if (obj.isMoving() && obj.getXVelocity() < 0) {
+        if (obj.getMovingLeft()) {
             PacketMoveLeftPlayer packet = new PacketMoveLeftPlayer();
             packet.moveingLeft = true;
             client.getClient().sendUDP(packet);
@@ -267,7 +267,7 @@ public class VersusState extends BasicGameState {
             packet.moveingLeft = false;
             client.getClient().sendUDP(packet);
         }
-        if (obj.isMoving() && obj.getXVelocity() > 0) {
+        if (obj.getMovingRight()) {
             PacketMoveRightPlayer packet = new PacketMoveRightPlayer();
             packet.moveingRight = true;
             client.getClient().sendUDP(packet);
