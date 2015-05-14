@@ -25,10 +25,10 @@ public class LevelSelectButton extends Button{
         this.highScoreAdapt = new HighscoreAdapter();
         
         this.title = name;
-        if(highScoreAdapt.readScore(state) == Integer.MAX_VALUE){
+        if(highScoreAdapt.readScore(state +1) == Integer.MAX_VALUE){
             this.bestTime = "No Score";
         }else{
-            this.bestTime = highScoreAdapt.readScore(state)+ "";
+            this.bestTime = highScoreAdapt.readScore(state +1)+ "";
         }
         
     }
