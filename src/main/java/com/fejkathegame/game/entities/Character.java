@@ -945,15 +945,7 @@ public class Character extends LevelObject {
         return currentX;
     }
 
-    public void setCurrentX(float currentX) {
-        this.currentX = currentX;
-    }
-
     public float getCurrentY() {
         return currentY;
-    }
-
-    public void setCurrentY(float currentY) {
-        this.currentY = currentY;
     }
 }
