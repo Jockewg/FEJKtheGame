@@ -24,3 +24,7 @@ nbactions.xml
 .idea/libraries/Maven__org_apache_mina_mina_codec_3_0_0_M2.xml
 .idea/libraries/Maven__org_apache_mina_mina_core_3_0_0_M2.xml
 .idea/libraries/Maven__org_newdawn_slick_jinput_1.xml
+.idea/libraries/Maven__org_slf4j_slf4j_api_1_7_5.xml
+.idea/libraries/Maven__com_esotericsoftware_jsonbeans_0_7.xml
+.idea/libraries/Maven__com_esotericsoftware_kryonet_2_22_0_RC1.xml
+*.xml
