@@ -1,10 +1,10 @@
 package com.fejkathegame.game;
 
-import com.fejkathegame.game.arena.maps.practice02.Tower01State;
-import com.fejkathegame.game.arena.maps.practice03.BigBlue02State;
-import com.fejkathegame.game.arena.maps.versus01.VersusState;
-import com.fejkathegame.game.arena.maps.practice01.PracticeState;
-import com.fejkathegame.game.arena.maps.tutorial04.Tutorial03State;
+import com.fejkathegame.game.arena.maps.singelplayer.tower02.Tower02State;
+import com.fejkathegame.game.arena.maps.singelplayer.bigblue03.BigBlue02State;
+import com.fejkathegame.game.arena.maps.multiplayer.versus01.VersusState;
+import com.fejkathegame.game.arena.maps.singelplayer.city04.CityState04;
+import com.fejkathegame.game.arena.maps.singelplayer.tutorial01.Tutorial01State;
 import com.fejkathegame.menu.HostScreenState;
 import com.fejkathegame.menu.LevelSelectState;
 import com.fejkathegame.menu.MenuState;
@@ -20,15 +20,17 @@ public class Main extends StateBasedGame {
     public static final int WINDOW_WIDTH = 900;
     public static final int WINDOW_HEIGHT = 500;
     public static final boolean FULLSCREEN = false;
-    
+    //menu constants
     public static final int MENU = 0;
     public static final int VERSUSSTATE = 1;
     public static final int HOSTSTATE = 2;
     public static final int LEVELSELECTSTATE = 3;
-    public static final int TOWER1STATE = 21;
-    public static final int BIGBLUESTATE = 22;
-    public static final int FIRSTPRACTICE = 23;
-    public static final int TUTORIAL = 24;
+    //singelplayer constants
+    public static final int TUTORIAL01 = 4;
+    public static final int TOWER02 = 5;
+    public static final int BIG_BlUE03 = 6;
+    public static final int CITY04 = 7;
+
 
     
     public static final float SCALE = (float) (1 * ((double) WINDOW_WIDTH / 900));
@@ -46,14 +48,18 @@ public class Main extends StateBasedGame {
      */
     @Override
     public void initStatesList(GameContainer gc) throws SlickException {
+        //add menus
         addState(new HostScreenState("host"));
         addState(new MenuState("menu"));
-        addState(new VersusState("arena2"));
-        addState(new Tower01State("tower_1"));
-        addState(new BigBlue02State("big_blue"));
-        addState(new PracticeState("practice"));
-        addState(new Tutorial03State("tutorial"));
         addState(new LevelSelectState());
+        //add multiplayer maps
+        addState(new VersusState("01versus"));
+        //add singelplayermaps
+        addState(new Tutorial01State("tutorial01"));
+        addState(new Tower02State("tower02"));
+        addState(new BigBlue02State("big_blue03"));
+        addState(new CityState04("city04"));
+
         
         this.enterState(MENU);
 

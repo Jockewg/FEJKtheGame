@@ -1,4 +1,4 @@
-package com.fejkathegame.game.arena.maps.versus01;
+package com.fejkathegame.game.arena.maps.multiplayer.versus01;
 
 import com.fejkathegame.game.arena.PracticeLevel;
 import com.fejkathegame.game.arena.maps.PracticeLevelHelper;
@@ -33,7 +33,7 @@ public class Versus extends PracticeLevel {
      * @throws SlickException
      */
     public Versus(String name, LevelObject levelObject) throws SlickException {
-        map = new TiledMap("src/main/resources/data/levels/" + name + ".tmx", "src/main/resources/data/img");
+        map = new TiledMap("src/main/resources/data/levels/multiplayer/" + name + ".tmx", "src/main/resources/data/img");
         players = new ArrayList<>();
         
         

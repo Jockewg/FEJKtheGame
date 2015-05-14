@@ -3,15 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.fejkathegame.game.arena.maps.tutorial04;
+package com.fejkathegame.game.arena.maps.singelplayer.tutorial01;
 
 import com.fejkathegame.game.Main;
 import com.fejkathegame.game.arena.maps.PracticeCamera;
 import com.fejkathegame.game.arena.maps.PracticeStateHelper;
-import com.fejkathegame.game.arena.maps.practice03.BigBlue02;
 import com.fejkathegame.game.arena.physics.Physics;
-import com.fejkathegame.game.arena.tiles.Tile;
-import com.fejkathegame.game.entities.PracticeTarget;
 import com.fejkathegame.game.entities.logic.MovementSystem;
 import java.io.IOException;
 import org.newdawn.slick.GameContainer;
@@ -24,9 +21,9 @@ import org.newdawn.slick.state.StateBasedGame;
  *
  * @author Swartt
  */
-public class Tutorial03State extends BasicGameState {
+public class Tutorial01State extends BasicGameState {
    
-    private Tutorial03 arena;
+    private Tutorial01 arena;
     private String name;
     private MovementSystem movementSystem;
     private Physics physics;
@@ -44,13 +41,13 @@ public class Tutorial03State extends BasicGameState {
      *
      * @param name of the stage
      */
-    public Tutorial03State(String name) {
+    public Tutorial01State(String name) {
         this.name = name;
     }
 
     @Override
     public int getID() {
-        return Main.TUTORIAL;
+        return Main.TUTORIAL01;
     }
 
     @Override
@@ -63,7 +60,7 @@ public class Tutorial03State extends BasicGameState {
             e.printStackTrace();
         }
 
-        arena = new Tutorial03(name, obj);
+        arena = new Tutorial01(name, obj);
 
         setCameraBoundaries();
 

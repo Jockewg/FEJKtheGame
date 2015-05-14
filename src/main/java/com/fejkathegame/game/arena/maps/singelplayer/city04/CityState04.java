@@ -1,4 +1,4 @@
-package com.fejkathegame.game.arena.maps.practice01;
+package com.fejkathegame.game.arena.maps.singelplayer.city04;
 
 import com.fejkathegame.game.Main;
 import com.fejkathegame.game.arena.maps.PracticeCamera;
@@ -18,8 +18,8 @@ import java.io.IOException;
  *
  * @author Swartt
  */
-public class PracticeState extends BasicGameState {
-    private Practice arena;
+public class CityState04 extends BasicGameState {
+    private City04 arena;
     private String name;
     private MovementSystem movementSystem;
     private Physics physics;
@@ -36,13 +36,13 @@ public class PracticeState extends BasicGameState {
      * Constructor for ArenaState
      * @param name of the stage
      */
-    public PracticeState(String name) {
+    public CityState04(String name) {
         this.name = name;
     }
 
     @Override
     public int getID() {
-        return Main.FIRSTPRACTICE;
+        return Main.CITY04;
     }
 
     @Override
@@ -55,7 +55,7 @@ public class PracticeState extends BasicGameState {
             e.printStackTrace();
         }
         
-        arena = new Practice(name, obj);
+        arena = new City04(name, obj);
         
         movementSystem = new MovementSystem(obj);
 

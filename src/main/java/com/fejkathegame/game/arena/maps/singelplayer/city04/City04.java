@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.fejkathegame.game.arena.maps.practice01;
+package com.fejkathegame.game.arena.maps.singelplayer.city04;
 
 import com.fejkathegame.game.arena.PracticeLevel;
 import com.fejkathegame.game.arena.maps.PracticeLevelHelper;
@@ -24,7 +24,7 @@ import java.util.logging.Logger;
 /**
  * @author Swartt
  */
-public class Practice extends PracticeLevel {
+public class City04 extends PracticeLevel {
 
     private TiledMap map;
 
@@ -44,8 +44,8 @@ public class Practice extends PracticeLevel {
      * @param levelObject
      * @throws SlickException
      */
-    public Practice(String name, LevelObject levelObject) throws SlickException {
-        map = new TiledMap("src/main/resources/data/levels/" + name + ".tmx", "src/main/resources/data/img");
+    public City04(String name, LevelObject levelObject) throws SlickException {
+        map = new TiledMap("src/main/resources/data/levels/singelplayer/" + name + ".tmx", "src/main/resources/data/img");
         players = new ArrayList<>();
         targets = new ArrayList<>();
 
@@ -106,9 +106,9 @@ public class Practice extends PracticeLevel {
                     }
                     tiles[x][y] = tile;
                 } catch (SlickException ex) {
-                    Logger.getLogger(Practice.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+                    Logger.getLogger(City04.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
                 } catch (IOException ex) {
-                    Logger.getLogger(Practice.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+                    Logger.getLogger(City04.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
                 }
             }
         }

@@ -1,4 +1,4 @@
-package com.fejkathegame.game.arena.maps.versus01;
+package com.fejkathegame.game.arena.maps.multiplayer.versus01;
 
 import com.fejkathegame.client.ClientProgram;
 import com.fejkathegame.client.MPPlayer;
@@ -14,7 +14,6 @@ import com.fejkathegame.game.entities.logic.MovementSystem;
 import com.fejkathegame.game.Main;
 import com.fejkathegame.game.arena.physics.Physics;
 import com.fejkathegame.game.entities.Character;
-import com.fejkathegame.game.entities.LevelObject;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
@@ -24,8 +23,6 @@ import org.newdawn.slick.state.StateBasedGame;
 import java.io.IOException;
 import java.util.ArrayList;
 import org.newdawn.slick.geom.Line;
-import org.newdawn.slick.geom.Rectangle;
-import org.newdawn.slick.geom.Shape;
 import org.newdawn.slick.geom.Vector2f;
 
 public class VersusState extends BasicGameState {

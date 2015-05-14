@@ -18,11 +18,12 @@ public class LevelSelect {
     private final File levelDirr;
     
     public LevelSelect() throws SlickException {
-        levelDirr = new File("src/main/resources/data/levels");
+        levelDirr = new File("src/main/resources/data/levels/singelplayer");
         levels = new ArrayList<>();
-        for(int i = 1;i<levelDirr.list().length;i++){
-            System.out.println(levelDirr.list()[i]);
-            levels.add(new LevelSelectButton(100, 100 + (i*60), 400, 50, levelDirr.list()[i], i+20));
+        for(int i = 0;i<levelDirr.list().length;i++){
+            System.out.println(levelDirr.list()[i] + " id of map: " +(i));
+            int mapId = i = i +4;
+            levels.add(new LevelSelectButton(100, 100 + (i*60), 400, 50, levelDirr.list()[i], mapId));
         }
     }
     

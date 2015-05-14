@@ -3,11 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.fejkathegame.game.arena.maps.tutorial04;
+package com.fejkathegame.game.arena.maps.singelplayer.tutorial01;
 
 import com.fejkathegame.game.arena.PracticeLevel;
 import com.fejkathegame.game.arena.maps.PracticeLevelHelper;
-import com.fejkathegame.game.arena.maps.practice03.BigBlue02;
+import com.fejkathegame.game.arena.maps.singelplayer.bigblue03.BigBlue02;
 import com.fejkathegame.game.arena.tiles.AirTile;
 import com.fejkathegame.game.arena.tiles.PitTile;
 import com.fejkathegame.game.arena.tiles.SolidTile;
@@ -26,7 +26,7 @@ import org.newdawn.slick.tiled.TiledMap;
  *
  * @author Swartt
  */
-public class Tutorial03 extends PracticeLevel {
+public class Tutorial01 extends PracticeLevel {
 
    private TiledMap map;
 
@@ -40,8 +40,8 @@ public class Tutorial03 extends PracticeLevel {
 
    PracticeTimer timer;
 
-   public Tutorial03(String name, LevelObject levelObject) throws SlickException {
-      map = new TiledMap("src/main/resources/data/levels/" + name + ".tmx", "src/main/resources/data/img");
+   public Tutorial01(String name, LevelObject levelObject) throws SlickException {
+      map = new TiledMap("src/main/resources/data/levels/singelplayer/" + name + ".tmx", "src/main/resources/data/img");
 
       players = new ArrayList<>();
       targets = new ArrayList<>();

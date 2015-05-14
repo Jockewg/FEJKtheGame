@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.fejkathegame.game.arena.maps.practice03;
+package com.fejkathegame.game.arena.maps.singelplayer.tower02;
 
 import com.fejkathegame.game.arena.PracticeLevel;
 import com.fejkathegame.game.arena.maps.PracticeLevelHelper;
@@ -24,7 +24,7 @@ import java.util.logging.Logger;
 /**
  * @author Swartt
  */
-public class BigBlue02 extends PracticeLevel {
+public class Tower02 extends PracticeLevel {
 
     private TiledMap map;
 
@@ -34,8 +34,8 @@ public class BigBlue02 extends PracticeLevel {
     private ArrayList<PracticeTarget> targets;
 
     PracticeLevelHelper helper;
-
     PracticeTimer timer;
+
 
     /**
      * Constructor for Arena, creates the playingfield and adds all players to
@@ -44,15 +44,16 @@ public class BigBlue02 extends PracticeLevel {
      * @param levelObject
      * @throws org.newdawn.slick.SlickException
      */
-    public BigBlue02(String name, LevelObject levelObject) throws SlickException {
-        map = new TiledMap("src/main/resources/data/levels/" + name + ".tmx", "src/main/resources/data/img");
+    public Tower02(String name, LevelObject levelObject) throws SlickException {
+        map = new TiledMap("src/main/resources/data/levels/singelplayer/" + name + ".tmx", "src/main/resources/data/img");
         players = new ArrayList<>();
         targets = new ArrayList<>();
+
         addPlayer(levelObject);
+
         loadTileMap();
         timer = new PracticeTimer();
         timer.startTimer();
-
 
         helper = new PracticeLevelHelper(timer, targets);
     }
@@ -101,9 +102,9 @@ public class BigBlue02 extends PracticeLevel {
                     }
                     tiles[x][y] = tile;
                 } catch (SlickException ex) {
-                    Logger.getLogger(BigBlue02.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+                    Logger.getLogger(Tower02.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
                 } catch (IOException ex) {
-                    Logger.getLogger(BigBlue02.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+                    Logger.getLogger(Tower02.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
                 }
 
             }
@@ -130,7 +131,6 @@ public class BigBlue02 extends PracticeLevel {
     /**
      * @return the player array which includes all {@code targetPractice} objects
      */
-    @Override
     public ArrayList<PracticeTarget> getTargets() {
         return targets;
     }
@@ -144,13 +144,13 @@ public class BigBlue02 extends PracticeLevel {
     }
 
     @Override
-    public PracticeLevelHelper getMapHelper() {
-        return helper;
+    public TiledMap getMap() {
+        return null;
     }
 
-
-    public TiledMap getMap() {
-        return map;
+    @Override
+    public PracticeLevelHelper getMapHelper() {
+        return helper;
     }
 
     /**
@@ -159,7 +159,7 @@ public class BigBlue02 extends PracticeLevel {
      * @throws org.newdawn.slick.SlickException
      */
     public void render() throws SlickException {
-        map.render(0, 0, 0, 0, 150, 50);
+        map.render(0, 0, 0, 0, 36, 100);
 
         for (LevelObject p : players) {
             p.render();
@@ -168,6 +168,8 @@ public class BigBlue02 extends PracticeLevel {
         for (LevelObject t : targets) {
             t.render();
         }
+
+
     }
 
 }
