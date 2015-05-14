@@ -201,16 +201,16 @@ public class Character extends LevelObject {
      * @param delta
      */
     public void moveLeft(int delta) {
+        movingRight = false;
         if (x_velocity > -maximumSpeed) {
             x_velocity -= accelerationSpeed * delta;
             movingLeft = true;
             if (x_velocity < -maximumSpeed) {
                 x_velocity = -maximumSpeed;
             }
-        } else {
-            movingLeft = false;
         }
         moving = true;
+        movingLeft = true;
     }
 
     /**
@@ -219,16 +219,16 @@ public class Character extends LevelObject {
      * @param delta
      */
     public void moveRight(int delta) {
+        movingLeft = false;
         if (x_velocity < maximumSpeed) {
             x_velocity += accelerationSpeed * delta;
-            movingRight = true;
+            
             if (x_velocity > maximumSpeed) {
                 x_velocity = maximumSpeed;
             }
-        } else {
-            movingRight = false;
         }
         moving = true;
+        movingRight = true;
         
     }
 
@@ -441,9 +441,9 @@ public class Character extends LevelObject {
             else
                 stanceAnimation.draw(x - 4, y - 2, 27, 27);
         } else if(y_velocity < 0) {
-            if(x_velocity > 0) {
+            if(movingRight) {
                 flipped = false;
-            } else if(x_velocity < 0) {
+            } else if(movingLeft) {
                 flipped = true;
             }
             
