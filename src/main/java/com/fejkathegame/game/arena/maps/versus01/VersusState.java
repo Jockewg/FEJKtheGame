@@ -76,7 +76,7 @@ public class VersusState extends BasicGameState {
         characters = new ArrayList<>();
         characters.add(obj);
         characters.add(player2);
-
+        
         line = new Line(obj.getX(), obj.getY(), player2.getX(), player2.getY());
 
         arena = new Versus(name, obj);
@@ -156,6 +156,14 @@ public class VersusState extends BasicGameState {
         Vector2f player2Vector = new Vector2f(player2.getX(), player2.getY());
         line = new Line(objVector, player2Vector);
     }
+    
+    public void movePlayer2() {
+        for (MPPlayer mpPlayer : client.getPlayers().values()) { //other player render here.
+            player2.setX(mpPlayer.x);
+            player2.setY(mpPlayer.y);
+        }
+        
+    }
 
     @Override
     public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
@@ -166,17 +174,17 @@ public class VersusState extends BasicGameState {
 
         g.resetTransform();
         g.translate(-cameraX, -cameraY);
+        g.draw(line);
         obj.getHealthSystem().render(cameraX + 450 - 135 - 60, cameraY + 473);
         obj.renderStoredJumpsIndicator(cameraX + 450 - 135 - 60 - 10, cameraY + 473);
         obj.renderAttackCharge(cameraX + 450 - 134.5f - 60, cameraY + 465);
         player2.getHealthSystem().render(cameraX + 450 + 60, cameraY + 473);
         player2.renderStoredJumpsIndicator(cameraX + 450 + 135 + 60 + 2, cameraY + 473);
         player2.renderAttackChargeReversed(cameraX + 450 + 60 + 135.5f, cameraY + 465);
-        g.resetTransform();
-
         for (MPPlayer mpPlayer : client.getPlayers().values()) { //other player render here.
             g.drawRect(mpPlayer.x, mpPlayer.y, 32, 32);
         }
+        g.resetTransform();
     }
 
     @Override
@@ -184,6 +192,7 @@ public class VersusState extends BasicGameState {
         updateVectorLine();
         updateCameraRect();
         movementSystem.handleInput(gc.getInput(), i);
+        movePlayer2();
         physics.handlePhysics(arena, i);
         player2.update(i);
         obj.update(i);
