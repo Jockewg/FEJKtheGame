@@ -334,6 +334,11 @@ public class Character extends LevelObject {
             attackIndicator.setLocation(x + 16, y + 16);
 
             storedAttacks--;
+            if(sweepXEnd > sweepXStart) {
+                flipped = true;
+            } else if(sweepXStart > sweepXEnd) {
+                flipped = false;
+            }
             attackSound.playAsSoundEffect(1.0f, 1.0f, false);
         }
 
@@ -435,7 +440,7 @@ public class Character extends LevelObject {
         } else if(movingLeft && y_velocity == 0) {
             flipped = true;
             runningAnimation.getCurrentFrame().getFlippedCopy(true, false).draw(x - 9, y - 2, 27, 27);
-        } else if(!movingRight && !movingLeft && y_velocity == 0) {
+        } else if(!movingLeft && !movingRight &&  y_velocity == 0) {
             if(flipped)
                 stanceAnimation.getCurrentFrame().getFlippedCopy(true, false).draw(x - 9, y - 2, 27, 27);
             else

@@ -58,6 +58,8 @@ public class MovementSystem {
             character.moveRight(delta);
         } else {
             character.setMoving(false);
+            character.setMovingLeft(false);
+            character.setMovingRight(false);
         }
         
         if(i.isKeyPressed(Input.KEY_Q)) {
