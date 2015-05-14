@@ -3,6 +3,8 @@ package com.fejkathegame.menu;
 import com.fejkathegame.menu.button.LevelSelectButton;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collections;
+
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 
@@ -14,24 +16,35 @@ public class LevelSelect {
     
     //private int numberOfLevels = 3;
     //private Image[] levelImages;
-    private ArrayList<LevelSelectButton> levels;
+    private ArrayList<LevelSelectButton> levelButtons;
     private final File levelDirr;
     
     public LevelSelect() throws SlickException {
         levelDirr = new File("src/main/resources/data/levels/singelplayer");
-        levels = new ArrayList<>();
-        for(int i = 0;i<levelDirr.list().length;i++){
-            System.out.println(levelDirr.list()[i] + " id of map: " +(i));
-            int mapId = i = i +4;
-            levels.add(new LevelSelectButton(100, 100 + (i*60), 400, 50, levelDirr.list()[i], mapId));
+        levelButtons = new ArrayList<>();
+        ArrayList<String> listOfNames = arrayToArrayListAdapter(levelDirr.list());
+        for(int i = 0; i < listOfNames.size(); i++){
+            int mapId = i + 4;
+            System.out.println("id of map in LevelSelect is: " + mapId);
+            levelButtons.add(new LevelSelectButton(100, 100 + (i * 60), 400, 50, listOfNames.get(i), mapId));
         }
+    }
+
+    public ArrayList<String> arrayToArrayListAdapter(String[] toConvert) {
+        ArrayList<String> listOfMapNames = new ArrayList<>();
+        for (int i = 0; i < toConvert.length; i++) {
+            listOfMapNames.add(toConvert[i]);
+        }
+        Collections.sort(listOfMapNames);
+        return listOfMapNames;
+
     }
     
     public void render(Graphics g) {
         
-        for(LevelSelectButton lvlbtn : levels){
+        for(LevelSelectButton buttons : levelButtons){
             
-            lvlbtn.render(g);
+            buttons.render(g);
             
         }
         
@@ -52,7 +65,7 @@ public class LevelSelect {
     }
 
     public ArrayList<LevelSelectButton> getLevelButtons() {
-        return levels;
+        return levelButtons;
     }
     
 }
