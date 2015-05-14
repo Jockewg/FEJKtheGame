@@ -105,6 +105,7 @@ public class ServerProgram extends Listener {
         } else if (o instanceof PacketMoveLeftPlayer) {
             PacketMoveLeftPlayer packet = (PacketMoveLeftPlayer) o;
             players.get(c.getID()).moveingLeft = packet.moveingLeft;
+            packet.id = c.getID();
             server.sendToAllExceptUDP(c.getID(), packet);
             if (players.get(c.getID()).moveingLeft == true) {
                 System.out.println("client " + c.getID() + " moveing left");
@@ -112,6 +113,7 @@ public class ServerProgram extends Listener {
         } else if (o instanceof PacketMoveRightPlayer) {
             PacketMoveRightPlayer packet = (PacketMoveRightPlayer) o;
             players.get(c.getID()).moveingRight = packet.moveingRight;
+            packet.id = c.getID();
             server.sendToAllExceptUDP(c.getID(), packet);
             if (players.get(c.getID()).moveingRight == true) {
                 System.out.println("client " + c.getID() + " moveing right");
