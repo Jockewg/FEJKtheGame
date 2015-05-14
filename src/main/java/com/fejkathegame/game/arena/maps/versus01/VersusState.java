@@ -173,7 +173,6 @@ public class VersusState extends BasicGameState {
 
         g.resetTransform();
         g.translate(-cameraX, -cameraY);
-        g.draw(line);
         obj.getHealthSystem().render(cameraX + 450 - 135 - 60, cameraY + 473);
         obj.renderStoredJumpsIndicator(cameraX + 450 - 135 - 60 - 10, cameraY + 473);
         obj.renderAttackCharge(cameraX + 450 - 134.5f - 60, cameraY + 465);
