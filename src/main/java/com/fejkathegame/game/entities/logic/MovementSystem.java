@@ -69,6 +69,8 @@ public class MovementSystem {
     
     public void handleChargeAttack(Input i, int delta) {
         if(i.isKeyDown(Input.KEY_E) && !character.getIsFullyCharged()) {
+            character.setMovingLeft(false);
+            character.setMovingRight(false);
             character.setIsCharging(true);
             character.playChargeSound();
             character.setMoving(false);
