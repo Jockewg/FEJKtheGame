@@ -24,6 +24,8 @@ public class ServerProgram extends Listener {
         server.getKryo().register(PacketChargePlayer.class);
         server.getKryo().register(PacketFullyChargedPlayer.class);
         server.getKryo().register(PacketAttackDirectionPlayer.class);
+        server.getKryo().register(PacketMoveLeftPlayer.class);
+        server.getKryo().register(PacketMoveRightPlayer.class);
 
         server.bind(tcpPort, udpPort);
         server.start();
@@ -100,7 +102,21 @@ public class ServerProgram extends Listener {
             if (players.get(c.getID()).isFullyCharged == true) {
                 System.out.println("client " + c.getID() + "  it fully charged");
             }
-        }
+        } else if (o instanceof PacketMoveLeftPlayer) {
+            PacketMoveLeftPlayer packet = (PacketMoveLeftPlayer) o;
+            players.get(c.getID()).moveingLeft = packet.moveingLeft;
+            server.sendToAllExceptUDP(c.getID(), packet);
+            if (players.get(c.getID()).moveingLeft == true) {
+                System.out.println("client " + c.getID() + " moveing left");
+            }
+        } else if (o instanceof PacketMoveRightPlayer) {
+            PacketMoveRightPlayer packet = (PacketMoveRightPlayer) o;
+            players.get(c.getID()).moveingRight = packet.moveingRight;
+            server.sendToAllExceptUDP(c.getID(), packet);
+            if (players.get(c.getID()).moveingRight == true) {
+                System.out.println("client " + c.getID() + " moveing right");
+            }
+        } 
     }
 
     @Override

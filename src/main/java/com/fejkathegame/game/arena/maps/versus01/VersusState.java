@@ -6,6 +6,8 @@ import com.fejkathegame.client.PacketAttackDirectionPlayer;
 import com.fejkathegame.client.PacketAttackPlayer;
 import com.fejkathegame.client.PacketChargePlayer;
 import com.fejkathegame.client.PacketFullyChargedPlayer;
+import com.fejkathegame.client.PacketMoveLeftPlayer;
+import com.fejkathegame.client.PacketMoveRightPlayer;
 import com.fejkathegame.client.PacketUpdateX;
 import com.fejkathegame.client.PacketUpdateY;
 import com.fejkathegame.game.entities.logic.MovementSystem;
@@ -76,7 +78,7 @@ public class VersusState extends BasicGameState {
         characters = new ArrayList<>();
         characters.add(obj);
         characters.add(player2);
-        
+
         line = new Line(obj.getX(), obj.getY(), player2.getX(), player2.getY());
 
         arena = new Versus(name, obj);
@@ -139,13 +141,13 @@ public class VersusState extends BasicGameState {
         } else if (cameraX < 0) {
             cameraX = 0;
         }
-        
-        if(cameraWidth > 900) {
+
+        if (cameraWidth > 900) {
             cameraWidth = 900;
             cameraHeight = cameraWidth * 0.55f;
             cameraX = 0;
             cameraY = 0;
-        } else if(cameraHeight > 500) {
+        } else if (cameraHeight > 500) {
             cameraHeight = 500;
             cameraWidth = cameraHeight / 0.55f;
             cameraY = 0;
@@ -167,7 +169,7 @@ public class VersusState extends BasicGameState {
         Vector2f player2Vector = new Vector2f(player2.getX(), player2.getY());
         line = new Line(objVector, player2Vector);
     }
-    
+
     public void movePlayer2() {
         for (MPPlayer mpPlayer : client.getPlayers().values()) { //other player render here.
             player2.setX(mpPlayer.x);
@@ -182,7 +184,7 @@ public class VersusState extends BasicGameState {
         arena.getAnimation().draw(200, 50);
         arena.render();
         g.resetTransform();
-        
+
         g.translate(-cameraX, -cameraY);
         obj.getHealthSystem().render(cameraX + 450 - 135 - 60, cameraY + 473);
         obj.renderStoredJumpsIndicator(cameraX + 450 - 135 - 60 - 10, cameraY + 473);
@@ -254,6 +256,24 @@ public class VersusState extends BasicGameState {
         } else {
             PacketFullyChargedPlayer packet = new PacketFullyChargedPlayer();
             packet.isFullyCharged = false;
+            client.getClient().sendUDP(packet);
+        }
+        if (obj.isMoving() && obj.getXVelocity() < 0) {
+            PacketMoveLeftPlayer packet = new PacketMoveLeftPlayer();
+            packet.moveingLeft = true;
+            client.getClient().sendUDP(packet);
+        } else {
+            PacketMoveLeftPlayer packet = new PacketMoveLeftPlayer();
+            packet.moveingLeft = false;
+            client.getClient().sendUDP(packet);
+        }
+        if (obj.isMoving() && obj.getXVelocity() > 0) {
+            PacketMoveRightPlayer packet = new PacketMoveRightPlayer();
+            packet.moveingRight = true;
+            client.getClient().sendUDP(packet);
+        } else {
+            PacketMoveRightPlayer packet = new PacketMoveRightPlayer();
+            packet.moveingRight = false;
             client.getClient().sendUDP(packet);
         }
     }

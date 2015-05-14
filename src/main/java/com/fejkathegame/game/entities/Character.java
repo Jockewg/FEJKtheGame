@@ -948,4 +948,8 @@ public class Character extends LevelObject {
     public float getCurrentY() {
         return currentY;
     }
+    
+    public float getXVelocity () {
+        return x_velocity;
+    }
 }

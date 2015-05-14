@@ -18,5 +18,6 @@ public class Player {
     public boolean isAttacking;
     public boolean isChargeing;
     public boolean isFullyCharged;
-    
+    public boolean moveingLeft;
+    public boolean moveingRight;
 }

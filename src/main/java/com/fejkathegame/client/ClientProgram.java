@@ -39,6 +39,8 @@ public class ClientProgram extends Listener {
         client.getKryo().register(PacketChargePlayer.class);
         client.getKryo().register(PacketFullyChargedPlayer.class);
         client.getKryo().register(PacketAttackDirectionPlayer.class);
+        client.getKryo().register(PacketMoveLeftPlayer.class);
+        client.getKryo().register(PacketMoveRightPlayer.class);
         client.addListener(this);
 
         client.start();
@@ -80,8 +82,13 @@ public class ClientProgram extends Listener {
         } else if (o instanceof PacketFullyChargedPlayer) {
             PacketFullyChargedPlayer packet = (PacketFullyChargedPlayer) o;
             players.get(packet.id).isFullyCharged = packet.isFullyCharged;
+        } else if (o instanceof PacketMoveLeftPlayer) {
+            PacketMoveLeftPlayer packet = (PacketMoveLeftPlayer) o;
+            players.get(packet.id).moveingLeft = packet.moveingLeft;
+        } else if (o instanceof PacketMoveRightPlayer) {
+            PacketMoveRightPlayer packet = (PacketMoveRightPlayer) o;
+            players.get(packet.id).moveingRight = packet.moveingRight;
         }
-
     }
 
     public Client getClient() {
