@@ -162,7 +162,6 @@ public class VersusState extends BasicGameState {
             player2.setX(mpPlayer.x);
             player2.setY(mpPlayer.y);
         }
-        
     }
 
     @Override
@@ -181,9 +180,6 @@ public class VersusState extends BasicGameState {
         player2.getHealthSystem().render(cameraX + 450 + 60, cameraY + 473);
         player2.renderStoredJumpsIndicator(cameraX + 450 + 135 + 60 + 2, cameraY + 473);
         player2.renderAttackChargeReversed(cameraX + 450 + 60 + 135.5f, cameraY + 465);
-        for (MPPlayer mpPlayer : client.getPlayers().values()) { //other player render here.
-            g.drawRect(mpPlayer.x, mpPlayer.y, 32, 32);
-        }
         g.resetTransform();
     }
 
@@ -196,7 +192,6 @@ public class VersusState extends BasicGameState {
         physics.handlePhysics(arena, i);
         player2.update(i);
         obj.update(i);
-
         checkCollisionWithTarget();
         sendClientData();
     }
