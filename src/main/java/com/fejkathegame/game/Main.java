@@ -25,10 +25,10 @@ public class Main extends StateBasedGame {
     public static final int VERSUSSTATE = 1;
     public static final int HOSTSTATE = 2;
     public static final int LEVELSELECTSTATE = 3;
-    public static final int TOWER1STATE = 4;
-    public static final int BIGBLUESTATE = 5;
-    public static final int FIRSTPRACTICE = 6;
-    public static final int TUTORIAL = 7;
+    public static final int TOWER1STATE = 21;
+    public static final int BIGBLUESTATE = 22;
+    public static final int FIRSTPRACTICE = 23;
+    public static final int TUTORIAL = 24;
 
     
     public static final float SCALE = (float) (1 * ((double) WINDOW_WIDTH / 900));
@@ -38,7 +38,7 @@ public class Main extends StateBasedGame {
     }
     
     /**
-     * Loads the different states(screens/modes/menus) available nad
+     * Loads the different states(screens/modes/menus) available and
      * enters the state specified with an id.
      * 
      * @param gc - The container given by Slick

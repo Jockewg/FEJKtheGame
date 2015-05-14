@@ -78,29 +78,23 @@ public class LevelSelectState extends BasicGameState {
         
         if(levelSelect.getLevelButtons().get(0).onHover(x, y)){
             if (i.isMousePressed(Input.MOUSE_LEFT_BUTTON)) {
-                sbg.enterState(Main.VERSUSSTATE);
+                sbg.enterState(Main.BIGBLUESTATE);
             }
         }
 
         if(levelSelect.getLevelButtons().get(1).onHover(x, y)){
             if (i.isMousePressed(Input.MOUSE_LEFT_BUTTON)) {
-                sbg.enterState(Main.BIGBLUESTATE);
+                sbg.enterState(Main.FIRSTPRACTICE);
             }
         }
 
         if(levelSelect.getLevelButtons().get(2).onHover(x, y)){
             if (i.isMousePressed(Input.MOUSE_LEFT_BUTTON)) {
-                sbg.enterState(Main.FIRSTPRACTICE);
-            }
-        }
-
-        if(levelSelect.getLevelButtons().get(3).onHover(x, y)){
-            if (i.isMousePressed(Input.MOUSE_LEFT_BUTTON)) {
                 sbg.enterState(Main.TOWER1STATE);
             }
         }
 
-        if(levelSelect.getLevelButtons().get(4).onHover(x, y)){
+        if(levelSelect.getLevelButtons().get(3).onHover(x, y)){
             if (i.isMousePressed(Input.MOUSE_LEFT_BUTTON)) {
                 sbg.enterState(Main.TUTORIAL);
             }

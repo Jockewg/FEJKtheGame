@@ -20,9 +20,9 @@ public class LevelSelect {
     public LevelSelect() throws SlickException {
         levelDirr = new File("src/main/resources/data/levels");
         levels = new ArrayList<>();
-        for(int i = 0;i<levelDirr.list().length;i++){
+        for(int i = 1;i<levelDirr.list().length;i++){
             System.out.println(levelDirr.list()[i]);
-            levels.add(new LevelSelectButton(100, 100 + (i*60), 400, 50, levelDirr.list()[i]));
+            levels.add(new LevelSelectButton(100, 100 + (i*60), 400, 50, levelDirr.list()[i], i+20));
         }
     }
     

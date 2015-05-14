@@ -1,6 +1,7 @@
 
 package com.fejkathegame.menu.button;
 
+import com.fejkathegame.game.arena.maps.highscore.HighscoreAdapter;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 
@@ -11,17 +12,25 @@ import org.newdawn.slick.Graphics;
 public class LevelSelectButton extends Button{
 
     String title;
-    double bestTime = 0.0;
+    String bestTime;
+    HighscoreAdapter highScoreAdapt;
     
-    public LevelSelectButton(int x, int y, int width, int height, String name) {
+    public LevelSelectButton(int x, int y, int width, int height, String name, int state) {
         this.posX = x;
         this.posY = y;
         this.hitPosX = x;
         this.hitPosY = y;
         this.width = width;
         this.height = height;
+        this.highScoreAdapt = new HighscoreAdapter();
         
         this.title = name;
+        if(highScoreAdapt.readScore(state) == Integer.MAX_VALUE){
+            this.bestTime = "No Score";
+        }else{
+            this.bestTime = highScoreAdapt.readScore(state)+ "";
+        }
+        
     }
     
     public void render(Graphics g){
@@ -31,7 +40,7 @@ public class LevelSelectButton extends Button{
         g.drawString(bestTime + "", posX + 300, posY + (height / 2));
     }
     
-    public void setBestTime(double time){
+    public void setBestTime(String time){
         bestTime = time;
     }
     
