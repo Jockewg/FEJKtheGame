@@ -3,8 +3,7 @@ package com.fejkathegame.client;
 import com.fejkathegame.game.entities.Character;
 
 /**
- *
- * 
+ * the data all players have.
  * 
  * @author Filip
  */
