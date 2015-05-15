@@ -78,7 +78,7 @@ public class VersusState extends BasicGameState {
         characters.add(obj);
 //        characters.add(player2);
 
-        line = new Line(obj.getX(), obj.getY(), player2.getX(), player2.getY());
+        line = new Line(obj.getX(), obj.getY(), 0, 0);
 
         arena = new Versus(name, obj);
 //        arena.addPlayer(player2);
@@ -223,7 +223,7 @@ public class VersusState extends BasicGameState {
         physics.handlePhysics(arena, i);
 //        player2.update(i);
         obj.update(i);
-        checkCollisionWithTarget();
+//        checkCollisionWithTarget();
         sendClientData();
     }
 
