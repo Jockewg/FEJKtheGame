@@ -18,4 +18,5 @@ public class MPPlayer {
     public boolean moveingLeft;
     public boolean moveingRight;
     public Character character;
+    public boolean connected;
 }
