@@ -66,22 +66,22 @@ public class VersusState extends BasicGameState {
     public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {
 
         obj = null;
-        player2 = null;
+//        player2 = null;
         try {
             obj = new Character(800, 40);
-            player2 = new Character(200, 40);
+//            player2 = new Character(200, 40);
         } catch (IOException e) {
             e.printStackTrace();
         }
 
         characters = new ArrayList<>();
         characters.add(obj);
-        characters.add(player2);
+//        characters.add(player2);
 
         line = new Line(obj.getX(), obj.getY(), player2.getX(), player2.getY());
 
         arena = new Versus(name, obj);
-        arena.addPlayer(player2);
+//        arena.addPlayer(player2);
 
         movementSystem = new MovementSystem(obj);
 
@@ -164,12 +164,24 @@ public class VersusState extends BasicGameState {
     }
 
     public void updateVectorLine() {
-        Vector2f objVector = new Vector2f(obj.getX(), obj.getY());
-        Vector2f player2Vector = new Vector2f(player2.getX(), player2.getY());
-        line = new Line(objVector, player2Vector);
+        for(MPPlayer mp : client.getPlayers().values()) {
+            Vector2f objVector = new Vector2f(obj.getX(), obj.getY());
+            Vector2f player2Vector = new Vector2f(mp.x, mp.y);
+            line = new Line(objVector, player2Vector);
+        }
     }
 
     public void movePlayer2(int i) {
+        for (MPPlayer mpPlayer : client.getPlayers().values()) { //other player render here.
+            mpPlayer.character.update(i);
+            mpPlayer.character.setX(mpPlayer.x);
+            mpPlayer.character.setY(mpPlayer.y);
+            mpPlayer.character.setMovingLeft(mpPlayer.moveingLeft);
+            mpPlayer.character.setMovingRight(mpPlayer.moveingRight);
+        }
+    }
+    
+    public void checkIfNewPlayerConnected() {
         for (MPPlayer mpPlayer : client.getPlayers().values()) { //other player render here.
             if(mpPlayer.character == null) {
                 try {
@@ -180,11 +192,6 @@ public class VersusState extends BasicGameState {
                 characters.add(mpPlayer.character);
                 arena.addPlayer(mpPlayer.character);
             }
-            mpPlayer.character.update(i);
-            mpPlayer.character.setX(mpPlayer.x);
-            mpPlayer.character.setY(mpPlayer.y);
-            mpPlayer.character.setMovingLeft(mpPlayer.moveingLeft);
-            mpPlayer.character.setMovingRight(mpPlayer.moveingRight);
         }
     }
 
@@ -200,20 +207,21 @@ public class VersusState extends BasicGameState {
         obj.getHealthSystem().render(cameraX + 450 - 135 - 60, cameraY + 473);
         obj.renderStoredJumpsIndicator(cameraX + 450 - 135 - 60 - 10, cameraY + 473);
         obj.renderAttackCharge(cameraX + 450 - 134.5f - 60, cameraY + 465);
-        player2.getHealthSystem().render(cameraX + 450 + 60, cameraY + 473);
-        player2.renderStoredJumpsIndicator(cameraX + 450 + 135 + 60 + 2, cameraY + 473);
-        player2.renderAttackChargeReversed(cameraX + 450 + 60 + 135.5f, cameraY + 465);
+//        player2.getHealthSystem().render(cameraX + 450 + 60, cameraY + 473);
+//        player2.renderStoredJumpsIndicator(cameraX + 450 + 135 + 60 + 2, cameraY + 473);
+//        player2.renderAttackChargeReversed(cameraX + 450 + 60 + 135.5f, cameraY + 465);
         g.resetTransform();
     }
 
     @Override
     public void update(GameContainer gc, StateBasedGame sbg, int i) throws SlickException {
+        checkIfNewPlayerConnected();
         updateVectorLine();
         updateCameraRect();
         movementSystem.handleInput(gc.getInput(), i);
         movePlayer2(i);
         physics.handlePhysics(arena, i);
-        player2.update(i);
+//        player2.update(i);
         obj.update(i);
         checkCollisionWithTarget();
         sendClientData();
@@ -288,5 +296,4 @@ public class VersusState extends BasicGameState {
             client.getClient().sendUDP(packet);
         }
     }
-
 }
