@@ -32,6 +32,7 @@ public class BigBlue02 extends PracticeLevel {
 
     private ArrayList<LevelObject> players;
     private ArrayList<PracticeTarget> targets;
+    private ArrayList<Tile> targetTiles;
 
     PracticeLevelHelper helper;
 
@@ -48,6 +49,7 @@ public class BigBlue02 extends PracticeLevel {
         map = new TiledMap("src/main/resources/data/levels/singelplayer/" + name + ".tmx", "src/main/resources/data/img");
         players = new ArrayList<>();
         targets = new ArrayList<>();
+        targetTiles = new ArrayList<>();
         addPlayer(levelObject);
         loadTileMap();
         timer = new PracticeTimer();
@@ -93,6 +95,7 @@ public class BigBlue02 extends PracticeLevel {
                             tile = new TargetTile(x, y);
                             target = new PracticeTarget(x * 25, y * 25);
                             targets.add(target);
+                            targetTiles.add(tile);
                             break;
 
                         default:
@@ -135,6 +138,9 @@ public class BigBlue02 extends PracticeLevel {
         return targets;
     }
 
+    public ArrayList<Tile> getTargetTiles() {
+        return targetTiles;
+    }
 
     /**
      * @return a multidimensional array of tiles
