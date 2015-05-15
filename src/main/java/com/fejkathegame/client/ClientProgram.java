@@ -11,6 +11,8 @@ import java.util.logging.Logger;
 
 /**
  * Created by Swartt on 2015-04-30.
+ * 
+ * Sends data to the server it connects to
  */
 public class ClientProgram extends Listener {
 
@@ -26,7 +28,10 @@ public class ClientProgram extends Listener {
 
     public ClientProgram() {
     }
-
+    /**
+     * Starts the server and regiters the packets to send/recive
+     * and tries to conenct to server
+     */
     public void network() {
         System.out.println("Connecting to the server...");
         client = new Client();
@@ -54,7 +59,13 @@ public class ClientProgram extends Listener {
         System.out.println("Connected! The client program is now waiting for a packet...\n");
 
     }
-
+     /**
+      * 
+      * What happens when the recived packet is a registed packet.
+      * 
+      * @param c the connection to the server
+      * @param o the objec the clietn recives
+      */
     @Override
     public void received(Connection c, Object o) {
         if (o instanceof PacketAddPlayer) {
