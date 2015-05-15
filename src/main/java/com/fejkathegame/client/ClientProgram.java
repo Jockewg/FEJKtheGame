@@ -10,9 +10,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * Created by Swartt on 2015-04-30.
  * 
  * Sends data to the server it connects to
+ * 
+ * @author Filip.
  */
 public class ClientProgram extends Listener {
 

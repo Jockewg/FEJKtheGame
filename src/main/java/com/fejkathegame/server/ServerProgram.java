@@ -7,13 +7,22 @@ import java.util.Map;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
 import com.esotericsoftware.kryonet.Server;
-
+/**
+ * The server sends data to all clients connected to it.
+ * 
+ * @author Filip
+ */
 public class ServerProgram extends Listener {
 
     static Server server;
     static final int udpPort = 27960, tcpPort = 27960;
     static Map<Integer, Player> players = new HashMap<>();
-
+    /**
+     * The server register the packedges binds to the port and starts.
+     * 
+     * @param args
+     * @throws IOException 
+     */
     public static void main(String[] args) throws IOException {
         server = new Server();
         server.getKryo().register(PacketUpdateX.class);
@@ -33,6 +42,12 @@ public class ServerProgram extends Listener {
         System.out.println("The server is ready");
     }
 
+    
+    /**
+     * 
+     * 
+     * @param c the connection to the client
+     */
     @Override
     public void connected(Connection c) {
         Player player = new Player();
