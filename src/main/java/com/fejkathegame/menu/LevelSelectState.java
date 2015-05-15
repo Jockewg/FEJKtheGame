@@ -36,7 +36,6 @@ public class LevelSelectState extends BasicGameState {
 
     @Override
     public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
-        //g.scale(900, 900);
         g.translate(-cam.getX(), -cam.getY());
         levelSelect.render(g);
         g.resetTransform();
@@ -57,17 +56,20 @@ public class LevelSelectState extends BasicGameState {
         int mouseBefore = Mouse.getDWheel();
         
         if(mouseBefore < 0) {
-            for(LevelSelectButton lvlbtn: lvlselect.getLevelButtons()){
-                lvlbtn.setHitPosY(lvlbtn.getHitPosY() +20);
+            if(lvlselect.getLevelButtons().get(0).getHitPosY() < Main.WINDOW_HEIGHT - lvlselect.getLevelButtons().get(0).getHeight() - 20){
+                for(LevelSelectButton lvlbtn: lvlselect.getLevelButtons()){
+                    lvlbtn.setHitPosY(lvlbtn.getHitPosY() +20);
+                }
+                camera.addToY(-20);
             }
-            camera.addToY(-20);
         } else if(mouseBefore > 0) {
-            for(LevelSelectButton lvlbtn: lvlselect.getLevelButtons()){
-                lvlbtn.setHitPosY(lvlbtn.getHitPosY() -20);
+            if(lvlselect.getLevelButtons().get(lvlselect.getLevelButtons().size()-1).getHitPosY() > 0 ){
+                for(LevelSelectButton lvlbtn: lvlselect.getLevelButtons()){
+                    lvlbtn.setHitPosY(lvlbtn.getHitPosY() -20);
+                }
+                camera.addToY(20);
             }
-            camera.addToY(20);
         }
-        
     }
 
     public void selectLevel(int x, int y, Input i, StateBasedGame sbg) {

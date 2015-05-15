@@ -39,6 +39,7 @@ public class LevelSelectButton extends Button{
         g.drawRect(posX, posY, width, height);
         g.drawString(title, posX + 20, posY + (height / 2));
         g.drawString(bestTime + "", posX + 300, posY + (height / 2));
+        g.drawString("HitPosY: " + hitPosY, posX + 160, posY);
     }
     
     public void setBestTime(String time){
