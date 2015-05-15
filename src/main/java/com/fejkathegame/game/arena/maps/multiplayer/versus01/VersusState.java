@@ -22,6 +22,8 @@ import org.newdawn.slick.state.StateBasedGame;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.newdawn.slick.geom.Line;
 import org.newdawn.slick.geom.Vector2f;
 
@@ -169,10 +171,19 @@ public class VersusState extends BasicGameState {
 
     public void movePlayer2() {
         for (MPPlayer mpPlayer : client.getPlayers().values()) { //other player render here.
-            player2.setX(mpPlayer.x);
-            player2.setY(mpPlayer.y);
-            player2.setMovingLeft(mpPlayer.moveingLeft);
-            player2.setMovingRight(mpPlayer.moveingRight);
+            if(mpPlayer.character == null) {
+                try {
+                    mpPlayer.character = new Character(300, 40);
+                } catch (SlickException | IOException ex) {
+                    Logger.getLogger(VersusState.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                characters.add(mpPlayer.character);
+                arena.addPlayer(mpPlayer.character);
+            }
+            mpPlayer.character.setX(mpPlayer.x);
+            mpPlayer.character.setY(mpPlayer.y);
+            mpPlayer.character.setMovingLeft(mpPlayer.moveingLeft);
+            mpPlayer.character.setMovingRight(mpPlayer.moveingRight);
         }
     }
 

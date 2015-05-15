@@ -6,6 +6,8 @@
 
 package com.fejkathegame.client;
 
+import com.fejkathegame.game.entities.Character;
+
 /**
  *
  * @author Filip
@@ -19,4 +21,5 @@ public class MPPlayer {
     public boolean isFullyCharged;
     public boolean moveingLeft;
     public boolean moveingRight;
+    public Character character;
 }
