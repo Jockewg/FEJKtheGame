@@ -78,6 +78,7 @@ public class Main extends StateBasedGame {
                     appgc.getFPS();
                     appgc.setShowFPS(true);
                     appgc.setTargetFrameRate(100);
+                    appgc.setAlwaysRender(true);
                     appgc.start();
             } catch (SlickException ex) {
                     Logger.getLogger(ex.toString());

@@ -169,7 +169,7 @@ public class VersusState extends BasicGameState {
         line = new Line(objVector, player2Vector);
     }
 
-    public void movePlayer2() {
+    public void movePlayer2(int i) {
         for (MPPlayer mpPlayer : client.getPlayers().values()) { //other player render here.
             if(mpPlayer.character == null) {
                 try {
@@ -180,6 +180,7 @@ public class VersusState extends BasicGameState {
                 characters.add(mpPlayer.character);
                 arena.addPlayer(mpPlayer.character);
             }
+            mpPlayer.character.update(i);
             mpPlayer.character.setX(mpPlayer.x);
             mpPlayer.character.setY(mpPlayer.y);
             mpPlayer.character.setMovingLeft(mpPlayer.moveingLeft);
@@ -210,7 +211,7 @@ public class VersusState extends BasicGameState {
         updateVectorLine();
         updateCameraRect();
         movementSystem.handleInput(gc.getInput(), i);
-        movePlayer2();
+        movePlayer2(i);
         physics.handlePhysics(arena, i);
         player2.update(i);
         obj.update(i);
