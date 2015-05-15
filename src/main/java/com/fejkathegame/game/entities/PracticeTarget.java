@@ -29,7 +29,7 @@ public class PracticeTarget extends LevelObject {
       healthSystem = new HealthSystem(this);
       health = 1;
       sprite = new Image("src/main/resources/data/img/target/target.png");
-      hitBox = new Rectangle(x, y, 25, 25);
+      hitBox = new Rectangle(x, y, 30, 30);
    }
 
    @Override
