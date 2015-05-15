@@ -164,16 +164,17 @@ public class VersusState extends BasicGameState {
     }
 
     public void updateVectorLine() {
-        if(client.getPlayers().values().size() <= 0) {
-            line = new Line(obj.getX(), obj.getY(), 0, 0);
-        } else if(client.getPlayers().values().size() > 1) {
-                line = new Line(arena.getArenaWidth(), arena.getArenaHeight(), 0, 0);
-        } else {
-                for(MPPlayer mp : client.getPlayers().values()) {
+        if(client.getPlayers().values().size() == 0) {
+            line = new Line(0, 0, 900, 500);
+        } else if(client.getPlayers().values().size() <= 1) {
+            for(MPPlayer mp : client.getPlayers().values()) {
                 Vector2f objVector = new Vector2f(obj.getX(), obj.getY());
                 Vector2f player2Vector = new Vector2f(mp.x, mp.y);
                 line = new Line(objVector, player2Vector);
             }
+                
+        } else {
+            line = new Line(0, 0, 900, 500);
         }
     }
 
