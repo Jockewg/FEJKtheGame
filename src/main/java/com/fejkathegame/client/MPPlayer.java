@@ -3,8 +3,7 @@ package com.fejkathegame.client;
 import com.fejkathegame.game.entities.Character;
 
 /**
- *
- * 
+ * the data all players have.
  * 
  * @author Filip
  */
@@ -18,4 +17,5 @@ public class MPPlayer {
     public boolean moveingLeft;
     public boolean moveingRight;
     public Character character;
+    public boolean connected;
 }
