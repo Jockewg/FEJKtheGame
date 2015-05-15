@@ -44,7 +44,7 @@ public class ServerProgram extends Listener {
 
     
     /**
-     * 
+     * creates a new player with uniqe id and sends to all clients.
      * 
      * @param c the connection to the client
      */
@@ -73,6 +73,13 @@ public class ServerProgram extends Listener {
         System.out.println("Connection received.");
     }
 
+    /**
+     * for every packet recived the player will be updated and 
+     * sent to all clients.
+     * 
+     * @param c the connection to client
+     * @param o the packet recived
+     */
     @Override
     public void received(Connection c, Object o) {
         if (o instanceof PacketUpdateX) {
@@ -153,7 +160,12 @@ public class ServerProgram extends Listener {
             }
         }
     }
-
+    /**
+     * for every dissconnected client there will be
+     * a message sent to all clients
+     * 
+     * @param c the connection to the client
+     */
     @Override
     public void disconnected(Connection c) {
         players.remove(c.getID());
