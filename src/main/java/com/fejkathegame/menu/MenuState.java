@@ -36,8 +36,6 @@ public class MenuState extends BasicGameState {
     public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
         g.setBackground(Color.decode("#655d5d"));
         menu.render();
-        g.drawString(Mouse.getX()+ "", 100, 100);
-        g.drawString(Mouse.getY()+ "", 100, 120);
         
     }
 

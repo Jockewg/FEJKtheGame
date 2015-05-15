@@ -24,7 +24,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.newdawn.slick.Color;
 import org.newdawn.slick.geom.Line;
+import org.newdawn.slick.geom.Polygon;
 import org.newdawn.slick.geom.Vector2f;
 
 public class VersusState extends BasicGameState {
@@ -35,8 +37,7 @@ public class VersusState extends BasicGameState {
     private String name;
     private MovementSystem movementSystem;
     private Physics physics;
-    private Character obj;
-    private Character player2;
+    private Character localPlayer;
 
     //Camera stuff
     private float cameraX, cameraY;
@@ -45,6 +46,8 @@ public class VersusState extends BasicGameState {
     private float cameraScale = 1.0f;
 
     private Line line;
+    
+    private Polygon playerIndicator;
 
     private ArrayList<Character> characters;
 
@@ -65,25 +68,27 @@ public class VersusState extends BasicGameState {
     @Override
     public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {
 
-        obj = null;
-//        player2 = null;
+        localPlayer = null;
         try {
-            obj = new Character(800, 40);
-//            player2 = new Character(200, 40);
+            localPlayer = new Character(800, 40);
         } catch (IOException e) {
             e.printStackTrace();
         }
 
         characters = new ArrayList<>();
-        characters.add(obj);
-//        characters.add(player2);
+        characters.add(localPlayer);
 
-        line = new Line(obj.getX(), obj.getY(), 0, 0);
+        line = new Line(0, 0, 450, 250);
+        
+        playerIndicator = new Polygon();
+        playerIndicator.addPoint(0, 0);
+        playerIndicator.addPoint(20, 0);
+        playerIndicator.addPoint(10, 10);
+        
 
-        arena = new Versus(name, obj);
-//        arena.addPlayer(player2);
+        arena = new Versus(name, localPlayer);
 
-        movementSystem = new MovementSystem(obj);
+        movementSystem = new MovementSystem(localPlayer);
 
         physics = new Physics();
         client.network();
@@ -91,22 +96,26 @@ public class VersusState extends BasicGameState {
     }
 
     public void checkCollisionWithTarget() {
-
-        if (obj.getAttackIndicator().intersects(player2.getHitBox()) && obj.getIsAttacking()
-                || obj.getIsFullyCharged() && obj.getSuperAttackIndicator().intersects(player2.getHitBox())) {
-            System.out.println("Player 1 hit Player 2 omfg");
-            player2.getHealthSystem().dealDamage(1);
-            if (player2.getHealth() <= 0) {
-                arena.getPlayers().remove(player2);
+        
+        for(MPPlayer mp : client.getPlayers().values()) {
+            if (localPlayer.getAttackIndicator().intersects(mp.character.getHitBox()) && localPlayer.getIsAttacking()
+                    || localPlayer.getIsFullyCharged() && localPlayer.getSuperAttackIndicator().intersects(mp.character.getHitBox())) {
+                System.out.println("Player 1 hit Player 2 omfg");
+                mp.character.getHealthSystem().dealDamage(1);
+                if (mp.character.getHealth() <= 0) {
+                    arena.getPlayers().remove(mp.character);
+                    characters.remove(mp.character);
+                }
             }
-        }
 
-        if (player2.getAttackIndicator().intersects(obj.getHitBox()) && player2.getIsAttacking()
-                || player2.getIsFullyCharged() && player2.getSuperAttackIndicator().intersects(obj.getHitBox())) {
-            System.out.println("Player 2 hit Player 1 omfg");
-            obj.getHealthSystem().dealDamage(1);
-            if (obj.getHealth() <= 0) {
-                arena.getPlayers().remove(obj);
+            if (mp.character.getAttackIndicator().intersects(localPlayer.getHitBox()) && mp.character.getIsAttacking()
+                    || mp.character.getIsFullyCharged() && mp.character.getSuperAttackIndicator().intersects(localPlayer.getHitBox())) {
+                System.out.println("Player 2 hit Player 1 omfg");
+                localPlayer.getHealthSystem().dealDamage(1);
+                if (localPlayer.getHealth() <= 0) {
+                    arena.getPlayers().remove(localPlayer);
+                    characters.remove(localPlayer);
+                }
             }
         }
 
@@ -164,18 +173,27 @@ public class VersusState extends BasicGameState {
     }
 
     public void updateVectorLine() {
-        if(client.getPlayers().values().size() == 0) {
+        if(client.getPlayers().values().isEmpty()) {
             line = new Line(0, 0, 900, 500);
         } else if(client.getPlayers().values().size() <= 1) {
             for(MPPlayer mp : client.getPlayers().values()) {
-                Vector2f objVector = new Vector2f(obj.getX(), obj.getY());
+                Vector2f objVector = new Vector2f(localPlayer.getX(), localPlayer.getY());
                 Vector2f player2Vector = new Vector2f(mp.x, mp.y);
                 line = new Line(objVector, player2Vector);
             }
-                
         } else {
             line = new Line(0, 0, 900, 500);
         }
+    }
+    
+    public void updatePlayerIndicator() {
+        playerIndicator.setX(localPlayer.getX() - 4);
+        playerIndicator.setY(localPlayer.getY() - 17);
+    }
+    
+    public void renderPlayerIndicator(Graphics g) {
+        g.setColor(new Color(1.0f, 0.0f, 0.0f, 0.5f));
+        g.fill(playerIndicator);
     }
 
     public void movePlayer2(int i) {
@@ -206,17 +224,14 @@ public class VersusState extends BasicGameState {
     public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
         g.scale(cameraScale, cameraScale);
         g.translate(-cameraX, -cameraY);
-        arena.getAnimation().draw(200, 50);
         arena.render();
+        renderPlayerIndicator(g);
         g.resetTransform();
 
         g.translate(-cameraX, -cameraY);
-        obj.getHealthSystem().render(cameraX + 450 - 135 - 60, cameraY + 473);
-        obj.renderStoredJumpsIndicator(cameraX + 450 - 135 - 60 - 10, cameraY + 473);
-        obj.renderAttackCharge(cameraX + 450 - 134.5f - 60, cameraY + 465);
-//        player2.getHealthSystem().render(cameraX + 450 + 60, cameraY + 473);
-//        player2.renderStoredJumpsIndicator(cameraX + 450 + 135 + 60 + 2, cameraY + 473);
-//        player2.renderAttackChargeReversed(cameraX + 450 + 60 + 135.5f, cameraY + 465);
+        localPlayer.getHealthSystem().render(cameraX + 450 - 135 - 60, cameraY + 473);
+        localPlayer.renderStoredJumpsIndicator(cameraX + 450 - 135 - 60 - 10, cameraY + 473);
+        localPlayer.renderAttackCharge(cameraX + 450 - 134.5f - 60, cameraY + 465);
         g.resetTransform();
     }
 
@@ -228,45 +243,45 @@ public class VersusState extends BasicGameState {
         movementSystem.handleInput(gc.getInput(), i);
         movePlayer2(i);
         physics.handlePhysics(arena, i);
-//        player2.update(i);
-        obj.update(i);
-//        checkCollisionWithTarget();
+        localPlayer.update(i);
+        updatePlayerIndicator();
+        checkCollisionWithTarget();
         sendClientData();
     }
 
     private void sendClientData() {
-        if (obj.networkPosition.x != obj.getCurrentX()) {
+        if (localPlayer.networkPosition.x != localPlayer.getCurrentX()) {
             //Send the player's X value
             PacketUpdateX packet = new PacketUpdateX();
-            packet.x = obj.getCurrentX();
+            packet.x = localPlayer.getCurrentX();
             client.getClient().sendUDP(packet);
 
-            obj.networkPosition.x = obj.getCurrentX();
+            localPlayer.networkPosition.x = localPlayer.getCurrentX();
         }
-        if (obj.networkPosition.y != obj.getCurrentY()) {
+        if (localPlayer.networkPosition.y != localPlayer.getCurrentY()) {
             //Send the player's Y value
             PacketUpdateY packet = new PacketUpdateY();
-            packet.y = obj.getCurrentY();
+            packet.y = localPlayer.getCurrentY();
             client.getClient().sendUDP(packet);
 
-            obj.networkPosition.y = obj.getCurrentY();
+            localPlayer.networkPosition.y = localPlayer.getCurrentY();
         }
-        if (obj.getIsAttacking()) {
+        if (localPlayer.getIsAttacking()) {
             PacketAttackPlayer packet = new PacketAttackPlayer();
             PacketAttackDirectionPlayer packet2 = new PacketAttackDirectionPlayer();
-            packet2.direction = (float) obj.getAttackDirection().getTheta();
-            packet.isAttacking = obj.getIsAttacking();
+            packet2.direction = (float) localPlayer.getAttackDirection().getTheta();
+            packet.isAttacking = localPlayer.getIsAttacking();
             client.getClient().sendUDP(packet);
             client.getClient().sendUDP(packet2);
         } else {
             PacketAttackPlayer packet = new PacketAttackPlayer();
             PacketAttackDirectionPlayer packet2 = new PacketAttackDirectionPlayer();
-            packet2.direction = (float) obj.getAttackDirection().getTheta();
-            packet.isAttacking = obj.getIsAttacking();
+            packet2.direction = (float) localPlayer.getAttackDirection().getTheta();
+            packet.isAttacking = localPlayer.getIsAttacking();
             client.getClient().sendUDP(packet);
             client.getClient().sendUDP(packet2);
         }
-        if (obj.getIsCharging()) {
+        if (localPlayer.getIsCharging()) {
             PacketChargePlayer packet = new PacketChargePlayer();
             packet.isChargeing = true;
             client.getClient().sendUDP(packet);
@@ -275,7 +290,7 @@ public class VersusState extends BasicGameState {
             packet.isChargeing = false;
             client.getClient().sendUDP(packet);
         }
-        if (obj.getIsFullyCharged()) {
+        if (localPlayer.getIsFullyCharged()) {
             PacketFullyChargedPlayer packet = new PacketFullyChargedPlayer();
             packet.isFullyCharged = true;
             client.getClient().sendUDP(packet);
@@ -284,7 +299,7 @@ public class VersusState extends BasicGameState {
             packet.isFullyCharged = false;
             client.getClient().sendUDP(packet);
         }
-        if (obj.getMovingLeft()) {
+        if (localPlayer.getMovingLeft()) {
             PacketMoveLeftPlayer packet = new PacketMoveLeftPlayer();
             packet.moveingLeft = true;
             client.getClient().sendUDP(packet);
@@ -293,7 +308,7 @@ public class VersusState extends BasicGameState {
             packet.moveingLeft = false;
             client.getClient().sendUDP(packet);
         }
-        if (obj.getMovingRight()) {
+        if (localPlayer.getMovingRight()) {
             PacketMoveRightPlayer packet = new PacketMoveRightPlayer();
             packet.moveingRight = true;
             client.getClient().sendUDP(packet);
