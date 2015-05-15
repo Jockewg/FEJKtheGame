@@ -56,14 +56,14 @@ public class LevelSelectState extends BasicGameState {
         int mouseBefore = Mouse.getDWheel();
         
         if(mouseBefore < 0) {
-            if(lvlselect.getLevelButtons().get(0).getHitPosY() < Main.WINDOW_HEIGHT - lvlselect.getLevelButtons().get(0).getHeight() - 20){
+            if(lvlselect.getLevelButtons().get(0).getHitPosY() < 0){
                 for(LevelSelectButton lvlbtn: lvlselect.getLevelButtons()){
                     lvlbtn.setHitPosY(lvlbtn.getHitPosY() +20);
                 }
                 camera.addToY(-20);
             }
         } else if(mouseBefore > 0) {
-            if(lvlselect.getLevelButtons().get(lvlselect.getLevelButtons().size()-1).getHitPosY() > 0 ){
+            if(lvlselect.getLevelButtons().get(lvlselect.getLevelButtons().size()-1).getHitPosY() > Main.WINDOW_HEIGHT + lvlselect.getLevelButtons().get(0).getHeight() + 20 ){
                 for(LevelSelectButton lvlbtn: lvlselect.getLevelButtons()){
                     lvlbtn.setHitPosY(lvlbtn.getHitPosY() -20);
                 }
