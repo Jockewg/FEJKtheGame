@@ -7,6 +7,8 @@ import com.fejkathegame.game.arena.tiles.Tile;
 import java.util.ArrayList;
 
 import com.fejkathegame.game.entities.PracticeTarget;
+import com.fejkathegame.game.timer.PracticeTimer;
+import org.newdawn.slick.SlickException;
 import org.newdawn.slick.tiled.TiledMap;
 
 /**
@@ -27,10 +29,16 @@ public abstract class PracticeLevel {
     public abstract ArrayList<LevelObject> getPlayers();
 
     public abstract ArrayList<PracticeTarget> getTargets();
+    
+    public abstract ArrayList<Tile> getTargetTiles();
 
     public abstract Tile[][] getTiles();
 
     public abstract PracticeLevelHelper getMapHelper();
 
     public abstract TiledMap getMap();
+    
+    public abstract void render() throws SlickException;
+    
+    public abstract PracticeTimer getTimer();
 }
