@@ -4,6 +4,7 @@ import com.fejkathegame.game.Main;
 import com.fejkathegame.game.arena.PracticeState;
 import com.fejkathegame.game.arena.maps.PracticeCamera;
 import com.fejkathegame.game.arena.maps.PracticeStateHelper;
+import com.fejkathegame.game.arena.maps.UIHelper;
 import com.fejkathegame.game.arena.physics.Physics;
 import com.fejkathegame.game.entities.logic.MovementSystem;
 import org.newdawn.slick.GameContainer;
@@ -19,129 +20,92 @@ import java.util.logging.Logger;
  * @author Swartt
  */
 public class BigBlue02State extends PracticeState {
-//    private BigBlue02 arena;
-    private String name;
-    private MovementSystem movementSystem;
-    private Physics physics;
-//    private Character player;
-    private PracticeStateHelper stateHelper;
-//    private PracticeCamera camera;
 
-    private float offsetMaxX;
-    private float offsetMaxY;
-    
-    private boolean isCameraAnimationRunning = true;
-    private float scale = 0.24f;
-    private float scaleSmoothing = 0;
-    
-    
-    
+   private String name;
+   private MovementSystem movementSystem;
+   private PracticeStateHelper stateHelper;
 
-    /**
-     * Constructor for ArenaState
-     *
-     * @param name of the stage
-     */
-    public BigBlue02State(String name) {
-        this.name = name;
-    }
+   private float offsetMaxX;
+   private float offsetMaxY;
 
-    @Override
-    public int getID() {
-        return Main.BIG_BlUE03;
-    }
+   private boolean isCameraAnimationRunning = true;
+   private float scale = 0.24f;
+   private float scaleSmoothing = 0;
 
-    @Override
-    public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {
+   /**
+    * Constructor for ArenaState
+    *
+    * @param name of the stage
+    */
+   public BigBlue02State(String name) {
+      this.name = name;
+   }
 
-        player = null;
-        try {
-            player = new com.fejkathegame.game.entities.Character(50, 1100);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        
-        
+   @Override
+   public int getID() {
+      return Main.BIG_BlUE03;
+   }
 
-        arena = new BigBlue02(name, player);
+   @Override
+   public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {
 
-        setCameraBoundaries();
+      player = null;
+      try {
+         player = new com.fejkathegame.game.entities.Character(50, 1100);
+      }
+      catch (IOException e) {
+         e.printStackTrace();
+      }
 
-        movementSystem = new MovementSystem(player);
-        
-        
+      arena = new BigBlue02(name, player);
 
-        physics = new Physics();
+      setCameraBoundaries();
 
-        camera = new PracticeCamera(offsetMaxX, offsetMaxY);
+      movementSystem = new MovementSystem(player);
 
-        stateHelper = new PracticeStateHelper(this);
-        
-    }
+      physics = new Physics();
 
-    public void setCameraBoundaries() {
-        offsetMaxX = arena.getMap().getWidth() * 22;
-        offsetMaxY = arena.getMap().getHeight() * 20;
-    }
-    
-    public void cameraAnimation() {
-        if(scale < 0.25f) {
-            scale += 0.00005f;
-            camera.setCamY(0);
-        } else {
-            scaleSmoothing += 0.00005f;
-            scale += (0.005f + scaleSmoothing);
-            camera.setCamY(0);
-            float newCamY = (750 * scale);
-            camera.setCamY(newCamY);
-            /*System.out.println("cameraY: " + camera.getCamY());*/
-        }
-        
-        if(scale >= 1) {
-            scale = 1;
-            isCameraAnimationRunning = false;
-        }
-        
-        /*System.out.println(scale);*/
-        
-    }
-    
-    @Override
-    public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
-        g.setAntiAlias(false);
-        if(isCameraAnimationRunning) {
-            cameraAnimation();
-            g.scale(scale, scale);
-        } else {
-            g.scale(scale, scale);
-        }
-        g.translate(-camera.getCamX(), -camera.getCamY());
-        arena.render();
-        arena.getMapHelper().updateText(camera.getCamX(), camera.getCamY());
-        if(paused && !isCameraAnimationRunning) {
-            stateHelper.drawPauseMenu(g);
-        }
-        g.resetTransform();
-        
-    }
+      camera = new PracticeCamera(offsetMaxX, offsetMaxY);
 
+      stateHelper = new PracticeStateHelper(this);
 
-    @Override
-    public void update(GameContainer gc, StateBasedGame sbg, int i) throws SlickException {
-        try {
-            stateHelper.pauseGame(gc.getInput(), sbg, 50, 1100);
-        } catch (IOException ex) {
-            Logger.getLogger(BigBlue02State.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        if(!paused) {
-            stateHelper.checkCameraOffset();
-            if(!arena.getTimer().isCountdownRunning()) {
-                movementSystem.handleInput(gc.getInput(), i);
-                physics.handlePhysics(arena, i);
-                stateHelper.checkCollisionWithTarget(getID());
-            }
-            player.update(i);
-            arena.getTimer().calculateSecond(i);
-        }
-    }
+   }
+
+   public void setCameraBoundaries() {
+      offsetMaxX = arena.getMap().getWidth() * 22;
+      offsetMaxY = arena.getMap().getHeight() * 20;
+   }
+
+   public void cameraAnimation() {
+      if (scale < 0.25f) {
+         scale += 0.00005f;
+         camera.setCamY(0);
+      }
+      else {
+         scaleSmoothing += 0.00005f;
+         scale += (0.005f + scaleSmoothing);
+         camera.setCamY(0);
+         float newCamY = (750 * scale);
+         camera.setCamY(newCamY);
+         /*System.out.println("cameraY: " + camera.getCamY());*/
+      }
+
+      if (scale >= 1) {
+         scale = 1;
+         isCameraAnimationRunning = false;
+      }
+
+      /*System.out.println(scale);*/
+   }
+
+   @Override
+   public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
+      stateHelper.render(gc, sbg, g);
+
+   }
+
+   @Override
+   public void update(GameContainer gc, StateBasedGame sbg, int i) throws SlickException {
+      stateHelper.update(gc, sbg, i, 50, 1100);
+   }
 }

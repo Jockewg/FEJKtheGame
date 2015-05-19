@@ -18,140 +18,131 @@ import org.newdawn.slick.state.StateBasedGame;
  * @author Swartt
  */
 public class Tutorial01State extends PracticeState {
-   
-    private Tutorial01 arena;
-    private String name;
-    private MovementSystem movementSystem;
-    private Physics physics;
-    private com.fejkathegame.game.entities.Character obj;
-    private PracticeStateHelper helper;
-    private PracticeCamera camera;
 
-    private Image spacebar;
-    private Image arrow;
-    private Image attack;
-    private Image line;
-    
-    private float offsetMaxX;
-    private float offsetMaxY;
-    
-    private boolean inPit = false;
+   private Tutorial01 arena;
+   private String name;
+   private MovementSystem movementSystem;
 
-    /**
-     * Constructor for ArenaState
-     *
-     * @param name of the stage
-     */
-    public Tutorial01State(String name) {
-        this.name = name;
-    }
+   private PracticeStateHelper helper;
+   private Image spacebar;
+   private Image arrow;
+   private Image attack;
+   private Image line;
 
-    @Override
-    public int getID() {
-        return Main.TUTORIAL01;
-    }
+   private float offsetMaxX;
+   private float offsetMaxY;
 
-    @Override
-    public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {
+   private boolean inPit = false;
 
-        obj = null;
-        try {
-            obj = new com.fejkathegame.game.entities.Character(50, 500);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+   /**
+    * Constructor for ArenaState
+    *
+    * @param name of the stage
+    */
+   public Tutorial01State(String name) {
+      this.name = name;
+   }
 
-        arena = new Tutorial01(name, obj);
+   @Override
+   public int getID() {
+      return Main.TUTORIAL01;
+   }
 
-        setCameraBoundaries();
+   @Override
+   public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {
 
-        movementSystem = new MovementSystem(obj);
-        
-        spacebar = new Image("data/img/levelart/spacebar.png");
-        
-        arrow = new Image("data/img/levelart/arrow.png");
-        
-        attack = new Image("data/img/levelart/attac.png");
-        
-        line = new Image("data/img/levelart/line.png");
+      player = null;
+      try {
+         player = new com.fejkathegame.game.entities.Character(50, 500);
+      }
+      catch (IOException e) {
+         e.printStackTrace();
+      }
 
-        physics = new Physics();
+      arena = new Tutorial01(name, player);
 
-        camera = new PracticeCamera(offsetMaxX, offsetMaxY);
+      setCameraBoundaries();
 
-        helper = new PracticeStateHelper(this);
-    }
+      movementSystem = new MovementSystem(player);
 
-    public void setCameraBoundaries() {
-        offsetMaxX = arena.getMap().getWidth() * 25 -450;
-        offsetMaxY = arena.getMap().getHeight() * 25 -325;
-    }
-    
-    public void checkIfInPit() {
-        int tileId = arena.getMap().getTileId((int) (obj.getX()) / 25, (int) (obj.getY() + 30) / 25, 0);
-        String property = arena.getMap().getTileProperty(tileId, "tileType", "pit");
-        
-        if("pit".equals(property)) {
-            inPit = true;
-        } else {
-            inPit = false;
-        }
-    }
-    
-    public void resetMap() {
-        arena.getPlayers().get(0).setX(50);
-        arena.getPlayers().get(0).setY(500);
-    }
+      spacebar = new Image("data/img/levelart/spacebar.png");
 
+      arrow = new Image("data/img/levelart/arrow.png");
 
-    @Override
-    public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
-        g.setAntiAlias(false);
-        g.scale(Main.SCALE, Main.SCALE);
-        g.translate(-camera.getCamX(), -camera.getCamY());
-        spacebar.draw(220,510);
-        arrow.draw(300, 500);
-        
-        
-        spacebar.draw(700,510);
-        arrow.draw(780, 500);
-        spacebar.draw(950,510);
-        arrow.draw(1050, 500);
-        
-        
-        spacebar.draw(1500,510);
-        arrow.draw(1580, 500);
-        spacebar.draw(1750,510);
-        arrow.draw(1830, 500);
-        
-        attack.draw(1960, 510);
-        line.draw(2050, 440);
-        
-        spacebar.draw(2400, 510);
-        attack.draw(2400, 450);
-        line.draw(2425, 400);
-        
-        spacebar.draw(730, 250);
-        spacebar.draw(650, 200);
-        
-        arena.render();
+      attack = new Image("data/img/levelart/attac.png");
+
+      line = new Image("data/img/levelart/line.png");
+
+      physics = new Physics();
+
+      camera = new PracticeCamera(offsetMaxX, offsetMaxY);
+
+      helper = new PracticeStateHelper(this);
+   }
+
+   public void setCameraBoundaries() {
+      offsetMaxX = arena.getMap().getWidth() * 25 - 450;
+      offsetMaxY = arena.getMap().getHeight() * 25 - 325;
+   }
+
+   public void checkIfInPit() {
+      int tileId = arena.getMap().getTileId((int) (player.getX()) / 25, (int) (player.getY() + 30) / 25, 0);
+      String property = arena.getMap().getTileProperty(tileId, "tileType", "pit");
+
+      if ("pit".equals(property)) {
+         inPit = true;
+      }
+      else {
+         inPit = false;
+      }
+   }
+
+   public void resetMap() {
+      arena.getPlayers().get(0).setX(50);
+      arena.getPlayers().get(0).setY(500);
+   }
+
+   @Override
+   public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
+//        g.setAntiAlias(false);
+//        g.scale(Main.SCALE, Main.SCALE);
+//        g.translate(-camera.getCamX(), -camera.getCamY());
+      spacebar.draw(220, 510);
+      arrow.draw(300, 500);
+
+      spacebar.draw(700, 510);
+      arrow.draw(780, 500);
+      spacebar.draw(950, 510);
+      arrow.draw(1050, 500);
+
+      spacebar.draw(1500, 510);
+      arrow.draw(1580, 500);
+      spacebar.draw(1750, 510);
+      arrow.draw(1830, 500);
+
+      attack.draw(1960, 510);
+      line.draw(2050, 440);
+
+      spacebar.draw(2400, 510);
+      attack.draw(2400, 450);
+      line.draw(2425, 400);
+
+      spacebar.draw(730, 250);
+      spacebar.draw(650, 200);
+
+//        arena.render();
         /*arena.helper.updateText(camera.getCamX(), camera.getCamY());*/
-        g.resetTransform();
-    }
+//        g.resetTransform();
+      helper.render(gc, sbg, g);
+   }
 
+   @Override
+   public void update(GameContainer gc, StateBasedGame sbg, int i) throws SlickException {
+      checkIfInPit();
+      if (inPit) {
+         resetMap();
+      }
+      helper.update(gc, sbg, i, 50, 500);
 
-    @Override
-    public void update(GameContainer gc, StateBasedGame sbg, int i) throws SlickException {
-        checkIfInPit();
-        if(inPit) {
-            resetMap();
-        }
-        helper.checkCameraOffset();
-        movementSystem.handleInput(gc.getInput(), i);
-        physics.handlePhysics(arena, i);
-        helper.checkCollisionWithTarget(getID());
-        obj.update(i);
-//        arena.timer.calculateSecond(i);
-        
-    }
+   }
 }

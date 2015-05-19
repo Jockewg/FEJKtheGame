@@ -23,15 +23,13 @@ public class CityState04 extends PracticeState {
     private City04 arena;
     private String name;
     private MovementSystem movementSystem;
-    private Physics physics;
-    private Character obj;
-    private PracticeStateHelper helper;
-    private PracticeCamera camera;
+    private PracticeStateHelper stateHelper;
     
     private float offsetMaxX = 2050;
     private float offsetMaxY = 750;
 
     private float camX = 0, camY = 0;
+    
 
     /**
      * Constructor for ArenaState
@@ -49,50 +47,38 @@ public class CityState04 extends PracticeState {
     @Override
     public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {
 
-        obj = null;
+        player = null;
         try {
-            obj = new Character(32, 40);
+            player = new Character(32, 40);
         } catch (IOException e) {
             e.printStackTrace();
         }
         
-        arena = new City04(name, obj);
+        arena = new City04(name, player);
         
-        movementSystem = new MovementSystem(obj);
+        movementSystem = new MovementSystem(player);
 
         physics = new Physics();
 
         camera = new PracticeCamera(offsetMaxX, offsetMaxY);
 
-        helper = new PracticeStateHelper(this);
+        stateHelper = new PracticeStateHelper(this);
 
 
     }
 
     @Override
     public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
-        g.setAntiAlias(false);
-        g.scale(Main.SCALE, Main.SCALE);
-        g.translate(-camera.getCamX(), -camera.getCamY());
-        arena.render();
-        arena.helper.updateText(camera.getCamX(), camera.getCamY());
-        g.translate(-camX, -camY);
-        g.resetTransform();
+       stateHelper.render(gc, sbg, g);
     }
 
 
     @Override
     public void update(GameContainer gc, StateBasedGame sbg, int i) throws SlickException {
-        helper.checkCameraOffset();
-        if(!arena.timer.isCountdownRunning()) {
-            movementSystem.handleInput(gc.getInput(), i);
-            physics.handlePhysics(arena, i);
-            helper.checkCollisionWithTarget(getID());
-            obj.update(i);
-            arena.helper.moveTarget();
-        }
-        arena.timer.calculateSecond(i);
+        stateHelper.update(gc, sbg, i, 32, 40);
     }
+   
+   
     
 
 
