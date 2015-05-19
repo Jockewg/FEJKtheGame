@@ -23,15 +23,13 @@ public class CityState04 extends PracticeState {
     private City04 arena;
     private String name;
     private MovementSystem movementSystem;
-    private Physics physics;
-    private Character obj;
     private PracticeStateHelper stateHelper;
-    private PracticeCamera camera;
     
     private float offsetMaxX = 2050;
     private float offsetMaxY = 750;
 
     private float camX = 0, camY = 0;
+    
 
     /**
      * Constructor for ArenaState
@@ -49,16 +47,16 @@ public class CityState04 extends PracticeState {
     @Override
     public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {
 
-        obj = null;
+        player = null;
         try {
-            obj = new Character(32, 40);
+            player = new Character(32, 40);
         } catch (IOException e) {
             e.printStackTrace();
         }
         
-        arena = new City04(name, obj);
+        arena = new City04(name, player);
         
-        movementSystem = new MovementSystem(obj);
+        movementSystem = new MovementSystem(player);
 
         physics = new Physics();
 

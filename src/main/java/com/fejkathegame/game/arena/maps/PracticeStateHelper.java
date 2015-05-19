@@ -22,10 +22,12 @@ public class PracticeStateHelper {
 
    PracticeState state;
    Rectangle pauseMenuBackground;
+   UIHelper uIHelper;
 
    public PracticeStateHelper(PracticeState state) {
       this.state = state;
       pauseMenuBackground = new Rectangle(0, 0, 600, 300);
+      uIHelper = new UIHelper(state.camera.getCamX(), state.camera.getCamY());
    }
 
    public void checkCollisionWithTarget(int map) {
@@ -119,12 +121,19 @@ public class PracticeStateHelper {
    }
 
    public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
+
       g.setAntiAlias(false);
       g.scale(Main.SCALE, Main.SCALE);
       g.translate(-state.camera.getCamX(), -state.camera.getCamY());
       state.arena.render();
-      state.arena.getMapHelper().updateText(state.camera.getCamX(), state.camera.getCamY());
+//      state.arena.getMapHelper().updateText(state.camera.getCamX(), state.camera.getCamY());
+      if (state.paused) {
+         drawPauseMenu(g);
+      }
+      uIHelper.renderPracticeUI(state.arena.getMapHelper());
       g.translate(-state.camera.getCamX(), -state.camera.getCamY());
+      
       g.resetTransform();
+
    }
 }

@@ -23,10 +23,7 @@ public class Tower02State extends PracticeState {
    private Tower02 arena;
    private String name;
    private MovementSystem movementSystem;
-   private Physics physics;
-   private com.fejkathegame.game.entities.Character obj;
    private PracticeStateHelper helper;
-   private PracticeCamera camera;
 
    private float offsetMaxX = 450;
    private float offsetMaxY = 2250;
@@ -51,17 +48,17 @@ public class Tower02State extends PracticeState {
    @Override
    public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {
 
-      obj = null;
+      player = null;
       try {
-         obj = new com.fejkathegame.game.entities.Character(450, 2424);
+         player = new com.fejkathegame.game.entities.Character(450, 2424);
       }
       catch (IOException e) {
          e.printStackTrace();
       }
 
-      arena = new Tower02(name, obj);
+      arena = new Tower02(name, player);
 
-      movementSystem = new MovementSystem(obj);
+      movementSystem = new MovementSystem(player);
 
       physics = new Physics();
 
