@@ -172,7 +172,7 @@ public class ServerProgram extends Listener {
             players.get(c.getID()).isJumping = packet.isJumping;
             packet.id = c.getID();
             if (players.get(c.getID()).isJumping != old) {
-                server.sendToAllExceptUDP(tcpPort, packet);
+                server.sendToAllExceptUDP(c.getID(), packet);
                 if (players.get(c.getID()).isJumping == true) {
                     System.out.println("client " + c.getID() + " is jumping");
                 }
@@ -183,7 +183,7 @@ public class ServerProgram extends Listener {
             players.get(c.getID()).isFalling = packet.isFalling;
             packet.id = c.getID();
             if (players.get(c.getID()).isFalling != old) {
-                server.sendToAllExceptUDP(tcpPort, packet);
+                server.sendToAllExceptUDP(c.getID(), packet);
                 if (players.get(c.getID()).isFalling == true) {
                     System.out.println("client " + c.getID() + " is falling");
                 }
@@ -194,7 +194,7 @@ public class ServerProgram extends Listener {
             players.get(c.getID()).isGrounded = packet.isGrounded;
             packet.id = c.getID();
             if (players.get(c.getID()).isGrounded != old) {
-                server.sendToAllExceptUDP(tcpPort, packet);
+                server.sendToAllExceptUDP(c.getID(), packet);
                 if (players.get(c.getID()).isGrounded == true) {
                     System.out.println("client " + c.getID() + " is grounded");
                 }
@@ -205,7 +205,7 @@ public class ServerProgram extends Listener {
             players.get(c.getID()).hp = packet.hp;
             packet.id = c.getID();
             if (players.get(c.getID()).hp != old) {
-                server.sendToAllExceptTCP(tcpPort, packet);
+                server.sendToAllExceptTCP(c.getID(), packet);
                 System.out.println( c.getID() + " hp is: " + players.get(c.getID()).hp);
             }
         }
