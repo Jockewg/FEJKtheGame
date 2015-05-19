@@ -8,6 +8,7 @@ import com.fejkathegame.client.PacketChargePlayer;
 import com.fejkathegame.client.PacketFallingPlayer;
 import com.fejkathegame.client.PacketFullyChargedPlayer;
 import com.fejkathegame.client.PacketGroundedPlayer;
+import com.fejkathegame.client.PacketHpPlayer;
 import com.fejkathegame.client.PacketJumpPlayer;
 import com.fejkathegame.client.PacketMoveLeftPlayer;
 import com.fejkathegame.client.PacketMoveRightPlayer;
@@ -102,23 +103,30 @@ public class VersusState extends BasicGameState {
     public void checkCollisionWithTarget() {
 
         for (MPPlayer mp : client.getPlayers().values()) {
-            if (localPlayer.getAttackIndicator().intersects(mp.character.getHitBox()) && localPlayer.getIsAttacking()
-                    || localPlayer.getIsFullyCharged() && localPlayer.getSuperAttackIndicator().intersects(mp.character.getHitBox())) {
-                System.out.println("Player 1 hit Player 2 omfg");
-                mp.character.getHealthSystem().dealDamage(1);
-                if (mp.character.getHealth() <= 0) {
-                    arena.getPlayers().remove(mp.character);
-                    characters.remove(mp.character);
-                }
-            }
+//            if (localPlayer.getAttackIndicator().intersects(mp.character.getHitBox()) && localPlayer.getIsAttacking()
+//                    || localPlayer.getIsFullyCharged() && localPlayer.getSuperAttackIndicator().intersects(mp.character.getHitBox())) {
+//                System.out.println("Player 1 hit Player 2 omfg");
+//                mp.character.getHealthSystem().dealDamage(1);
+//                if (mp.character.getHealth() <= 0) {
+//                    arena.getPlayers().remove(mp.character);
+//                    characters.remove(mp.character);
+//                }
+//            }
 
             if (mp.character.getAttackIndicator().intersects(localPlayer.getHitBox()) && mp.character.getIsAttacking()
                     || mp.character.getIsFullyCharged() && mp.character.getSuperAttackIndicator().intersects(localPlayer.getHitBox())) {
-                System.out.println("Player 2 hit Player 1 omfg");
+                System.out.println("you got hit!");
                 localPlayer.getHealthSystem().dealDamage(1);
+                PacketHpPlayer packet = new PacketHpPlayer();
+                packet.hp = localPlayer.getHealth();
+                client.getClient().sendUDP(packet);
                 if (localPlayer.getHealth() <= 0) {
                     arena.getPlayers().remove(localPlayer);
                     characters.remove(localPlayer);
+                }
+                if (mp.character.getHealth() <= 0) {
+                    arena.getPlayers().remove(mp.character);
+                    characters.remove(mp.character);
                 }
             }
         }
