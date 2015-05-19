@@ -55,7 +55,7 @@ public class ClientProgram extends Listener {
 
         client.start();
         try {
-            client.connect(5000, "localhost", tcpPort, updPort);
+            client.connect(5000, "192.168.43.240", tcpPort, updPort);
         } catch (IOException ex) {
             Logger.getLogger(ClientProgram.class.getName()).log(Level.SEVERE, null, ex);
         }
