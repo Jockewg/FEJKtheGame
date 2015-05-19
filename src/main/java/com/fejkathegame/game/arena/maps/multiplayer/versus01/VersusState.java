@@ -5,7 +5,11 @@ import com.fejkathegame.client.MPPlayer;
 import com.fejkathegame.client.PacketAttackDirectionPlayer;
 import com.fejkathegame.client.PacketAttackPlayer;
 import com.fejkathegame.client.PacketChargePlayer;
+import com.fejkathegame.client.PacketFallingPlayer;
 import com.fejkathegame.client.PacketFullyChargedPlayer;
+import com.fejkathegame.client.PacketGroundedPlayer;
+import com.fejkathegame.client.PacketHpPlayer;
+import com.fejkathegame.client.PacketJumpPlayer;
 import com.fejkathegame.client.PacketMoveLeftPlayer;
 import com.fejkathegame.client.PacketMoveRightPlayer;
 import com.fejkathegame.client.PacketUpdateX;
@@ -40,6 +44,8 @@ public class VersusState extends BasicGameState {
     private Physics physics;
     private Character localPlayer;
 
+    private boolean hasUpdated = true;
+
     //Camera stuff
     private float cameraX, cameraY;
     private float cameraWidth = 900;
@@ -47,7 +53,7 @@ public class VersusState extends BasicGameState {
     private float cameraScale = 1.0f;
 
     private Line line;
-    
+
     private Polygon playerIndicator;
 
     private ArrayList<Character> characters;
@@ -82,12 +88,11 @@ public class VersusState extends BasicGameState {
         characters.add(localPlayer);
 
         line = new Line(0, 0, 450, 250);
-        
+
         playerIndicator = new Polygon();
         playerIndicator.addPoint(0, 0);
         playerIndicator.addPoint(20, 0);
         playerIndicator.addPoint(10, 10);
-        
 
         arena = new Versus(name, localPlayer);
         vsUI = new UIHelper(cameraX, cameraY);
@@ -100,25 +105,24 @@ public class VersusState extends BasicGameState {
     }
 
     public void checkCollisionWithTarget() {
-        
-        for(MPPlayer mp : client.getPlayers().values()) {
-            if (localPlayer.getAttackIndicator().intersects(mp.character.getHitBox()) && localPlayer.getIsAttacking()
-                    || localPlayer.getIsFullyCharged() && localPlayer.getSuperAttackIndicator().intersects(mp.character.getHitBox())) {
-                System.out.println("Player 1 hit Player 2 omfg");
-                mp.character.getHealthSystem().dealDamage(1);
-                if (mp.character.getHealth() <= 0) {
-                    arena.getPlayers().remove(mp.character);
-                    characters.remove(mp.character);
-                }
-            }
 
-            if (mp.character.getAttackIndicator().intersects(localPlayer.getHitBox()) && mp.character.getIsAttacking()
+        for (MPPlayer mp : client.getPlayers().values()) {
+            if (mp.character.getAttackIndicator().intersects(localPlayer.getHitBox()) && mp.isAttacking
                     || mp.character.getIsFullyCharged() && mp.character.getSuperAttackIndicator().intersects(localPlayer.getHitBox())) {
-                System.out.println("Player 2 hit Player 1 omfg");
+                System.out.println("you got hit!");
                 localPlayer.getHealthSystem().dealDamage(1);
+                PacketHpPlayer packet = new PacketHpPlayer();
+                packet.hp = localPlayer.getHealth();
+                client.getClient().sendUDP(packet);
                 if (localPlayer.getHealth() <= 0) {
+                    localPlayer.setAlive(false);
                     arena.getPlayers().remove(localPlayer);
                     characters.remove(localPlayer);
+                }
+                if(mp.hp <= 0) {
+                    mp.character.setAlive(false);
+                    arena.getPlayers().remove(mp.character);
+                    characters.remove(mp.character);
                 }
             }
         }
@@ -177,10 +181,10 @@ public class VersusState extends BasicGameState {
     }
 
     public void updateVectorLine() {
-        if(characters.isEmpty()) {
+        if (characters.isEmpty()) {
             line = new Line(0, 0, 900, 500);
-        } else if(characters.size() == 2) {
-            for(MPPlayer mp : client.getPlayers().values()) {
+        } else if (characters.size() == 2) {
+            for (MPPlayer mp : client.getPlayers().values()) {
                 Vector2f objVector = new Vector2f(localPlayer.getX(), localPlayer.getY());
                 Vector2f player2Vector = new Vector2f(mp.x, mp.y);
                 line = new Line(objVector, player2Vector);
@@ -189,35 +193,62 @@ public class VersusState extends BasicGameState {
             line = new Line(0, 0, 900, 500);
         }
     }
-    
+
     public void updatePlayerIndicator() {
         playerIndicator.setX(localPlayer.getX() - 4);
         playerIndicator.setY(localPlayer.getY() - 17);
     }
-    
+
     public void renderPlayerIndicator(Graphics g) {
         g.setColor(new Color(1.0f, 0.0f, 0.0f, 0.5f));
         g.fill(playerIndicator);
     }
 
-    public void movePlayer2(int i) {
-        for (MPPlayer mpPlayer : client.getPlayers().values()) { //other player render here.
-            mpPlayer.character.update(i);
-            mpPlayer.character.setX(mpPlayer.x);
-            mpPlayer.character.setY(mpPlayer.y);
-            mpPlayer.character.setMovingLeft(mpPlayer.moveingLeft);
-            mpPlayer.character.setMovingRight(mpPlayer.moveingRight);
+    public void updateMpPlayer(int i) {
+        for (MPPlayer mp : client.getPlayers().values()) { //other player render here.
+            if(mp.character.getHealth() > 0) {
+                mp.character.update(i);
+                mp.character.setX(mp.x);
+                mp.character.setY(mp.y);
+                mp.character.setMovingLeft(mp.moveingLeft);
+                if (mp.moveingLeft) {
+                    mp.character.setFlipped(true);
+                }
+                mp.character.setMovingRight(mp.moveingRight);
+                if (mp.moveingRight) {
+                    mp.character.setFlipped(false);
+                }
+                mp.character.setIsCharging(mp.isChargeing);
+                mp.character.setIsFullyCharged(mp.isFullyCharged);
+                mp.character.setIsJumping(mp.isJumping);
+                mp.character.setIsFalling(mp.isFalling);
+                mp.character.setGrounded(mp.isGrounded);
+                if (mp.isAttacking && hasUpdated) {
+                    mp.character.setRotateDirection(mp.direction);
+                    mp.character.updateAttackIndicator();
+                    hasUpdated = false;
+                } else if (!mp.isAttacking) {
+                    hasUpdated = true;
+                }
+
+                if (mp.isChargeing) {
+                    mp.character.chargeSuperAttack(i);
+                } else if (mp.isFullyCharged) {
+                    mp.character.activateSuperAttack(i);
+                }
+            }
         }
     }
-    
+
     public void checkIfNewPlayerConnected() {
         for (MPPlayer mpPlayer : client.getPlayers().values()) { //other player render here.
-            if(mpPlayer.character == null) {
+            if (mpPlayer.character == null) {
                 try {
                     mpPlayer.character = new Character(300, 40);
                 } catch (SlickException | IOException ex) {
                     Logger.getLogger(VersusState.class.getName()).log(Level.SEVERE, null, ex);
                 }
+                mpPlayer.character.setHealth(mpPlayer.hp);
                 characters.add(mpPlayer.character);
                 arena.addPlayer(mpPlayer.character);
             }
@@ -234,6 +265,16 @@ public class VersusState extends BasicGameState {
         g.translate(-cameraX, -cameraY);
         arena.render();
         renderPlayerIndicator(g);
+        for (MPPlayer mp : client.getPlayers().values()) {
+            if (mp.character.getHealth() > 0) {
+                if (mp.isAttacking) {
+                    mp.character.renderAttackIndicator();
+                    mp.character.setAttackIndicatorTransp(1.0f);
+                }
+
+                mp.character.renderCharacterAnimation();
+            }
+        }
         g.resetTransform();
 
         g.translate(-cameraX, -cameraY);
@@ -247,7 +288,7 @@ public class VersusState extends BasicGameState {
         updateVectorLine();
         updateCameraRect();
         movementSystem.handleInput(gc.getInput(), i);
-        movePlayer2(i);
+        updateMpPlayer(i);
         physics.handlePhysics(arena, i);
         localPlayer.update(i);
         updatePlayerIndicator();
@@ -321,6 +362,33 @@ public class VersusState extends BasicGameState {
         } else {
             PacketMoveRightPlayer packet = new PacketMoveRightPlayer();
             packet.moveingRight = false;
+            client.getClient().sendUDP(packet);
+        }
+        if (localPlayer.isJumping()) {
+            PacketJumpPlayer packet = new PacketJumpPlayer();
+            packet.isJumping = true;
+            client.getClient().sendUDP(packet);
+        } else {
+            PacketJumpPlayer packet = new PacketJumpPlayer();
+            packet.isJumping = false;
+            client.getClient().sendUDP(packet);
+        }
+        if (localPlayer.isFalling()) {
+            PacketFallingPlayer packet = new PacketFallingPlayer();
+            packet.isFalling = true;
+            client.getClient().sendUDP(packet);
+        } else {
+            PacketFallingPlayer packet = new PacketFallingPlayer();
+            packet.isFalling = false;
+            client.getClient().sendUDP(packet);
+        }
+        if (localPlayer.getGrounded()) {
+            PacketGroundedPlayer packet = new PacketGroundedPlayer();
+            packet.isGrounded = true;
+            client.getClient().sendUDP(packet);
+        } else {
+            PacketGroundedPlayer packet = new PacketGroundedPlayer();
+            packet.isGrounded = false;
             client.getClient().sendUDP(packet);
         }
     }

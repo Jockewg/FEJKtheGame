@@ -47,11 +47,15 @@ public class ClientProgram extends Listener {
         client.getKryo().register(PacketAttackDirectionPlayer.class);
         client.getKryo().register(PacketMoveLeftPlayer.class);
         client.getKryo().register(PacketMoveRightPlayer.class);
+        client.getKryo().register(PacketJumpPlayer.class);
+        client.getKryo().register(PacketGroundedPlayer.class);
+        client.getKryo().register(PacketFallingPlayer.class);
+        client.getKryo().register(PacketHpPlayer.class);
         client.addListener(this);
 
         client.start();
         try {
-            client.connect(5000, "localhost", tcpPort, updPort);
+            client.connect(5000, "192.168.43.240", tcpPort, updPort);
         } catch (IOException ex) {
             Logger.getLogger(ClientProgram.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -101,6 +105,18 @@ public class ClientProgram extends Listener {
         } else if (o instanceof PacketMoveRightPlayer) {
             PacketMoveRightPlayer packet = (PacketMoveRightPlayer) o;
             players.get(packet.id).moveingRight = packet.moveingRight;
+        } else if(o instanceof PacketJumpPlayer) {
+            PacketJumpPlayer packet = (PacketJumpPlayer) o;
+            players.get(packet.id).isJumping = packet.isJumping;
+        } else if (o instanceof PacketFallingPlayer ) {
+            PacketFallingPlayer packet = (PacketFallingPlayer) o;
+            players.get(packet.id).isFalling = packet.isFalling;
+        }  else if (o instanceof PacketGroundedPlayer) {
+            PacketGroundedPlayer packet = (PacketGroundedPlayer) o;
+            players.get(packet.id).isGrounded = packet.isGrounded;
+        } else if (o instanceof PacketHpPlayer) {
+            PacketHpPlayer packet = (PacketHpPlayer) o;
+            players.get(packet.id).hp = packet.hp;
         }
     }
 

@@ -49,7 +49,6 @@ public class Tutorial01 extends PracticeLevel {
       loadTileMap();
 
       timer = new PracticeTimer();
-      timer.startTimer();
 
       helper = new PracticeLevelHelper(timer, targets);
    }
@@ -151,6 +150,11 @@ public class Tutorial01 extends PracticeLevel {
 
    public PracticeTimer getTimer() {
       return timer;
+   }
+
+   @Override
+   public ArrayList<Tile> getTargetTiles() {
+      throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
    }
 
 }

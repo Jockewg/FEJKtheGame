@@ -18,4 +18,8 @@ public class MPPlayer {
     public boolean moveingRight;
     public Character character;
     public boolean connected;
+    public boolean isJumping;
+    public boolean isGrounded;
+    public boolean isFalling;
+    public int hp;
 }

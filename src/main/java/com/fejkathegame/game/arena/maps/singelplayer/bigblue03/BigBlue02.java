@@ -164,6 +164,7 @@ public class BigBlue02 extends PracticeLevel {
      *
      * @throws org.newdawn.slick.SlickException
      */
+    @Override
     public void render() throws SlickException {
         map.render(0, 0, 0, 0, 150, 50);
 
@@ -175,5 +176,10 @@ public class BigBlue02 extends PracticeLevel {
             t.render();
         }
     }
+
+   @Override
+   public PracticeTimer getTimer() {
+      return timer;
+   }
 
 }

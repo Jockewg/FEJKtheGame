@@ -32,6 +32,7 @@ public class City04 extends PracticeLevel {
 
     private ArrayList<LevelObject> players;
     private ArrayList<PracticeTarget> targets;
+    private ArrayList<Tile> targetTiles;
 
     PracticeLevelHelper helper;
     PracticeTimer timer;
@@ -172,5 +173,15 @@ public class City04 extends PracticeLevel {
             t.render();
         }
     }
+
+   @Override
+   public ArrayList<Tile> getTargetTiles() {
+      return targetTiles;
+   }
+
+   @Override
+   public PracticeTimer getTimer() {
+      return timer;
+   }
 
 }

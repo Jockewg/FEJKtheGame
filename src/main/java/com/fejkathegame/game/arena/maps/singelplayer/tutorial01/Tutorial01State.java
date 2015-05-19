@@ -1,11 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.fejkathegame.game.arena.maps.singelplayer.tutorial01;
 
 import com.fejkathegame.game.Main;
+import com.fejkathegame.game.arena.PracticeState;
 import com.fejkathegame.game.arena.maps.PracticeCamera;
 import com.fejkathegame.game.arena.maps.PracticeStateHelper;
 import com.fejkathegame.game.arena.physics.Physics;
@@ -13,15 +9,15 @@ import com.fejkathegame.game.entities.logic.MovementSystem;
 import java.io.IOException;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
-import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
 /**
  *
  * @author Swartt
  */
-public class Tutorial01State extends BasicGameState {
+public class Tutorial01State extends PracticeState {
    
     private Tutorial01 arena;
     private String name;
@@ -31,6 +27,11 @@ public class Tutorial01State extends BasicGameState {
     private PracticeStateHelper helper;
     private PracticeCamera camera;
 
+    private Image spacebar;
+    private Image arrow;
+    private Image attack;
+    private Image line;
+    
     private float offsetMaxX;
     private float offsetMaxY;
     
@@ -65,12 +66,20 @@ public class Tutorial01State extends BasicGameState {
         setCameraBoundaries();
 
         movementSystem = new MovementSystem(obj);
+        
+        spacebar = new Image("data/img/levelart/spacebar.png");
+        
+        arrow = new Image("data/img/levelart/arrow.png");
+        
+        attack = new Image("data/img/levelart/attac.png");
+        
+        line = new Image("data/img/levelart/line.png");
 
         physics = new Physics();
 
         camera = new PracticeCamera(offsetMaxX, offsetMaxY);
 
-        helper = new PracticeStateHelper(arena, obj, camera);
+        helper = new PracticeStateHelper(this);
     }
 
     public void setCameraBoundaries() {
@@ -100,6 +109,31 @@ public class Tutorial01State extends BasicGameState {
         g.setAntiAlias(false);
         g.scale(Main.SCALE, Main.SCALE);
         g.translate(-camera.getCamX(), -camera.getCamY());
+        spacebar.draw(220,510);
+        arrow.draw(300, 500);
+        
+        
+        spacebar.draw(700,510);
+        arrow.draw(780, 500);
+        spacebar.draw(950,510);
+        arrow.draw(1050, 500);
+        
+        
+        spacebar.draw(1500,510);
+        arrow.draw(1580, 500);
+        spacebar.draw(1750,510);
+        arrow.draw(1830, 500);
+        
+        attack.draw(1960, 510);
+        line.draw(2050, 440);
+        
+        spacebar.draw(2400, 510);
+        attack.draw(2400, 450);
+        line.draw(2425, 400);
+        
+        spacebar.draw(730, 250);
+        spacebar.draw(650, 200);
+        
         arena.render();
         /*arena.helper.updateText(camera.getCamX(), camera.getCamY());*/
         g.resetTransform();
@@ -117,7 +151,7 @@ public class Tutorial01State extends BasicGameState {
         physics.handlePhysics(arena, i);
         helper.checkCollisionWithTarget(getID());
         obj.update(i);
-        arena.timer.calculateSecond(i);
+//        arena.timer.calculateSecond(i);
         
     }
 }

@@ -7,6 +7,7 @@ import com.fejkathegame.game.arena.tiles.AirTile;
 import com.fejkathegame.game.arena.tiles.SolidTile;
 import com.fejkathegame.game.arena.tiles.Tile;
 import com.fejkathegame.game.entities.PracticeTarget;
+import com.fejkathegame.game.timer.PracticeTimer;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.tiled.TiledMap;
 
@@ -26,6 +27,8 @@ public class Versus extends PracticeLevel {
     private Image[] crankAnim;
     
     private Animation animation;
+    
+    private ArrayList<Tile> targetTiles;
     /**
      * Constructor for Arena, creates the playingfield and adds all players to the field
      * @param name name of the file containing the tilemap
@@ -160,4 +163,14 @@ public class Versus extends PracticeLevel {
     public Animation getAnimation() {
         return animation;
     }
+
+   @Override
+   public ArrayList<Tile> getTargetTiles() {
+      return targetTiles;
+      }
+
+   @Override
+   public PracticeTimer getTimer() {
+      return null;
+   }
 }

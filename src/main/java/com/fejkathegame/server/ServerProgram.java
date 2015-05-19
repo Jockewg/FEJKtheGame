@@ -35,6 +35,10 @@ public class ServerProgram extends Listener {
         server.getKryo().register(PacketAttackDirectionPlayer.class);
         server.getKryo().register(PacketMoveLeftPlayer.class);
         server.getKryo().register(PacketMoveRightPlayer.class);
+        server.getKryo().register(PacketJumpPlayer.class);
+        server.getKryo().register(PacketFallingPlayer.class);
+        server.getKryo().register(PacketGroundedPlayer.class);
+        server.getKryo().register(PacketHpPlayer.class);
 
         server.bind(tcpPort, udpPort);
         server.start();
@@ -58,6 +62,10 @@ public class ServerProgram extends Listener {
         player.isAttacking = false;
         player.isChargeing = false;
         player.isFullyCharged = false;
+        player.isFalling = false;
+        player.isJumping = false;
+        player.isGrounded = false;
+        player.hp = 5;
 
         PacketAddPlayer packet = new PacketAddPlayer();
         packet.id = c.getID();
@@ -67,6 +75,10 @@ public class ServerProgram extends Listener {
             PacketAddPlayer packet2 = new PacketAddPlayer();
             packet2.id = p.c.getID();
             c.sendTCP(packet2);
+            PacketHpPlayer packet3 = new PacketHpPlayer();
+            packet3.id = p.c.getID();
+            packet3.hp = p.hp;
+            c.sendTCP(packet3);
         }
 
         players.put(c.getID(), player);
@@ -157,6 +169,48 @@ public class ServerProgram extends Listener {
                 if (players.get(c.getID()).moveingRight == true) {
                     System.out.println("client " + c.getID() + " moveing right");
                 }
+            }
+        } else if (o instanceof PacketJumpPlayer) {
+            PacketJumpPlayer packet = (PacketJumpPlayer) o;
+            boolean old = players.get(c.getID()).isJumping;
+            players.get(c.getID()).isJumping = packet.isJumping;
+            packet.id = c.getID();
+            if (players.get(c.getID()).isJumping != old) {
+                server.sendToAllExceptUDP(c.getID(), packet);
+                if (players.get(c.getID()).isJumping == true) {
+                    System.out.println("client " + c.getID() + " is jumping");
+                }
+            }
+        } else if (o instanceof PacketFallingPlayer) {
+            PacketFallingPlayer packet = (PacketFallingPlayer) o;
+            boolean old = players.get(c.getID()).isFalling;
+            players.get(c.getID()).isFalling = packet.isFalling;
+            packet.id = c.getID();
+            if (players.get(c.getID()).isFalling != old) {
+                server.sendToAllExceptUDP(c.getID(), packet);
+                if (players.get(c.getID()).isFalling == true) {
+                    System.out.println("client " + c.getID() + " is falling");
+                }
+            }
+        } else if (o instanceof PacketGroundedPlayer) {
+            PacketGroundedPlayer packet = (PacketGroundedPlayer) o;
+            boolean old = players.get(c.getID()).isGrounded;
+            players.get(c.getID()).isGrounded = packet.isGrounded;
+            packet.id = c.getID();
+            if (players.get(c.getID()).isGrounded != old) {
+                server.sendToAllExceptUDP(c.getID(), packet);
+                if (players.get(c.getID()).isGrounded == true) {
+                    System.out.println("client " + c.getID() + " is grounded");
+                }
+            }
+        } else if (o instanceof PacketHpPlayer) {
+            PacketHpPlayer packet = (PacketHpPlayer) o;
+            int old = players.get(c.getID()).hp;
+            players.get(c.getID()).hp = packet.hp;
+            packet.id = c.getID();
+            if (players.get(c.getID()).hp != old) {
+                server.sendToAllExceptTCP(c.getID(), packet);
+                System.out.println("client " +  c.getID() + " hp is: " + players.get(c.getID()).hp);
             }
         }
     }
