@@ -39,6 +39,8 @@ public class VersusState extends BasicGameState {
     private Physics physics;
     private Character localPlayer;
 
+    private boolean hasUpdated = false;
+
     //Camera stuff
     private float cameraX, cameraY;
     private float cameraWidth = 900;
@@ -46,7 +48,7 @@ public class VersusState extends BasicGameState {
     private float cameraScale = 1.0f;
 
     private Line line;
-    
+
     private Polygon playerIndicator;
 
     private ArrayList<Character> characters;
@@ -79,12 +81,11 @@ public class VersusState extends BasicGameState {
         characters.add(localPlayer);
 
         line = new Line(0, 0, 450, 250);
-        
+
         playerIndicator = new Polygon();
         playerIndicator.addPoint(0, 0);
         playerIndicator.addPoint(20, 0);
         playerIndicator.addPoint(10, 10);
-        
 
         arena = new Versus(name, localPlayer);
 
@@ -96,8 +97,8 @@ public class VersusState extends BasicGameState {
     }
 
     public void checkCollisionWithTarget() {
-        
-        for(MPPlayer mp : client.getPlayers().values()) {
+
+        for (MPPlayer mp : client.getPlayers().values()) {
             if (localPlayer.getAttackIndicator().intersects(mp.character.getHitBox()) && localPlayer.getIsAttacking()
                     || localPlayer.getIsFullyCharged() && localPlayer.getSuperAttackIndicator().intersects(mp.character.getHitBox())) {
                 System.out.println("Player 1 hit Player 2 omfg");
@@ -173,10 +174,10 @@ public class VersusState extends BasicGameState {
     }
 
     public void updateVectorLine() {
-        if(characters.isEmpty()) {
+        if (characters.isEmpty()) {
             line = new Line(0, 0, 900, 500);
-        } else if(characters.size() == 2) {
-            for(MPPlayer mp : client.getPlayers().values()) {
+        } else if (characters.size() == 2) {
+            for (MPPlayer mp : client.getPlayers().values()) {
                 Vector2f objVector = new Vector2f(localPlayer.getX(), localPlayer.getY());
                 Vector2f player2Vector = new Vector2f(mp.x, mp.y);
                 line = new Line(objVector, player2Vector);
@@ -185,12 +186,12 @@ public class VersusState extends BasicGameState {
             line = new Line(0, 0, 900, 500);
         }
     }
-    
+
     public void updatePlayerIndicator() {
         playerIndicator.setX(localPlayer.getX() - 4);
         playerIndicator.setY(localPlayer.getY() - 17);
     }
-    
+
     public void renderPlayerIndicator(Graphics g) {
         g.setColor(new Color(1.0f, 0.0f, 0.0f, 0.5f));
         g.fill(playerIndicator);
@@ -203,21 +204,27 @@ public class VersusState extends BasicGameState {
             mpPlayer.character.setY(mpPlayer.y);
             mpPlayer.character.setMovingLeft(mpPlayer.moveingLeft);
             mpPlayer.character.setMovingRight(mpPlayer.moveingRight);
-            if(mpPlayer.isAttacking) {
+            if (!hasUpdated && mpPlayer.character.getOldRotate() != mpPlayer.direction) {
                 mpPlayer.character.setRotateDirection(mpPlayer.direction);
+                hasUpdated = true;
             }
-            
-            if(mpPlayer.isChargeing) {
+            if (mpPlayer.isAttacking && hasUpdated) {
+
+                mpPlayer.character.updateAttackIndicator();
+                hasUpdated = false;
+            }
+
+            if (mpPlayer.isChargeing) {
                 mpPlayer.character.chargeSuperAttack(i);
-            } else if(mpPlayer.isFullyCharged) {
+            } else if (mpPlayer.isFullyCharged) {
                 mpPlayer.character.activateSuperAttack(i);
             }
         }
     }
-    
+
     public void checkIfNewPlayerConnected() {
         for (MPPlayer mpPlayer : client.getPlayers().values()) { //other player render here.
-            if(mpPlayer.character == null) {
+            if (mpPlayer.character == null) {
                 try {
                     mpPlayer.character = new Character(300, 40);
                 } catch (SlickException | IOException ex) {
@@ -239,8 +246,11 @@ public class VersusState extends BasicGameState {
         g.translate(-cameraX, -cameraY);
         arena.render();
         renderPlayerIndicator(g);
-        for(MPPlayer mp : client.getPlayers().values()) {
-            mp.character.renderAttackIndicator();
+        for (MPPlayer mp : client.getPlayers().values()) {
+            if (mp.isAttacking) {
+                mp.character.renderAttackIndicator();
+                mp.character.setAttackIndicatorTransp(1.0f);
+            }
         }
         g.resetTransform();
 
