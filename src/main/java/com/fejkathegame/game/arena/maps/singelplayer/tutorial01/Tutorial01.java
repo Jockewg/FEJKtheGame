@@ -152,4 +152,9 @@ public class Tutorial01 extends PracticeLevel {
       return timer;
    }
 
+   @Override
+   public ArrayList<Tile> getTargetTiles() {
+      throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+   }
+
 }
