@@ -20,4 +20,8 @@ public class Player {
     public boolean isFullyCharged;
     public boolean moveingLeft;
     public boolean moveingRight;
+    public boolean isJumping;
+    public boolean isGrounded;
+    public boolean isFalling;
+    public int hp;
 }
