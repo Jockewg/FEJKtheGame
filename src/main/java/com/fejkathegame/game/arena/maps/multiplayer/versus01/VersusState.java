@@ -173,9 +173,9 @@ public class VersusState extends BasicGameState {
     }
 
     public void updateVectorLine() {
-        if(client.getPlayers().values().isEmpty()) {
+        if(characters.isEmpty()) {
             line = new Line(0, 0, 900, 500);
-        } else if(client.getPlayers().values().size() <= 1) {
+        } else if(characters.size() == 2) {
             for(MPPlayer mp : client.getPlayers().values()) {
                 Vector2f objVector = new Vector2f(localPlayer.getX(), localPlayer.getY());
                 Vector2f player2Vector = new Vector2f(mp.x, mp.y);
