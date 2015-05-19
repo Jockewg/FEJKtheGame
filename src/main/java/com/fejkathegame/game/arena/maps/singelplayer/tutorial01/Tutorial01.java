@@ -49,7 +49,6 @@ public class Tutorial01 extends PracticeLevel {
       loadTileMap();
 
       timer = new PracticeTimer();
-      timer.startTimer();
 
       helper = new PracticeLevelHelper(timer, targets);
    }
