@@ -22,13 +22,11 @@ import java.util.logging.Logger;
 public class BigBlue02State extends PracticeState {
 
     private String name;
-    private MovementSystem movementSystem;
     private PracticeStateHelper stateHelper;
 
     private float offsetMaxX;
     private float offsetMaxY;
 
-    private boolean isCameraAnimationRunning = true;
     private float scale = 0.24f;
     private float scaleSmoothing = 0;
 
@@ -59,8 +57,6 @@ public class BigBlue02State extends PracticeState {
         arena = new BigBlue02(name, player);
 
         setCameraBoundaries();
-
-        movementSystem = new MovementSystem(player);
 
         physics = new Physics();
 
