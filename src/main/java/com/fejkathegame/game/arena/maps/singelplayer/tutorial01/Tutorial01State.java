@@ -1,6 +1,7 @@
 package com.fejkathegame.game.arena.maps.singelplayer.tutorial01;
 
 import com.fejkathegame.game.Main;
+import com.fejkathegame.game.arena.PracticeState;
 import com.fejkathegame.game.arena.maps.PracticeCamera;
 import com.fejkathegame.game.arena.maps.PracticeStateHelper;
 import com.fejkathegame.game.arena.physics.Physics;
@@ -10,14 +11,13 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
-import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
 /**
  *
  * @author Swartt
  */
-public class Tutorial01State extends BasicGameState {
+public class Tutorial01State extends PracticeState {
    
     private Tutorial01 arena;
     private String name;
@@ -79,7 +79,7 @@ public class Tutorial01State extends BasicGameState {
 
         camera = new PracticeCamera(offsetMaxX, offsetMaxY);
 
-        helper = new PracticeStateHelper(arena, obj, camera);
+        helper = new PracticeStateHelper(this);
     }
 
     public void setCameraBoundaries() {

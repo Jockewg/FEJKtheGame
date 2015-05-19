@@ -1,26 +1,19 @@
 package com.fejkathegame.game.arena.maps.singelplayer.bigblue03;
 
 import com.fejkathegame.game.Main;
-import com.fejkathegame.game.arena.MenuHelper;
 import com.fejkathegame.game.arena.PracticeState;
 import com.fejkathegame.game.arena.maps.PracticeCamera;
 import com.fejkathegame.game.arena.maps.PracticeStateHelper;
 import com.fejkathegame.game.arena.physics.Physics;
-import com.fejkathegame.game.arena.tiles.Tile;
 import com.fejkathegame.game.entities.logic.MovementSystem;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
-import com.fejkathegame.game.entities.Character;
-import com.fejkathegame.game.entities.PracticeTarget;
 
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.newdawn.slick.Input;
-import org.newdawn.slick.geom.Rectangle;
-import org.newdawn.slick.geom.Shape;
 
 /**
  * @author Swartt
@@ -33,7 +26,6 @@ public class BigBlue02State extends PracticeState {
 //    private Character player;
     private PracticeStateHelper stateHelper;
 //    private PracticeCamera camera;
-    private MenuHelper menuHelper;
 
     private float offsetMaxX;
     private float offsetMaxY;
@@ -83,9 +75,8 @@ public class BigBlue02State extends PracticeState {
 
         camera = new PracticeCamera(offsetMaxX, offsetMaxY);
 
-        stateHelper = new PracticeStateHelper(arena, player, camera);
+        stateHelper = new PracticeStateHelper(this);
         
-        menuHelper = new MenuHelper(this);
     }
 
     public void setCameraBoundaries() {
@@ -128,7 +119,7 @@ public class BigBlue02State extends PracticeState {
         arena.render();
         arena.getMapHelper().updateText(camera.getCamX(), camera.getCamY());
         if(paused && !isCameraAnimationRunning) {
-            menuHelper.drawPauseMenu(g);
+            stateHelper.drawPauseMenu(g);
         }
         g.resetTransform();
         
@@ -138,7 +129,7 @@ public class BigBlue02State extends PracticeState {
     @Override
     public void update(GameContainer gc, StateBasedGame sbg, int i) throws SlickException {
         try {
-            menuHelper.pauseGame(gc.getInput(), sbg, 50, 1100);
+            stateHelper.pauseGame(gc.getInput(), sbg, 50, 1100);
         } catch (IOException ex) {
             Logger.getLogger(BigBlue02State.class.getName()).log(Level.SEVERE, null, ex);
         }
