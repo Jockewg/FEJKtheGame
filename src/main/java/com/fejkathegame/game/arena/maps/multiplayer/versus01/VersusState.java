@@ -224,16 +224,9 @@ public class VersusState extends BasicGameState {
             mp.character.setIsCharging(mp.isChargeing);
             mp.character.setIsFullyCharged(mp.isFullyCharged);
             mp.character.setIsJumping(mp.isJumping);
-            if(mp.isJumping && hasUpdated) {
-                mp.character.playJumpSound();
-                hasUpdated = false;
-            } else if(!mp.isJumping) {
-                hasUpdated = true;
-            }
             mp.character.setIsFalling(mp.isFalling);
             mp.character.setGrounded(mp.isGrounded);
             if (mp.isAttacking && hasUpdated) {
-                mp.character.playAttackSound();
                 mp.character.setRotateDirection(mp.direction);
                 mp.character.updateAttackIndicator();
                 hasUpdated = false;
@@ -245,6 +238,8 @@ public class VersusState extends BasicGameState {
                 mp.character.chargeSuperAttack(i);
             } else if (mp.isFullyCharged) {
                 mp.character.activateSuperAttack(i);
+            } else {
+                mp.character.stopChargeSound();
             }
         }
     }
