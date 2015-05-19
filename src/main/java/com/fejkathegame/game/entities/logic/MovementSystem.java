@@ -74,7 +74,7 @@ public class MovementSystem {
             character.setIsCharging(true);
             character.playChargeSound();
             character.setMoving(false);
-            character.chargeSuperAttack(i, delta);
+            character.chargeSuperAttack(delta);
         } else {
             character.setIsCharging(false);
             character.stopChargeSound();

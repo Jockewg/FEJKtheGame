@@ -24,12 +24,12 @@ public class LevelSelectButton extends Button{
         this.height = height;
         this.highScoreAdapt = new HighscoreAdapter();
         this.title = name;
+        this.bestTime = "Best Time : ";
 
         if(highScoreAdapt.readScore(mapId) == Integer.MAX_VALUE){
-            this.bestTime = "N/A";
+            this.bestTime = this.bestTime + "N/A";
         }else{
-            this.bestTime = highScoreAdapt.readScore(mapId)+ "";
-
+            this.bestTime = this.bestTime + highScoreAdapt.readScore(mapId);
         }
         
     }
@@ -38,7 +38,7 @@ public class LevelSelectButton extends Button{
         g.setColor(Color.orange);
         g.drawRect(posX, posY, width, height);
         g.drawString(title, posX + 20, posY + (height / 2));
-        g.drawString(bestTime + "", posX + 300, posY + (height / 2));
+        g.drawString(bestTime + "", posX + 230, posY + (height / 2));
     }
     
     public void setBestTime(String time){
