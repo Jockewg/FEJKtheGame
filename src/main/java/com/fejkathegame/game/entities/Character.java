@@ -391,7 +391,7 @@ public class Character extends LevelObject {
 
         sweepXEnd = sweepXStart;
         sweepYEnd = sweepYStart;
-        oldRotate = rotateDirection;
+        
     }
 
     /**
@@ -565,6 +565,7 @@ public class Character extends LevelObject {
         attackIndicator = (Polygon) attackIndicator.transform(
         Transform.createRotateTransform((float) Math.toRadians(rotateDirection - oldRotate)));
         attackIndicator.setLocation(x + 16, y + 16);
+        oldRotate = rotateDirection;
     }
 
     /**
