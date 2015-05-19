@@ -206,7 +206,7 @@ public class ServerProgram extends Listener {
             packet.id = c.getID();
             if (players.get(c.getID()).hp != old) {
                 server.sendToAllExceptTCP(c.getID(), packet);
-                System.out.println( c.getID() + " hp is: " + players.get(c.getID()).hp);
+                System.out.println("client " +  c.getID() + " hp is: " + players.get(c.getID()).hp);
             }
         }
     }

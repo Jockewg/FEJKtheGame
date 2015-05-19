@@ -113,18 +113,21 @@ public class VersusState extends BasicGameState {
 //                }
 //            }
 
-            if (mp.character.getAttackIndicator().intersects(localPlayer.getHitBox()) && mp.character.getIsAttacking()
+            if (mp.character.getAttackIndicator().intersects(localPlayer.getHitBox()) && mp.isAttacking
                     || mp.character.getIsFullyCharged() && mp.character.getSuperAttackIndicator().intersects(localPlayer.getHitBox())) {
                 System.out.println("you got hit!");
                 localPlayer.getHealthSystem().dealDamage(1);
                 PacketHpPlayer packet = new PacketHpPlayer();
                 packet.hp = localPlayer.getHealth();
+                System.out.println(localPlayer.getHealth());
                 client.getClient().sendUDP(packet);
                 if (localPlayer.getHealth() <= 0) {
+                    localPlayer.setAlive(false);
                     arena.getPlayers().remove(localPlayer);
                     characters.remove(localPlayer);
                 }
                 if (mp.character.getHealth() <= 0) {
+                    mp.character.setAlive(false);
                     arena.getPlayers().remove(mp.character);
                     characters.remove(mp.character);
                 }
@@ -209,38 +212,36 @@ public class VersusState extends BasicGameState {
     }
 
     public void updateMpPlayer(int i) {
-        for (MPPlayer mpPlayer : client.getPlayers().values()) { //other player render here.
-            mpPlayer.character.update(i);
-            mpPlayer.character.setX(mpPlayer.x);
-            mpPlayer.character.setY(mpPlayer.y);
-            mpPlayer.character.setMovingLeft(mpPlayer.moveingLeft);
-            if(mpPlayer.moveingLeft)
-                mpPlayer.character.setFlipped(true);
-            mpPlayer.character.setMovingRight(mpPlayer.moveingRight);
-            if(mpPlayer.moveingRight)
-                mpPlayer.character.setFlipped(false);
-            mpPlayer.character.setIsCharging(mpPlayer.isChargeing);
-            mpPlayer.character.setIsFullyCharged(mpPlayer.isFullyCharged);
-            mpPlayer.character.setIsJumping(mpPlayer.isJumping);
-            mpPlayer.character.setIsFalling(mpPlayer.isFalling);
-            mpPlayer.character.setGrounded(mpPlayer.isGrounded);
-            if (mpPlayer.isAttacking && hasUpdated) {
-                mpPlayer.character.setRotateDirection(mpPlayer.direction);
-                mpPlayer.character.updateAttackIndicator();
+        for (MPPlayer mp : client.getPlayers().values()) { //other player render here.
+            mp.character.update(i);
+            mp.character.setX(mp.x);
+            mp.character.setY(mp.y);
+            mp.character.setMovingLeft(mp.moveingLeft);
+            if (mp.moveingLeft) {
+                mp.character.setFlipped(true);
+            }
+            mp.character.setMovingRight(mp.moveingRight);
+            if (mp.moveingRight) {
+                mp.character.setFlipped(false);
+            }
+            mp.character.setHealth(mp.hp);
+            mp.character.setIsCharging(mp.isChargeing);
+            mp.character.setIsFullyCharged(mp.isFullyCharged);
+            mp.character.setIsJumping(mp.isJumping);
+            mp.character.setIsFalling(mp.isFalling);
+            mp.character.setGrounded(mp.isGrounded);
+            if (mp.isAttacking && hasUpdated) {
+                mp.character.setRotateDirection(mp.direction);
+                mp.character.updateAttackIndicator();
                 hasUpdated = false;
-            } else if (!mpPlayer.isAttacking) {
+            } else if (!mp.isAttacking) {
                 hasUpdated = true;
             }
 
-            if (mpPlayer.isChargeing) {
-                mpPlayer.character.chargeSuperAttack(i);
-            } else if (mpPlayer.isFullyCharged) {
-                mpPlayer.character.activateSuperAttack(i);
-            }
-            
-            if(mpPlayer.character.getHealth() <= 0) {
-                arena.getPlayers().remove(mpPlayer.character);
-                characters.remove(mpPlayer.character);
+            if (mp.isChargeing) {
+                mp.character.chargeSuperAttack(i);
+            } else if (mp.isFullyCharged) {
+                mp.character.activateSuperAttack(i);
             }
         }
     }
@@ -270,12 +271,14 @@ public class VersusState extends BasicGameState {
         arena.render();
         renderPlayerIndicator(g);
         for (MPPlayer mp : client.getPlayers().values()) {
-            if (mp.isAttacking) {
-                mp.character.renderAttackIndicator();
-                mp.character.setAttackIndicatorTransp(1.0f);
+            if (mp.character.isAlive()) {
+                if (mp.isAttacking) {
+                    mp.character.renderAttackIndicator();
+                    mp.character.setAttackIndicatorTransp(1.0f);
+                }
+
+                mp.character.renderCharacterAnimation();
             }
-            
-            mp.character.renderCharacterAnimation();
         }
         g.resetTransform();
 
