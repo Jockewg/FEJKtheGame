@@ -39,7 +39,7 @@ public class VersusState extends BasicGameState {
     private Physics physics;
     private Character localPlayer;
 
-    private boolean hasUpdated = false;
+    private boolean hasUpdated = true;
 
     //Camera stuff
     private float cameraX, cameraY;
@@ -204,16 +204,13 @@ public class VersusState extends BasicGameState {
             mpPlayer.character.setY(mpPlayer.y);
             mpPlayer.character.setMovingLeft(mpPlayer.moveingLeft);
             mpPlayer.character.setMovingRight(mpPlayer.moveingRight);
-            if (!hasUpdated && mpPlayer.character.getOldRotate() != mpPlayer.direction) {
-                mpPlayer.character.setRotateDirection(mpPlayer.direction);
-                hasUpdated = true;
-            }
             if (mpPlayer.isAttacking && hasUpdated) {
-
+                mpPlayer.character.setRotateDirection(mpPlayer.direction);
                 mpPlayer.character.updateAttackIndicator();
                 hasUpdated = false;
-            }
-
+            } else if(!mpPlayer.isAttacking)
+                hasUpdated = true;
+            
             if (mpPlayer.isChargeing) {
                 mpPlayer.character.chargeSuperAttack(i);
             } else if (mpPlayer.isFullyCharged) {
