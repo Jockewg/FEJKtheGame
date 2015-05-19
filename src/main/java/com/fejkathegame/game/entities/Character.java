@@ -22,13 +22,13 @@ import org.newdawn.slick.SpriteSheet;
  */
 public class Character extends LevelObject {
     public Vector2f networkPosition = new Vector2f(0,0);
-    private boolean grounded;
+    private boolean grounded = false;
     private boolean isAlive;
     private boolean moving = false;
     private boolean flipped;
     private boolean movingRight = false;
     private boolean movingLeft = false;
-    private boolean isJumping, isFalling, zeroYVel;
+    private boolean isJumping, isFalling;
     
     private SpriteSheet runningSheet;
     private Animation runningAnimation;
@@ -50,8 +50,6 @@ public class Character extends LevelObject {
     private float currentX = 0, currentY = 0;
     private float jumpStrength;
     private float size;
-    private float velocityY;
-    private float velocityX;
     private float currentPositionX;
     private float currentPositionY;
     private float attackCoolDown;
@@ -104,14 +102,11 @@ public class Character extends LevelObject {
         decelerationSpeed = 0.003f;
         sprite = new Image("src/main/resources/data/img/placeholder.png");
         boundingShape = new AABoundingRect(x, y, 19, 25);
-        grounded = false;
         health = 5;
         attackCoolDown = 100;
         storedAttacks = 2;
         storedJumps = 0;
         size = 40;
-        velocityY = 0;
-        velocityX = 0;
         isAlive = true;
         this.healthSystem = new HealthSystem(this);
         this.movementSystem = new MovementSystem(this);
@@ -221,7 +216,7 @@ public class Character extends LevelObject {
         fallAnimation.setCurrentFrame(0);
         fallAnimation.stop();
 
-        if (!isOnGround()) {
+        if (!grounded) {
             jumpIndicatorTransp = 1.0f;
         }
         
@@ -242,7 +237,7 @@ public class Character extends LevelObject {
             isJumping = false;
             isFalling = true;
             grounded = false;
-        } else if(y_velocity == 0) {
+        } else if(onGround) {
             grounded = true;
             isJumping = false;
             isFalling = false;
@@ -259,7 +254,7 @@ public class Character extends LevelObject {
         flipped = true;
         if (x_velocity > -maximumSpeed) {
             x_velocity -= accelerationSpeed * delta;
-            movingLeft = true;
+            
             if (x_velocity < -maximumSpeed) {
                 x_velocity = -maximumSpeed;
             }
@@ -643,14 +638,6 @@ public class Character extends LevelObject {
         this.isCharging = isCharging;
     }
 
-    public boolean isGrounded() {
-        return grounded;
-    }
-
-    public void setGrounded(boolean grounded) {
-        this.grounded = grounded;
-    }
-
     public void setIsFullyCharged(boolean isFullyCharged) {
         this.isFullyCharged = isFullyCharged;
     }
@@ -713,22 +700,6 @@ public class Character extends LevelObject {
 
     public void setSize(float size) {
         this.size = size;
-    }
-
-    public float getVelocityY() {
-        return velocityY;
-    }
-
-    public void setVelocityY(float velocityY) {
-        this.velocityY = velocityY;
-    }
-
-    public float getVelocityX() {
-        return velocityX;
-    }
-
-    public void setVelocityX(float velocityX) {
-        this.velocityX = velocityX;
     }
 
     public float getCurrentPositionX() {
@@ -1060,6 +1031,10 @@ public class Character extends LevelObject {
     public float getXVelocity () {
         return x_velocity;
     }
+    
+    public float getYVelocity() {
+        return y_velocity;
+    }
 
     public boolean isJumping() {
         return isJumping;
@@ -1077,13 +1052,20 @@ public class Character extends LevelObject {
         this.isFalling = isFalling;
     }
 
-    public boolean isStanding() {
-        return zeroYVel;
+    public boolean isFlipped() {
+        return flipped;
     }
 
-    public void setIsStanding(boolean isStanding) {
-        this.zeroYVel = isStanding;
+    public void setFlipped(boolean flipped) {
+        this.flipped = flipped;
     }
     
+    public boolean getGrounded() {
+        return grounded;
+    }
+
+    public void setGrounded(boolean grounded) {
+        this.grounded = grounded;
+    }
     
 }

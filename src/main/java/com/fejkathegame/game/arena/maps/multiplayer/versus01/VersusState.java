@@ -206,12 +206,16 @@ public class VersusState extends BasicGameState {
             mpPlayer.character.setX(mpPlayer.x);
             mpPlayer.character.setY(mpPlayer.y);
             mpPlayer.character.setMovingLeft(mpPlayer.moveingLeft);
+            if(mpPlayer.moveingLeft)
+                mpPlayer.character.setFlipped(true);
             mpPlayer.character.setMovingRight(mpPlayer.moveingRight);
+            if(mpPlayer.moveingRight)
+                mpPlayer.character.setFlipped(false);
             mpPlayer.character.setIsCharging(mpPlayer.isChargeing);
             mpPlayer.character.setIsFullyCharged(mpPlayer.isFullyCharged);
             mpPlayer.character.setIsJumping(mpPlayer.isJumping);
             mpPlayer.character.setIsFalling(mpPlayer.isFalling);
-            mpPlayer.character.setIsStanding(mpPlayer.isGrounded);
+            mpPlayer.character.setGrounded(mpPlayer.isGrounded);
             if (mpPlayer.isAttacking && hasUpdated) {
                 mpPlayer.character.setRotateDirection(mpPlayer.direction);
                 mpPlayer.character.updateAttackIndicator();
@@ -224,6 +228,11 @@ public class VersusState extends BasicGameState {
                 mpPlayer.character.chargeSuperAttack(i);
             } else if (mpPlayer.isFullyCharged) {
                 mpPlayer.character.activateSuperAttack(i);
+            }
+            
+            if(mpPlayer.character.getHealth() <= 0) {
+                arena.getPlayers().remove(mpPlayer.character);
+                characters.remove(mpPlayer.character);
             }
         }
     }
@@ -369,7 +378,7 @@ public class VersusState extends BasicGameState {
             packet.isFalling = false;
             client.getClient().sendUDP(packet);
         }
-        if (localPlayer.isGrounded()) {
+        if (localPlayer.getGrounded()) {
             PacketGroundedPlayer packet = new PacketGroundedPlayer();
             packet.isGrounded = true;
             client.getClient().sendUDP(packet);
