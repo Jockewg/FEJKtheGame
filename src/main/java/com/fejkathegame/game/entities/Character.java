@@ -1061,7 +1061,7 @@ public class Character extends LevelObject {
         return x_velocity;
     }
 
-    public boolean isIsJumping() {
+    public boolean isJumping() {
         return isJumping;
     }
 
@@ -1069,7 +1069,7 @@ public class Character extends LevelObject {
         this.isJumping = isJumping;
     }
 
-    public boolean isIsFalling() {
+    public boolean isFalling() {
         return isFalling;
     }
 
@@ -1077,7 +1077,7 @@ public class Character extends LevelObject {
         this.isFalling = isFalling;
     }
 
-    public boolean isIsStanding() {
+    public boolean isStanding() {
         return zeroYVel;
     }
 
