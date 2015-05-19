@@ -106,18 +106,18 @@ public class VersusState extends BasicGameState {
 
     public void checkCollisionWithTarget(MPPlayer mp) {
 
-        if (mp.character.getAttackIndicator().intersects(localPlayer.getHitBox()) && mp.isAttacking && mp.character.getHealth() >= 1
-                || mp.character.getIsFullyCharged() && mp.character.getSuperAttackIndicator().intersects(localPlayer.getHitBox())
-                && mp.character.getHealth() >= 1) {
-            System.out.println("you got hit!");
-            localPlayer.getHealthSystem().dealDamage(1);
+        if (mp.character.getAttackIndicator().intersects(localPlayer.getHitBox()) && mp.isAttacking
+                || mp.character.getIsFullyCharged() && mp.character.getSuperAttackIndicator().intersects(localPlayer.getHitBox())) {
+            if(mp.character.isAlive()) {
+                localPlayer.getHealthSystem().dealDamage(1);
+                localPlayer.setIsCharging(false);
+            }
             PacketHpPlayer packet = new PacketHpPlayer();
             packet.hp = localPlayer.getHealth();
             client.getClient().sendUDP(packet);
             System.out.println(mp.hp);
         }
         if (mp.hp == 0 && mp.character.isAlive()) {
-            System.out.println("remove");
             mp.character.setAlive(false);
             arena.getPlayers().remove(mp.character);
             characters.remove(mp.character);
