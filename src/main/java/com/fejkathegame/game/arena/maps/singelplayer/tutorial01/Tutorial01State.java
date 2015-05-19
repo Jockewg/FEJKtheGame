@@ -143,6 +143,5 @@ public class Tutorial01State extends PracticeState {
          resetMap();
       }
       helper.update(gc, sbg, i, 50, 500);
-
    }
 }

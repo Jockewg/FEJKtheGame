@@ -40,6 +40,7 @@ public class MovementSystem {
         if(i.isMousePressed(Input.MOUSE_LEFT_BUTTON) && character.getStoredJumps() > 0||
                 i.isKeyPressed(Input.KEY_SPACE) && character.getStoredJumps() > 0) {
             character.jump(delta);
+            character.playJumpSound();
         }
         if( i.isMouseButtonDown(Input.MOUSE_RIGHT_BUTTON) && character.getStoredAttacks() > 0) {
             character.attack(i, delta);
@@ -72,7 +73,6 @@ public class MovementSystem {
             character.setMovingLeft(false);
             character.setMovingRight(false);
             character.setIsCharging(true);
-            character.playChargeSound();
             character.setMoving(false);
             character.chargeSuperAttack(delta);
         } else {

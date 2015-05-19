@@ -226,7 +226,7 @@ public class Character extends LevelObject {
 
         y_velocity = -0.055f * (float) Math.sqrt(Math.pow(delta, 2));
         storedJumps--;
-        jumpSound.playAsSoundEffect(1.0f, 1.0f, false);
+        
     }
 
     public void checkMomentum() {
@@ -305,6 +305,16 @@ public class Character extends LevelObject {
             chargeActivationSound.stop();
         }
 
+    }
+    
+    public void playJumpSound() {
+        if(!jumpSound.isPlaying())
+            jumpSound.playAsSoundEffect(1.0f, 1.0f, false);
+    }
+    
+    public void playAttackSound() {
+        if(!attackSound.isPlaying())
+            attackSound.playAsSoundEffect(1.0f, 1.0f, false);
     }
 
     /**
@@ -399,7 +409,8 @@ public class Character extends LevelObject {
             } else if (sweepXStart > sweepXEnd) {
                 flipped = false;
             }
-            attackSound.playAsSoundEffect(1.0f, 1.0f, false);
+            
+            
         }
 
         sweepXEnd = sweepXStart;
@@ -499,6 +510,7 @@ public class Character extends LevelObject {
 
     public void renderCharacterAnimation() {
         if (isCharging) {
+            playChargeSound();
             if (!flipped) {
                 chargingAnimation.draw(x - 2, y, 32, 32);
                 chargingParticleAnimation.draw(x - 14, y - 6, 48, 48);
@@ -507,6 +519,7 @@ public class Character extends LevelObject {
                 chargingParticleAnimation.draw(x - 11, y - 6, 48, 48);
             }
         } else if (isFullyCharged) {
+            stopChargeSound();
             if (!flipped) {
                 chargeReleaseAnimation.draw(x - 4, y - 6, 32, 32);
             } else {
@@ -582,6 +595,7 @@ public class Character extends LevelObject {
                 Transform.createRotateTransform((float) Math.toRadians(rotateDirection - oldRotate)));
         attackIndicator.setLocation(x + 16, y + 16);
         oldRotate = rotateDirection;
+        playAttackSound();
     }
 
     /**
