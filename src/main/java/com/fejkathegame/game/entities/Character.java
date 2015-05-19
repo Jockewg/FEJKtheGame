@@ -75,7 +75,7 @@ public class Character extends LevelObject {
 
     private Vector2f attackDirection = new Vector2f(0, 0), attackStart, current;
     private HealthSystem healthSystem;
-    private MovementSystem movementSystem;
+    public MovementSystem movementSystem;
     private Shape player;
     private Color color;
     private Image sprite;

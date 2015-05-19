@@ -7,6 +7,7 @@ package com.fejkathegame.game.arena;
 
 
 import com.fejkathegame.game.arena.maps.PracticeCamera;
+import com.fejkathegame.game.arena.physics.Physics;
 import com.fejkathegame.game.entities.Character;
 import org.newdawn.slick.state.BasicGameState;
 
@@ -33,6 +34,8 @@ public abstract class PracticeState extends BasicGameState {
    public Character player;
    
    public PracticeCamera camera;
+   
+   public Physics physics;
 
 
 }

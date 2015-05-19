@@ -19,97 +19,74 @@ import java.io.IOException;
  * @author Swartt
  */
 public class Tower02State extends PracticeState {
-    private Tower02 arena;
-    private String name;
-    private MovementSystem movementSystem;
-    private Physics physics;
-    private com.fejkathegame.game.entities.Character obj;
-    private PracticeStateHelper helper;
-    private PracticeCamera camera;
 
-    private float offsetMaxX = 450;
-    private float offsetMaxY = 2250;
-    
-    private boolean isCameraAnimationRunning = true;
-    private float cameraMotionY = 0;
+   private Tower02 arena;
+   private String name;
+   private MovementSystem movementSystem;
+   private Physics physics;
+   private com.fejkathegame.game.entities.Character obj;
+   private PracticeStateHelper helper;
+   private PracticeCamera camera;
 
-    /**
-     * Constructor for ArenaState
-     * @param name of the stage
-     */
-    public Tower02State(String name) {
-        this.name = name;
-    }
+   private float offsetMaxX = 450;
+   private float offsetMaxY = 2250;
 
-    @Override
-    public int getID() {
-        return Main.TOWER02;
-    }
+   private boolean isCameraAnimationRunning = true;
+   private float cameraMotionY = 0;
 
-    @Override
-    public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {
+   /**
+    * Constructor for ArenaState
+    *
+    * @param name of the stage
+    */
+   public Tower02State(String name) {
+      this.name = name;
+   }
 
-        obj = null;
-        try {
-            obj = new com.fejkathegame.game.entities.Character(450, 2424);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+   @Override
+   public int getID() {
+      return Main.TOWER02;
+   }
 
+   @Override
+   public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {
 
-        arena = new Tower02(name, obj);
-        
-        movementSystem = new MovementSystem(obj);
+      obj = null;
+      try {
+         obj = new com.fejkathegame.game.entities.Character(450, 2424);
+      }
+      catch (IOException e) {
+         e.printStackTrace();
+      }
 
-        physics = new Physics();
+      arena = new Tower02(name, obj);
 
-        camera = new PracticeCamera(offsetMaxX, offsetMaxY);
+      movementSystem = new MovementSystem(obj);
 
-        helper = new PracticeStateHelper(this);
+      physics = new Physics();
 
+      camera = new PracticeCamera(offsetMaxX, offsetMaxY);
 
+      helper = new PracticeStateHelper(this);
 
-    }
-    
-    public void cameraAnimation() {
-        cameraMotionY += arena.timer.getCurrentCountdownTimeInReverseIncrement();
-        camera.setCamX(0);
-        camera.setCamY(cameraMotionY);
-        if(cameraMotionY >= offsetMaxY - 250) {
-            isCameraAnimationRunning = false;
-        }
-    }
+   }
 
-    
+   public void cameraAnimation() {
+      cameraMotionY += arena.timer.getCurrentCountdownTimeInReverseIncrement();
+      camera.setCamX(0);
+      camera.setCamY(cameraMotionY);
+      if (cameraMotionY >= offsetMaxY - 250) {
+         isCameraAnimationRunning = false;
+      }
+   }
 
-    @Override
-    public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
-        g.setAntiAlias(false);
-        g.scale(Main.SCALE, Main.SCALE);
-        if(isCameraAnimationRunning) {
-            cameraAnimation();
-            g.translate(-camera.getCamX(), -camera.getCamY());
-        } else {
-            g.translate(-camera.getCamX(), -camera.getCamY());
-        }
-        arena.render();
-        arena.helper.updateText(camera.getCamX(), camera.getCamY());
-        g.resetTransform();
-    }
+   @Override
+   public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
+      helper.render(gc, sbg, g);
+   }
 
-
-    @Override
-    public void update(GameContainer gc, StateBasedGame sbg, int i) throws SlickException {
-        helper.checkCameraOffset();
-        if(!arena.timer.isCountdownRunning()) {
-            movementSystem.handleInput(gc.getInput(), i);
-            physics.handlePhysics(arena, i);
-            helper.checkCollisionWithTarget(getID());
-            obj.update(i);
-        }
-         arena.timer.calculateSecond(i);
-        
-    }
-
-
+   @Override
+   public void update(GameContainer gc, StateBasedGame sbg, int i) throws SlickException {
+      helper.update(gc, sbg, i, 450, 2424);
+   }
 }

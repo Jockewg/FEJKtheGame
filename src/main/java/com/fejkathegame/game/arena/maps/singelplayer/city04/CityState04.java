@@ -25,7 +25,7 @@ public class CityState04 extends PracticeState {
     private MovementSystem movementSystem;
     private Physics physics;
     private Character obj;
-    private PracticeStateHelper helper;
+    private PracticeStateHelper stateHelper;
     private PracticeCamera camera;
     
     private float offsetMaxX = 2050;
@@ -64,35 +64,23 @@ public class CityState04 extends PracticeState {
 
         camera = new PracticeCamera(offsetMaxX, offsetMaxY);
 
-        helper = new PracticeStateHelper(this);
+        stateHelper = new PracticeStateHelper(this);
 
 
     }
 
     @Override
     public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
-        g.setAntiAlias(false);
-        g.scale(Main.SCALE, Main.SCALE);
-        g.translate(-camera.getCamX(), -camera.getCamY());
-        arena.render();
-        arena.helper.updateText(camera.getCamX(), camera.getCamY());
-        g.translate(-camX, -camY);
-        g.resetTransform();
+       stateHelper.render(gc, sbg, g);
     }
 
 
     @Override
     public void update(GameContainer gc, StateBasedGame sbg, int i) throws SlickException {
-        helper.checkCameraOffset();
-        if(!arena.timer.isCountdownRunning()) {
-            movementSystem.handleInput(gc.getInput(), i);
-            physics.handlePhysics(arena, i);
-            helper.checkCollisionWithTarget(getID());
-            obj.update(i);
-            arena.helper.moveTarget();
-        }
-        arena.timer.calculateSecond(i);
+        stateHelper.update(gc, sbg, i, 32, 40);
     }
+   
+   
     
 
 

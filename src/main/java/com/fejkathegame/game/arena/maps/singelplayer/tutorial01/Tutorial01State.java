@@ -106,9 +106,9 @@ public class Tutorial01State extends PracticeState {
 
     @Override
     public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
-        g.setAntiAlias(false);
-        g.scale(Main.SCALE, Main.SCALE);
-        g.translate(-camera.getCamX(), -camera.getCamY());
+//        g.setAntiAlias(false);
+//        g.scale(Main.SCALE, Main.SCALE);
+//        g.translate(-camera.getCamX(), -camera.getCamY());
         spacebar.draw(220,510);
         arrow.draw(300, 500);
         
@@ -134,9 +134,10 @@ public class Tutorial01State extends PracticeState {
         spacebar.draw(730, 250);
         spacebar.draw(650, 200);
         
-        arena.render();
+//        arena.render();
         /*arena.helper.updateText(camera.getCamX(), camera.getCamY());*/
-        g.resetTransform();
+//        g.resetTransform();
+        helper.render(gc, sbg, g);
     }
 
 
@@ -146,12 +147,7 @@ public class Tutorial01State extends PracticeState {
         if(inPit) {
             resetMap();
         }
-        helper.checkCameraOffset();
-        movementSystem.handleInput(gc.getInput(), i);
-        physics.handlePhysics(arena, i);
-        helper.checkCollisionWithTarget(getID());
-        obj.update(i);
-//        arena.timer.calculateSecond(i);
+         helper.update(gc, sbg, i, 50, 500);
         
     }
 }
