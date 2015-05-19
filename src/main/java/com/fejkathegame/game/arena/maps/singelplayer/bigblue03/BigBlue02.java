@@ -36,7 +36,6 @@ public class BigBlue02 extends PracticeLevel {
 
     PracticeLevelHelper helper;
 
-    PracticeTimer timer;
 
     /**
      * Constructor for Arena, creates the playingfield and adds all players to

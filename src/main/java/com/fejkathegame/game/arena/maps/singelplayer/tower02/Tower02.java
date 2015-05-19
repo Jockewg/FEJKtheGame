@@ -171,14 +171,14 @@ public class Tower02 extends PracticeLevel {
 
     }
 
-   @Override
-   public ArrayList<Tile> getTargetTiles() {
-      throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-   }
+    @Override
+    public ArrayList<Tile> getTargetTiles() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 
-   @Override
-   public PracticeTimer getTimer() {
-      return timer;
-   }
+    @Override
+    public PracticeTimer getTimer() {
+        return timer;
+    }
 
 }
