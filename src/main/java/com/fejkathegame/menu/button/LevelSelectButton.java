@@ -24,7 +24,7 @@ public class LevelSelectButton extends Button{
         this.height = height;
         this.highScoreAdapt = new HighscoreAdapter();
         this.title = name;
-        this.bestTime = "HighScore : ";
+        this.bestTime = "Best Time : ";
 
         if(highScoreAdapt.readScore(mapId) == Integer.MAX_VALUE){
             this.bestTime = this.bestTime + "N/A";
@@ -38,7 +38,7 @@ public class LevelSelectButton extends Button{
         g.setColor(Color.orange);
         g.drawRect(posX, posY, width, height);
         g.drawString(title, posX + 20, posY + (height / 2));
-        g.drawString(bestTime + "", posX + 300, posY + (height / 2));
+        g.drawString(bestTime + "", posX + 230, posY + (height / 2));
     }
     
     public void setBestTime(String time){
