@@ -22,6 +22,8 @@ public abstract class PracticeLevel {
 
     private ArrayList<LevelObject> players;
 
+    public PracticeTimer timer;
+
     public abstract void loadTileMap();
 
     public abstract void addPlayer(LevelObject p);
@@ -40,5 +42,5 @@ public abstract class PracticeLevel {
     
     public abstract void render() throws SlickException;
     
-    public abstract PracticeTimer getTimer();
+    public PracticeTimer getTimer(){return timer;}
 }

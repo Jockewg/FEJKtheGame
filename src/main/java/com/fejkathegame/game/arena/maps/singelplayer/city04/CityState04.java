@@ -20,15 +20,13 @@ import java.io.IOException;
  * @author Swartt
  */
 public class CityState04 extends PracticeState {
-    private City04 arena;
+
     private String name;
     private MovementSystem movementSystem;
     private PracticeStateHelper stateHelper;
     
     private float offsetMaxX = 2050;
     private float offsetMaxY = 750;
-
-    private float camX = 0, camY = 0;
     
 
     /**
@@ -57,7 +55,6 @@ public class CityState04 extends PracticeState {
         arena = new City04(name, player);
         
         movementSystem = new MovementSystem(player);
-
         physics = new Physics();
 
         camera = new PracticeCamera(offsetMaxX, offsetMaxY);

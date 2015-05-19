@@ -177,9 +177,9 @@ public class BigBlue02 extends PracticeLevel {
         }
     }
 
-   @Override
-   public PracticeTimer getTimer() {
-      return timer;
-   }
+    @Override
+    public PracticeTimer getTimer() {
+        return timer;
+    }
 
 }

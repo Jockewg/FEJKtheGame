@@ -19,11 +19,10 @@ import org.newdawn.slick.state.StateBasedGame;
  */
 public class Tutorial01State extends PracticeState {
 
-   private Tutorial01 arena;
    private String name;
    private MovementSystem movementSystem;
 
-   private PracticeStateHelper helper;
+   private PracticeStateHelper stateHelper;
    private Image spacebar;
    private Image arrow;
    private Image attack;
@@ -77,7 +76,7 @@ public class Tutorial01State extends PracticeState {
 
       camera = new PracticeCamera(offsetMaxX, offsetMaxY);
 
-      helper = new PracticeStateHelper(this);
+      stateHelper = new PracticeStateHelper(this);
    }
 
    public void setCameraBoundaries() {
@@ -131,9 +130,9 @@ public class Tutorial01State extends PracticeState {
       spacebar.draw(650, 200);
 
 //        arena.render();
-        /*arena.helper.updateText(camera.getCamX(), camera.getCamY());*/
+        /*arena.stateHelper.updateText(camera.getCamX(), camera.getCamY());*/
 //        g.resetTransform();
-      helper.render(gc, sbg, g);
+      stateHelper.render(gc, sbg, g);
    }
 
    @Override
@@ -142,6 +141,6 @@ public class Tutorial01State extends PracticeState {
       if (inPit) {
          resetMap();
       }
-      helper.update(gc, sbg, i, 50, 500);
+      stateHelper.update(gc, sbg, i, 50, 500);
    }
 }

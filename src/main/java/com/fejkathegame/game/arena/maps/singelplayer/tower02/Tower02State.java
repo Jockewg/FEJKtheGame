@@ -20,7 +20,6 @@ import java.io.IOException;
  */
 public class Tower02State extends PracticeState {
 
-   private Tower02 arena;
    private String name;
    private MovementSystem movementSystem;
    private PracticeStateHelper helper;

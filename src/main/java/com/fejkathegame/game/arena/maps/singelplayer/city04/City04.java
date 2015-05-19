@@ -7,6 +7,7 @@ package com.fejkathegame.game.arena.maps.singelplayer.city04;
 
 import com.fejkathegame.game.arena.PracticeLevel;
 import com.fejkathegame.game.arena.maps.PracticeLevelHelper;
+import com.fejkathegame.game.arena.physics.Physics;
 import com.fejkathegame.game.arena.tiles.AirTile;
 import com.fejkathegame.game.arena.tiles.SolidTile;
 import com.fejkathegame.game.arena.tiles.TargetTile;
@@ -35,7 +36,6 @@ public class City04 extends PracticeLevel {
     private ArrayList<Tile> targetTiles;
 
     PracticeLevelHelper helper;
-    PracticeTimer timer;
 
 
     /**
@@ -54,6 +54,7 @@ public class City04 extends PracticeLevel {
 
 
         loadTileMap();
+
 
         timer = new PracticeTimer();
         timer.startTimer();

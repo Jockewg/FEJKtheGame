@@ -18,14 +18,12 @@ import org.newdawn.slick.state.BasicGameState;
 public abstract class PracticeState extends BasicGameState {
    
    public PracticeLevel arena;
-   public PracticeLevel getLevel() {return arena;}
    
    public boolean paused;
    public boolean isPaused() {return paused;}
    public void setPaused(boolean newState) {paused = newState;}
    
    public boolean isCameraAnimationRunning;
-   public boolean isCameraAnimationRunning(){return isCameraAnimationRunning;}
    public void setCameraAnimationRunning(boolean newState){isCameraAnimationRunning = newState;}
    
    public float scale;

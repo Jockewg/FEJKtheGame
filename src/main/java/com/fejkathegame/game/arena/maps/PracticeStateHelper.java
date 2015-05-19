@@ -85,10 +85,10 @@ public class PracticeStateHelper {
       state.setScale(0.24f);
       state.player.setX(x);
       state.player.setY(y);
-      state.getLevel().getTargets().clear();
-      for (Tile at : state.getLevel().getTargetTiles()) {
+      state.arena.getTargets().clear();
+      for (Tile at : state.arena.getTargetTiles()) {
          PracticeTarget pt = new PracticeTarget(at.getX() * 25, at.getY() * 25);
-         state.getLevel().getTargets().add(pt);
+         state.arena.getTargets().add(pt);
       }
    }
 
@@ -110,7 +110,7 @@ public class PracticeStateHelper {
       }
       if (!state.paused) {
          checkCameraOffset();
-         if (!state.arena.getTimer().isCountdownRunning()) {
+         if (!state.arena.timer.isCountdownRunning()) {
             state.player.movementSystem.handleInput(gc.getInput(), i);
             state.physics.handlePhysics(state.arena, i);
             checkCollisionWithTarget(state.getID());
