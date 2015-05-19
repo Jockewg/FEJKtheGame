@@ -34,7 +34,6 @@ public class Tower02 extends PracticeLevel {
     private ArrayList<PracticeTarget> targets;
 
     PracticeLevelHelper helper;
-    PracticeTimer timer;
 
 
     /**
@@ -179,7 +178,7 @@ public class Tower02 extends PracticeLevel {
 
    @Override
    public PracticeTimer getTimer() {
-      throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+      return timer;
    }
 
 }

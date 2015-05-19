@@ -27,7 +27,7 @@ public class Tower02State extends PracticeState {
    private float offsetMaxX = 450;
    private float offsetMaxY = 2250;
 
-   private boolean isCameraAnimationRunning = true;
+
    private float cameraMotionY = 0;
 
    /**
