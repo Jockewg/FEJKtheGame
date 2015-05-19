@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.fejkathegame.game.arena.maps.singelplayer.tutorial01;
 
 import com.fejkathegame.game.Main;
@@ -156,7 +151,7 @@ public class Tutorial01State extends BasicGameState {
         physics.handlePhysics(arena, i);
         helper.checkCollisionWithTarget(getID());
         obj.update(i);
-        arena.timer.calculateSecond(i);
+//        arena.timer.calculateSecond(i);
         
     }
 }
