@@ -28,3 +28,4 @@ nbactions.xml
 .idea/libraries/Maven__com_esotericsoftware_jsonbeans_0_7.xml
 .idea/libraries/Maven__com_esotericsoftware_kryonet_2_22_0_RC1.xml
 *.xml
+nbactions.xml
