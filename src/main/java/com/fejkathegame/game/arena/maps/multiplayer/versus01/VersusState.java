@@ -12,6 +12,7 @@ import com.fejkathegame.client.PacketUpdateX;
 import com.fejkathegame.client.PacketUpdateY;
 import com.fejkathegame.game.entities.logic.MovementSystem;
 import com.fejkathegame.game.Main;
+import com.fejkathegame.game.arena.maps.UIHelper;
 import com.fejkathegame.game.arena.physics.Physics;
 import com.fejkathegame.game.entities.Character;
 import org.newdawn.slick.GameContainer;
@@ -50,6 +51,8 @@ public class VersusState extends BasicGameState {
     private Polygon playerIndicator;
 
     private ArrayList<Character> characters;
+    
+    private UIHelper vsUI;
 
     /**
      * Constructor for ArenaState
@@ -87,6 +90,7 @@ public class VersusState extends BasicGameState {
         
 
         arena = new Versus(name, localPlayer);
+        vsUI = new UIHelper(cameraX, cameraY);
 
         movementSystem = new MovementSystem(localPlayer);
 
@@ -233,9 +237,7 @@ public class VersusState extends BasicGameState {
         g.resetTransform();
 
         g.translate(-cameraX, -cameraY);
-        localPlayer.getHealthSystem().render(cameraX + 450 - 135 - 60, cameraY + 473);
-        localPlayer.renderStoredJumpsIndicator(cameraX + 450 - 135 - 60 - 10, cameraY + 473);
-        localPlayer.renderAttackCharge(cameraX + 450 - 134.5f - 60, cameraY + 465);
+        vsUI.renderVersusUI(localPlayer);
         g.resetTransform();
     }
 

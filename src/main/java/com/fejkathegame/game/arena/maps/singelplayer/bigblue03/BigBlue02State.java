@@ -3,6 +3,7 @@ package com.fejkathegame.game.arena.maps.singelplayer.bigblue03;
 import com.fejkathegame.game.Main;
 import com.fejkathegame.game.arena.maps.PracticeCamera;
 import com.fejkathegame.game.arena.maps.PracticeStateHelper;
+import com.fejkathegame.game.arena.maps.UIHelper;
 import com.fejkathegame.game.arena.physics.Physics;
 import com.fejkathegame.game.arena.tiles.AirTile;
 import com.fejkathegame.game.arena.tiles.TargetTile;
@@ -35,6 +36,7 @@ public class BigBlue02State extends BasicGameState {
     private Character obj;
     private PracticeStateHelper helper;
     private PracticeCamera camera;
+    private UIHelper practiceUIHelper;
 
     private float offsetMaxX;
     private float offsetMaxY;
@@ -84,6 +86,8 @@ public class BigBlue02State extends BasicGameState {
         physics = new Physics();
 
         camera = new PracticeCamera(offsetMaxX, offsetMaxY);
+        
+        practiceUIHelper = new UIHelper(camera.getCamX(), camera.getCamY());
 
         helper = new PracticeStateHelper(arena, obj, camera);
     }
@@ -165,7 +169,7 @@ public class BigBlue02State extends BasicGameState {
         }
         g.translate(-camera.getCamX(), -camera.getCamY());
         arena.render();
-        arena.helper.updateText(camera.getCamX(), camera.getCamY());
+        practiceUIHelper.renderPracticeUI(arena.helper);
         if(paused && !isCameraAnimationRunning) {
             drawPauseMenu(g);
         }
