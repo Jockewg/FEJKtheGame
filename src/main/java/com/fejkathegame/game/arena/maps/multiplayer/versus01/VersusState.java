@@ -5,7 +5,10 @@ import com.fejkathegame.client.MPPlayer;
 import com.fejkathegame.client.PacketAttackDirectionPlayer;
 import com.fejkathegame.client.PacketAttackPlayer;
 import com.fejkathegame.client.PacketChargePlayer;
+import com.fejkathegame.client.PacketFallingPlayer;
 import com.fejkathegame.client.PacketFullyChargedPlayer;
+import com.fejkathegame.client.PacketGroundedPlayer;
+import com.fejkathegame.client.PacketJumpPlayer;
 import com.fejkathegame.client.PacketMoveLeftPlayer;
 import com.fejkathegame.client.PacketMoveRightPlayer;
 import com.fejkathegame.client.PacketUpdateX;
@@ -208,9 +211,10 @@ public class VersusState extends BasicGameState {
                 mpPlayer.character.setRotateDirection(mpPlayer.direction);
                 mpPlayer.character.updateAttackIndicator();
                 hasUpdated = false;
-            } else if(!mpPlayer.isAttacking)
+            } else if (!mpPlayer.isAttacking) {
                 hasUpdated = true;
-            
+            }
+
             if (mpPlayer.isChargeing) {
                 mpPlayer.character.chargeSuperAttack(i);
             } else if (mpPlayer.isFullyCharged) {
@@ -338,6 +342,33 @@ public class VersusState extends BasicGameState {
         } else {
             PacketMoveRightPlayer packet = new PacketMoveRightPlayer();
             packet.moveingRight = false;
+            client.getClient().sendUDP(packet);
+        }
+        if (localPlayer.isJumping()) {
+            PacketJumpPlayer packet = new PacketJumpPlayer();
+            packet.isJumping = true;
+            client.getClient().sendUDP(packet);
+        } else {
+            PacketJumpPlayer packet = new PacketJumpPlayer();
+            packet.isJumping = false;
+            client.getClient().sendUDP(packet);
+        }
+        if (localPlayer.isFalling()) {
+            PacketFallingPlayer packet = new PacketFallingPlayer();
+            packet.isFalling = true;
+            client.getClient().sendUDP(packet);
+        } else {
+            PacketFallingPlayer packet = new PacketFallingPlayer();
+            packet.isFalling = false;
+            client.getClient().sendUDP(packet);
+        }
+        if (localPlayer.isGrounded()) {
+            PacketGroundedPlayer packet = new PacketGroundedPlayer();
+            packet.isGrounded = true;
+            client.getClient().sendUDP(packet);
+        } else {
+            PacketGroundedPlayer packet = new PacketGroundedPlayer();
+            packet.isGrounded = false;
             client.getClient().sendUDP(packet);
         }
     }
