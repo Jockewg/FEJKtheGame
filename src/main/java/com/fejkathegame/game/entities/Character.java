@@ -232,6 +232,22 @@ public class Character extends LevelObject {
         storedJumps--;
         jumpSound.playAsSoundEffect(1.0f, 1.0f, false);
     }
+    
+    public void checkMomentum() {
+        if(y_velocity < 0) {
+           isJumping = true;
+           isFalling = false;
+           grounded = false;
+        } else if(y_velocity > 0) {
+            isJumping = false;
+            isFalling = true;
+            grounded = false;
+        } else if(y_velocity == 0) {
+            grounded = true;
+            isJumping = false;
+            isFalling = false;
+        }
+    }
 
     /**
      * Moves the character to the left
@@ -430,6 +446,8 @@ public class Character extends LevelObject {
         chargeReleaseAnimation.update(delta);
         chargingParticleAnimation.update(delta);
         healthSystem.damageCooldown(delta);
+        
+        checkMomentum();
         
         
         if (!isCharging && !isFullyCharged) {
