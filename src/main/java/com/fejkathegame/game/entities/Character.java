@@ -25,9 +25,10 @@ public class Character extends LevelObject {
     private boolean grounded;
     private boolean isAlive;
     private boolean moving = false;
-    private boolean flipped = false;
+    private boolean flipped;
     private boolean movingRight = false;
     private boolean movingLeft = false;
+    private boolean isJumping, isFalling, zeroYVel;
     
     private SpriteSheet runningSheet;
     private Animation runningAnimation;
@@ -498,22 +499,22 @@ public class Character extends LevelObject {
             else
                 chargeReleaseAnimation.getCurrentFrame().getFlippedCopy(true, false).draw(x - 14, y - 6, 32, 32);
             
-        } else if(movingRight && y_velocity == 0) {
+        } else if(movingRight && grounded) {
             runningAnimation.draw(x - 4, y - 2, 27, 27);
-        } else if(movingLeft && y_velocity == 0) {
+        } else if(movingLeft && grounded) {
             runningAnimation.getCurrentFrame().getFlippedCopy(true, false).draw(x - 9, y - 2, 27, 27);
         } else if(!movingLeft && !movingRight &&  y_velocity == 0) {
             if(flipped)
                 stanceAnimation.getCurrentFrame().getFlippedCopy(true, false).draw(x - 9, y - 2, 27, 27);
             else
                 stanceAnimation.draw(x - 4, y - 2, 27, 27);
-        } else if(y_velocity < 0) {
+        } else if(isJumping) {
             if(flipped) {
                 jumpAnimation.getCurrentFrame().getFlippedCopy(true, false).draw(x - 9, y - 2, 27, 27);
             } else {
                 jumpAnimation.draw(x - 4, y - 2, 27, 27);
             }
-        } else if(y_velocity > 0) {
+        } else if(isFalling) {
             if(flipped) {
                 fallAnimation.setCurrentFrame(0);
                 fallAnimation.getCurrentFrame().getFlippedCopy(true, false).draw(x - 7, y - 2, 27, 27);
@@ -1041,4 +1042,30 @@ public class Character extends LevelObject {
     public float getXVelocity () {
         return x_velocity;
     }
+
+    public boolean isIsJumping() {
+        return isJumping;
+    }
+
+    public void setIsJumping(boolean isJumping) {
+        this.isJumping = isJumping;
+    }
+
+    public boolean isIsFalling() {
+        return isFalling;
+    }
+
+    public void setIsFalling(boolean isFalling) {
+        this.isFalling = isFalling;
+    }
+
+    public boolean isIsStanding() {
+        return zeroYVel;
+    }
+
+    public void setIsStanding(boolean isStanding) {
+        this.zeroYVel = isStanding;
+    }
+    
+    
 }
