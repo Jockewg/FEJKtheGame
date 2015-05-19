@@ -187,9 +187,11 @@ public class VersusState extends BasicGameState {
             line = new Line(0, 0, 900, 500);
         } else if (characters.size() == 2) {
             for (MPPlayer mp : client.getPlayers().values()) {
-                Vector2f objVector = new Vector2f(localPlayer.getX(), localPlayer.getY());
-                Vector2f player2Vector = new Vector2f(mp.x, mp.y);
-                line = new Line(objVector, player2Vector);
+                if(mp.character.isAlive() && localPlayer.isAlive()) {
+                    Vector2f objVector = new Vector2f(localPlayer.getX(), localPlayer.getY());
+                    Vector2f player2Vector = new Vector2f(mp.x, mp.y);
+                    line = new Line(objVector, player2Vector);
+                }
             }
         } else {
             line = new Line(0, 0, 900, 500);
