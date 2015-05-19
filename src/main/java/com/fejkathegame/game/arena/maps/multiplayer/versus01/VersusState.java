@@ -207,6 +207,11 @@ public class VersusState extends BasicGameState {
             mpPlayer.character.setY(mpPlayer.y);
             mpPlayer.character.setMovingLeft(mpPlayer.moveingLeft);
             mpPlayer.character.setMovingRight(mpPlayer.moveingRight);
+            mpPlayer.character.setIsCharging(mpPlayer.isChargeing);
+            mpPlayer.character.setIsFullyCharged(mpPlayer.isFullyCharged);
+            mpPlayer.character.setIsJumping(mpPlayer.isJumping);
+            mpPlayer.character.setIsFalling(mpPlayer.isFalling);
+            mpPlayer.character.setIsStanding(mpPlayer.isGrounded);
             if (mpPlayer.isAttacking && hasUpdated) {
                 mpPlayer.character.setRotateDirection(mpPlayer.direction);
                 mpPlayer.character.updateAttackIndicator();
@@ -252,6 +257,8 @@ public class VersusState extends BasicGameState {
                 mp.character.renderAttackIndicator();
                 mp.character.setAttackIndicatorTransp(1.0f);
             }
+            
+            mp.character.renderCharacterAnimation();
         }
         g.resetTransform();
 

@@ -521,7 +521,7 @@ public class Character extends LevelObject {
             runningAnimation.draw(x - 4, y - 2, 27, 27);
         } else if(movingLeft && grounded) {
             runningAnimation.getCurrentFrame().getFlippedCopy(true, false).draw(x - 9, y - 2, 27, 27);
-        } else if(!movingLeft && !movingRight &&  y_velocity == 0) {
+        } else if(!movingLeft && !movingRight &&  grounded) {
             if(flipped)
                 stanceAnimation.getCurrentFrame().getFlippedCopy(true, false).draw(x - 9, y - 2, 27, 27);
             else
