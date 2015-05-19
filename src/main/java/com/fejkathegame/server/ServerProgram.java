@@ -75,6 +75,10 @@ public class ServerProgram extends Listener {
             PacketAddPlayer packet2 = new PacketAddPlayer();
             packet2.id = p.c.getID();
             c.sendTCP(packet2);
+            PacketHpPlayer packet3 = new PacketHpPlayer();
+            packet3.id = p.c.getID();
+            packet3.hp = p.hp;
+            c.sendTCP(packet3);
         }
 
         players.put(c.getID(), player);

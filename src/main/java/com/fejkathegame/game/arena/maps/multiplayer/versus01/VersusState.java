@@ -16,6 +16,7 @@ import com.fejkathegame.client.PacketUpdateX;
 import com.fejkathegame.client.PacketUpdateY;
 import com.fejkathegame.game.entities.logic.MovementSystem;
 import com.fejkathegame.game.Main;
+import com.fejkathegame.game.arena.maps.UIHelper;
 import com.fejkathegame.game.arena.physics.Physics;
 import com.fejkathegame.game.entities.Character;
 import org.newdawn.slick.GameContainer;
@@ -56,6 +57,8 @@ public class VersusState extends BasicGameState {
     private Polygon playerIndicator;
 
     private ArrayList<Character> characters;
+    
+    private UIHelper vsUI;
 
     /**
      * Constructor for ArenaState
@@ -92,6 +95,7 @@ public class VersusState extends BasicGameState {
         playerIndicator.addPoint(10, 10);
 
         arena = new Versus(name, localPlayer);
+        vsUI = new UIHelper(cameraX, cameraY);
 
         movementSystem = new MovementSystem(localPlayer);
 
@@ -103,30 +107,19 @@ public class VersusState extends BasicGameState {
     public void checkCollisionWithTarget() {
 
         for (MPPlayer mp : client.getPlayers().values()) {
-//            if (localPlayer.getAttackIndicator().intersects(mp.character.getHitBox()) && localPlayer.getIsAttacking()
-//                    || localPlayer.getIsFullyCharged() && localPlayer.getSuperAttackIndicator().intersects(mp.character.getHitBox())) {
-//                System.out.println("Player 1 hit Player 2 omfg");
-//                mp.character.getHealthSystem().dealDamage(1);
-//                if (mp.character.getHealth() <= 0) {
-//                    arena.getPlayers().remove(mp.character);
-//                    characters.remove(mp.character);
-//                }
-//            }
-
             if (mp.character.getAttackIndicator().intersects(localPlayer.getHitBox()) && mp.isAttacking
                     || mp.character.getIsFullyCharged() && mp.character.getSuperAttackIndicator().intersects(localPlayer.getHitBox())) {
                 System.out.println("you got hit!");
                 localPlayer.getHealthSystem().dealDamage(1);
                 PacketHpPlayer packet = new PacketHpPlayer();
                 packet.hp = localPlayer.getHealth();
-                System.out.println(localPlayer.getHealth());
                 client.getClient().sendUDP(packet);
                 if (localPlayer.getHealth() <= 0) {
                     localPlayer.setAlive(false);
                     arena.getPlayers().remove(localPlayer);
                     characters.remove(localPlayer);
                 }
-                if (mp.character.getHealth() <= 0) {
+                if(mp.hp <= 0) {
                     mp.character.setAlive(false);
                     arena.getPlayers().remove(mp.character);
                     characters.remove(mp.character);
@@ -213,35 +206,36 @@ public class VersusState extends BasicGameState {
 
     public void updateMpPlayer(int i) {
         for (MPPlayer mp : client.getPlayers().values()) { //other player render here.
-            mp.character.update(i);
-            mp.character.setX(mp.x);
-            mp.character.setY(mp.y);
-            mp.character.setMovingLeft(mp.moveingLeft);
-            if (mp.moveingLeft) {
-                mp.character.setFlipped(true);
-            }
-            mp.character.setMovingRight(mp.moveingRight);
-            if (mp.moveingRight) {
-                mp.character.setFlipped(false);
-            }
-            mp.character.setHealth(mp.hp);
-            mp.character.setIsCharging(mp.isChargeing);
-            mp.character.setIsFullyCharged(mp.isFullyCharged);
-            mp.character.setIsJumping(mp.isJumping);
-            mp.character.setIsFalling(mp.isFalling);
-            mp.character.setGrounded(mp.isGrounded);
-            if (mp.isAttacking && hasUpdated) {
-                mp.character.setRotateDirection(mp.direction);
-                mp.character.updateAttackIndicator();
-                hasUpdated = false;
-            } else if (!mp.isAttacking) {
-                hasUpdated = true;
-            }
+            if(mp.character.getHealth() > 0) {
+                mp.character.update(i);
+                mp.character.setX(mp.x);
+                mp.character.setY(mp.y);
+                mp.character.setMovingLeft(mp.moveingLeft);
+                if (mp.moveingLeft) {
+                    mp.character.setFlipped(true);
+                }
+                mp.character.setMovingRight(mp.moveingRight);
+                if (mp.moveingRight) {
+                    mp.character.setFlipped(false);
+                }
+                mp.character.setIsCharging(mp.isChargeing);
+                mp.character.setIsFullyCharged(mp.isFullyCharged);
+                mp.character.setIsJumping(mp.isJumping);
+                mp.character.setIsFalling(mp.isFalling);
+                mp.character.setGrounded(mp.isGrounded);
+                if (mp.isAttacking && hasUpdated) {
+                    mp.character.setRotateDirection(mp.direction);
+                    mp.character.updateAttackIndicator();
+                    hasUpdated = false;
+                } else if (!mp.isAttacking) {
+                    hasUpdated = true;
+                }
 
-            if (mp.isChargeing) {
-                mp.character.chargeSuperAttack(i);
-            } else if (mp.isFullyCharged) {
-                mp.character.activateSuperAttack(i);
+                if (mp.isChargeing) {
+                    mp.character.chargeSuperAttack(i);
+                } else if (mp.isFullyCharged) {
+                    mp.character.activateSuperAttack(i);
+                }
             }
         }
     }
@@ -254,6 +248,7 @@ public class VersusState extends BasicGameState {
                 } catch (SlickException | IOException ex) {
                     Logger.getLogger(VersusState.class.getName()).log(Level.SEVERE, null, ex);
                 }
+                mpPlayer.character.setHealth(mpPlayer.hp);
                 characters.add(mpPlayer.character);
                 arena.addPlayer(mpPlayer.character);
             }
@@ -271,7 +266,7 @@ public class VersusState extends BasicGameState {
         arena.render();
         renderPlayerIndicator(g);
         for (MPPlayer mp : client.getPlayers().values()) {
-            if (mp.character.isAlive()) {
+            if (mp.character.getHealth() > 0) {
                 if (mp.isAttacking) {
                     mp.character.renderAttackIndicator();
                     mp.character.setAttackIndicatorTransp(1.0f);
@@ -283,9 +278,7 @@ public class VersusState extends BasicGameState {
         g.resetTransform();
 
         g.translate(-cameraX, -cameraY);
-        localPlayer.getHealthSystem().render(cameraX + 450 - 135 - 60, cameraY + 473);
-        localPlayer.renderStoredJumpsIndicator(cameraX + 450 - 135 - 60 - 10, cameraY + 473);
-        localPlayer.renderAttackCharge(cameraX + 450 - 134.5f - 60, cameraY + 465);
+        vsUI.renderVersusUI(localPlayer);
         g.resetTransform();
     }
 

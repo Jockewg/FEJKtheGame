@@ -4,6 +4,7 @@ import com.fejkathegame.game.Main;
 import com.fejkathegame.game.arena.PracticeState;
 import com.fejkathegame.game.arena.maps.PracticeCamera;
 import com.fejkathegame.game.arena.maps.PracticeStateHelper;
+import com.fejkathegame.game.arena.maps.UIHelper;
 import com.fejkathegame.game.arena.physics.Physics;
 import com.fejkathegame.game.entities.logic.MovementSystem;
 import org.newdawn.slick.GameContainer;
@@ -21,12 +22,20 @@ import java.util.logging.Logger;
 public class BigBlue02State extends PracticeState {
 //    private BigBlue02 arena;
 
+
    private String name;
    private MovementSystem movementSystem;
 //    private Physics physics;
+    private Physics physics;
+    private Character obj;
+    private PracticeStateHelper helper;
+    private PracticeCamera camera;
+    private UIHelper practiceUIHelper;
+
 //    private Character player;
    private PracticeStateHelper stateHelper;
 //    private PracticeCamera camera;
+
 
    private float offsetMaxX;
    private float offsetMaxY;
