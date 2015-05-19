@@ -27,7 +27,7 @@ public class PracticeStateHelper {
    public PracticeStateHelper(PracticeState state) {
       this.state = state;
       pauseMenuBackground = new Rectangle(0, 0, 600, 300);
-      uIHelper = new UIHelper(state.camera.getCamX(), state.camera.getCamY());
+      uIHelper = new UIHelper(state);
    }
 
    public void checkCollisionWithTarget(int map) {
@@ -130,8 +130,9 @@ public class PracticeStateHelper {
       if (state.paused) {
          drawPauseMenu(g);
       }
-      uIHelper.renderPracticeUI(state.arena.getMapHelper());
+       uIHelper.renderPracticeUI();
       g.translate(-state.camera.getCamX(), -state.camera.getCamY());
+
       
       g.resetTransform();
 

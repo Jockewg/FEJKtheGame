@@ -1,6 +1,7 @@
 
 package com.fejkathegame.game.arena.maps;
 
+import com.fejkathegame.game.arena.PracticeState;
 import com.fejkathegame.game.entities.Character;
 import com.fejkathegame.game.Main;
 
@@ -12,12 +13,10 @@ public class UIHelper {
  
     private final float X_CENTER = Main.WINDOW_WIDTH/2;
     private final float Y_CENTER = Main.WINDOW_HEIGHT/2;
-    private float camX;
-    private float camY;
+    PracticeState state;
     
-    public UIHelper(float camX, float camY){
-        this.camX = camX;
-        this.camY = camY;
+    public UIHelper(PracticeState state){
+    this.state = state;
     }
     
     public void renderVersusUI(Character character){
@@ -26,16 +25,16 @@ public class UIHelper {
         character.renderAttackCharge(getCenterXOffset(-195.5f), getCenterYOffset(215f));
     }
     
-    public void renderPracticeUI(PracticeLevelHelper helper){
-        helper.updateText(camX, camX);
+    public void renderPracticeUI(){
+        state.arena.getMapHelper().updateText( state.camera.getCamX(), state.camera.getCamY());
     }
     
     public float getCenterXOffset(float offset){
-        return camX + X_CENTER + offset;
+        return state.camera.getCamX() + X_CENTER + offset;
     }
     
     public float getCenterYOffset(float offset){
-        return camY + Y_CENTER + offset;
+        return state.camera.getCamY() + Y_CENTER + offset;
     }
     
     public float getCenterX(float camX){

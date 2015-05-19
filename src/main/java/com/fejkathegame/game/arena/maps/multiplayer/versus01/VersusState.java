@@ -95,7 +95,7 @@ public class VersusState extends BasicGameState {
         playerIndicator.addPoint(10, 10);
 
         arena = new Versus(name, localPlayer);
-        vsUI = new UIHelper(cameraX, cameraY);
+        /*vsUI = new UIHelper(cameraX, cameraY);*/
 
         movementSystem = new MovementSystem(localPlayer);
 
