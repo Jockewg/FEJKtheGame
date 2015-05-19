@@ -219,6 +219,7 @@ public class VersusState extends BasicGameState {
             }
             if (mpPlayer.connected == false) {
                 arena.getPlayers().remove(mpPlayer.character);
+                characters.remove(mpPlayer.character);
             }
         }
     }
