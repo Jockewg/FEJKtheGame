@@ -196,13 +196,22 @@ public class VersusState extends BasicGameState {
         g.fill(playerIndicator);
     }
 
-    public void movePlayer2(int i) {
+    public void updateMpPlayer(int i) {
         for (MPPlayer mpPlayer : client.getPlayers().values()) { //other player render here.
             mpPlayer.character.update(i);
             mpPlayer.character.setX(mpPlayer.x);
             mpPlayer.character.setY(mpPlayer.y);
             mpPlayer.character.setMovingLeft(mpPlayer.moveingLeft);
             mpPlayer.character.setMovingRight(mpPlayer.moveingRight);
+            if(mpPlayer.isAttacking) {
+                mpPlayer.character.setRotateDirection(mpPlayer.direction);
+            }
+            
+            if(mpPlayer.isChargeing) {
+                mpPlayer.character.chargeSuperAttack(i);
+            } else if(mpPlayer.isFullyCharged) {
+                mpPlayer.character.activateSuperAttack(i);
+            }
         }
     }
     
@@ -230,6 +239,9 @@ public class VersusState extends BasicGameState {
         g.translate(-cameraX, -cameraY);
         arena.render();
         renderPlayerIndicator(g);
+        for(MPPlayer mp : client.getPlayers().values()) {
+            mp.character.renderAttackIndicator();
+        }
         g.resetTransform();
 
         g.translate(-cameraX, -cameraY);
@@ -245,7 +257,7 @@ public class VersusState extends BasicGameState {
         updateVectorLine();
         updateCameraRect();
         movementSystem.handleInput(gc.getInput(), i);
-        movePlayer2(i);
+        updateMpPlayer(i);
         physics.handlePhysics(arena, i);
         localPlayer.update(i);
         updatePlayerIndicator();

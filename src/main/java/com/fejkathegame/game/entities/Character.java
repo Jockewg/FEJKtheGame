@@ -280,7 +280,7 @@ public class Character extends LevelObject {
      * @param i
      * @param delta 
      */
-    public void chargeSuperAttack(Input i, int delta) {
+    public void chargeSuperAttack(int delta) {
         float shrinking1 = superAttackIndicator.getRadius1() - (0.75f / delta);
         superAttackIndicator.setRadius1(shrinking1);
         superAttackIndicator.setRadius2(shrinking1);
@@ -377,11 +377,8 @@ public class Character extends LevelObject {
 
             rotateDirection = (float) attackDirection.getTheta();
             attackCoolDown = 1000;
-
-            attackIndicator.setLocation(0, 0);
-            attackIndicator = (Polygon) attackIndicator.transform(
-                    Transform.createRotateTransform((float) Math.toRadians(rotateDirection - oldRotate)));
-            attackIndicator.setLocation(x + 16, y + 16);
+            
+            updateAttackIndicator();
 
             storedAttacks--;
             if(sweepXEnd > sweepXStart) {
@@ -561,6 +558,13 @@ public class Character extends LevelObject {
         jumpIndicator.setY(y);
         g.fill(jumpIndicator);
         jumpIndicatorTransp -= 0.02f;
+    }
+    
+    public void updateAttackIndicator() {
+        attackIndicator.setLocation(0, 0);
+        attackIndicator = (Polygon) attackIndicator.transform(
+        Transform.createRotateTransform((float) Math.toRadians(rotateDirection - oldRotate)));
+        attackIndicator.setLocation(x + 16, y + 16);
     }
 
     /**
