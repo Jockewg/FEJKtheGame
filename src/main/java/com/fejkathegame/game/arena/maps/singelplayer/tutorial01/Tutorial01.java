@@ -2,9 +2,7 @@ package com.fejkathegame.game.arena.maps.singelplayer.tutorial01;
 
 import com.fejkathegame.game.arena.PracticeLevel;
 import com.fejkathegame.game.arena.maps.PracticeLevelHelper;
-import com.fejkathegame.game.arena.tiles.Tile;
 import com.fejkathegame.game.entities.LevelObject;
-import com.fejkathegame.game.entities.PracticeTarget;
 import com.fejkathegame.game.timer.PracticeTimer;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.tiled.TiledMap;
@@ -15,8 +13,6 @@ import java.util.ArrayList;
  * @author Swartt
  */
 public class Tutorial01 extends PracticeLevel {
-
-    PracticeLevelHelper helper;
 
     public Tutorial01(String name, LevelObject levelObject) throws SlickException {
         map = new TiledMap("src/main/resources/data/levels/singelplayer/" + name + ".tmx", "src/main/resources/data/img");
