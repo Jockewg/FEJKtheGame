@@ -37,10 +37,14 @@ public class PracticeLevelHelper {
         ttf = new TrueTypeFont(font, true);
         font2 = new Font("Arial", Font.BOLD, 50);
         ttf2 = new TrueTypeFont(font2, true);
-        level.timer.startCountdown(3);
+        startTimer();
 
         score = "Targets Left: " + String.valueOf(level.targets.size());
     }
+
+    public void startTimer(){
+        level.timer.startCountdown(3);
+    };
 
     public void updateText(float x, float y) {
         ttf.drawString(x, y, score, org.newdawn.slick.Color.green);
