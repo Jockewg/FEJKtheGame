@@ -30,7 +30,7 @@ public class LobbyState extends State {
     
     private Character localPlayer;
     
-    private String name;
+    private String name, playerName;
     private Lobby lobby;
     private ArrayList<Image> heads;
     private ArrayList<Character> characters;
@@ -55,10 +55,13 @@ public class LobbyState extends State {
         lobby = new Lobby(name);
         heads = lobby.getImages();
         characters = lobby.getCharacters();
-        client.network(hs.getIp());
-        
-        System.out.println("IP: " + hs.getIp());
-        System.out.println("PLAYER: " + hs.getPlayerName());
+        if(hs != null) {
+            client.network(hs.getIp());
+            playerName = hs.getPlayerName();
+        } else {
+            client.network("localhost");
+            playerName = "Player";
+        }
         
         localPlayer = null;
         try {
@@ -67,7 +70,7 @@ public class LobbyState extends State {
             e.printStackTrace();
         }
         
-        localPlayer.setName(hs.getPlayerName());
+        localPlayer.setName(playerName);
         sendNameToServer();
         
         characters.add(localPlayer);
@@ -107,7 +110,7 @@ public class LobbyState extends State {
     public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
         lobby.render();
         for(Character c : characters) {
-            g.drawString(c.getName(), increase * 64, 132);
+            g.drawString(c.getName(), increase * 128, 132);
             increase += 1;
         }
         

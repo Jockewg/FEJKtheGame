@@ -32,6 +32,8 @@ public class HostScreen {
         playerNameTextField.setTextColor(Color.black);
         ipField.setTextColor(Color.black);
         connect = new Image("src/main/resources/data/img/buttons/connect.png");
+        
+        playerNameTextField.setMaxLength(10);
     }
     
     public HostScreen() {
