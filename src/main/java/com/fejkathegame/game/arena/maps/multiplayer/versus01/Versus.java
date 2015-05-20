@@ -20,10 +20,6 @@ public class Versus extends PracticeLevel {
     
     private TiledMap map;
     
-    private Tile[][] tiles;
-    
-
-    
     private Image[] crankAnim;
     
     private Animation animation;
@@ -112,6 +108,7 @@ public class Versus extends PracticeLevel {
      * adds a player to the player array
      * @param p
      */
+    @Override
     public void addPlayer(LevelObject p) {
         players.add(p);
     }
@@ -120,6 +117,7 @@ public class Versus extends PracticeLevel {
      * Renders the level
      * @throws SlickException
      */
+    @Override
     public void render() throws SlickException {
         map.render(0, 0, 0, 0, 36, 20);
         

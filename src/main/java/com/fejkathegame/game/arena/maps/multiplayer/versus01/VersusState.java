@@ -16,6 +16,7 @@ import com.fejkathegame.client.PacketUpdateX;
 import com.fejkathegame.client.PacketUpdateY;
 import com.fejkathegame.game.entities.logic.MovementSystem;
 import com.fejkathegame.game.Main;
+import com.fejkathegame.game.arena.PracticeState;
 import com.fejkathegame.game.arena.maps.UIHelper;
 import com.fejkathegame.game.arena.physics.Physics;
 import com.fejkathegame.game.entities.Character;
@@ -34,7 +35,7 @@ import org.newdawn.slick.geom.Line;
 import org.newdawn.slick.geom.Polygon;
 import org.newdawn.slick.geom.Vector2f;
 
-public class VersusState extends BasicGameState {
+public class VersusState extends PracticeState {
 
     
     ClientProgram client;
@@ -56,14 +57,13 @@ public class VersusState extends BasicGameState {
 
     private Polygon playerIndicator;
 
-    private ArrayList<Character> characters;
-
     private UIHelper vsUI;
 
     /**
      * Constructor for ArenaState
      *
      * @param name of the stage
+     * @param client
      */
     public VersusState(String name, ClientProgram client) {
         this.name = name;
@@ -85,8 +85,6 @@ public class VersusState extends BasicGameState {
             e.printStackTrace();
         }
         System.out.println("Creating arraylist");
-        characters = new ArrayList<>();
-        characters.add(localPlayer);
 
         line = new Line(0, 0, 450, 250);
 
@@ -121,13 +119,11 @@ public class VersusState extends BasicGameState {
         if (mp.hp == 0 && mp.character.isAlive()) {
             mp.character.setAlive(false);
             arena.players.remove(mp.character);
-            characters.remove(mp.character);
         }
 
         if (localPlayer.getHealth() <= 0) {
             localPlayer.setAlive(false);
             arena.players.remove(localPlayer);
-            characters.remove(localPlayer);
         }
 
     }
@@ -184,9 +180,9 @@ public class VersusState extends BasicGameState {
     }
 
     public void updateVectorLine() {
-        if (characters.size() == 1) {
+        if (arena.players.size() == 1) {
             line = new Line(0, 0, 900, 500);
-        } else if (characters.size() == 2) {
+        } else if (arena.players.size() == 2) {
             for (MPPlayer mp : client.getPlayers().values()) {
                 if(mp.character.isAlive() && localPlayer.isAlive()) {
                     Vector2f objVector = new Vector2f(localPlayer.getX(), localPlayer.getY());
@@ -258,12 +254,12 @@ public class VersusState extends BasicGameState {
                 }
                 mpPlayer.character.setHealth(5);
                 mpPlayer.hp = 5;
-                characters.add(mpPlayer.character);
+                arena.players.add(mpPlayer.character);
                 arena.addPlayer(mpPlayer.character);
             }
             if (mpPlayer.connected == false) {
                 arena.players.remove(mpPlayer.character);
-                characters.remove(mpPlayer.character);
+                arena.players.remove(mpPlayer.character);
             }
         }
     }
