@@ -14,6 +14,7 @@ public class Lobby {
     
     private Image challenger;
     private ArrayList<Character> characters;
+    private ArrayList<Image> heads;
     
     public Lobby(String name) {
         try {
@@ -23,9 +24,15 @@ public class Lobby {
         }
         
         characters = new ArrayList<>();
+        heads = new ArrayList<>();
+        heads.add(challenger);
     }
     
     public ArrayList<Character> getCharacters() {
         return characters;
+    }
+    
+    public ArrayList<Image> getImages() {
+        return heads;
     }
 }
