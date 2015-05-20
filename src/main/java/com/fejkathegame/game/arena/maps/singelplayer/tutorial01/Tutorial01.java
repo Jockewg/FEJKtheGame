@@ -21,7 +21,6 @@ public class Tutorial01 extends Level {
         targets = new ArrayList<>();
         targetTiles = new ArrayList<>();
         addPlayer(levelObject);
-/*        loadTileMap();*/
 
         timer = new PracticeTimer();
         timer.startTimer();
@@ -30,56 +29,6 @@ public class Tutorial01 extends Level {
         helper.loadTileMap();
     }
 
-
-    public void loadTileMap() {
-       /* tiles = new Tile[map.getWidth() + 1][map.getHeight() + 1];
-
-        int collisionLayer = map.getLayerIndex("CollisionLayer");
-        int noLayer = -1;
-
-        if (collisionLayer == noLayer) {
-            System.err.println("Map does not contain CollisionLayer");
-            System.exit(0);
-        }
-
-        for (int x = 0; x < map.getWidth(); x++) {
-            for (int y = 0; y < map.getHeight(); y++) {
-
-                try {
-                    int tileID = map.getTileId(x, y, collisionLayer);
-
-                    Tile tile = null;
-                    PracticeTarget target = null;
-
-                    switch (map.getTileProperty(tileID, "tileType", "solid")) {
-                        case "air":
-                            tile = new AirTile(x, y);
-                            break;
-
-                        case "target":
-                            tile = new TargetTile(x, y);
-                            target = new PracticeTarget(x * 25, y * 25);
-                            targets.add(target);
-                            break;
-
-                        case "pit":
-                            tile = new PitTile(x, y);
-                            break;
-
-                        default:
-                            tile = new SolidTile(x, y);
-                            break;
-                    }
-                    tiles[x][y] = tile;
-                } catch (SlickException ex) {
-                    Logger.getLogger(BigBlue02.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-                } catch (IOException ex) {
-                    Logger.getLogger(BigBlue02.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-                }
-
-            }
-        }*/
-    }
 
     @Override
     public void addPlayer(LevelObject p) {
