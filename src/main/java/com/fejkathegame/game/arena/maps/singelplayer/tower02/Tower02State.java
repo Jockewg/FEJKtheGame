@@ -80,8 +80,8 @@ public class Tower02State extends State {
    @Override
    public void update(GameContainer gc, StateBasedGame sbg, int i) throws SlickException {
       helper.update(gc, sbg, i, 450, 2424);
-       if (isCameraAnimationRunning) {
+/*       if (isCameraAnimationRunning) {
            cameraAnimation();
-       }
+       }*/
    }
 }
