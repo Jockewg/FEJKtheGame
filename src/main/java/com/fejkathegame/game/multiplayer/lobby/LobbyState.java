@@ -54,7 +54,7 @@ public class LobbyState extends State {
         }
         
         characters.add(localPlayer);
-        sbg.addState(new VersusState("01versus", client, localPlayer));
+        sbg.addState(new VersusState("01versus", client, localPlayer, characters));
     }
     
     public void checkIfNewPlayerConnected() {
@@ -73,6 +73,10 @@ public class LobbyState extends State {
                 characters.remove(mpPlayer.character);
             }
         }
+    }
+    
+    public ArrayList<Character> getCharacters() {
+        return characters;
     }
 
     @Override

@@ -7,6 +7,8 @@ import com.fejkathegame.game.arena.maps.UIHelper;
 import com.fejkathegame.game.arena.physics.Physics;
 import com.fejkathegame.game.entities.Character;
 import com.fejkathegame.game.entities.logic.MovementSystem;
+import com.fejkathegame.game.multiplayer.lobby.LobbyState;
+import java.util.ArrayList;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -27,6 +29,8 @@ public class VersusState extends State {
     private Character localPlayer;
 
     private boolean hasUpdated = true;
+    
+    private ArrayList<Character> characters;
 
     //Camera stuff
     private float cameraX, cameraY;
@@ -46,10 +50,11 @@ public class VersusState extends State {
      * @param name of the stage
      * @param client
      */
-    public VersusState(String name, ClientProgram client, Character localPlayer) {
+    public VersusState(String name, ClientProgram client, Character localPlayer, ArrayList<Character> characters) {
         this.name = name;
         this.client = client;
         this.localPlayer = localPlayer;
+        this.characters = characters;
     }
 
     @Override
@@ -69,7 +74,11 @@ public class VersusState extends State {
         playerIndicator.addPoint(20, 0);
         playerIndicator.addPoint(10, 10);
 
-        arena = new Versus(name, localPlayer);
+        arena = new Versus(name);
+        
+        for(Character c : characters) {
+            arena.players.add(c);
+        }
         /*vsUI = new UIHelper(cameraX, cameraY);*/
 
         movementSystem = new MovementSystem(localPlayer);
