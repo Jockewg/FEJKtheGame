@@ -28,6 +28,12 @@ public class Lobby {
         heads.add(challenger);
     }
     
+    public void render() {
+        for(Character c : characters) {
+            challenger.draw(characters.indexOf(c) * 200, 300);
+        }
+    }
+    
     public ArrayList<Character> getCharacters() {
         return characters;
     }

@@ -3,6 +3,7 @@ package com.fejkathegame.game.multiplayer.lobby;
 import com.fejkathegame.client.ClientProgram;
 import com.fejkathegame.game.Main;
 import com.fejkathegame.game.arena.maps.multiplayer.versus01.VersusState;
+import com.fejkathegame.server.ServerProgram;
 import java.util.ArrayList;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -38,12 +39,15 @@ public class LobbyState extends BasicGameState {
     @Override
     public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {
         lobby = new Lobby(name);
+        heads = lobby.getImages();
+        characters = lobby.getCharacters();
+        client.network();
         sbg.addState(new VersusState("01versus", client));
     }
 
     @Override
     public void render(GameContainer gc, StateBasedGame sbg, Graphics grphcs) throws SlickException {
-
+        lobby.render();
     }
 
     @Override

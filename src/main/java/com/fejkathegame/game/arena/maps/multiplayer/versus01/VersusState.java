@@ -99,7 +99,6 @@ public class VersusState extends PracticeState {
         movementSystem = new MovementSystem(localPlayer);
 
         physics = new Physics();
-        client.network();
 
     }
 
