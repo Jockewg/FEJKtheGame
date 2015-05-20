@@ -29,7 +29,7 @@ public class Character extends LevelObject {
     private boolean flipped;
     private boolean movingRight = false;
     private boolean movingLeft = false;
-    private boolean isJumping, isFalling;
+    private boolean isJumping, isFalling, hasJumped;
 
     private SpriteSheet runningSheet;
     private Animation runningAnimation;
@@ -308,7 +308,7 @@ public class Character extends LevelObject {
     }
     
     public void playJumpSound() {
-        if(!jumpSound.isPlaying())
+//        if(!jumpSound.isPlaying())
             jumpSound.playAsSoundEffect(1.0f, 1.0f, false);
     }
     
@@ -1081,6 +1081,14 @@ public class Character extends LevelObject {
 
     public void setGrounded(boolean grounded) {
         this.grounded = grounded;
+    }
+
+    public boolean HasJumped() {
+        return hasJumped;
+    }
+
+    public void setHasJumped(boolean hasJumped) {
+        this.hasJumped = hasJumped;
     }
 
 }
