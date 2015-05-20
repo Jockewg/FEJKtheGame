@@ -26,7 +26,7 @@ public class UIHelper {
     }
     
     public void renderPracticeUI(){
-        state.arena.getMapHelper().updateText( state.camera.getCamX(), state.camera.getCamY());
+       /* state.level.updateText( state.camera.getCamX(), state.camera.getCamY());*/
     }
     
     public float getCenterXOffset(float offset){

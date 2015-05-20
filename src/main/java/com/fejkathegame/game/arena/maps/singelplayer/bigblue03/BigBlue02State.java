@@ -4,17 +4,13 @@ import com.fejkathegame.game.Main;
 import com.fejkathegame.game.arena.PracticeState;
 import com.fejkathegame.game.arena.maps.PracticeCamera;
 import com.fejkathegame.game.arena.maps.PracticeStateHelper;
-import com.fejkathegame.game.arena.maps.UIHelper;
 import com.fejkathegame.game.arena.physics.Physics;
-import com.fejkathegame.game.entities.logic.MovementSystem;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * @author Swartt
@@ -54,7 +50,7 @@ public class BigBlue02State extends PracticeState {
             e.printStackTrace();
         }
 
-        arena = new BigBlue02(name, player);
+        level = new BigBlue02(name, player);
 
         setCameraBoundaries();
 
@@ -67,8 +63,8 @@ public class BigBlue02State extends PracticeState {
     }
 
     public void setCameraBoundaries() {
-        offsetMaxX = arena.getMap().getWidth() * 22;
-        offsetMaxY = arena.getMap().getHeight() * 20;
+        offsetMaxX = level.getMap().getWidth() * 22;
+        offsetMaxY = level.getMap().getHeight() * 20;
     }
 
     public void cameraAnimation() {

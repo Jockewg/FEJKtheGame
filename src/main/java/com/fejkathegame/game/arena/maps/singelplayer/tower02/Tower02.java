@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.fejkathegame.game.arena.maps.singelplayer.tower02;
 
 import com.fejkathegame.game.arena.PracticeLevel;
@@ -31,7 +26,6 @@ public class Tower02 extends PracticeLevel {
     private Tile[][] tiles;
 
     private ArrayList<LevelObject> players;
-    private ArrayList<PracticeTarget> targets;
 
     PracticeLevelHelper helper;
 
@@ -47,21 +41,18 @@ public class Tower02 extends PracticeLevel {
         map = new TiledMap("src/main/resources/data/levels/singelplayer/" + name + ".tmx", "src/main/resources/data/img");
         players = new ArrayList<>();
         targets = new ArrayList<>();
-
+        targetTiles = new ArrayList<>();
         addPlayer(levelObject);
 
-        loadTileMap();
+
         timer = new PracticeTimer();
         timer.startTimer();
 
-        helper = new PracticeLevelHelper(timer, targets);
+        helper = new PracticeLevelHelper(this);
+        helper.loadTileMap();
     }
 
-    /**
-     * populates the arena with tiles
-     *
-     * @throws org.newdawn.slick.SlickException
-     */
+
     public void loadTileMap() {
         tiles = new Tile[map.getWidth() + 1][map.getHeight() + 1];
 
@@ -119,41 +110,8 @@ public class Tower02 extends PracticeLevel {
         players.add(p);
     }
 
-
     /**
-     * @return the player array which includes all player objects
-     */
-    public ArrayList<LevelObject> getPlayers() {
-        return players;
-    }
-
-    /**
-     * @return the player array which includes all {@code targetPractice} objects
-     */
-    public ArrayList<PracticeTarget> getTargets() {
-        return targets;
-    }
-
-
-    /**
-     * @return a multidimensional array of tiles
-     */
-    public Tile[][] getTiles() {
-        return tiles;
-    }
-
-    @Override
-    public TiledMap getMap() {
-        return null;
-    }
-
-    @Override
-    public PracticeLevelHelper getMapHelper() {
-        return helper;
-    }
-
-    /**
-     * Renders the arena
+     * Renders the level
      *
      * @throws org.newdawn.slick.SlickException
      */
@@ -167,18 +125,5 @@ public class Tower02 extends PracticeLevel {
         for (LevelObject t : targets) {
             t.render();
         }
-
-
     }
-
-    @Override
-    public ArrayList<Tile> getTargetTiles() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public PracticeTimer getTimer() {
-        return timer;
-    }
-
 }

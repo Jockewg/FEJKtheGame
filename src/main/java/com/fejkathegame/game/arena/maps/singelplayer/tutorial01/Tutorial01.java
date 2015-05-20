@@ -1,41 +1,20 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.fejkathegame.game.arena.maps.singelplayer.tutorial01;
 
 import com.fejkathegame.game.arena.PracticeLevel;
 import com.fejkathegame.game.arena.maps.PracticeLevelHelper;
-import com.fejkathegame.game.arena.maps.singelplayer.bigblue03.BigBlue02;
-import com.fejkathegame.game.arena.tiles.AirTile;
-import com.fejkathegame.game.arena.tiles.PitTile;
-import com.fejkathegame.game.arena.tiles.SolidTile;
-import com.fejkathegame.game.arena.tiles.TargetTile;
 import com.fejkathegame.game.arena.tiles.Tile;
 import com.fejkathegame.game.entities.LevelObject;
 import com.fejkathegame.game.entities.PracticeTarget;
 import com.fejkathegame.game.timer.PracticeTimer;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.logging.Logger;
-
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.tiled.TiledMap;
+
+import java.util.ArrayList;
 
 /**
  * @author Swartt
  */
 public class Tutorial01 extends PracticeLevel {
-
-    private TiledMap map;
-
-    private Tile[][] tiles;
-
-    private ArrayList<LevelObject> players;
-
-    private ArrayList<PracticeTarget> targets;
 
     PracticeLevelHelper helper;
 
@@ -44,19 +23,20 @@ public class Tutorial01 extends PracticeLevel {
 
         players = new ArrayList<>();
         targets = new ArrayList<>();
+        targetTiles = new ArrayList<>();
         addPlayer(levelObject);
-        loadTileMap();
+/*        loadTileMap();*/
 
         timer = new PracticeTimer();
-        System.out.println("new timer from tutorial01 is: " + timer.toString());
         timer.startTimer();
 
-        helper = new PracticeLevelHelper(timer, targets);
+        helper = new PracticeLevelHelper(this);
+        helper.loadTileMap();
     }
 
-    @Override
+
     public void loadTileMap() {
-        tiles = new Tile[map.getWidth() + 1][map.getHeight() + 1];
+       /* tiles = new Tile[map.getWidth() + 1][map.getHeight() + 1];
 
         int collisionLayer = map.getLayerIndex("CollisionLayer");
         int noLayer = -1;
@@ -102,7 +82,7 @@ public class Tutorial01 extends PracticeLevel {
                 }
 
             }
-        }
+        }*/
     }
 
     @Override
@@ -145,15 +125,6 @@ public class Tutorial01 extends PracticeLevel {
         for (LevelObject t : targets) {
             t.render();
         }
-    }
-    @Override
-    public PracticeTimer getTimer() {
-        return timer;
-    }
-
-    @Override
-    public ArrayList<Tile> getTargetTiles() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }

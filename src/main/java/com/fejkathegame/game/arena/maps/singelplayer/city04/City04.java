@@ -1,16 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.fejkathegame.game.arena.maps.singelplayer.city04;
 
 import com.fejkathegame.game.arena.PracticeLevel;
 import com.fejkathegame.game.arena.maps.PracticeLevelHelper;
-import com.fejkathegame.game.arena.physics.Physics;
-import com.fejkathegame.game.arena.tiles.AirTile;
-import com.fejkathegame.game.arena.tiles.SolidTile;
-import com.fejkathegame.game.arena.tiles.TargetTile;
 import com.fejkathegame.game.arena.tiles.Tile;
 import com.fejkathegame.game.entities.LevelObject;
 import com.fejkathegame.game.entities.PracticeTarget;
@@ -18,22 +9,12 @@ import com.fejkathegame.game.timer.PracticeTimer;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.tiled.TiledMap;
 
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.logging.Logger;
 
 /**
  * @author Swartt
  */
 public class City04 extends PracticeLevel {
-
-    private TiledMap map;
-
-    private Tile[][] tiles;
-
-    private ArrayList<LevelObject> players;
-    private ArrayList<PracticeTarget> targets;
-    private ArrayList<Tile> targetTiles;
 
     PracticeLevelHelper helper;
 
@@ -49,71 +30,21 @@ public class City04 extends PracticeLevel {
         map = new TiledMap("src/main/resources/data/levels/singelplayer/" + name + ".tmx", "src/main/resources/data/img");
         players = new ArrayList<>();
         targets = new ArrayList<>();
-
+        targetTiles = new ArrayList<>();
         addPlayer(levelObject);
-
-
-        loadTileMap();
 
 
         timer = new PracticeTimer();
         timer.startTimer();
 
-        helper = new PracticeLevelHelper(timer, targets);
+        helper = new PracticeLevelHelper(this);
+        helper.loadTileMap();
 
 
         PracticeTarget movableTarget = targets.get(15);
         float movableTargetStartingPos = movableTarget.getY();
         helper.moveTargetConstructor(movableTarget, movableTargetStartingPos, 1.0f);
 
-    }
-
-    /**
-     * populates the arena with tiles
-     *
-     * @throws org.newdawn.slick.SlickException
-     */
-    public void loadTileMap() {
-        tiles = new Tile[map.getWidth() + 1][map.getHeight() + 1];
-
-        int layerIndex = map.getLayerIndex("CollisionLayer");
-
-        if (layerIndex == -1) {
-            System.err.println("Map does not conatin CollisionLayer");
-            System.exit(0);
-        }
-
-        for (int x = 0; x < map.getWidth(); x++) {
-            for (int y = 0; y < map.getHeight(); y++) {
-
-                try {
-                    int tileID = map.getTileId(x, y, layerIndex);
-
-                    Tile tile = null;
-                    PracticeTarget target = null;
-
-                    switch (map.getTileProperty(tileID, "tileType", "solid")) {
-                        case "air":
-                            tile = new AirTile(x, y);
-                            break;
-                        case "target":
-                            tile = new TargetTile(x, y);
-                            target = new PracticeTarget(tile.getX() * 25 - 1, tile.getY() * 25 - 1);
-                            targets.add(target);
-
-                            break;
-                        default:
-                            tile = new SolidTile(x, y);
-                            break;
-                    }
-                    tiles[x][y] = tile;
-                } catch (SlickException ex) {
-                    Logger.getLogger(City04.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-                } catch (IOException ex) {
-                    Logger.getLogger(City04.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-                }
-            }
-        }
     }
 
     /**
@@ -158,7 +89,7 @@ public class City04 extends PracticeLevel {
     }
 
     /**
-     * Renders the arena
+     * Renders the level
      *
      * @throws SlickException
      */
@@ -175,14 +106,10 @@ public class City04 extends PracticeLevel {
         }
     }
 
-   @Override
-   public ArrayList<Tile> getTargetTiles() {
-      return targetTiles;
-   }
+    @Override
+    public ArrayList<Tile> getTargetTiles() {
+        return targetTiles;
+    }
 
-   @Override
-   public PracticeTimer getTimer() {
-      return timer;
-   }
 
 }

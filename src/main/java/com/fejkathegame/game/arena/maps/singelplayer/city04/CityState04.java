@@ -10,7 +10,6 @@ import com.fejkathegame.game.entities.logic.MovementSystem;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
-import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
 import java.io.IOException;
@@ -52,7 +51,7 @@ public class CityState04 extends PracticeState {
             e.printStackTrace();
         }
         
-        arena = new City04(name, player);
+        level = new City04(name, player);
         
         movementSystem = new MovementSystem(player);
         physics = new Physics();

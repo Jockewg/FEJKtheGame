@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.fejkathegame.game.arena.maps.singelplayer.bigblue03;
 
 import com.fejkathegame.game.arena.PracticeLevel;
@@ -26,14 +21,6 @@ import java.util.logging.Logger;
  */
 public class BigBlue02 extends PracticeLevel {
 
-    private TiledMap map;
-
-    private Tile[][] tiles;
-
-    private ArrayList<LevelObject> players;
-    private ArrayList<PracticeTarget> targets;
-    private ArrayList<Tile> targetTiles;
-
     PracticeLevelHelper helper;
 
 
@@ -50,67 +37,20 @@ public class BigBlue02 extends PracticeLevel {
         targets = new ArrayList<>();
         targetTiles = new ArrayList<>();
         addPlayer(levelObject);
-        loadTileMap();
+
         timer = new PracticeTimer();
         timer.startTimer();
 
 
-        helper = new PracticeLevelHelper(timer, targets);
+        helper = new PracticeLevelHelper(this);
+        helper.loadTileMap();
     }
 
     /**
-     * populates the arena with tiles
+     * populates the level with tiles
      *
      * @throws org.newdawn.slick.SlickException
      */
-    public void loadTileMap() {
-        tiles = new Tile[map.getWidth() + 1][map.getHeight() + 1];
-
-        int collisionLayer = map.getLayerIndex("CollisionLayer");
-        int noLayer = -1;
-
-        if (collisionLayer == noLayer) {
-            System.err.println("Map does not contain CollisionLayer");
-            System.exit(0);
-        }
-
-
-        for (int x = 0; x < map.getWidth(); x++) {
-            for (int y = 0; y < map.getHeight(); y++) {
-
-
-                try {
-                    int tileID = map.getTileId(x, y, collisionLayer);
-
-                    Tile tile = null;
-                    PracticeTarget target = null;
-
-                    switch (map.getTileProperty(tileID, "tileType", "solid")) {
-                        case "air":
-                            tile = new AirTile(x, y);
-                            break;
-
-                        case "target":
-                            tile = new TargetTile(x, y);
-                            target = new PracticeTarget(x * 25, y * 25);
-                            targets.add(target);
-                            targetTiles.add(tile);
-                            break;
-
-                        default:
-                            tile = new SolidTile(x, y);
-                            break;
-                    }
-                    tiles[x][y] = tile;
-                } catch (SlickException ex) {
-                    Logger.getLogger(BigBlue02.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-                } catch (IOException ex) {
-                    Logger.getLogger(BigBlue02.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-                }
-
-            }
-        }
-    }
 
     /**
      * adds a player to the player array
@@ -159,7 +99,7 @@ public class BigBlue02 extends PracticeLevel {
     }
 
     /**
-     * Renders the arena
+     * Renders the level
      *
      * @throws org.newdawn.slick.SlickException
      */
@@ -174,11 +114,6 @@ public class BigBlue02 extends PracticeLevel {
         for (LevelObject t : targets) {
             t.render();
         }
-    }
-
-    @Override
-    public PracticeTimer getTimer() {
-        return timer;
     }
 
 }

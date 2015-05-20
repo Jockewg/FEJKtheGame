@@ -31,12 +31,12 @@ public class PracticeStateHelper {
    }
 
    public void checkCollisionWithTarget(int map) {
-      for (int i = 0; i < state.arena.getTargets().size(); i++) {
-         if (state.player.getAttackIndicator().intersects(state.arena.getTargets().get(i).getHitbox()) && state.player.getIsAttacking()
-             || state.player.getIsFullyCharged() && state.player.getSuperAttackIndicator().intersects(state.arena.getTargets().get(i).getHitbox())) {
-            state.arena.getTargets().get(i).getHealthSystem().dealDamage(1);
-            state.arena.getTargets().remove(i);
-            state.arena.getMapHelper().updateScore(map);
+      for (int i = 0; i < state.level.targets.size(); i++) {
+         if (state.player.getAttackIndicator().intersects(state.level.targets.get(i).getHitbox()) && state.player.getIsAttacking()
+             || state.player.getIsFullyCharged() && state.player.getSuperAttackIndicator().intersects(state.level.targets.get(i).getHitbox())) {
+            state.level.targets.get(i).getHealthSystem().dealDamage(1);
+            state.level.targets.remove(i);
+            updateScore(map);
          }
       }
    }
@@ -85,10 +85,10 @@ public class PracticeStateHelper {
       state.setScale(0.24f);
       state.player.setX(x);
       state.player.setY(y);
-      state.arena.getTargets().clear();
-      for (Tile at : state.arena.getTargetTiles()) {
+      state.level.targets.clear();
+      for (Tile at : state.level.targetTiles) {
          PracticeTarget pt = new PracticeTarget(at.getX() * 25, at.getY() * 25);
-         state.arena.getTargets().add(pt);
+         state.level.targets.add(pt);
       }
    }
 
@@ -110,13 +110,13 @@ public class PracticeStateHelper {
       }
       if (!state.paused) {
          checkCameraOffset();
-         if (!state.arena.timer.isCountdownRunning()) {
+         if (!state.level.timer.isCountdownRunning()) {
             state.player.movementSystem.handleInput(gc.getInput(), i);
-            state.physics.handlePhysics(state.arena, i);
+            state.physics.handlePhysics(state.level, i);
             checkCollisionWithTarget(state.getID());
          }
          state.player.update(i);
-         state.arena.getTimer().calculateSecond(i);
+         state.level.timer.calculateSecond(i);
       }
    }
 
@@ -125,8 +125,8 @@ public class PracticeStateHelper {
       g.setAntiAlias(false);
       g.scale(Main.SCALE, Main.SCALE);
       g.translate(-state.camera.getCamX(), -state.camera.getCamY());
-      state.arena.render();
-//      state.arena.getMapHelper().updateText(state.camera.getCamX(), state.camera.getCamY());
+      state.level.render();
+//      state.level.getMapHelper().updateText(state.camera.getCamX(), state.camera.getCamY());
       if (state.paused) {
          drawPauseMenu(g);
       }
@@ -137,4 +137,13 @@ public class PracticeStateHelper {
       g.resetTransform();
 
    }
+    public void updateScore(int map) {
+        if (state.level.targets.size() > 0) {
+            score = "Targets Left: " + String.valueOf(state.level.targets.size());
+        } else {
+            score = "You are a winrar!";
+            level.timer.stopTimer();
+            saveScore(map);
+        }
+    }
 }

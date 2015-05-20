@@ -16,31 +16,20 @@ import org.newdawn.slick.tiled.TiledMap;
  */
 public abstract class PracticeLevel {
 
-    private TiledMap map;
+    public TiledMap map;
 
-    private Tile[][] tiles;
+    public Tile[][] tiles;
 
-    private ArrayList<LevelObject> players;
+    public ArrayList<LevelObject> players;
+
+    public ArrayList<PracticeTarget> targets;
+
+    public ArrayList<Tile> targetTiles;
 
     public PracticeTimer timer;
 
-    public abstract void loadTileMap();
-
     public abstract void addPlayer(LevelObject p);
-
-    public abstract ArrayList<LevelObject> getPlayers();
-
-    public abstract ArrayList<PracticeTarget> getTargets();
-    
-    public abstract ArrayList<Tile> getTargetTiles();
-
-    public abstract Tile[][] getTiles();
-
-    public abstract PracticeLevelHelper getMapHelper();
-
-    public abstract TiledMap getMap();
     
     public abstract void render() throws SlickException;
-    
-    public PracticeTimer getTimer(){return timer;}
+
 }

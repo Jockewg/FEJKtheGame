@@ -76,7 +76,7 @@ public class Versus extends PracticeLevel {
     }
 
     /**
-     * populates the arena with tiles
+     * populates the level with tiles
      */
     public void loadTileMap() {
         tiles = new Tile[map.getWidth() + 1][map.getHeight() + 1];
@@ -148,7 +148,7 @@ public class Versus extends PracticeLevel {
     }
 
     /**
-     * Renders the arena
+     * Renders the level
      * @throws SlickException
      */
     
@@ -168,9 +168,4 @@ public class Versus extends PracticeLevel {
    public ArrayList<Tile> getTargetTiles() {
       return targetTiles;
       }
-
-   @Override
-   public PracticeTimer getTimer() {
-      return null;
-   }
 }

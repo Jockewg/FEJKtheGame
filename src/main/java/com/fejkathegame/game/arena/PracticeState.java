@@ -17,7 +17,7 @@ import org.newdawn.slick.state.BasicGameState;
  */
 public abstract class PracticeState extends BasicGameState {
    
-   public PracticeLevel arena;
+   public PracticeLevel level;
    
    public boolean paused;
    public boolean isPaused() {return paused;}

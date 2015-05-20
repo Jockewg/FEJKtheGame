@@ -5,7 +5,7 @@ import com.fejkathegame.game.arena.PracticeState;
 import com.fejkathegame.game.arena.maps.PracticeCamera;
 import com.fejkathegame.game.arena.maps.PracticeStateHelper;
 import com.fejkathegame.game.arena.physics.Physics;
-import com.fejkathegame.game.entities.logic.MovementSystem;
+
 import java.io.IOException;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -20,7 +20,6 @@ import org.newdawn.slick.state.StateBasedGame;
 public class Tutorial01State extends PracticeState {
 
    private String name;
-   private MovementSystem movementSystem;
 
    private PracticeStateHelper stateHelper;
    private Image spacebar;
@@ -58,11 +57,9 @@ public class Tutorial01State extends PracticeState {
          e.printStackTrace();
       }
 
-      arena = new Tutorial01(name, player);
+      level = new Tutorial01(name, player);
 
       setCameraBoundaries();
-
-      movementSystem = new MovementSystem(player);
 
       spacebar = new Image("data/img/levelart/spacebar.png");
 
@@ -80,13 +77,13 @@ public class Tutorial01State extends PracticeState {
    }
 
    public void setCameraBoundaries() {
-      offsetMaxX = arena.getMap().getWidth() * 25 - 450;
-      offsetMaxY = arena.getMap().getHeight() * 25 - 325;
+      offsetMaxX = level.getMap().getWidth() * 25 - 450;
+      offsetMaxY = level.getMap().getHeight() * 25 - 325;
    }
 
    public void checkIfInPit() {
-      int tileId = arena.getMap().getTileId((int) (player.getX()) / 25, (int) (player.getY() + 30) / 25, 0);
-      String property = arena.getMap().getTileProperty(tileId, "tileType", "pit");
+      int tileId = level.getMap().getTileId((int) (player.getX()) / 25, (int) (player.getY() + 30) / 25, 0);
+      String property = level.getMap().getTileProperty(tileId, "tileType", "pit");
 
       if ("pit".equals(property)) {
          inPit = true;
@@ -97,8 +94,8 @@ public class Tutorial01State extends PracticeState {
    }
 
    public void resetMap() {
-      arena.getPlayers().get(0).setX(50);
-      arena.getPlayers().get(0).setY(500);
+      level.getPlayers().get(0).setX(50);
+      level.getPlayers().get(0).setY(500);
    }
 
    @Override
@@ -129,8 +126,8 @@ public class Tutorial01State extends PracticeState {
       spacebar.draw(730, 250);
       spacebar.draw(650, 200);
 
-//        arena.render();
-        /*arena.stateHelper.updateText(camera.getCamX(), camera.getCamY());*/
+//        level.render();
+        /*level.stateHelper.updateText(camera.getCamX(), camera.getCamY());*/
 //        g.resetTransform();
       stateHelper.render(gc, sbg, g);
    }

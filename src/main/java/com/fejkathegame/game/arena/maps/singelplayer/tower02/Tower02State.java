@@ -5,11 +5,9 @@ import com.fejkathegame.game.arena.PracticeState;
 import com.fejkathegame.game.arena.maps.PracticeCamera;
 import com.fejkathegame.game.arena.maps.PracticeStateHelper;
 import com.fejkathegame.game.arena.physics.Physics;
-import com.fejkathegame.game.entities.logic.MovementSystem;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
-import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
 import java.io.IOException;
@@ -21,7 +19,6 @@ import java.io.IOException;
 public class Tower02State extends PracticeState {
 
    private String name;
-   private MovementSystem movementSystem;
    private PracticeStateHelper helper;
 
    private float offsetMaxX = 450;
@@ -55,9 +52,8 @@ public class Tower02State extends PracticeState {
          e.printStackTrace();
       }
 
-      arena = new Tower02(name, player);
+      level = new Tower02(name, player);
 
-      movementSystem = new MovementSystem(player);
 
       physics = new Physics();
 
@@ -68,7 +64,7 @@ public class Tower02State extends PracticeState {
    }
 
    public void cameraAnimation() {
-      cameraMotionY += arena.timer.getCurrentCountdownTimeInReverseIncrement();
+      cameraMotionY += level.timer.getCurrentCountdownTimeInReverseIncrement();
       camera.setCamX(0);
       camera.setCamY(cameraMotionY);
       if (cameraMotionY >= offsetMaxY - 250) {
