@@ -1,7 +1,7 @@
 package com.fejkathegame.game.arena.maps.singelplayer.tutorial01;
 
 import com.fejkathegame.game.Main;
-import com.fejkathegame.game.arena.PracticeState;
+import com.fejkathegame.game.arena.State;
 import com.fejkathegame.game.arena.maps.PracticeCamera;
 import com.fejkathegame.game.arena.maps.PracticeStateHelper;
 import com.fejkathegame.game.arena.physics.Physics;
@@ -17,7 +17,7 @@ import org.newdawn.slick.state.StateBasedGame;
  *
  * @author Swartt
  */
-public class Tutorial01State extends PracticeState {
+public class Tutorial01State extends State {
 
    private String name;
 
@@ -100,36 +100,38 @@ public class Tutorial01State extends PracticeState {
 
    @Override
    public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
-//        g.setAntiAlias(false);
-//        g.scale(Main.SCALE, Main.SCALE);
-//        g.translate(-camera.getCamX(), -camera.getCamY());
-      spacebar.draw(220, 510);
-      arrow.draw(300, 500);
+       g.setAntiAlias(false);
+       g.scale(Main.SCALE, Main.SCALE);
+       g.translate(-camera.getCamX(), -camera.getCamY());
+       level.render();
+       level.helper.updateText(camera.getCamX(), camera.getCamY());
+       spacebar.draw(220, 510);
+       arrow.draw(300, 500);
 
-      spacebar.draw(700, 510);
-      arrow.draw(780, 500);
-      spacebar.draw(950, 510);
-      arrow.draw(1050, 500);
+       spacebar.draw(700, 510);
+       arrow.draw(780, 500);
+       spacebar.draw(950, 510);
+       arrow.draw(1050, 500);
 
-      spacebar.draw(1500, 510);
-      arrow.draw(1580, 500);
-      spacebar.draw(1750, 510);
-      arrow.draw(1830, 500);
+       spacebar.draw(1500, 510);
+       arrow.draw(1580, 500);
+       spacebar.draw(1750, 510);
+       arrow.draw(1830, 500);
 
-      attack.draw(1960, 510);
-      line.draw(2050, 440);
+       attack.draw(1960, 510);
+       line.draw(2050, 440);
 
-      spacebar.draw(2400, 510);
-      attack.draw(2400, 450);
-      line.draw(2425, 400);
+       spacebar.draw(2400, 510);
+       attack.draw(2400, 450);
+       line.draw(2425, 400);
 
-      spacebar.draw(730, 250);
-      spacebar.draw(650, 200);
-
-//        level.render();
-        /*level.stateHelper.updateText(camera.getCamX(), camera.getCamY());*/
-//        g.resetTransform();
-      stateHelper.render(gc, sbg, g);
+       spacebar.draw(730, 250);
+       spacebar.draw(650, 200);
+       if (paused) {
+           stateHelper.drawPauseMenu(g);
+       }
+       g.translate(-camera.getCamX(), camera.getCamY());
+       g.resetTransform();
    }
 
    @Override

@@ -1,7 +1,7 @@
 package com.fejkathegame.game.arena.maps;
 
 import com.fejkathegame.game.Main;
-import com.fejkathegame.game.arena.PracticeState;
+import com.fejkathegame.game.arena.State;
 import com.fejkathegame.game.arena.tiles.Tile;
 import com.fejkathegame.game.entities.PracticeTarget;
 
@@ -22,11 +22,11 @@ import org.newdawn.slick.state.StateBasedGame;
  */
 public class PracticeStateHelper {
 
-    PracticeState state;
+    State state;
     Rectangle pauseMenuBackground;
     UIHelper uIHelper;
 
-    public PracticeStateHelper(PracticeState state) {
+    public PracticeStateHelper(State state) {
         this.state = state;
         pauseMenuBackground = new Rectangle(0, 0, 600, 300);
         uIHelper = new UIHelper(state);

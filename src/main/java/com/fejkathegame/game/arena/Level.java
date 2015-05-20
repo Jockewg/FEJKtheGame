@@ -14,7 +14,7 @@ import org.newdawn.slick.tiled.TiledMap;
 /**
  * @author Swartt
  */
-public abstract class PracticeLevel {
+public abstract class Level {
 
     public PracticeLevelHelper helper;
 

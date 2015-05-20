@@ -1,7 +1,7 @@
 
 package com.fejkathegame.game.arena.maps;
 
-import com.fejkathegame.game.arena.PracticeState;
+import com.fejkathegame.game.arena.State;
 import com.fejkathegame.game.entities.Character;
 import com.fejkathegame.game.Main;
 
@@ -13,9 +13,9 @@ public class UIHelper {
  
     private final float X_CENTER = Main.WINDOW_WIDTH/2;
     private final float Y_CENTER = Main.WINDOW_HEIGHT/2;
-    PracticeState state;
+    State state;
     
-    public UIHelper(PracticeState state){
+    public UIHelper(State state){
     this.state = state;
     }
     

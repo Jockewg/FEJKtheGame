@@ -1,6 +1,6 @@
 package com.fejkathegame.game.arena.physics;
 
-import com.fejkathegame.game.arena.PracticeLevel;
+import com.fejkathegame.game.arena.Level;
 import com.fejkathegame.game.entities.LevelObject;
 import com.fejkathegame.game.arena.tiles.Tile;
 
@@ -21,22 +21,22 @@ public class Physics {
      * @param arena the level that will utilize physics
      * @param delta the time between two updates 
      */
-    public void handlePhysics(PracticeLevel arena, int delta) {
+    public void handlePhysics(Level arena, int delta) {
         handleCharacters(arena, delta);
     }
     
     /**
      * Handles physics for objects in the game.
      * 
-     * @param practiceLevel the level that the objects are in
+     * @param level the level that the objects are in
      * @param delta the time between two updates
      */
-    private void handleCharacters(PracticeLevel practiceLevel, int delta) {
-        for(LevelObject p : practiceLevel.players) {
+    private void handleCharacters(Level level, int delta) {
+        for(LevelObject p : level.players) {
             if(!p.isMoving()) {
                 p.decelerate(delta);
             }
-            handleGameObject(p, practiceLevel, delta);
+            handleGameObject(p, level, delta);
         }
     }
     
@@ -97,11 +97,11 @@ public class Physics {
      * gravity on the player.
      * 
      * @param obj the player
-     * @param practiceLevel the level that the player is in
+     * @param level the level that the player is in
      * @param delta the time between two updates
      */
-    private void handleGameObject(LevelObject obj, PracticeLevel practiceLevel, int delta) {
-        obj.setOnGround(isOnGround(obj, practiceLevel.tiles));
+    private void handleGameObject(LevelObject obj, Level level, int delta) {
+        obj.setOnGround(isOnGround(obj, level.tiles));
         
         if(!obj.isOnGround() || obj.getY_velocity() < 0) {
             obj.applyGravity(gravity * delta);
@@ -153,7 +153,7 @@ public class Physics {
                 
                 obj.setX(obj.getX() + step_x);
                 
-                if(checkCollision(obj, practiceLevel.tiles)) {
+                if(checkCollision(obj, level.tiles)) {
                     obj.setX(obj.getX() - step_x);
                     obj.setX_velocity(0);
                     x_movement = 0;
@@ -169,7 +169,7 @@ public class Physics {
                 
                 obj.setY(obj.getY() + step_y);
                 
-                if(checkCollision(obj, practiceLevel.tiles)) {
+                if(checkCollision(obj, level.tiles)) {
                     obj.setY(obj.getY() - step_y);
                     obj.setY_velocity(0);
                     y_movement = 0;

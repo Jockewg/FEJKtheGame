@@ -1,8 +1,7 @@
 package com.fejkathegame.game.arena.maps.singelplayer.city04;
 
-import com.fejkathegame.game.arena.PracticeLevel;
+import com.fejkathegame.game.arena.Level;
 import com.fejkathegame.game.arena.maps.PracticeLevelHelper;
-import com.fejkathegame.game.arena.tiles.Tile;
 import com.fejkathegame.game.entities.LevelObject;
 import com.fejkathegame.game.entities.PracticeTarget;
 import com.fejkathegame.game.timer.PracticeTimer;
@@ -14,7 +13,7 @@ import java.util.ArrayList;
 /**
  * @author Swartt
  */
-public class City04 extends PracticeLevel {
+public class City04 extends Level {
 
     /**
      * Constructor for Arena, creates the playingfield and adds all players to

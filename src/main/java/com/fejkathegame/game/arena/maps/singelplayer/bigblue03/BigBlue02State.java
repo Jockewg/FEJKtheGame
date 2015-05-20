@@ -1,7 +1,7 @@
 package com.fejkathegame.game.arena.maps.singelplayer.bigblue03;
 
 import com.fejkathegame.game.Main;
-import com.fejkathegame.game.arena.PracticeState;
+import com.fejkathegame.game.arena.State;
 import com.fejkathegame.game.arena.maps.PracticeCamera;
 import com.fejkathegame.game.arena.maps.PracticeStateHelper;
 import com.fejkathegame.game.arena.physics.Physics;
@@ -15,7 +15,7 @@ import java.io.IOException;
 /**
  * @author Swartt
  */
-public class BigBlue02State extends PracticeState {
+public class BigBlue02State extends State {
 
     private String name;
     private PracticeStateHelper stateHelper;

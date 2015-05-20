@@ -1,22 +1,18 @@
 package com.fejkathegame.game.arena.maps.multiplayer.versus01;
 
-import com.fejkathegame.game.arena.PracticeLevel;
-import com.fejkathegame.game.arena.maps.PracticeLevelHelper;
+import com.fejkathegame.game.arena.Level;
 import com.fejkathegame.game.entities.LevelObject;
 import com.fejkathegame.game.arena.tiles.AirTile;
 import com.fejkathegame.game.arena.tiles.SolidTile;
 import com.fejkathegame.game.arena.tiles.Tile;
-import com.fejkathegame.game.entities.PracticeTarget;
-import com.fejkathegame.game.timer.PracticeTimer;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.tiled.TiledMap;
 
 import java.util.ArrayList;
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.Image;
-import org.newdawn.slick.geom.Rectangle;
 
-public class Versus extends PracticeLevel {
+public class Versus extends Level {
     
     private TiledMap map;
     

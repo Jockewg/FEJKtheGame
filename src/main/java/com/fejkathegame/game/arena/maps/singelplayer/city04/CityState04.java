@@ -1,7 +1,7 @@
 package com.fejkathegame.game.arena.maps.singelplayer.city04;
 
 import com.fejkathegame.game.Main;
-import com.fejkathegame.game.arena.PracticeState;
+import com.fejkathegame.game.arena.State;
 import com.fejkathegame.game.arena.maps.PracticeCamera;
 import com.fejkathegame.game.arena.maps.PracticeStateHelper;
 import com.fejkathegame.game.arena.physics.Physics;
@@ -18,7 +18,7 @@ import java.io.IOException;
  *
  * @author Swartt
  */
-public class CityState04 extends PracticeState {
+public class CityState04 extends State {
 
     private String name;
     private MovementSystem movementSystem;

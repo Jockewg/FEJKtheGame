@@ -1,6 +1,6 @@
 package com.fejkathegame.game.arena.maps;
 
-import com.fejkathegame.game.arena.PracticeLevel;
+import com.fejkathegame.game.arena.Level;
 import com.fejkathegame.game.arena.maps.highscore.HighscoreAdapter;
 import com.fejkathegame.game.arena.tiles.*;
 import com.fejkathegame.game.entities.PracticeTarget;
@@ -27,10 +27,10 @@ public class PracticeLevelHelper {
     TrueTypeFont ttf2;
     HighscoreAdapter adapter;
     boolean writtenToFile = false;
-    PracticeLevel level;
+    Level level;
 
 
-    public PracticeLevelHelper(PracticeLevel level) {
+    public PracticeLevelHelper(Level level) {
         this.level = level;
         adapter = new HighscoreAdapter();
         font = new Font("Verdana", Font.BOLD, 20);

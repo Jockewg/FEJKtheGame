@@ -1,7 +1,7 @@
 package com.fejkathegame.game.arena.maps.singelplayer.tower02;
 
 import com.fejkathegame.game.Main;
-import com.fejkathegame.game.arena.PracticeState;
+import com.fejkathegame.game.arena.State;
 import com.fejkathegame.game.arena.maps.PracticeCamera;
 import com.fejkathegame.game.arena.maps.PracticeStateHelper;
 import com.fejkathegame.game.arena.physics.Physics;
@@ -16,7 +16,7 @@ import java.io.IOException;
  *
  * @author Swartt
  */
-public class Tower02State extends PracticeState {
+public class Tower02State extends State {
 
    private String name;
    private PracticeStateHelper helper;

@@ -1,41 +1,22 @@
 package com.fejkathegame.game.arena.maps.multiplayer.versus01;
 
-import com.fejkathegame.client.ClientProgram;
-import com.fejkathegame.client.MPPlayer;
-import com.fejkathegame.client.PacketAttackDirectionPlayer;
-import com.fejkathegame.client.PacketAttackPlayer;
-import com.fejkathegame.client.PacketChargePlayer;
-import com.fejkathegame.client.PacketFallingPlayer;
-import com.fejkathegame.client.PacketFullyChargedPlayer;
-import com.fejkathegame.client.PacketGroundedPlayer;
-import com.fejkathegame.client.PacketHpPlayer;
-import com.fejkathegame.client.PacketJumpPlayer;
-import com.fejkathegame.client.PacketMoveLeftPlayer;
-import com.fejkathegame.client.PacketMoveRightPlayer;
-import com.fejkathegame.client.PacketUpdateX;
-import com.fejkathegame.client.PacketUpdateY;
-import com.fejkathegame.game.entities.logic.MovementSystem;
+import com.fejkathegame.client.*;
 import com.fejkathegame.game.Main;
-import com.fejkathegame.game.arena.PracticeState;
+import com.fejkathegame.game.arena.State;
 import com.fejkathegame.game.arena.maps.UIHelper;
 import com.fejkathegame.game.arena.physics.Physics;
 import com.fejkathegame.game.entities.Character;
+import com.fejkathegame.game.entities.logic.MovementSystem;
+import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
-import org.newdawn.slick.state.BasicGameState;
-import org.newdawn.slick.state.StateBasedGame;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import org.newdawn.slick.Color;
 import org.newdawn.slick.geom.Line;
 import org.newdawn.slick.geom.Polygon;
 import org.newdawn.slick.geom.Vector2f;
+import org.newdawn.slick.state.StateBasedGame;
 
-public class VersusState extends PracticeState {
+public class VersusState extends State {
 
     
     ClientProgram client;
