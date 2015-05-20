@@ -3,6 +3,7 @@ package com.fejkathegame.game.multiplayer.lobby;
 import com.fejkathegame.client.ClientProgram;
 import com.fejkathegame.client.MPPlayer;
 import com.fejkathegame.client.PacketNamePlayer;
+import com.fejkathegame.client.PacketReadyPlayer;
 import com.fejkathegame.game.Main;
 import com.fejkathegame.game.arena.State;
 import com.fejkathegame.game.arena.maps.multiplayer.versus01.VersusState;
@@ -105,12 +106,22 @@ public class LobbyState extends State {
             packet.name = localPlayer.getName();
             client.getClient().sendUDP(packet);
     }
+    
+    public void sendReadyToServer() {
+        PacketReadyPlayer packet = new PacketReadyPlayer();
+        packet.ready = localPlayer.getReady();
+        client.getClient().sendTCP(packet);
+    }
 
     @Override
     public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
         lobby.render();
         for(Character c : characters) {
             g.drawString(c.getName(), increase * 128, 132);
+            if(c.getReady())
+                g.drawString("READY", increase * 128, 68);
+            else
+                g.drawString("NOT READY", increase * 128, 68);
             increase += 1;
         }
         
@@ -123,6 +134,14 @@ public class LobbyState extends State {
         if(gc.getInput().isKeyPressed(Input.KEY_ENTER)) {
             sbg.getState(Main.VERSUSSTATE).init(gc, sbg);
             sbg.enterState(Main.VERSUSSTATE);
+        } else if(gc.getInput().isKeyPressed(Input.KEY_R)) {
+            if(localPlayer.getReady()) {
+                localPlayer.setReady(false);
+                sendReadyToServer();
+            } else {
+                localPlayer.setReady(true);
+                sendReadyToServer();
+            }
         }
     }
 }

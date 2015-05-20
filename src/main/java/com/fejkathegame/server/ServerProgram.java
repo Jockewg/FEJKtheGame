@@ -227,6 +227,15 @@ public class ServerProgram extends Listener {
             packet.id = c.getID();
                 server.sendToAllExceptTCP(c.getID(), packet);
                 System.out.println("client " + c.getID() + " name is: " + players.get(c.getID()).name);
+        } else if(o instanceof PacketReadyPlayer) {
+            PacketReadyPlayer packet = (PacketReadyPlayer) o;
+            boolean old = players.get(c.getID()).ready;
+            players.get(c.getID()).ready = packet.ready;
+            packet.id = c.getID();
+            if(players.get(c.getID()).ready != old) {
+                server.sendToAllExceptUDP(c.getID(), packet);
+                System.out.println("client " + c.getID() + " ready status is: " + players.get(c.getID()).ready);
+            }
         }
     }
     /**

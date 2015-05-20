@@ -30,6 +30,7 @@ public class Character extends LevelObject {
     private boolean movingRight = false;
     private boolean movingLeft = false;
     private boolean isJumping, isFalling, hasJumped;
+    private boolean ready = false;
 
     private SpriteSheet runningSheet;
     private Animation runningAnimation;
@@ -1101,6 +1102,14 @@ public class Character extends LevelObject {
     
     public void setName(String name) {
         this.name = name;
+    }
+    
+    public boolean getReady() {
+        return ready;
+    }
+    
+    public void setReady(boolean ready) {
+        this.ready = ready;
     }
 
 }

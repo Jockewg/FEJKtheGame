@@ -14,13 +14,14 @@ import org.newdawn.slick.SlickException;
  */
 public class Lobby {
     
-    private Image challenger;
+    private Image challenger, readyBtn;
     private ArrayList<Character> characters;
     private ArrayList<Image> heads;
     
     public Lobby(String name) {
         try {
             challenger = new Image("src/main/resources/data/img/spritesheets/characterHead.png");
+            readyBtn = new Image();
         } catch (SlickException ex) {
             Logger.getLogger(Lobby.class.getName()).log(Level.SEVERE, null, ex);
         }

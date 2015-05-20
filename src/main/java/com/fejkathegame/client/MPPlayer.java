@@ -23,4 +23,5 @@ public class MPPlayer {
     public boolean isGrounded;
     public boolean isFalling;
     public int hp;
+    public boolean ready;
 }
