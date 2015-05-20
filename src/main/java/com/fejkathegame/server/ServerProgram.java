@@ -37,7 +37,7 @@ public class ServerProgram extends Listener {
         server.getKryo().register(PacketMoveRightPlayer.class);
         server.getKryo().register(PacketJumpPlayer.class);
         server.getKryo().register(PacketGroundedPlayer.class);
-//        server.getKryo().register(PacketFallingPlayer.class);
+        server.getKryo().register(PacketFallingPlayer.class);
         server.getKryo().register(PacketHpPlayer.class);
 
         server.bind(tcpPort, udpPort);
@@ -177,17 +177,17 @@ public class ServerProgram extends Listener {
                     System.out.println("client " + c.getID() + " is jumping");
                 }
             }
-//        } else if (o instanceof PacketFallingPlayer) {
-//            PacketFallingPlayer packet = (PacketFallingPlayer) o;
-//            boolean old = players.get(c.getID()).isFalling;
-//            players.get(c.getID()).isFalling = packet.isFalling;
-//            packet.id = c.getID();
-//            if (players.get(c.getID()).isFalling != old) {
-//                server.sendToAllExceptUDP(c.getID(), packet);
-//                if (players.get(c.getID()).isFalling == true) {
-//                    System.out.println("client " + c.getID() + " is falling");
-//                }
-//            }
+        } else if (o instanceof PacketFallingPlayer) {
+            PacketFallingPlayer packet = (PacketFallingPlayer) o;
+            boolean old = players.get(c.getID()).isFalling;
+            players.get(c.getID()).isFalling = packet.isFalling;
+            packet.id = c.getID();
+            if (players.get(c.getID()).isFalling != old) {
+                server.sendToAllExceptUDP(c.getID(), packet);
+                if (players.get(c.getID()).isFalling == true) {
+                    System.out.println("client " + c.getID() + " is falling");
+                }
+            }
         } else if (o instanceof PacketGroundedPlayer) {
             PacketGroundedPlayer packet = (PacketGroundedPlayer) o;
             boolean old = players.get(c.getID()).isGrounded;
