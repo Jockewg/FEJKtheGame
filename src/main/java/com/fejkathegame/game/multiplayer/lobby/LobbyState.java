@@ -36,7 +36,6 @@ public class LobbyState extends State {
     private ArrayList<Character> characters;
     
     private int increase = 1;
-    private boolean hasSentName = false;
 
     @Override
     public int getID() {
@@ -85,6 +84,7 @@ public class LobbyState extends State {
                 }
                 mpPlayer.character.setHealth(5);
                 mpPlayer.hp = 5;
+                mpPlayer.character.setName(mpPlayer.name);
                 characters.add(mpPlayer.character);
             }
             if (mpPlayer.connected == false) {
@@ -98,12 +98,9 @@ public class LobbyState extends State {
     }
     
     public void sendNameToServer() {
-        if(!hasSentName) {
             PacketNamePlayer packet = new PacketNamePlayer();
             packet.name = localPlayer.getName();
-            client.getClient().sendTCP(packet);
-            hasSentName = true;
-        }
+            client.getClient().sendUDP(packet);
     }
 
     @Override

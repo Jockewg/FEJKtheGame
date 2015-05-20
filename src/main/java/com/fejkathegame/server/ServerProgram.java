@@ -225,6 +225,8 @@ public class ServerProgram extends Listener {
             PacketNamePlayer packet = (PacketNamePlayer) o;
             players.get(c.getID()).name = packet.name;
             packet.id = c.getID();
+                server.sendToAllExceptTCP(c.getID(), packet);
+                System.out.println("client " + c.getID() + " name is: " + players.get(c.getID()).name);
         }
     }
     /**
