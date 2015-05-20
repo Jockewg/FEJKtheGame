@@ -5,6 +5,7 @@ import com.fejkathegame.game.arena.maps.singelplayer.bigblue03.BigBlue02State;
 import com.fejkathegame.game.arena.maps.multiplayer.versus01.VersusState;
 import com.fejkathegame.game.arena.maps.singelplayer.city04.CityState04;
 import com.fejkathegame.game.arena.maps.singelplayer.tutorial01.Tutorial01State;
+import com.fejkathegame.game.multiplayer.lobby.LobbyState;
 import com.fejkathegame.menu.HostScreenState;
 import com.fejkathegame.menu.LevelSelectState;
 import com.fejkathegame.menu.MenuState;
@@ -25,6 +26,7 @@ public class Main extends StateBasedGame {
     public static final int VERSUSSTATE = 1;
     public static final int HOSTSTATE = 2;
     public static final int LEVELSELECTSTATE = 3;
+    public static final int LOBBYSTATE = 1337;
     //singelplayer constants
     public static final int BIG_BlUE03 = 4;
     public static final int CITY04 = 5;
@@ -57,7 +59,7 @@ public class Main extends StateBasedGame {
         addState(new MenuState("menu"));
         addState(new LevelSelectState());
         //add multiplayer maps
-        addState(new VersusState("01versus"));
+        addState(new LobbyState("Lobby"));
         //add singelplayermaps
         addState(new Tutorial01State("tutorial01"));
         addState(new Tower02State("tower02"));

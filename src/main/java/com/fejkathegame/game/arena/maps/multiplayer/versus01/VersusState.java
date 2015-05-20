@@ -36,8 +36,8 @@ import org.newdawn.slick.geom.Vector2f;
 
 public class VersusState extends BasicGameState {
 
-    ClientProgram client = new ClientProgram();
-
+    
+    ClientProgram client;
     private Versus arena;
     private String name;
     private MovementSystem movementSystem;
@@ -65,8 +65,9 @@ public class VersusState extends BasicGameState {
      *
      * @param name of the stage
      */
-    public VersusState(String name) {
+    public VersusState(String name, ClientProgram client) {
         this.name = name;
+        this.client = client;
     }
 
     @Override
@@ -83,7 +84,7 @@ public class VersusState extends BasicGameState {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
+        System.out.println("Creating arraylist");
         characters = new ArrayList<>();
         characters.add(localPlayer);
 
@@ -183,7 +184,7 @@ public class VersusState extends BasicGameState {
     }
 
     public void updateVectorLine() {
-        if (characters.isEmpty()) {
+        if (characters.size() == 1) {
             line = new Line(0, 0, 900, 500);
         } else if (characters.size() == 2) {
             for (MPPlayer mp : client.getPlayers().values()) {
