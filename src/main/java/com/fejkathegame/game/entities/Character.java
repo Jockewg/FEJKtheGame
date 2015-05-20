@@ -230,11 +230,11 @@ public class Character extends LevelObject {
     }
 
     public void checkMomentum() {
-        if (y_velocity < 0) {
+        if (y_velocity < 0 && !getIsAttacking()) {
             isJumping = true;
             isFalling = false;
             grounded = false;
-        } else if (y_velocity > 0) {
+        } else if (y_velocity > 0 && !getIsAttacking()) {
             isJumping = false;
             isFalling = true;
             grounded = false;
