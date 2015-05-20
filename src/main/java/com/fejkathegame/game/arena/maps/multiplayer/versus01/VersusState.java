@@ -234,9 +234,9 @@ public class VersusState extends PracticeState {
                 hasUpdated = true;
             }
 
-            if (mp.isChargeing) {
+            if (mp.isChargeing && mp.character.getHealth() >= 1) {
                 mp.character.chargeSuperAttack(i);
-            } else if (mp.isFullyCharged) {
+            } else if (mp.isFullyCharged && mp.character.getHealth() >= 1) {
                 mp.character.activateSuperAttack(i);
             } else {
                 mp.character.stopChargeSound();
