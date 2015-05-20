@@ -45,6 +45,7 @@ public class ServerProgram extends Listener {
         server.getKryo().register(PacketFallingPlayer.class);
         server.getKryo().register(PacketHpPlayer.class);
         server.getKryo().register(PacketNamePlayer.class);
+        server.getKryo().register(PacketReadyPlayer.class);
 
         try {
             server.bind(tcpPort, udpPort);
@@ -77,6 +78,7 @@ public class ServerProgram extends Listener {
         player.isJumping = false;
         player.isGrounded = false;
         player.hp = 5;
+        player.ready = false;
 
         PacketAddPlayer packet = new PacketAddPlayer();
         packet.id = c.getID();
@@ -232,10 +234,8 @@ public class ServerProgram extends Listener {
             boolean old = players.get(c.getID()).ready;
             players.get(c.getID()).ready = packet.ready;
             packet.id = c.getID();
-            if(players.get(c.getID()).ready != old) {
-                server.sendToAllExceptUDP(c.getID(), packet);
+                server.sendToAllExceptTCP(c.getID(), packet);
                 System.out.println("client " + c.getID() + " ready status is: " + players.get(c.getID()).ready);
-            }
         }
     }
     /**
