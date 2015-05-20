@@ -2,28 +2,23 @@ package com.fejkathegame.game.multiplayer.lobby;
 
 import com.fejkathegame.client.ClientProgram;
 import com.fejkathegame.client.MPPlayer;
-import com.fejkathegame.game.entities.Character;
 import com.fejkathegame.game.Main;
-import com.fejkathegame.game.arena.PracticeState;
+import com.fejkathegame.game.arena.State;
 import com.fejkathegame.game.arena.maps.multiplayer.versus01.VersusState;
-import com.fejkathegame.server.ServerProgram;
+import com.fejkathegame.game.entities.Character;
+import org.newdawn.slick.*;
+import org.newdawn.slick.state.StateBasedGame;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Image;
-import org.newdawn.slick.Input;
-import org.newdawn.slick.SlickException;
-import org.newdawn.slick.state.BasicGameState;
-import org.newdawn.slick.state.StateBasedGame;
 
 /**
  *
  * @author Khamekaze
  */
-public class LobbyState extends PracticeState {
+public class LobbyState extends State {
     
     
     private ClientProgram client = new ClientProgram();
