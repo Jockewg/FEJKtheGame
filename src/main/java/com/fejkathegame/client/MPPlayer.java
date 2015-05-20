@@ -9,6 +9,7 @@ import com.fejkathegame.game.entities.Character;
  */
 public class MPPlayer {
     public float x = 256f, y = 256f;
+    public String name;
     public int id;
     public float direction;
     public boolean isAttacking;

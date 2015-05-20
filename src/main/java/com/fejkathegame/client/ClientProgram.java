@@ -77,6 +77,7 @@ public class ClientProgram extends Listener {
             PacketAddPlayer packet = (PacketAddPlayer) o;
             MPPlayer newPlayer = new MPPlayer();
             players.put(packet.id, newPlayer);
+            players.get(packet.id).name = packet.name;
             players.get(packet.id).connected = true;
         } else if (o instanceof PacketRemovePlayer) {
             PacketRemovePlayer packet = (PacketRemovePlayer) o;

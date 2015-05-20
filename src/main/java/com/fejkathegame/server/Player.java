@@ -12,6 +12,7 @@ import com.esotericsoftware.kryonet.Connection;
  * @author Filip
  */
 public class Player {
+    public String name;
     public float x, y;
     public Connection c;
     public float direction;

@@ -7,6 +7,8 @@ import java.util.Map;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
 import com.esotericsoftware.kryonet.Server;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 /**
  * The server sends data to all clients connected to it.
  * 
@@ -21,9 +23,12 @@ public class ServerProgram extends Listener {
      * The server register the packedges binds to the port and starts.
      * 
      * @param args
-     * @throws IOException 
      */
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
+        startServer();
+    }
+    public static void startServer() {
+        
         server = new Server();
         server.getKryo().register(PacketUpdateX.class);
         server.getKryo().register(PacketUpdateY.class);
@@ -40,7 +45,11 @@ public class ServerProgram extends Listener {
         server.getKryo().register(PacketFallingPlayer.class);
         server.getKryo().register(PacketHpPlayer.class);
 
-        server.bind(tcpPort, udpPort);
+        try {
+            server.bind(tcpPort, udpPort);
+        } catch (IOException ex) {
+            Logger.getLogger(ServerProgram.class.getName()).log(Level.SEVERE, null, ex);
+        }
         server.start();
         server.addListener(new ServerProgram());
         System.out.println("The server is ready");
@@ -55,6 +64,7 @@ public class ServerProgram extends Listener {
     @Override
     public void connected(Connection c) {
         Player player = new Player();
+        player.name = "" + c.getID();
         player.x = 256;
         player.y = 256;
         player.c = c;
@@ -69,11 +79,13 @@ public class ServerProgram extends Listener {
 
         PacketAddPlayer packet = new PacketAddPlayer();
         packet.id = c.getID();
+        packet.name = player.name;
         server.sendToAllExceptTCP(c.getID(), packet);
 
         for (Player p : players.values()) {
             PacketAddPlayer packet2 = new PacketAddPlayer();
             packet2.id = p.c.getID();
+            packet2.name = p.name;
             c.sendTCP(packet2);
         }
 

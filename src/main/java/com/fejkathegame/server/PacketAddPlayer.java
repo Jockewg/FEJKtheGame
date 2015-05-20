@@ -11,4 +11,5 @@ package com.fejkathegame.server;
  */
 public class PacketAddPlayer {
     public int id;
+    public String name;
 }
