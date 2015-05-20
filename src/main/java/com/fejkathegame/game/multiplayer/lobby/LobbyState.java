@@ -3,8 +3,10 @@ package com.fejkathegame.game.multiplayer.lobby;
 import com.fejkathegame.client.ClientProgram;
 import com.fejkathegame.game.Main;
 import com.fejkathegame.game.arena.maps.multiplayer.versus01.VersusState;
+import java.util.ArrayList;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
@@ -21,6 +23,8 @@ public class LobbyState extends BasicGameState {
     
     private String name;
     private Lobby lobby;
+    private ArrayList<Image> heads;
+    private ArrayList<Character> characters;
 
     @Override
     public int getID() {
