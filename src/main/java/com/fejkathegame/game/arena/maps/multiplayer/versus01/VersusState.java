@@ -65,9 +65,10 @@ public class VersusState extends PracticeState {
      * @param name of the stage
      * @param client
      */
-    public VersusState(String name, ClientProgram client) {
+    public VersusState(String name, ClientProgram client, Character localPlayer) {
         this.name = name;
         this.client = client;
+        this.localPlayer = localPlayer;
     }
 
     @Override
@@ -78,12 +79,6 @@ public class VersusState extends PracticeState {
     @Override
     public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {
 
-        localPlayer = null;
-        try {
-            localPlayer = new Character(800, 40);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
         System.out.println("Creating arraylist");
 
         line = new Line(0, 0, 450, 250);
@@ -243,24 +238,6 @@ public class VersusState extends PracticeState {
         }
     }
 
-    public void checkIfNewPlayerConnected() {
-        for (MPPlayer mpPlayer : client.getPlayers().values()) { //other player render here.
-            if (mpPlayer.character == null) {
-                try {
-                    mpPlayer.character = new Character(300, 40);
-                } catch (SlickException | IOException ex) {
-                    Logger.getLogger(VersusState.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                mpPlayer.character.setHealth(5);
-                mpPlayer.hp = 5;
-                arena.players.add(mpPlayer.character);
-            }
-            if (mpPlayer.connected == false) {
-                arena.players.remove(mpPlayer.character);
-            }
-        }
-    }
-
     @Override
     public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
         g.scale(cameraScale, cameraScale);
@@ -277,7 +254,6 @@ public class VersusState extends PracticeState {
 
     @Override
     public void update(GameContainer gc, StateBasedGame sbg, int i) throws SlickException {
-        checkIfNewPlayerConnected();
         updateVectorLine();
         updateCameraRect();
         movementSystem.handleInput(gc.getInput(), i);

@@ -1,5 +1,7 @@
 package com.fejkathegame.game.multiplayer.lobby;
 
+import com.fejkathegame.game.entities.Character;
+
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
