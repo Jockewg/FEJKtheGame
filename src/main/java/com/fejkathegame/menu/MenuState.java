@@ -1,6 +1,7 @@
 package com.fejkathegame.menu;
 
 import com.fejkathegame.game.Main;
+import com.fejkathegame.game.multiplayer.lobby.LobbyState;
 import com.fejkathegame.menu.button.MenuButton;
 import org.lwjgl.input.Mouse;
 import org.newdawn.slick.Color;
@@ -44,7 +45,7 @@ public class MenuState extends BasicGameState {
         input = gc.getInput();
         int mouseX = Mouse.getX();
         int mouseY = gc.getHeight() - Mouse.getY();
-        checkIfButtonIsPressed(mouseX, mouseY, input, sbg);
+        checkIfButtonIsPressed(mouseX, mouseY, input, gc, sbg);
 
     }
     
@@ -59,7 +60,7 @@ public class MenuState extends BasicGameState {
      * @param i the Input that handles mouse movement
      * @param sbg context of the game that calls for new states
      */
-    public void checkIfButtonIsPressed(int x, int y, Input i, StateBasedGame sbg) {
+    public void checkIfButtonIsPressed(int x, int y, Input i, GameContainer gc, StateBasedGame sbg) throws SlickException {
 //        if((x > 250 && x < 400) && (y < 200 && y > 125)) {
 //            if(i.isMousePressed(Input.MOUSE_LEFT_BUTTON)) {
 //                sbg.enterState(Main.VERSUSSTATE);
@@ -80,6 +81,8 @@ public class MenuState extends BasicGameState {
             }
         }else if(menu.getButtons()[1].onHover(x, y)){
             if(i.isMousePressed(Input.MOUSE_LEFT_BUTTON)) {
+                sbg.addState(new LobbyState("Lobby"));
+                sbg.getState(Main.LOBBYSTATE).init(gc, sbg);
                 sbg.enterState(Main.LOBBYSTATE);
             }
         }else if(menu.getButtons()[2].onHover(x, y)){
