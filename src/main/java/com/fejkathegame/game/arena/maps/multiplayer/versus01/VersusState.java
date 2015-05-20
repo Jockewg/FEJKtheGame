@@ -180,7 +180,7 @@ public class VersusState extends PracticeState {
     }
 
     public void updateVectorLine() {
-        if (arena.players.size() == 1) {
+        if (arena.players.isEmpty()) {
             line = new Line(0, 0, 900, 500);
         } else if (arena.players.size() == 2) {
             for (MPPlayer mp : client.getPlayers().values()) {
@@ -255,10 +255,8 @@ public class VersusState extends PracticeState {
                 mpPlayer.character.setHealth(5);
                 mpPlayer.hp = 5;
                 arena.players.add(mpPlayer.character);
-                arena.addPlayer(mpPlayer.character);
             }
             if (mpPlayer.connected == false) {
-                arena.players.remove(mpPlayer.character);
                 arena.players.remove(mpPlayer.character);
             }
         }
