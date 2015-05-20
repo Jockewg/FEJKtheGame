@@ -220,6 +220,10 @@ public class ServerProgram extends Listener {
                 server.sendToAllExceptTCP(c.getID(), packet);
                 System.out.println("client " +  c.getID() + " hp is: " + players.get(c.getID()).hp);
             }
+        } else if(o instanceof PacketNamePlayer) {
+            PacketNamePlayer packet = (PacketNamePlayer) o;
+            players.get(c.getID()).name = packet.name;
+            packet.id = c.getID();
         }
     }
     /**
