@@ -102,7 +102,7 @@ public class VersusState extends State {
         }
         if (mp.hp == 0 && mp.character.isAlive()) {
             mp.character.setAlive(false);
-//            arena.players.remove(mp.character);
+            arena.players.remove(mp.character);
         }
 
         if (localPlayer.getHealth() <= 0) {
@@ -168,7 +168,7 @@ public class VersusState extends State {
             line = new Line(0, 0, 900, 500);
         } else if (arena.players.size() == 2) {
             for (MPPlayer mp : client.getPlayers().values()) {
-                if(mp.hp >= 1 && localPlayer.isAlive()) {
+                if(mp.hp >= 1 && localPlayer.getHealth() >= 1) {
                     Vector2f objVector = new Vector2f(localPlayer.getX(), localPlayer.getY());
                     Vector2f player2Vector = new Vector2f(mp.x, mp.y);
                     line = new Line(objVector, player2Vector);
