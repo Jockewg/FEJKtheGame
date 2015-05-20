@@ -1,10 +1,16 @@
 package com.fejkathegame.game.multiplayer.lobby;
 
 import com.fejkathegame.client.ClientProgram;
+import com.fejkathegame.client.MPPlayer;
+import com.fejkathegame.game.entities.Character;
 import com.fejkathegame.game.Main;
+import com.fejkathegame.game.arena.PracticeState;
 import com.fejkathegame.game.arena.maps.multiplayer.versus01.VersusState;
 import com.fejkathegame.server.ServerProgram;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -17,10 +23,12 @@ import org.newdawn.slick.state.StateBasedGame;
  *
  * @author Khamekaze
  */
-public class LobbyState extends BasicGameState {
+public class LobbyState extends PracticeState {
     
     
     private ClientProgram client = new ClientProgram();
+    
+    private Character localPlayer;
     
     private String name;
     private Lobby lobby;
@@ -42,7 +50,34 @@ public class LobbyState extends BasicGameState {
         heads = lobby.getImages();
         characters = lobby.getCharacters();
         client.network();
-        sbg.addState(new VersusState("01versus", client));
+        
+        localPlayer = null;
+        try {
+            localPlayer = new com.fejkathegame.game.entities.Character(800, 40);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        
+        characters.add(localPlayer);
+        sbg.addState(new VersusState("01versus", client, localPlayer));
+    }
+    
+    public void checkIfNewPlayerConnected() {
+        for (MPPlayer mpPlayer : client.getPlayers().values()) { //other player render here.
+            if (mpPlayer.character == null) {
+                try {
+                    mpPlayer.character = new Character(300, 40);
+                } catch (SlickException | IOException ex) {
+                    Logger.getLogger(VersusState.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                mpPlayer.character.setHealth(5);
+                mpPlayer.hp = 5;
+                characters.add(mpPlayer.character);
+            }
+            if (mpPlayer.connected == false) {
+                characters.remove(mpPlayer.character);
+            }
+        }
     }
 
     @Override
@@ -52,6 +87,7 @@ public class LobbyState extends BasicGameState {
 
     @Override
     public void update(GameContainer gc, StateBasedGame sbg, int i) throws SlickException {
+        checkIfNewPlayerConnected();
         if(gc.getInput().isKeyPressed(Input.KEY_ENTER)) {
             sbg.getState(Main.VERSUSSTATE).init(gc, sbg);
             sbg.enterState(Main.VERSUSSTATE);
