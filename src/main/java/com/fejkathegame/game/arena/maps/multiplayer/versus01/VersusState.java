@@ -103,6 +103,7 @@ public class VersusState extends State {
         if (mp.hp == 0 && mp.character.isAlive()) {
             mp.character.setAlive(false);
             arena.players.remove(mp.character);
+            characters.remove(mp.character);
         }
 
         if (localPlayer.getHealth() <= 0) {
@@ -258,7 +259,6 @@ public class VersusState extends State {
                 mp.character.renderCharacterAnimation();
             }
         }
-
         physics.handlePhysics(arena, i);
         localPlayer.update(i);
         updatePlayerIndicator();
