@@ -29,6 +29,8 @@ public class LobbyState extends State {
     private Lobby lobby;
     private ArrayList<Image> heads;
     private ArrayList<Character> characters;
+    
+    private int increase = 1;
 
     @Override
     public int getID() {
@@ -80,8 +82,13 @@ public class LobbyState extends State {
     }
 
     @Override
-    public void render(GameContainer gc, StateBasedGame sbg, Graphics grphcs) throws SlickException {
+    public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
         lobby.render();
+        for(MPPlayer p : client.getPlayers().values()) {
+            g.drawString(p.name, increase * 64, 132);
+            increase += 1;
+        }
+        increase = 1;
     }
 
     @Override

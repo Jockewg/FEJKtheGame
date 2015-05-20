@@ -32,7 +32,7 @@ public class Lobby {
     
     public void render() {
         for(Character c : characters) {
-            challenger.draw(characters.indexOf(c) * 200, 300);
+            challenger.draw((characters.indexOf(c) + 1) * 64, 100, 32, 32);
         }
     }
     
