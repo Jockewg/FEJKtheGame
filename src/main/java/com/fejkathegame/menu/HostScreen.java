@@ -11,9 +11,10 @@ import org.newdawn.slick.gui.TextField;
 
 public class HostScreen {
     
-    private TextField playerName, ipField;
+    private TextField playerNameTextField, ipField;
     private Image connect;
     private Font font;
+    private String ip, playerName;
     
     /**
      * Initiates the gui for this screen.
@@ -24,13 +25,17 @@ public class HostScreen {
      */
     public HostScreen(String name, GameContainer gc) throws SlickException {
         font = gc.getDefaultFont();
-        playerName = new TextField(gc, font, gc.getWidth() / 2 - 150, gc.getHeight() / 2 - 80, 300, 40);
-        playerName.setBackgroundColor(Color.white);
+        playerNameTextField = new TextField(gc, font, gc.getWidth() / 2 - 150, gc.getHeight() / 2 - 80, 300, 40);
+        playerNameTextField.setBackgroundColor(Color.white);
         ipField = new TextField(gc, font, gc.getWidth() / 2 - 150, gc.getHeight() / 2, 300, 40);
         ipField.setBackgroundColor(Color.white);
-        playerName.setTextColor(Color.black);
+        playerNameTextField.setTextColor(Color.black);
         ipField.setTextColor(Color.black);
         connect = new Image("src/main/resources/data/img/buttons/connect.png");
+    }
+    
+    public HostScreen() {
+        
     }
     
     /**
@@ -40,16 +45,32 @@ public class HostScreen {
      * @param g
      */
     public void render(GameContainer gc, Graphics g) {
-        playerName.render(gc, g);
+        playerNameTextField.render(gc, g);
         ipField.render(gc, g);
         connect.draw(gc.getWidth() / 2 - 150, gc.getHeight() / 2 + 80);
     }
 
-    public TextField getPlayerName() {
-        return playerName;
+    public TextField getPlayerNameTextField() {
+        return playerNameTextField;
     }
 
     public TextField getIpField() {
         return ipField;
+    }
+    
+    public void setPlayerName(String playerName) {
+        this.playerName = playerName;
+    }
+    
+    public String getPlayerName() {
+        return playerName;
+    }
+    
+    public void setIp(String ip) {
+        this.ip = ip;
+    }
+    
+    public String getIp() {
+        return ip;
     }
 }

@@ -77,7 +77,7 @@ public class Main extends StateBasedGame {
                     appgc.setDisplayMode(WINDOW_WIDTH, WINDOW_HEIGHT, FULLSCREEN);
                     appgc.setDisplayMode(900, 500, false);
                     appgc.getFPS();
-                    appgc.setShowFPS(true);
+                    appgc.setShowFPS(false);
                     appgc.setTargetFrameRate(100);
                     appgc.setAlwaysRender(true);
                     appgc.start();

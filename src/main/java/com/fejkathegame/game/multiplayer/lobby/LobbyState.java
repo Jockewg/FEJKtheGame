@@ -6,6 +6,8 @@ import com.fejkathegame.game.Main;
 import com.fejkathegame.game.arena.State;
 import com.fejkathegame.game.arena.maps.multiplayer.versus01.VersusState;
 import com.fejkathegame.game.entities.Character;
+import com.fejkathegame.menu.HostScreen;
+import com.fejkathegame.menu.HostScreenState;
 import org.newdawn.slick.*;
 import org.newdawn.slick.state.StateBasedGame;
 
@@ -22,6 +24,8 @@ public class LobbyState extends State {
     
     
     private ClientProgram client = new ClientProgram();
+    
+    private HostScreenState hs;
     
     private Character localPlayer;
     
@@ -40,13 +44,20 @@ public class LobbyState extends State {
     public LobbyState(String name) {
         this.name = name;
     }
+    
+    public LobbyState(HostScreenState hs) {
+        this.hs = hs;
+    }
 
     @Override
     public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {
         lobby = new Lobby(name);
         heads = lobby.getImages();
         characters = lobby.getCharacters();
-        client.network();
+        client.network(hs.getIp());
+        
+        System.out.println("IP: " + hs.getIp());
+        System.out.println("PLAYER: " + hs.getPlayerName());
         
         localPlayer = null;
         try {
@@ -54,6 +65,8 @@ public class LobbyState extends State {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        
+        localPlayer.setName(hs.getPlayerName());
         
         characters.add(localPlayer);
         sbg.addState(new VersusState("01versus", client, localPlayer, characters));
@@ -84,10 +97,11 @@ public class LobbyState extends State {
     @Override
     public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
         lobby.render();
-        for(MPPlayer p : client.getPlayers().values()) {
-            g.drawString(p.name, increase * 64, 132);
+        for(Character c : characters) {
+            g.drawString(c.getName(), increase * 64, 132);
             increase += 1;
         }
+        
         increase = 1;
     }
 
@@ -99,5 +113,4 @@ public class LobbyState extends State {
             sbg.enterState(Main.VERSUSSTATE);
         }
     }
-
 }

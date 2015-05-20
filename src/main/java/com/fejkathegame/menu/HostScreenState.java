@@ -3,6 +3,8 @@ package com.fejkathegame.menu;
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryonet.Client;
 import com.fejkathegame.client.ClientProgram;
+import com.fejkathegame.game.Main;
+import com.fejkathegame.game.multiplayer.lobby.LobbyState;
 import com.fejkathegame.server.ServerProgram;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
@@ -19,8 +21,14 @@ public class HostScreenState extends BasicGameState {
     private String name;
     private Input input;
     
+    private String playerName, ip;
+    
     public HostScreenState(String name) {
         this.name = name;
+    }
+    
+    public HostScreenState() {
+        
     }
 
     @Override
@@ -32,6 +40,7 @@ public class HostScreenState extends BasicGameState {
     public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {
         input = gc.getInput();
         hostScreen = new HostScreen(name, gc);
+        
     }
 
     @Override
@@ -54,7 +63,9 @@ public class HostScreenState extends BasicGameState {
     public void update(GameContainer gc, StateBasedGame sbg, int i) throws SlickException {
         int x = input.getMouseX();
         int y = input.getMouseY();
-        checkIfConnectIsClicked(x, y, input, sbg);
+        checkIfConnectIsClicked(x, y, input, gc, sbg);
+        System.out.println("IP: " + ip);
+        System.out.println("PLAYER: " + playerName);
     }
     
     /**
@@ -68,14 +79,31 @@ public class HostScreenState extends BasicGameState {
      * @param i the Input to be used to read mouse pos
      * @param sbg
      */
-    public void checkIfConnectIsClicked(int x, int y, Input i, StateBasedGame sbg) {
+    public void checkIfConnectIsClicked(int x, int y, Input i, GameContainer gc, StateBasedGame sbg) throws SlickException {
         if((x > 300 && x < 600) && (y > 331 && y < 371)) {
             if(i.isMousePressed(Input.MOUSE_LEFT_BUTTON)) {
-                
-                sbg.enterState(1);
-                
+                ip = hostScreen.getIpField().getText();
+                playerName = hostScreen.getPlayerNameTextField().getText();
+                sbg.addState(new LobbyState(this));
+                sbg.getState(Main.LOBBYSTATE).init(gc, sbg);
+                sbg.enterState(Main.LOBBYSTATE);
             }
         }
     }
-
+    
+    public void setPlayerName(String playerName) {
+        this.playerName = playerName;
+    }
+    
+    public String getPlayerName() {
+        return playerName;
+    }
+    
+    public void setIp(String ip) {
+        this.ip = ip;
+    }
+    
+    public String getIp() {
+        return ip;
+    }
 }

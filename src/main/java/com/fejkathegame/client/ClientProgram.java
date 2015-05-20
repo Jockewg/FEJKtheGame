@@ -33,7 +33,7 @@ public class ClientProgram extends Listener {
      * Starts the server and regiters the packets to send/recive
      * and tries to conenct to server
      */
-    public void network() {
+    public void network(String ip) {
         System.out.println("Connecting to the server...");
         client = new Client();
 
@@ -55,7 +55,7 @@ public class ClientProgram extends Listener {
 
         client.start();
         try {
-            client.connect(5000, "25.34.87.173", tcpPort, updPort);
+            client.connect(5000, ip, tcpPort, updPort);
         } catch (IOException ex) {
             Logger.getLogger(ClientProgram.class.getName()).log(Level.SEVERE, null, ex);
         }

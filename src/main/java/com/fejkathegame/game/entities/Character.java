@@ -89,6 +89,7 @@ public class Character extends LevelObject {
     private Image[] numberOfJumps = new Image[2];
     private Image attackCharger;
     private float attackChargeSize = 0;
+    private String name;
 
     /**
      * Constructor for creating a character, gives it the default values for a
@@ -136,7 +137,7 @@ public class Character extends LevelObject {
         loadCharacterAnimations();
 
     }
-
+    
     /**
      * Decelerates the Character, avoiding jerky movement
      *
@@ -1089,6 +1090,17 @@ public class Character extends LevelObject {
 
     public void setHasJumped(boolean hasJumped) {
         this.hasJumped = hasJumped;
+    }
+    
+    public String getName() {
+        if(name == null) {
+            return "HELLO";
+        } else
+            return name;
+    }
+    
+    public void setName(String name) {
+        this.name = name;
     }
 
 }
