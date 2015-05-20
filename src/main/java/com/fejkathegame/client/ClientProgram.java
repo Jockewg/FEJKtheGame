@@ -51,6 +51,7 @@ public class ClientProgram extends Listener {
         client.getKryo().register(PacketGroundedPlayer.class);
         client.getKryo().register(PacketFallingPlayer.class);
         client.getKryo().register(PacketHpPlayer.class);
+        client.getKryo().register(PacketNamePlayer.class);
         client.addListener(this);
 
         client.start();
@@ -118,7 +119,11 @@ public class ClientProgram extends Listener {
         } else if (o instanceof PacketHpPlayer) {
             PacketHpPlayer packet = (PacketHpPlayer) o;
             players.get(packet.id).hp = packet.hp;
+        } else if(o instanceof PacketNamePlayer) {
+            PacketNamePlayer packet = (PacketNamePlayer) o;
+            players.get(packet.id).name = packet.name;
         }
+        
     }
 
     public Client getClient() {
