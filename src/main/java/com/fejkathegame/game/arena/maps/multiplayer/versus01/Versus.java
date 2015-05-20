@@ -13,16 +13,19 @@ import org.newdawn.slick.Animation;
 import org.newdawn.slick.Image;
 
 public class Versus extends Level {
-    
+
     private TiledMap map;
-    
+
     private Image[] crankAnim;
-    
+
     private Animation animation;
-    
+
     private ArrayList<Tile> targetTiles;
+
     /**
-     * Constructor for Arena, creates the playingfield and adds all players to the field
+     * Constructor for Arena, creates the playingfield and adds all players to
+     * the field
+     *
      * @param name name of the file containing the tilemap
      * @param levelObject a player to be added to the level
      * @throws SlickException
@@ -30,21 +33,18 @@ public class Versus extends Level {
     public Versus(String name) throws SlickException {
         map = new TiledMap("src/main/resources/data/levels/multiplayer/" + name + ".tmx", "src/main/resources/data/img");
         players = new ArrayList<>();
-        
-        
+
 //        addPlayer(levelObject);
-        
         loadTileMap();
-        
+
         loadCrankAnim();
         animation = new Animation(crankAnim, 30);
 
-
     }
-    
+
     public void loadCrankAnim() throws SlickException {
         crankAnim = new Image[12];
-        
+
         crankAnim[0] = new Image("src/main/resources/data/img/animations/crankAnim1.png");
         crankAnim[1] = new Image("src/main/resources/data/img/animations/crankAnim2.png");
         crankAnim[2] = new Image("src/main/resources/data/img/animations/crankAnim3.png");
@@ -58,11 +58,11 @@ public class Versus extends Level {
         crankAnim[10] = new Image("src/main/resources/data/img/animations/crankAnim11.png");
         crankAnim[11] = new Image("src/main/resources/data/img/animations/crankAnim12.png");
     }
-    
+
     public float getArenaWidth() {
         return map.getWidth();
     }
-    
+
     public float getArenaHeight() {
         return map.getHeight();
     }
@@ -72,22 +72,22 @@ public class Versus extends Level {
      */
     public void loadTileMap() {
         tiles = new Tile[map.getWidth() + 1][map.getHeight() + 1];
-        
+
         int layerIndex = map.getLayerIndex("CollisionLayer");
-        
-        if(layerIndex == -1) {
+
+        if (layerIndex == -1) {
             System.err.println("Map does not conatin CollisionLayer");
             System.exit(0);
         }
-        
-        for(int x = 0; x < map.getWidth(); x++) {
-            for(int y = 0; y < map.getHeight(); y++) {
-                
+
+        for (int x = 0; x < map.getWidth(); x++) {
+            for (int y = 0; y < map.getHeight(); y++) {
+
                 int tileID = map.getTileId(x, y, layerIndex);
-                
+
                 Tile tile = null;
-                
-                switch(map.getTileProperty(tileID, "tileType", "solid")) {
+
+                switch (map.getTileProperty(tileID, "tileType", "solid")) {
                     case "air":
                         tile = new AirTile(x, y);
                         break;
@@ -102,6 +102,7 @@ public class Versus extends Level {
 
     /**
      * adds a player to the player array
+     *
      * @param p
      */
     @Override
@@ -111,17 +112,20 @@ public class Versus extends Level {
 
     /**
      * Renders the level
+     *
      * @throws SlickException
      */
     @Override
     public void render() throws SlickException {
         map.render(0, 0, 0, 0, 36, 20);
-        
-        for(LevelObject p : players) {
-            p.render();
+
+        for (LevelObject p : players) {
+            if (p.isAlive()) {
+                p.render();
+            }
         }
     }
-    
+
     public Animation getAnimation() {
         return animation;
     }
