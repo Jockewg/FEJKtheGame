@@ -21,7 +21,7 @@ import java.io.IOException;
 public class CityState04 extends State {
 
     private String name;
-    private MovementSystem movementSystem;
+
     private PracticeStateHelper stateHelper;
     
     private float offsetMaxX = 2050;
@@ -52,8 +52,7 @@ public class CityState04 extends State {
         }
         
         level = new City04(name, player);
-        
-        movementSystem = new MovementSystem(player);
+
         physics = new Physics();
 
         camera = new PracticeCamera(offsetMaxX, offsetMaxY);

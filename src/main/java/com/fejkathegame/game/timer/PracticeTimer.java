@@ -35,6 +35,15 @@ public class PracticeTimer {
       countdownRunning = false;
    }
 
+    public void resetTimer(){
+        timerDuration = 0;
+        secondsPassed = 0;
+        reverse = 0;
+        end = 0;
+        timerRunning = false;
+        countdownRunning = false;
+    }
+
    public void calculateSecond(int delta) {
       secondsPassed += delta;
       if (secondsPassed > 1000) {

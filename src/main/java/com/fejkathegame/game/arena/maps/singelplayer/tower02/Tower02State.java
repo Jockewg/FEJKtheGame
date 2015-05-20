@@ -60,7 +60,7 @@ public class Tower02State extends State {
       camera = new PracticeCamera(offsetMaxX, offsetMaxY);
 
       helper = new PracticeStateHelper(this);
-
+       setCameraAnimationRunning(true);
    }
 
    public void cameraAnimation() {
@@ -68,7 +68,7 @@ public class Tower02State extends State {
       camera.setCamX(0);
       camera.setCamY(cameraMotionY);
       if (cameraMotionY >= offsetMaxY - 250) {
-         isCameraAnimationRunning = false;
+         setCameraAnimationRunning(false);
       }
    }
 
@@ -80,5 +80,8 @@ public class Tower02State extends State {
    @Override
    public void update(GameContainer gc, StateBasedGame sbg, int i) throws SlickException {
       helper.update(gc, sbg, i, 450, 2424);
+       if (isCameraAnimationRunning) {
+           cameraAnimation();
+       }
    }
 }
