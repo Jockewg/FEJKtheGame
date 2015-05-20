@@ -16,9 +16,6 @@ import java.util.ArrayList;
  */
 public class City04 extends PracticeLevel {
 
-    PracticeLevelHelper helper;
-
-
     /**
      * Constructor for Arena, creates the playingfield and adds all players to
      * the field
@@ -57,38 +54,6 @@ public class City04 extends PracticeLevel {
     }
 
     /**
-     * @return the player array which includes all player objects
-     */
-    public ArrayList<LevelObject> getPlayers() {
-        return players;
-    }
-
-    /**
-     * @return the player array which includes all {@code targetPractice} objects
-     */
-    public ArrayList<PracticeTarget> getTargets() {
-        return targets;
-    }
-
-
-    @Override
-    public TiledMap getMap() {
-        return null;
-    }
-
-    /**
-     * @return a multidimensional array of tiles
-     */
-    public Tile[][] getTiles() {
-        return tiles;
-    }
-
-    @Override
-    public PracticeLevelHelper getMapHelper() {
-        return helper;
-    }
-
-    /**
      * Renders the level
      *
      * @throws SlickException
@@ -105,11 +70,4 @@ public class City04 extends PracticeLevel {
             t.render();
         }
     }
-
-    @Override
-    public ArrayList<Tile> getTargetTiles() {
-        return targetTiles;
-    }
-
-
 }

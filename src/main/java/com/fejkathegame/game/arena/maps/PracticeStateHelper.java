@@ -36,7 +36,7 @@ public class PracticeStateHelper {
              || state.player.getIsFullyCharged() && state.player.getSuperAttackIndicator().intersects(state.level.targets.get(i).getHitbox())) {
             state.level.targets.get(i).getHealthSystem().dealDamage(1);
             state.level.targets.remove(i);
-            updateScore(map);
+            state.level.helper.updateScore(map);
          }
       }
    }
@@ -137,13 +137,4 @@ public class PracticeStateHelper {
       g.resetTransform();
 
    }
-    public void updateScore(int map) {
-        if (state.level.targets.size() > 0) {
-            score = "Targets Left: " + String.valueOf(state.level.targets.size());
-        } else {
-            score = "You are a winrar!";
-            level.timer.stopTimer();
-            saveScore(map);
-        }
-    }
 }

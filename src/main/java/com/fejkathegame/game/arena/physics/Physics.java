@@ -32,7 +32,7 @@ public class Physics {
      * @param delta the time between two updates
      */
     private void handleCharacters(PracticeLevel practiceLevel, int delta) {
-        for(LevelObject p : practiceLevel.getPlayers()) {
+        for(LevelObject p : practiceLevel.players) {
             if(!p.isMoving()) {
                 p.decelerate(delta);
             }
@@ -101,7 +101,7 @@ public class Physics {
      * @param delta the time between two updates
      */
     private void handleGameObject(LevelObject obj, PracticeLevel practiceLevel, int delta) {
-        obj.setOnGround(isOnGround(obj, practiceLevel.getTiles()));
+        obj.setOnGround(isOnGround(obj, practiceLevel.tiles));
         
         if(!obj.isOnGround() || obj.getY_velocity() < 0) {
             obj.applyGravity(gravity * delta);
@@ -153,7 +153,7 @@ public class Physics {
                 
                 obj.setX(obj.getX() + step_x);
                 
-                if(checkCollision(obj, practiceLevel.getTiles())) {
+                if(checkCollision(obj, practiceLevel.tiles)) {
                     obj.setX(obj.getX() - step_x);
                     obj.setX_velocity(0);
                     x_movement = 0;
@@ -169,7 +169,7 @@ public class Physics {
                 
                 obj.setY(obj.getY() + step_y);
                 
-                if(checkCollision(obj, practiceLevel.getTiles())) {
+                if(checkCollision(obj, practiceLevel.tiles)) {
                     obj.setY(obj.getY() - step_y);
                     obj.setY_velocity(0);
                     y_movement = 0;

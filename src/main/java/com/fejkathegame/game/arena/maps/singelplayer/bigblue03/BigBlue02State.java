@@ -63,8 +63,8 @@ public class BigBlue02State extends PracticeState {
     }
 
     public void setCameraBoundaries() {
-        offsetMaxX = level.getMap().getWidth() * 22;
-        offsetMaxY = level.getMap().getHeight() * 20;
+        offsetMaxX = level.map.getWidth() * 22;
+        offsetMaxY = level.map.getHeight() * 20;
     }
 
     public void cameraAnimation() {

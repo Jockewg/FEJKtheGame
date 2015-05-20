@@ -90,31 +90,6 @@ public class Tutorial01 extends PracticeLevel {
         players.add(p);
     }
 
-    @Override
-    public ArrayList<LevelObject> getPlayers() {
-        return players;
-    }
-
-    @Override
-    public ArrayList<PracticeTarget> getTargets() {
-        return targets;
-    }
-
-    @Override
-    public Tile[][] getTiles() {
-        return tiles;
-    }
-
-    @Override
-    public PracticeLevelHelper getMapHelper() {
-        return helper;
-    }
-
-    @Override
-    public TiledMap getMap() {
-        return map;
-    }
-
     public void render() throws SlickException {
         map.render(0, 0, 0, 0, 100, 30);
 

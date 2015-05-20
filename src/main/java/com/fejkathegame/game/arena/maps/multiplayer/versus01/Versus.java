@@ -22,7 +22,7 @@ public class Versus extends PracticeLevel {
     
     private Tile[][] tiles;
     
-    private ArrayList<LevelObject> players;
+
     
     private Image[] crankAnim;
     
@@ -117,41 +117,9 @@ public class Versus extends PracticeLevel {
     }
 
     /**
-     * returns the player array
-     * @return
-     */
-    public ArrayList<LevelObject> getPlayers() {
-        return players;
-    }
-
-    @Override
-    public ArrayList<PracticeTarget> getTargets() {
-        ArrayList<PracticeTarget> targets = new ArrayList<>();
-        return targets;
-    }
-
-    /**
-     * @return a multidimensional array of tiles
-     */
-    public Tile[][] getTiles() {
-        return tiles;
-    }
-
-    @Override
-    public TiledMap getMap() {
-        return map;
-    }
-
-    @Override
-    public PracticeLevelHelper getMapHelper() {
-        return null;
-    }
-
-    /**
      * Renders the level
      * @throws SlickException
      */
-    
     public void render() throws SlickException {
         map.render(0, 0, 0, 0, 36, 20);
         
@@ -164,8 +132,4 @@ public class Versus extends PracticeLevel {
         return animation;
     }
 
-   @Override
-   public ArrayList<Tile> getTargetTiles() {
-      return targetTiles;
-      }
 }

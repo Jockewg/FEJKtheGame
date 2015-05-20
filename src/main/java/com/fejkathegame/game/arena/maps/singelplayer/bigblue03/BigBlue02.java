@@ -21,9 +21,6 @@ import java.util.logging.Logger;
  */
 public class BigBlue02 extends PracticeLevel {
 
-    PracticeLevelHelper helper;
-
-
     /**
      * Constructor for Arena, creates the playingfield and adds all players to
      * the field
@@ -59,43 +56,6 @@ public class BigBlue02 extends PracticeLevel {
      */
     public void addPlayer(LevelObject p) {
         players.add(p);
-    }
-
-
-    /**
-     * @return the player array which includes all player objects
-     */
-    public ArrayList<LevelObject> getPlayers() {
-        return players;
-    }
-
-    /**
-     * @return the player array which includes all {@code targetPractice} objects
-     */
-    @Override
-    public ArrayList<PracticeTarget> getTargets() {
-        return targets;
-    }
-
-    public ArrayList<Tile> getTargetTiles() {
-        return targetTiles;
-    }
-
-    /**
-     * @return a multidimensional array of tiles
-     */
-    public Tile[][] getTiles() {
-        return tiles;
-    }
-
-    @Override
-    public PracticeLevelHelper getMapHelper() {
-        return helper;
-    }
-
-
-    public TiledMap getMap() {
-        return map;
     }
 
     /**

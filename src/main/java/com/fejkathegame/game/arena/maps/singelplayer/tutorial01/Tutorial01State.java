@@ -77,13 +77,13 @@ public class Tutorial01State extends PracticeState {
    }
 
    public void setCameraBoundaries() {
-      offsetMaxX = level.getMap().getWidth() * 25 - 450;
-      offsetMaxY = level.getMap().getHeight() * 25 - 325;
+      offsetMaxX = level.map.getWidth() * 25 - 450;
+      offsetMaxY = level.map.getHeight() * 25 - 325;
    }
 
    public void checkIfInPit() {
-      int tileId = level.getMap().getTileId((int) (player.getX()) / 25, (int) (player.getY() + 30) / 25, 0);
-      String property = level.getMap().getTileProperty(tileId, "tileType", "pit");
+      int tileId = level.map.getTileId((int) (player.getX()) / 25, (int) (player.getY() + 30) / 25, 0);
+      String property = level.map.getTileProperty(tileId, "tileType", "pit");
 
       if ("pit".equals(property)) {
          inPit = true;
@@ -94,8 +94,8 @@ public class Tutorial01State extends PracticeState {
    }
 
    public void resetMap() {
-      level.getPlayers().get(0).setX(50);
-      level.getPlayers().get(0).setY(500);
+      level.players.get(0).setX(50);
+      level.players.get(0).setY(500);
    }
 
    @Override

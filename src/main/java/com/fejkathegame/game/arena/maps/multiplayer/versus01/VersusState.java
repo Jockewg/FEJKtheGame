@@ -120,13 +120,13 @@ public class VersusState extends BasicGameState {
         }
         if (mp.hp == 0 && mp.character.isAlive()) {
             mp.character.setAlive(false);
-            arena.getPlayers().remove(mp.character);
+            arena.players.remove(mp.character);
             characters.remove(mp.character);
         }
 
         if (localPlayer.getHealth() <= 0) {
             localPlayer.setAlive(false);
-            arena.getPlayers().remove(localPlayer);
+            arena.players.remove(localPlayer);
             characters.remove(localPlayer);
         }
 
@@ -262,7 +262,7 @@ public class VersusState extends BasicGameState {
                 arena.addPlayer(mpPlayer.character);
             }
             if (mpPlayer.connected == false) {
-                arena.getPlayers().remove(mpPlayer.character);
+                arena.players.remove(mpPlayer.character);
                 characters.remove(mpPlayer.character);
             }
         }

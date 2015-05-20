@@ -16,6 +16,8 @@ import org.newdawn.slick.tiled.TiledMap;
  */
 public abstract class PracticeLevel {
 
+    public PracticeLevelHelper helper;
+
     public TiledMap map;
 
     public Tile[][] tiles;
