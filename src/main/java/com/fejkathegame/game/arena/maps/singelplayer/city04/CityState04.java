@@ -72,6 +72,7 @@ public class CityState04 extends State {
     @Override
     public void update(GameContainer gc, StateBasedGame sbg, int i) throws SlickException {
         stateHelper.update(gc, sbg, i, 32, 40);
+        level.helper.moveTarget();
     }
    
    
