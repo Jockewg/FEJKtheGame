@@ -2,6 +2,7 @@ package com.fejkathegame.game.multiplayer.lobby;
 
 import com.fejkathegame.client.ClientProgram;
 import com.fejkathegame.client.MPPlayer;
+import com.fejkathegame.client.PacketNamePlayer;
 import com.fejkathegame.game.Main;
 import com.fejkathegame.game.arena.State;
 import com.fejkathegame.game.arena.maps.multiplayer.versus01.VersusState;
@@ -35,6 +36,7 @@ public class LobbyState extends State {
     private ArrayList<Character> characters;
     
     private int increase = 1;
+    private boolean hasSentName = false;
 
     @Override
     public int getID() {
@@ -67,6 +69,7 @@ public class LobbyState extends State {
         }
         
         localPlayer.setName(hs.getPlayerName());
+        sendNameToServer();
         
         characters.add(localPlayer);
         sbg.addState(new VersusState("01versus", client, localPlayer, characters));
@@ -92,6 +95,15 @@ public class LobbyState extends State {
     
     public ArrayList<Character> getCharacters() {
         return characters;
+    }
+    
+    public void sendNameToServer() {
+        if(!hasSentName) {
+            PacketNamePlayer packet = new PacketNamePlayer();
+            packet.name = localPlayer.getName();
+            client.getClient().sendTCP(packet);
+            hasSentName = true;
+        }
     }
 
     @Override
