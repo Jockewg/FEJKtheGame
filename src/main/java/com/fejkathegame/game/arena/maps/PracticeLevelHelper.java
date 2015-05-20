@@ -38,7 +38,6 @@ public class PracticeLevelHelper {
         font2 = new Font("Arial", Font.BOLD, 50);
         ttf2 = new TrueTypeFont(font2, true);
         startTimer();
-
         score = "Targets Left: " + String.valueOf(level.targets.size());
     }
 
