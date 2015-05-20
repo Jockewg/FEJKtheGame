@@ -87,6 +87,7 @@ public class PracticeStateHelper {
         state.level.timer.startCountdown(3);
         state.level.timer.startTimer();
         state.level.targets.clear();
+        /*state.setCameraAnimationRunning(false);*/
         state.level.helper.writtenToFile = false;
         for (Tile at : state.level.targetTiles) {
             PracticeTarget pt = new PracticeTarget(at.getX() * 25, at.getY() * 25);
