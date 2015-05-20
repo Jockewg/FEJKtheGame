@@ -83,11 +83,16 @@ public class PracticeStateHelper {
         state.setScale(0.24f);
         state.player.setX(x);
         state.player.setY(y);
+        state.level.timer.resetTimer();
+        state.level.timer.startCountdown(3);
+        state.level.timer.startTimer();
         state.level.targets.clear();
+        state.level.helper.writtenToFile = false;
         for (Tile at : state.level.targetTiles) {
             PracticeTarget pt = new PracticeTarget(at.getX() * 25, at.getY() * 25);
             state.level.targets.add(pt);
         }
+        state.level.helper.updateScore(state.getID());
     }
 
     public void drawPauseMenu(Graphics g) {
