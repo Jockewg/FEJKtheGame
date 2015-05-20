@@ -44,6 +44,7 @@ public class ServerProgram extends Listener {
         server.getKryo().register(PacketGroundedPlayer.class);
         server.getKryo().register(PacketFallingPlayer.class);
         server.getKryo().register(PacketHpPlayer.class);
+        server.getKryo().register(PacketNamePlayer.class);
 
         try {
             server.bind(tcpPort, udpPort);
