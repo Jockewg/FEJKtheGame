@@ -224,9 +224,9 @@ public class VersusState extends BasicGameState {
             mp.character.setIsCharging(mp.isChargeing);
             mp.character.setIsFullyCharged(mp.isFullyCharged);
             mp.character.setIsJumping(mp.isJumping);
-            if (mp.isJumping) {
-                mp.character.playJumpSound();
-            }
+//            if (mp.isJumping) {
+//                mp.character.playJumpSound();
+//            }
             mp.character.setIsFalling(mp.isFalling);
             mp.character.setGrounded(mp.isGrounded);
             if (mp.isAttacking && hasUpdated) {
@@ -373,7 +373,7 @@ public class VersusState extends BasicGameState {
             packet.moveingRight = false;
             client.getClient().sendUDP(packet);
         }
-        if (localPlayer.HasJumped()) {
+        if (localPlayer.isJumping()) {
             PacketJumpPlayer packet = new PacketJumpPlayer();
             packet.isJumping = true;
             client.getClient().sendUDP(packet);
