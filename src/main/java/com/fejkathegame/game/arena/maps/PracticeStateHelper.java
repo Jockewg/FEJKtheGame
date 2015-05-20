@@ -30,6 +30,7 @@ public class PracticeStateHelper {
         this.state = state;
         pauseMenuBackground = new Rectangle(0, 0, 600, 300);
         uIHelper = new UIHelper(state);
+        state.level.helper.updateScore(state.getID());
     }
 
     public void checkCollisionWithTarget(int map) {

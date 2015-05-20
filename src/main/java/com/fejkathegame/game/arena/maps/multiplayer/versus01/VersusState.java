@@ -379,15 +379,15 @@ public class VersusState extends PracticeState {
             packet.isJumping = false;
             client.getClient().sendUDP(packet);
         }
-        if (localPlayer.isFalling()) {
-            PacketFallingPlayer packet = new PacketFallingPlayer();
-            packet.isFalling = true;
-            client.getClient().sendUDP(packet);
-        } else {
-            PacketFallingPlayer packet = new PacketFallingPlayer();
-            packet.isFalling = false;
-            client.getClient().sendUDP(packet);
-        }
+//        if (localPlayer.isFalling()) {
+//            PacketFallingPlayer packet = new PacketFallingPlayer();
+//            packet.isFalling = true;
+//            client.getClient().sendUDP(packet);
+//        } else {
+//            PacketFallingPlayer packet = new PacketFallingPlayer();
+//            packet.isFalling = false;
+//            client.getClient().sendUDP(packet);
+//        }
         if (localPlayer.getGrounded()) {
             PacketGroundedPlayer packet = new PacketGroundedPlayer();
             packet.isGrounded = true;
