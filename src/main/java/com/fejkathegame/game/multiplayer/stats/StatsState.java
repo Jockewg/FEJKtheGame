@@ -6,6 +6,7 @@
 package com.fejkathegame.game.multiplayer.stats;
 
 import com.fejkathegame.client.ClientProgram;
+import com.fejkathegame.client.MPPlayer;
 import com.fejkathegame.game.Main;
 import com.fejkathegame.game.arena.State;
 import java.util.ArrayList;
@@ -70,7 +71,9 @@ public class StatsState extends State {
         if (i.getMouseX() > 550 && i.getMouseX() < 750
                 && i.getMouseY() > 350 && i.getMouseY() < 425) {
             if (i.isMousePressed(Input.MOUSE_LEFT_BUTTON)) {
-                characters.clear();
+                for(MPPlayer mp : client.getPlayers().values()) {
+                    mp.ready = false;
+                }
                 sbg.getState(Main.oldLobby.getID()).init(gc, sbg);
                 sbg.enterState(Main.oldLobby.getID());
             }
