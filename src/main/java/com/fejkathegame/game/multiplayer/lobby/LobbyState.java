@@ -13,6 +13,8 @@ import com.fejkathegame.menu.JoinScreenState;
 import org.newdawn.slick.*;
 import org.newdawn.slick.state.StateBasedGame;
 
+import java.awt.Font;
+
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
@@ -32,6 +34,10 @@ public class LobbyState extends State {
 
    private JoinScreenState js;
    private HostScreenState hs;
+
+   private Font font;
+   private TrueTypeFont ttf;
+   boolean comingfromHS = false;
 
    private Character localPlayer;
    private int numPlayersReady;
@@ -70,6 +76,7 @@ public class LobbyState extends State {
 
    public LobbyState(HostScreenState hs) {
       this.hs = hs;
+      comingfromHS = true;
       if (hs != null) {
          if (hs.getIp() != null) {
             client.network(hs.getIp());
@@ -116,6 +123,9 @@ public class LobbyState extends State {
       characters.add(localPlayer);
 
       checkReady = new boolean[1];
+
+      font = new java.awt.Font("Verdana", java.awt.Font.BOLD, 20);
+      ttf = new TrueTypeFont(font, true);
    }
 
    public void checkIfNewPlayerConnected() {
@@ -160,6 +170,15 @@ public class LobbyState extends State {
       lobby.render();
 
       renderPlayersInLobby(g);
+
+      if (comingfromHS) {
+         try {
+            ttf.drawString(550, 20, "IP to server: "+ getIP(), Color.white);
+         }
+         catch (Exception ex) {
+            Logger.getLogger(LobbyState.class.getName()).log(Level.SEVERE, null, ex);
+         }
+      }
 
       if (localPlayer.getReady()) {
          g.drawImage(lobby.getReadyButton(), (Main.WINDOW_WIDTH / 2) - 100, 350);
