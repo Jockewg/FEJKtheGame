@@ -44,6 +44,10 @@ public class HealthSystem {
         healthBar[4] = new Image("src/main/resources/data/img/statusBar/health/health4.png");
         healthBar[5] = new Image("src/main/resources/data/img/statusBar/health/health5.png");
     }
+    
+    public void playHurtSound() {
+        hurtSound.playAsSoundEffect(1.0f, 1.0f, false);
+    }
 
     /**
      * Subtracts health from the player if he takes damage, does an {@code isCharacterAlive} check
@@ -56,7 +60,7 @@ public class HealthSystem {
             int newHealth = currentHealth - damage;
             object.setHealth(newHealth);
             isCharacterAlive();
-            hurtSound.playAsSoundEffect(1.0f, 1.0f, false);
+            playHurtSound();
             isDamaged = true;
             damageCooldown = 1000;
         }
@@ -145,4 +149,5 @@ class Heart {
     public void setPositionY(float positionY) {
         this.positionY = positionY;
     }
+    
 }

@@ -49,6 +49,8 @@ public class VersusState extends State {
      *
      * @param name of the stage
      * @param client
+     * @param localPlayer
+     * @param characters
      */
     public VersusState(String name, ClientProgram client, Character localPlayer, ArrayList<Character> characters) {
         this.name = name;
@@ -88,7 +90,9 @@ public class VersusState extends State {
     }
 
     public void checkCollisionWithTarget(MPPlayer mp) {
-
+        if(localPlayer.getAttackIndicator().intersects(mp.character.getHitBox()) && localPlayer.getIsAttacking()) {
+            localPlayer.getHealthSystem().playHurtSound();
+        }
         if (mp.character.getAttackIndicator().intersects(localPlayer.getHitBox()) && mp.isAttacking
                 || mp.character.getIsFullyCharged() && mp.character.getSuperAttackIndicator().intersects(localPlayer.getHitBox())) {
             if(mp.character.isAlive()) {
@@ -225,6 +229,11 @@ public class VersusState extends State {
             } else {
                 mp.character.stopChargeSound();
             }
+            if (!mp.connected) {
+                arena.players.remove(mp.character);
+                characters.remove(mp.character);
+                mp.character = null;
+            }
         }
     }
 
@@ -241,7 +250,15 @@ public class VersusState extends State {
 //        vsUI.renderVersusUI(localPlayer);
         g.resetTransform();
     }
-
+    
+    private void checkWinLose() {
+        if (arena.players.size() == 1) {
+            
+        } else if (arena.players.isEmpty()) {
+            
+        }
+    }
+    
     @Override
     public void update(GameContainer gc, StateBasedGame sbg, int i) throws SlickException {
         updateVectorLine();
@@ -262,6 +279,7 @@ public class VersusState extends State {
         physics.handlePhysics(arena, i);
         localPlayer.update(i);
         updatePlayerIndicator();
+        checkWinLose();
         sendClientData();
     }
 
