@@ -5,6 +5,7 @@ import com.esotericsoftware.kryonet.Client;
 import com.fejkathegame.client.ClientProgram;
 import com.fejkathegame.game.Main;
 import com.fejkathegame.game.multiplayer.lobby.LobbyState;
+import com.fejkathegame.game.properties.HSPropertiesAdapter;
 import com.fejkathegame.server.ServerProgram;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
@@ -17,11 +18,13 @@ import sun.security.x509.IPAddressName;
 
 public class JoinScreenState extends BasicGameState {
     
-    private JoinScreen hostScreen;
+    private JoinScreen joinScreen;
     private String name;
     private Input input;
     
     private String playerName, ip;
+    
+    private HSPropertiesAdapter prop = new HSPropertiesAdapter();
     
     public JoinScreenState(String name) {
         this.name = name;
@@ -39,15 +42,23 @@ public class JoinScreenState extends BasicGameState {
     @Override
     public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {
         input = gc.getInput();
-        hostScreen = new JoinScreen(name, gc);
+        joinScreen = new JoinScreen(name, gc);
+        initTextFields();
         
+    }
+    
+    private void initTextFields() {
+       String prevIp = prop.load("ip");
+       String prevName = prop.load("playername");
+       joinScreen.getIpField().setText(prevIp);
+       joinScreen.getPlayerNameTextField().setText(prevName);
     }
 
     @Override
     public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
         g.setBackground(Color.decode("#655d5d"));
         
-        hostScreen.render(gc, g);
+        joinScreen.render(gc, g);
 
     }
 
@@ -82,8 +93,10 @@ public class JoinScreenState extends BasicGameState {
     public void checkIfConnectIsClicked(int x, int y, Input i, GameContainer gc, StateBasedGame sbg) throws SlickException {
         if((x > 300 && x < 600) && (y > 331 && y < 371)) {
             if(i.isMousePressed(Input.MOUSE_LEFT_BUTTON)) {
-                ip = hostScreen.getIpField().getText();
-                playerName = hostScreen.getPlayerNameTextField().getText();
+                ip = joinScreen.getIpField().getText();
+                playerName = joinScreen.getPlayerNameTextField().getText();
+                prop.save("ip", ip);
+                prop.save("playername", playerName);
                 sbg.addState(new LobbyState(this));
                 sbg.getState(Main.LOBBYSTATE).init(gc, sbg);
                 sbg.enterState(Main.LOBBYSTATE);
