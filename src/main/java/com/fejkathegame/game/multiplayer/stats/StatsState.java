@@ -87,6 +87,7 @@ public class StatsState extends State {
                 if(ServerProgram.server != null) {
                     ServerProgram.server.close();
                 }
+                client.getClient().close();
                 sbg.enterState(Main.MENU);
             }
         }
