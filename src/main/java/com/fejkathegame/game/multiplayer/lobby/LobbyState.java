@@ -62,11 +62,9 @@ public class LobbyState extends State {
                 client.network("localhost");
             }
             playerName = js.getPlayerName();
-        } else {
-            client.network("localhost");
-            playerName = "Player";
         }
     }
+    
     public LobbyState(HostScreenState hs) {
         this.hs = hs;
         if (hs != null) {
@@ -76,9 +74,6 @@ public class LobbyState extends State {
                 client.network("localhost");
             }
             playerName = hs.getPlayerName();
-        } else {
-            client.network("localhost");
-            playerName = "Player";
         }
     }
 
@@ -101,7 +96,7 @@ public class LobbyState extends State {
         sendReadyToServer();
 
         characters.add(localPlayer);
-        sbg.addState(new VersusState("01versus", client, localPlayer, characters));
+        
         checkReady = new boolean[1];
     }
 
@@ -216,6 +211,7 @@ public class LobbyState extends State {
         sendReadyToServer();
         checkIfAllIsReady();
         if (allReady && characters.size() >= 2) {
+            sbg.addState(new VersusState("01versus", client, localPlayer, characters));
             sbg.getState(Main.VERSUSSTATE).init(gc, sbg);
             sbg.enterState(Main.VERSUSSTATE);
         }

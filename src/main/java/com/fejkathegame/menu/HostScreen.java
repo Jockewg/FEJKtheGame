@@ -32,7 +32,6 @@ public class HostScreen {
 
     public void render(GameContainer gc, Graphics g) {
         playerNameTextField.render(gc, g);
-        playerNameTextField.setFocus(true);
         host.draw(gc.getWidth() / 2 - 75, gc.getHeight() / 2 + 80);
         playerNameTextField.setFocus(true);
     }

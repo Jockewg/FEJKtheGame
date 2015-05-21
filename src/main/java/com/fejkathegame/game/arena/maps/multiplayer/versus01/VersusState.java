@@ -273,11 +273,11 @@ public class VersusState extends State {
         if (arena.players.size() == 1) {
             sbg.getState(Main.STATSSTATE).init(gc, sbg);
             sbg.enterState(Main.STATSSTATE);
-            calculateHitPercent();
+//            calculateHitPercent();
         } else if (arena.players.isEmpty()) {
             sbg.getState(Main.STATSSTATE).init(gc, sbg);
             sbg.enterState(Main.STATSSTATE);
-            calculateHitPercent();
+//            calculateHitPercent();
         }
     }
 
@@ -308,9 +308,9 @@ public class VersusState extends State {
         sendClientData();
     }
     
-    public void calculateHitPercent() {
-        percent = (localPlayer.getNumberOfAttacks()/localPlayer.getNumberOfHits());
-    }
+//    public void calculateHitPercent() {
+//        percent = (localPlayer.getNumberOfAttacks()/localPlayer.getNumberOfHits());
+//    }
 
     private void sendClientData() {
         if (localPlayer.networkPosition.x != localPlayer.getCurrentX()) {
