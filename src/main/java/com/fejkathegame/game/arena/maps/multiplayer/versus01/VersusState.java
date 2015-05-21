@@ -8,6 +8,7 @@ import com.fejkathegame.game.arena.physics.Physics;
 import com.fejkathegame.game.entities.Character;
 import com.fejkathegame.game.entities.logic.MovementSystem;
 import com.fejkathegame.game.multiplayer.lobby.LobbyState;
+import com.fejkathegame.game.timer.PracticeTimer;
 import java.util.ArrayList;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
@@ -21,7 +22,7 @@ import org.newdawn.slick.state.StateBasedGame;
 public class VersusState extends State {
 
     
-    ClientProgram client;
+    private ClientProgram client;
     private Versus arena;
     private String name;
     private MovementSystem movementSystem;
@@ -31,6 +32,8 @@ public class VersusState extends State {
     private boolean hasUpdated = true;
     
     private ArrayList<Character> characters;
+    
+    private PracticeTimer timer;
 
     //Camera stuff
     private float cameraX, cameraY;
@@ -84,6 +87,8 @@ public class VersusState extends State {
         movementSystem = new MovementSystem(localPlayer);
 
         physics = new Physics();
+        timer = new PracticeTimer();
+        timer.startCountdown(3);
 
     }
 
@@ -225,7 +230,17 @@ public class VersusState extends State {
             } else {
                 mp.character.stopChargeSound();
             }
+            
+            if(!mp.connected) {
+                arena.players.remove(mp.character);
+                characters.remove(mp.character);
+                mp.character = null;
+            }
         }
+    }
+    
+    public void renderCountdown(float x, float y, Graphics g) {
+        g.drawString(String.valueOf(timer.getCurrentCountdownTime()), x, y);
     }
 
     @Override
@@ -238,6 +253,8 @@ public class VersusState extends State {
         g.resetTransform();
 
         g.translate(-cameraX, -cameraY);
+        if(timer.getCurrentCountdownTime() > 0)
+            renderCountdown(450, 250, g);
 //        vsUI.renderVersusUI(localPlayer);
         g.resetTransform();
     }
@@ -246,22 +263,25 @@ public class VersusState extends State {
     public void update(GameContainer gc, StateBasedGame sbg, int i) throws SlickException {
         updateVectorLine();
         updateCameraRect();
-        movementSystem.handleInput(gc.getInput(), i);
-        for (MPPlayer mp : client.getPlayers().values()) {
-            updateMpPlayer(mp, i);
-            checkCollisionWithTarget(mp);
-            if (mp.character.getHealth() >= 1) {
-                if (mp.isAttacking) {
-                    mp.character.renderAttackIndicator();
-                    mp.character.setAttackIndicatorTransp(1.0f);
+        timer.calculateSecond(i);
+        if(!timer.isCountdownRunning()) {
+            movementSystem.handleInput(gc.getInput(), i);
+            for (MPPlayer mp : client.getPlayers().values()) {
+                updateMpPlayer(mp, i);
+                checkCollisionWithTarget(mp);
+                if (mp.character.getHealth() >= 1) {
+                    if (mp.isAttacking) {
+                        mp.character.renderAttackIndicator();
+                        mp.character.setAttackIndicatorTransp(1.0f);
+                    }
+                    mp.character.renderCharacterAnimation();
                 }
-                mp.character.renderCharacterAnimation();
             }
-        }
 
-        physics.handlePhysics(arena, i);
-        localPlayer.update(i);
-        updatePlayerIndicator();
+            physics.handlePhysics(arena, i);
+            localPlayer.update(i);
+            updatePlayerIndicator();
+        }
         sendClientData();
     }
 
