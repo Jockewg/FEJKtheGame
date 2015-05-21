@@ -47,9 +47,9 @@ public class StatsState extends State {
     }
 
     @Override
-    public void render(GameContainer gc, StateBasedGame sbg, Graphics grphcs) throws SlickException {
+    public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
         
-        stats.render();
+        stats.render(g);
 
     }
 
