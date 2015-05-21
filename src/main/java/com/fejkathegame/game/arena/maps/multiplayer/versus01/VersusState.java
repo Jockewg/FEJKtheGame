@@ -277,7 +277,7 @@ public class VersusState extends State {
                 mp.character.renderCharacterAnimation();
             }
         }
-
+        updatePowerUp(i);
         physics.handlePhysics(arena, i);
         localPlayer.update(i);
         updatePlayerIndicator();

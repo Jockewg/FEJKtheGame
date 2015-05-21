@@ -20,7 +20,6 @@ public class HPPowerUp extends LevelObject{
    private final int boostAmount;
    private final Image sprite;
    private final Shape hitBox;
-   private PracticeTimer timer;
     
     public HPPowerUp(float width, float height) throws SlickException, IOException {
         super(0, 0);
@@ -28,7 +27,6 @@ public class HPPowerUp extends LevelObject{
         boostAmount = 1;
         sprite = new Image("src/main/resources/data/img/placeholder.png");
         hitBox = new Rectangle(x, y, width, height);
-        timer = new PracticeTimer();
         setAlive(false);
         changePositionRandom();
         
@@ -52,8 +50,8 @@ public class HPPowerUp extends LevelObject{
     
     public void changePositionRandom(){
         Random r = new Random();
-        x = r.nextInt(840) + 30;
-        y = r.nextInt(440) + 30;
+        x = r.nextInt(840) + 25;
+        y = r.nextInt(440) + 25;
     }
     
     public void boost(Character player){
