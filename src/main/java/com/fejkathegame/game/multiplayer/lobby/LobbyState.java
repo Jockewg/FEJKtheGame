@@ -55,16 +55,6 @@ public class LobbyState extends State {
 
     public LobbyState(JoinScreenState js) {
         this.js = js;
-    }
-    public LobbyState(HostScreenState hs) {
-        this.hs = hs;
-    }
-
-    @Override
-    public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {
-        lobby = new Lobby(name);
-        heads = lobby.getImages();
-        characters = lobby.getCharacters();
         if (js != null) {
             if (js.getIp() != null) {
                 client.network(js.getIp());
@@ -72,10 +62,13 @@ public class LobbyState extends State {
                 client.network("localhost");
             }
             playerName = js.getPlayerName();
-        } else if (hs == null) {
+        } else {
             client.network("localhost");
             playerName = "Player";
         }
+    }
+    public LobbyState(HostScreenState hs) {
+        this.hs = hs;
         if (hs != null) {
             if (hs.getIp() != null) {
                 client.network(hs.getIp());
@@ -87,6 +80,14 @@ public class LobbyState extends State {
             client.network("localhost");
             playerName = "Player";
         }
+    }
+
+    @Override
+    public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {
+        lobby = new Lobby(name);
+        heads = lobby.getImages();
+        characters = lobby.getCharacters();
+        
 
         localPlayer = null;
         try {
