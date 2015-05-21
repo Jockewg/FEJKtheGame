@@ -15,6 +15,7 @@ import java.util.logging.Logger;
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
 public class Main extends StateBasedGame {
@@ -36,7 +37,7 @@ public class Main extends StateBasedGame {
     public static final int TOWER02 = 6;
     public static final int TUTORIAL01 = 7;
 
-
+    public static BasicGameState oldLobby = null;
 
 
 

@@ -26,7 +26,7 @@ import java.util.logging.Logger;
  */
 public class LobbyState extends State {
 
-    private ClientProgram client = new ClientProgram();
+    private ClientProgram client;
 
     private JoinScreenState js;
     private HostScreenState hs;
@@ -49,16 +49,20 @@ public class LobbyState extends State {
         return Main.LOBBYSTATE;
     }
 
-    public LobbyState(String name) {
+    public LobbyState(String name,ClientProgram client, String pName) {
         this.name = name;
+        this.client = client;
+        playerName = pName;
     }
 
     public LobbyState(JoinScreenState js) {
         this.js = js;
         if (js != null) {
             if (js.getIp() != null) {
+                client = new ClientProgram();
                 client.network(js.getIp());
             } else {
+                client = new ClientProgram();
                 client.network("localhost");
             }
             playerName = js.getPlayerName();
@@ -69,8 +73,10 @@ public class LobbyState extends State {
         this.hs = hs;
         if (hs != null) {
             if (hs.getIp() != null) {
+                client = new ClientProgram();
                 client.network(hs.getIp());
             } else {
+                client = new ClientProgram();
                 client.network("localhost");
             }
             playerName = hs.getPlayerName();
@@ -98,6 +104,9 @@ public class LobbyState extends State {
         characters.add(localPlayer);
         
         checkReady = new boolean[1];
+        for (MPPlayer mp : client.getPlayers().values()) {
+            mp.character = null;
+        }
     }
 
     public void checkIfNewPlayerConnected() {
@@ -211,6 +220,7 @@ public class LobbyState extends State {
         sendReadyToServer();
         checkIfAllIsReady();
         if (allReady && characters.size() >= 2) {
+            Main.oldLobby = this;
             sbg.addState(new VersusState("01versus", client, localPlayer, characters));
             sbg.getState(Main.VERSUSSTATE).init(gc, sbg);
             sbg.enterState(Main.VERSUSSTATE);

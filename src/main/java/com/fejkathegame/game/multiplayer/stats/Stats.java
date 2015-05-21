@@ -20,13 +20,15 @@ import org.newdawn.slick.SlickException;
  */
 public class Stats {
     
-    private Image challenger;
+    private Image challenger, disconnect, playAgain;
     private ArrayList<Image> heads;
     private ArrayList<Character> characters;
 
     public Stats(String name) {
         try {
             challenger = new Image("src/main/resources/data/img/spritesheets/characterHead.png");
+            disconnect = new Image ("src/main/resources/data/img/buttons/unready.png");
+            playAgain = new Image ("src/main/resources/data/img/buttons/ready.png");
         } catch (SlickException ex) {
             Logger.getLogger(Stats.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -56,5 +58,13 @@ public class Stats {
     
     public ArrayList<Image> getImages() {
         return heads;
+    }
+
+    public Image getDisconnect() {
+        return disconnect;
+    }
+
+    public Image getPlayAgain() {
+        return playAgain;
     }
 }

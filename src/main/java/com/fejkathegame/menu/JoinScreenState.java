@@ -71,8 +71,6 @@ public class JoinScreenState extends BasicGameState {
         int x = input.getMouseX();
         int y = input.getMouseY();
         checkIfConnectIsClicked(x, y, input, gc, sbg);
-        System.out.println("IP: " + ip);
-        System.out.println("PLAYER: " + playerName);
     }
     
     /**

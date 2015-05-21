@@ -17,7 +17,7 @@ import java.util.logging.Logger;
  */
 public class ServerProgram extends Listener {
 
-    static Server server;
+    public static Server server;
     static final int udpPort = 27960, tcpPort = 27960;
     static Map<Integer, Player> players = new HashMap<>();
     public static boolean serverReady = false;
