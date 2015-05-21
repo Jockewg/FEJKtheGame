@@ -21,7 +21,6 @@ import org.newdawn.slick.state.StateBasedGame;
 
 public class VersusState extends State {
 
-    
     private ClientProgram client;
     private Versus arena;
     private String name;
@@ -30,9 +29,9 @@ public class VersusState extends State {
     private Character localPlayer;
 
     private boolean hasUpdated = true;
-    
+
     private ArrayList<Character> characters;
-    
+
     private PracticeTimer timer;
 
     //Camera stuff
@@ -80,8 +79,8 @@ public class VersusState extends State {
         playerIndicator.addPoint(10, 10);
 
         arena = new Versus(name);
-        
-        for(Character c : characters) {
+
+        for (Character c : characters) {
             arena.players.add(c);
         }
         /*vsUI = new UIHelper(cameraX, cameraY);*/
@@ -95,12 +94,14 @@ public class VersusState extends State {
     }
 
     public void checkCollisionWithTarget(MPPlayer mp) {
-        if(localPlayer.getAttackIndicator().intersects(mp.character.getHitBox()) && localPlayer.getIsAttacking()) {
-            localPlayer.getHealthSystem().playHurtSound();
+        if (localPlayer.getAttackIndicator().intersects(mp.character.getHitBox()) && localPlayer.getIsAttacking()) {
+            if (mp.character.isAlive()) {
+                localPlayer.getHealthSystem().playHurtSound();
+            }
         }
         if (mp.character.getAttackIndicator().intersects(localPlayer.getHitBox()) && mp.isAttacking
                 || mp.character.getIsFullyCharged() && mp.character.getSuperAttackIndicator().intersects(localPlayer.getHitBox())) {
-            if(mp.character.isAlive()) {
+            if (mp.character.isAlive()) {
                 localPlayer.getHealthSystem().dealDamage(1);
                 localPlayer.setIsCharging(false);
             }
@@ -177,7 +178,7 @@ public class VersusState extends State {
             line = new Line(0, 0, 900, 500);
         } else if (arena.players.size() == 2) {
             for (MPPlayer mp : client.getPlayers().values()) {
-                if(mp.hp >= 1 && localPlayer.getHealth() >= 1) {
+                if (mp.hp >= 1 && localPlayer.getHealth() >= 1) {
                     Vector2f objVector = new Vector2f(localPlayer.getX(), localPlayer.getY());
                     Vector2f player2Vector = new Vector2f(mp.x, mp.y);
                     line = new Line(objVector, player2Vector);
@@ -234,15 +235,14 @@ public class VersusState extends State {
             } else {
                 mp.character.stopChargeSound();
             }
-            
-            if(!mp.connected) {
+
+            if (!mp.connected) {
                 arena.players.remove(mp.character);
                 characters.remove(mp.character);
-                mp.character = null;
             }
         }
     }
-    
+
     public void renderCountdown(float x, float y, Graphics g) {
         g.drawString(String.valueOf(timer.getCurrentCountdownTime()), x, y);
     }
@@ -253,30 +253,31 @@ public class VersusState extends State {
         g.translate(-cameraX, -cameraY);
         arena.render();
         renderPlayerIndicator(g);
-        
+
         g.resetTransform();
 
         g.translate(-cameraX, -cameraY);
-        if(timer.getCurrentCountdownTime() > 0)
+        if (timer.getCurrentCountdownTime() > 0) {
             renderCountdown(450, 250, g);
+        }
 //        vsUI.renderVersusUI(localPlayer);
         g.resetTransform();
     }
-    
+
     private void checkWinLose() {
         if (arena.players.size() == 1) {
-            
+
         } else if (arena.players.isEmpty()) {
-            
+
         }
     }
-    
+
     @Override
     public void update(GameContainer gc, StateBasedGame sbg, int i) throws SlickException {
         updateVectorLine();
         updateCameraRect();
         timer.calculateSecond(i);
-        if(!timer.isCountdownRunning()) {
+        if (!timer.isCountdownRunning()) {
             movementSystem.handleInput(gc.getInput(), i);
             for (MPPlayer mp : client.getPlayers().values()) {
                 updateMpPlayer(mp, i);

@@ -15,6 +15,7 @@ import org.newdawn.slick.state.StateBasedGame;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -36,6 +37,7 @@ public class LobbyState extends State {
     private ArrayList<Image> heads;
     private ArrayList<Character> characters;
     private boolean[] checkReady;
+    private int arrayIndex = 1;
 
     private int increase = 2;
     private boolean allReady = false;
@@ -84,6 +86,7 @@ public class LobbyState extends State {
 
         characters.add(localPlayer);
         sbg.addState(new VersusState("01versus", client, localPlayer, characters));
+        checkReady = new boolean[1];
     }
 
     public void checkIfNewPlayerConnected() {
@@ -145,18 +148,17 @@ public class LobbyState extends State {
         g.drawString(localPlayer.getName(), 128, 132);
 
         for (MPPlayer c : client.getPlayers().values()) {
-            g.drawString(c.name, increase * 128, 132);
-            if (c.ready) {
-                g.drawString("READY", increase * 128, 68);
-            } else {
-                g.drawString("NOT READY", increase * 128, 68);
+            if (c.connected) {
+                g.drawString(c.name, increase * 128, 132);
+                if (c.ready) {
+                    g.drawString("READY", increase * 128, 68);
+                } else {
+                    g.drawString("NOT READY", increase * 128, 68);
+                }
+                increase += 1;
             }
-            increase += 1;
         }
         increase = 2;
-        
-        if(localPlayer.getReady())
-            allReady = true;
     }
 
     public void checkIfReadyIsPressed(Input i) {
@@ -172,21 +174,34 @@ public class LobbyState extends State {
         }
     }
 
+    private boolean allReadyTrue() {
+        if (Arrays.toString(checkReady).contains("f")) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
     public void checkIfAllIsReady() {
+        if (checkReady.length + 1 != client.getPlayers().size() && client.getPlayers().size() > 0) {
+            checkReady = new boolean[client.getPlayers().size() + 1];
+        } else {
+            checkReady = new boolean[2];
+        }
+
+        checkReady[0] = localPlayer.getReady();
+
         for (MPPlayer mp : client.getPlayers().values()) {
             if (mp.ready) {
-                checkReady[mp.id] = true;
-            } else if(!mp.ready) {
-                checkReady[mp.id] = false;
+                checkReady[arrayIndex] = true;
+            } else if (!mp.ready) {
+                checkReady[arrayIndex] = false;
             }
+            arrayIndex += 1;
         }
-        for(boolean b : checkReady) {
-            if (!b) {
-                allReady = false;
-            } else {
-                allReady = true;
-            }
-        }
+        arrayIndex = 1;
+
+        allReady = allReadyTrue();
     }
 
     @Override
