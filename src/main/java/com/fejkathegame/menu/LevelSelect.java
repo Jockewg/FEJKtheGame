@@ -16,7 +16,7 @@ public class LevelSelect {
     
     //private int numberOfLevels = 3;
     //private Image[] levelImages;
-    private ArrayList<LevelSelectButton> levelButtons;
+    private static ArrayList<LevelSelectButton> levelButtons;
     private final File levelDirr;
     
     public LevelSelect() throws SlickException {
@@ -64,7 +64,7 @@ public class LevelSelect {
 //        }
     }
 
-    public ArrayList<LevelSelectButton> getLevelButtons() {
+    public static ArrayList<LevelSelectButton> getLevelButtons() {
         return levelButtons;
     }
     
