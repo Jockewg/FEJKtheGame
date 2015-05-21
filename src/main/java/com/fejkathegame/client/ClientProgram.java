@@ -32,6 +32,7 @@ public class ClientProgram extends Listener {
     /**
      * Starts the server and regiters the packets to send/recive
      * and tries to conenct to server
+     * @param ip The servers ip
      */
     public void network(String ip) {
         System.out.println("Connecting to the server...");

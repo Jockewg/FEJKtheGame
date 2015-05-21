@@ -57,7 +57,7 @@ public class Main extends StateBasedGame {
     @Override
     public void initStatesList(GameContainer gc) throws SlickException {
         //add menus
-        addState(new JoinScreenState("host"));
+        addState(new JoinScreenState("join"));
         addState(new MenuState("menu"));
         addState(new LevelSelectState());
         //add multiplayer maps

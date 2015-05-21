@@ -8,6 +8,7 @@ import com.fejkathegame.game.Main;
 import com.fejkathegame.game.arena.State;
 import com.fejkathegame.game.arena.maps.multiplayer.versus01.VersusState;
 import com.fejkathegame.game.entities.Character;
+import com.fejkathegame.menu.HostScreenState;
 import com.fejkathegame.menu.JoinScreen;
 import com.fejkathegame.menu.JoinScreenState;
 import org.newdawn.slick.*;
@@ -27,7 +28,8 @@ public class LobbyState extends State {
 
     private ClientProgram client = new ClientProgram();
 
-    private JoinScreenState hs;
+    private JoinScreenState js;
+    private HostScreenState hs;
 
     private Character localPlayer;
     private int numPlayersReady;
@@ -51,7 +53,10 @@ public class LobbyState extends State {
         this.name = name;
     }
 
-    public LobbyState(JoinScreenState hs) {
+    public LobbyState(JoinScreenState js) {
+        this.js = js;
+    }
+    public LobbyState(HostScreenState hs) {
         this.hs = hs;
     }
 
@@ -60,6 +65,17 @@ public class LobbyState extends State {
         lobby = new Lobby(name);
         heads = lobby.getImages();
         characters = lobby.getCharacters();
+        if (js != null) {
+            if (js.getIp() != null) {
+                client.network(js.getIp());
+            } else {
+                client.network("localhost");
+            }
+            playerName = js.getPlayerName();
+        } else if (hs == null) {
+            client.network("localhost");
+            playerName = "Player";
+        }
         if (hs != null) {
             if (hs.getIp() != null) {
                 client.network(hs.getIp());
