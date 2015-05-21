@@ -246,6 +246,7 @@ public class VersusState extends State {
     }
 
     public void renderCountdown(float x, float y, Graphics g) {
+        g.setColor(Color.green);
         g.drawString(String.valueOf(timer.getCurrentCountdownTime()), x, y);
     }
 

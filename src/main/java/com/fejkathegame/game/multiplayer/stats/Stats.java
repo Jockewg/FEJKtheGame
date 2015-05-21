@@ -10,6 +10,8 @@ import org.newdawn.slick.Image;
 import com.fejkathegame.game.entities.Character;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.newdawn.slick.Color;
+import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 
 /**
@@ -35,10 +37,13 @@ public class Stats {
         
     }
     
-    public void render() {
+    public void render(Graphics g) {
         
         for(Character c : characters) {
+            g.setColor(new Color(1.0f, 1.0f, 1.0f, 1.0f));
             challenger.draw((characters.indexOf(c) + 1) * 128, 100, 32, 32);
+            g.drawString(c.getName(), (characters.indexOf(c) + 1) * 128, 68);
+            g.drawString(String.valueOf(c.getNumberOfAttacks()), (characters.indexOf(c) + 1) * 128, 132);
         }
         
     }

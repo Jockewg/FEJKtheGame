@@ -43,6 +43,7 @@ public class JoinScreenState extends BasicGameState {
     public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {
         input = gc.getInput();
         joinScreen = new JoinScreen(name, gc);
+
         initTextFields();
         
     }
