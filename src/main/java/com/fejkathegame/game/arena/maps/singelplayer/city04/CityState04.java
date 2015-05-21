@@ -58,7 +58,8 @@ public class CityState04 extends State {
         camera = new PracticeCamera(offsetMaxX, offsetMaxY);
 
         stateHelper = new PracticeStateHelper(this);
-
+        
+        
 
     }
 

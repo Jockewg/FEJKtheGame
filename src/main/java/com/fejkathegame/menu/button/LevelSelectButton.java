@@ -14,6 +14,7 @@ public class LevelSelectButton extends Button{
     String title;
     String bestTime;
     HighscoreAdapter highScoreAdapt;
+    int mapId;
     
     public LevelSelectButton(int x, int y, int width, int height, String name, int mapId) {
         this.posX = x;
@@ -25,13 +26,8 @@ public class LevelSelectButton extends Button{
         this.highScoreAdapt = new HighscoreAdapter();
         this.title = name;
         this.bestTime = "Best Time : ";
-
-        if(highScoreAdapt.readScore(mapId) == Integer.MAX_VALUE){
-            this.bestTime = this.bestTime + "N/A";
-        }else{
-            this.bestTime = this.bestTime + highScoreAdapt.readScore(mapId);
-        }
-        
+        this.mapId = mapId;
+        updateBestTime();
     }
     
     public void render(Graphics g){
@@ -43,6 +39,15 @@ public class LevelSelectButton extends Button{
     
     public void setBestTime(String time){
         bestTime = time;
+    }
+    
+    public void updateBestTime() {
+       bestTime = "Best Time : ";
+       if(highScoreAdapt.readScore(mapId) == Integer.MAX_VALUE){
+            this.bestTime = this.bestTime + "N/A";
+        }else{
+            this.bestTime = this.bestTime + highScoreAdapt.readScore(mapId);
+        }
     }
     
 }

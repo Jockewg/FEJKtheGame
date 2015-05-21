@@ -4,8 +4,12 @@ import com.fejkathegame.game.Main;
 import com.fejkathegame.game.arena.State;
 import com.fejkathegame.game.arena.tiles.Tile;
 import com.fejkathegame.game.entities.PracticeTarget;
+import com.fejkathegame.menu.LevelSelect;
+import com.fejkathegame.menu.button.Button;
+import com.fejkathegame.menu.button.LevelSelectButton;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -90,6 +94,11 @@ public class PracticeStateHelper {
         state.level.targets.clear();
         /*state.setCameraAnimationRunning(false);*/
         state.level.helper.writtenToFile = false;
+        ArrayList<LevelSelectButton> buttons = LevelSelect.getLevelButtons();
+        for (LevelSelectButton button : buttons) {
+           button.updateBestTime();
+        }
+       
         for (Tile at : state.level.targetTiles) {
             PracticeTarget pt = new PracticeTarget(at.getX() * 25, at.getY() * 25);
             state.level.targets.add(pt);
