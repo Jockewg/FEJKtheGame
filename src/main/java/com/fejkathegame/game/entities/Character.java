@@ -216,7 +216,7 @@ public class Character extends LevelObject {
      *
      * @param delta
      */
-    public void jump(int delta) {
+    public void jump() {
         currentPositionX = getX() - 2;
         currentPositionY = getY() + 32;
 
@@ -230,7 +230,7 @@ public class Character extends LevelObject {
         jumpAnimation.setCurrentFrame(0);
         jumpAnimation.start();
 
-        y_velocity = -0.055f * (float) Math.sqrt(Math.pow(delta, 2));
+        y_velocity = -0.55f;
         storedJumps--;
         
     }
