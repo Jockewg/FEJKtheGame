@@ -92,7 +92,9 @@ public class JoinScreenState extends BasicGameState {
                 ip = joinScreen.getIpField().getText();
                 playerName = joinScreen.getPlayerNameTextField().getText();
                 prop.save("ip", ip);
+                System.out.println("saved: " + prop.load("ip"));
                 prop.save("playername", playerName);
+                System.out.println("saved: " + prop.load("playername"));
                 sbg.addState(new LobbyState(this));
                 sbg.getState(Main.LOBBYSTATE).init(gc, sbg);
                 sbg.enterState(Main.LOBBYSTATE);

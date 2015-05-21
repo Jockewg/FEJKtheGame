@@ -14,11 +14,10 @@ public class HSPropertiesAdapter {
    PropertiesAdapter adapter = new PropertiesAdapter();
    
    public void save (String key, String value) {
-      String prevString = adapter.load(key);
-      if (value != null && !prevString.equals(value)) {
+      if (!value.equals("null")) {
          adapter.save(key, value);
       } else {
-         adapter.save(key, "");
+         adapter.save(key, "null");
       }
    }
    public String load (String key) {
@@ -27,7 +26,7 @@ public class HSPropertiesAdapter {
       if (!"null".equals(adapter.load(key))) {
            result = (adapter.load(key));
         } else {
-           result = "";
+           result = "null";
         }
         return result;
    }
