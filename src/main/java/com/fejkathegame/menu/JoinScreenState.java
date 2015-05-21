@@ -15,19 +15,19 @@ import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 import sun.security.x509.IPAddressName;
 
-public class HostScreenState extends BasicGameState {
+public class JoinScreenState extends BasicGameState {
     
-    private HostScreen hostScreen;
+    private JoinScreen hostScreen;
     private String name;
     private Input input;
     
     private String playerName, ip;
     
-    public HostScreenState(String name) {
+    public JoinScreenState(String name) {
         this.name = name;
     }
     
-    public HostScreenState() {
+    public JoinScreenState() {
         
     }
 
@@ -39,7 +39,7 @@ public class HostScreenState extends BasicGameState {
     @Override
     public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {
         input = gc.getInput();
-        hostScreen = new HostScreen(name, gc);
+        hostScreen = new JoinScreen(name, gc);
         
     }
 

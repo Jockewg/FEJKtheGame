@@ -6,7 +6,7 @@ import com.fejkathegame.game.arena.maps.multiplayer.versus01.VersusState;
 import com.fejkathegame.game.arena.maps.singelplayer.city04.CityState04;
 import com.fejkathegame.game.arena.maps.singelplayer.tutorial01.Tutorial01State;
 import com.fejkathegame.game.multiplayer.lobby.LobbyState;
-import com.fejkathegame.menu.HostScreenState;
+import com.fejkathegame.menu.JoinScreenState;
 import com.fejkathegame.menu.LevelSelectState;
 import com.fejkathegame.menu.MenuState;
 
@@ -56,7 +56,7 @@ public class Main extends StateBasedGame {
     @Override
     public void initStatesList(GameContainer gc) throws SlickException {
         //add menus
-        addState(new HostScreenState("host"));
+        addState(new JoinScreenState("host"));
         addState(new MenuState("menu"));
         addState(new LevelSelectState());
         //add multiplayer maps

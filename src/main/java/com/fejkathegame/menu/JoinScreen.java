@@ -9,7 +9,7 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.UnicodeFont;
 import org.newdawn.slick.gui.TextField;
 
-public class HostScreen {
+public class JoinScreen {
     
     private TextField playerNameTextField, ipField;
     private Image connect;
@@ -23,7 +23,7 @@ public class HostScreen {
      * @param gc the container to be used
      * @throws SlickException 
      */
-    public HostScreen(String name, GameContainer gc) throws SlickException {
+    public JoinScreen(String name, GameContainer gc) throws SlickException {
         font = gc.getDefaultFont();
         playerNameTextField = new TextField(gc, font, gc.getWidth() / 2 - 150, gc.getHeight() / 2 - 80, 300, 40);
         playerNameTextField.setBackgroundColor(Color.white);
@@ -36,7 +36,7 @@ public class HostScreen {
         playerNameTextField.setMaxLength(10);
     }
     
-    public HostScreen() {
+    public JoinScreen() {
         
     }
     

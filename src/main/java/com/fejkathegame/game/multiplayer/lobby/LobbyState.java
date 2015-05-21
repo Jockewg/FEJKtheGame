@@ -8,8 +8,8 @@ import com.fejkathegame.game.Main;
 import com.fejkathegame.game.arena.State;
 import com.fejkathegame.game.arena.maps.multiplayer.versus01.VersusState;
 import com.fejkathegame.game.entities.Character;
-import com.fejkathegame.menu.HostScreen;
-import com.fejkathegame.menu.HostScreenState;
+import com.fejkathegame.menu.JoinScreen;
+import com.fejkathegame.menu.JoinScreenState;
 import org.newdawn.slick.*;
 import org.newdawn.slick.state.StateBasedGame;
 
@@ -27,7 +27,7 @@ public class LobbyState extends State {
 
     private ClientProgram client = new ClientProgram();
 
-    private HostScreenState hs;
+    private JoinScreenState hs;
 
     private Character localPlayer;
     private int numPlayersReady;
@@ -51,7 +51,7 @@ public class LobbyState extends State {
         this.name = name;
     }
 
-    public LobbyState(HostScreenState hs) {
+    public LobbyState(JoinScreenState hs) {
         this.hs = hs;
     }
 
