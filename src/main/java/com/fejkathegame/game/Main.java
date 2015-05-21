@@ -24,8 +24,9 @@ public class Main extends StateBasedGame {
     //menu constants
     public static final int MENU = 0;
     public static final int VERSUSSTATE = 1;
-    public static final int HOSTSTATE = 2;
+    public static final int JOINSTATE = 2;
     public static final int LEVELSELECTSTATE = 3;
+    public static final int HOSTSTATE = 1336;
     public static final int LOBBYSTATE = 1337;
     public static final int STATSSTATE = 1338;
     //singelplayer constants

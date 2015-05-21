@@ -20,6 +20,7 @@ public class ServerProgram extends Listener {
     static Server server;
     static final int udpPort = 27960, tcpPort = 27960;
     static Map<Integer, Player> players = new HashMap<>();
+    public static boolean serverReady = false;
 
     /**
      * The server register the packedges binds to the port and starts.
@@ -58,6 +59,7 @@ public class ServerProgram extends Listener {
         server.start();
         server.addListener(new ServerProgram());
         System.out.println("The server is ready");
+        serverReady = true;
     }
 
     /**
@@ -257,5 +259,9 @@ public class ServerProgram extends Listener {
         packet.id = c.getID();
         server.sendToAllExceptTCP(c.getID(), packet);
         System.out.println("Connection dropped.");
+    }
+
+    public static boolean isServerReady() {
+        return serverReady;
     }
 }

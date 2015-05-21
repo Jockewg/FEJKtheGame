@@ -77,7 +77,7 @@ public class MenuState extends BasicGameState {
         
         if(menu.getButtons()[0].onHover(x, y)){
             if(i.isMousePressed(Input.MOUSE_LEFT_BUTTON)) {
-                sbg.enterState(Main.HOSTSTATE);
+                sbg.enterState(Main.JOINSTATE);
             }
         }else if(menu.getButtons()[1].onHover(x, y)){
             if(i.isMousePressed(Input.MOUSE_LEFT_BUTTON)) {
