@@ -183,25 +183,14 @@ public class LobbyState extends State {
     }
 
     public void checkIfAllIsReady() {
-        if (checkReady.length + 1 != client.getPlayers().size() && client.getPlayers().size() > 0) {
-            checkReady = new boolean[client.getPlayers().size() + 1];
-        } else {
-            checkReady = new boolean[2];
+        ArrayList<Boolean> playersReady = new ArrayList<>();
+        for(MPPlayer mp : client.getPlayers().values()) {
+            playersReady.add(mp.ready);
         }
-
-        checkReady[0] = localPlayer.getReady();
-
-        for (MPPlayer mp : client.getPlayers().values()) {
-            if (mp.ready) {
-                checkReady[arrayIndex] = true;
-            } else if (!mp.ready) {
-                checkReady[arrayIndex] = false;
-            }
-            arrayIndex += 1;
-        }
-        arrayIndex = 1;
-
-        allReady = allReadyTrue();
+        playersReady.add(localPlayer.getReady());
+        allReady = !Arrays.asList(playersReady).toString().contains("f");
+        
+        playersReady.clear();
     }
 
     @Override
