@@ -25,6 +25,7 @@ public class StatsState extends State {
     private String name;
     private Character localPlayer;
     private Stats stats;
+    private int percent = 0;
     
     private ArrayList<Character> characters;
 
@@ -48,9 +49,7 @@ public class StatsState extends State {
 
     @Override
     public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
-        
         stats.render(g);
-
     }
 
     @Override

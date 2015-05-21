@@ -19,10 +19,10 @@ public class UIHelper {
     this.state = state;
     }
     
-    public void renderVersusUI(Character character){
-        character.getHealthSystem().render(getCenterXOffset(-195f), getCenterYOffset(223f));
-        character.renderStoredJumpsIndicator(getCenterXOffset(-205f), getCenterYOffset(223f));
-        character.renderAttackCharge(getCenterXOffset(-195.5f), getCenterYOffset(215f));
+    public void renderVersusUI(Character character, float x, float y){
+        character.getHealthSystem().render(x + (Main.WINDOW_WIDTH / 2) - 67.5f, y + 500 - 28);
+        character.renderStoredJumpsIndicator(x + (Main.WINDOW_WIDTH / 2) - 67.5f - 10, y + 500 - 28);
+        character.renderAttackCharge(x + (Main.WINDOW_WIDTH / 2) - 67.5f, y + 500 - 28 - 8);
     }
     
     public void renderPracticeUI(){

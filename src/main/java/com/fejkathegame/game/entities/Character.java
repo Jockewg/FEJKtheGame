@@ -32,6 +32,9 @@ public class Character extends LevelObject {
     private boolean isJumping, isFalling, hasJumped;
     private boolean ready = false;
     private boolean canUlti = true;
+    private int numberOfAttacks = 0;
+    private int numberOfHits = 0;
+    private int hitPercent = 0;
 
     private SpriteSheet runningSheet;
     private Animation runningAnimation;
@@ -407,6 +410,7 @@ public class Character extends LevelObject {
             updateAttackIndicator();
 
             storedAttacks--;
+            numberOfAttacks++;
             if (sweepXEnd > sweepXStart) {
                 flipped = true;
             } else if (sweepXStart > sweepXEnd) {
@@ -1121,5 +1125,28 @@ public class Character extends LevelObject {
       this.canUlti = canUlti;
    }
     
+   public void setNumberOfAttacks(int numAtt) {
+       this.numberOfAttacks = numAtt;
+   }
+   
+   public int getNumberOfAttacks() {
+       return numberOfAttacks;
+   }
 
+   public void setNumberOfHits(int hits) {
+       this.numberOfHits = hits;
+   }
+   
+   public int getNumberOfHits() {
+       return numberOfHits;
+   }
+   
+   public void setHitPercent(int percent) {
+       this.hitPercent = percent;
+   }
+   
+   public int getHitPercent() {
+       return hitPercent;
+   }
+   
 }

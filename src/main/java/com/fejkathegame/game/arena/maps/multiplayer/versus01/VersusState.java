@@ -30,6 +30,7 @@ public class VersusState extends State {
     private Character localPlayer;
 
     private boolean hasUpdated = true;
+    private int percent = 0;
 
     private ArrayList<Character> characters;
 
@@ -84,7 +85,7 @@ public class VersusState extends State {
         for (Character c : characters) {
             arena.players.add(c);
         }
-        /*vsUI = new UIHelper(cameraX, cameraY);*/
+        vsUI = new UIHelper(this);
 
         movementSystem = new MovementSystem(localPlayer);
 
@@ -99,6 +100,7 @@ public class VersusState extends State {
         if (localPlayer.getAttackIndicator().intersects(mp.character.getHitBox()) && localPlayer.getIsAttacking()) {
             if (mp.character.isAlive()) {
                 localPlayer.getHealthSystem().playHurtSound();
+                localPlayer.setNumberOfHits(localPlayer.getNumberOfHits() + 1);
             }
         }
         if (mp.character.getAttackIndicator().intersects(localPlayer.getHitBox()) && mp.isAttacking
@@ -263,7 +265,7 @@ public class VersusState extends State {
         if (timer.getCurrentCountdownTime() > 0) {
             renderCountdown(450, 250, g);
         }
-//        vsUI.renderVersusUI(localPlayer);
+        vsUI.renderVersusUI(localPlayer, cameraX, cameraY);
         g.resetTransform();
     }
 
@@ -271,9 +273,11 @@ public class VersusState extends State {
         if (arena.players.size() == 1) {
             sbg.getState(Main.STATSSTATE).init(gc, sbg);
             sbg.enterState(Main.STATSSTATE);
+            calculateHitPercent();
         } else if (arena.players.isEmpty()) {
             sbg.getState(Main.STATSSTATE).init(gc, sbg);
             sbg.enterState(Main.STATSSTATE);
+            calculateHitPercent();
         }
     }
 
@@ -302,6 +306,10 @@ public class VersusState extends State {
             checkWinLose(sbg, gc);
         }
         sendClientData();
+    }
+    
+    public void calculateHitPercent() {
+        percent = (localPlayer.getNumberOfAttacks()/localPlayer.getNumberOfHits());
     }
 
     private void sendClientData() {
