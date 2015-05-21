@@ -43,6 +43,8 @@ public class HPPowerUp extends LevelObject{
         Random r = new Random();
         x = r.nextInt(840) + 25;
         y = r.nextInt(440) + 25;
+        hitBox.setX(x);
+        hitBox.setY(y);
     }
     
     public void boost(Character player){

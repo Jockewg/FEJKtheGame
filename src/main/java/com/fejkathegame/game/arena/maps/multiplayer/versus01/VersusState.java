@@ -128,9 +128,11 @@ public class VersusState extends State {
         }
         
         if(localPlayer.getHitBox().intersects(arena.getPowerUp().getHitBox())){
-            if (arena.getPowerUp().isAlive() && localPlayer.getHealth()<5){
+            System.out.println("BOOOST");
+            if (arena.getPowerUp().isAlive() && localPlayer.getHealth() < 5){
                 arena.getPowerUp().boost(localPlayer);
                 arena.getPowerUp().setAlive(false);
+                System.out.println(arena.getPowerUp().isAlive());
                 arena.getPowerUp().changePositionRandom();
                 powerUpTimer.startTimer();
             }

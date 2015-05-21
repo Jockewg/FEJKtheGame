@@ -46,7 +46,7 @@ public class Versus extends Level {
         animation = new Animation(crankAnim, 30);
         
         try {
-            powerUp = new HPPowerUp(40, 40);
+            powerUp = new HPPowerUp(200, 200);
         } catch (IOException ex) {
             Logger.getLogger(Versus.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
@@ -129,7 +129,8 @@ public class Versus extends Level {
     @Override
     public void render() throws SlickException {
         map.render(0, 0, 0, 0, 36, 20);
-        powerUp.render();
+        if(powerUp.isAlive())
+            powerUp.render();
         for (LevelObject p : players) {
             if (p.isAlive()) {
                 p.render();
