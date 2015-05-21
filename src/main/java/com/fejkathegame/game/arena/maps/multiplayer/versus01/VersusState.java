@@ -35,6 +35,7 @@ public class VersusState extends State {
     private ArrayList<Character> characters;
 
     private Timer timer;
+    private Timer powerUpTimer;
 
     //Camera stuff
     private float cameraX, cameraY;
@@ -90,8 +91,10 @@ public class VersusState extends State {
         movementSystem = new MovementSystem(localPlayer);
 
         physics = new Physics();
+        powerUpTimer = new Timer();
         timer = new Timer();
         timer.startCountdown(3);
+        powerUpTimer.startTimer();
         sbg.addState(new StatsState("Stats", client, localPlayer, characters));
 
     }
@@ -123,9 +126,27 @@ public class VersusState extends State {
             localPlayer.setAlive(false);
             arena.players.remove(localPlayer);
         }
-
+        
+        if(localPlayer.getHitBox().intersects(arena.getPowerUp().getHitBox())){
+            if (arena.getPowerUp().isAlive() && localPlayer.getHealth()<5){
+                arena.getPowerUp().boost(localPlayer);
+                arena.getPowerUp().setAlive(false);
+                arena.getPowerUp().changePositionRandom();
+                powerUpTimer.startTimer();
+            }
+        }
+            
     }
 
+    public void updatePowerUp(int delta){
+        if(powerUpTimer.getTimerDuration() == 10){
+            arena.getPowerUp().setAlive(true);
+            powerUpTimer.stopTimer();
+            powerUpTimer.resetTimer();
+        }
+        powerUpTimer.calculateSecond(delta);
+    }
+    
     public void updateCameraRect() {
         float dY = line.getDY();
         float dX = +line.getDX();
@@ -299,7 +320,7 @@ public class VersusState extends State {
                     mp.character.renderCharacterAnimation();
                 }
             }
-            
+            updatePowerUp(i);
             physics.handlePhysics(arena, i);
             localPlayer.update(i);
             updatePlayerIndicator();
