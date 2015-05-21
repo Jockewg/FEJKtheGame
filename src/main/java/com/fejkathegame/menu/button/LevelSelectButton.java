@@ -1,7 +1,7 @@
 
 package com.fejkathegame.menu.button;
 
-import com.fejkathegame.game.arena.maps.highscore.HighscoreAdapter;
+import com.fejkathegame.game.properties.HighscoreAdapter;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 

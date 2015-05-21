@@ -1,7 +1,7 @@
 package com.fejkathegame.game.arena.maps;
 
 import com.fejkathegame.game.arena.Level;
-import com.fejkathegame.game.arena.maps.highscore.HighscoreAdapter;
+import com.fejkathegame.game.properties.HighscoreAdapter;
 import com.fejkathegame.game.arena.tiles.*;
 import com.fejkathegame.game.entities.PracticeTarget;
 import org.newdawn.slick.SlickException;

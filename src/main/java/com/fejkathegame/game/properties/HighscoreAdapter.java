@@ -1,4 +1,4 @@
-package com.fejkathegame.game.arena.maps.highscore;
+package com.fejkathegame.game.properties;
 
 import java.io.*;
 import java.util.Properties;
