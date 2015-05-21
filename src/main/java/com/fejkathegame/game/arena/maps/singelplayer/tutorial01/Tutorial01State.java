@@ -104,7 +104,7 @@ public class Tutorial01State extends State {
        g.scale(Main.SCALE, Main.SCALE);
        g.translate(-camera.getCamX(), -camera.getCamY());
        level.render();
-       level.helper.updateText(camera.getCamX(), camera.getCamY());
+       
        spacebar.draw(220, 510);
        arrow.draw(300, 500);
 
@@ -130,6 +130,7 @@ public class Tutorial01State extends State {
        if (paused) {
            stateHelper.drawPauseMenu(g);
        }
+       level.helper.updateText(camera.getCamX(), camera.getCamY());
        g.translate(-camera.getCamX(), camera.getCamY());
        g.resetTransform();
    }
