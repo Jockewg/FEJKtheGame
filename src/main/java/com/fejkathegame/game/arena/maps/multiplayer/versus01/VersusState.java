@@ -8,6 +8,7 @@ import com.fejkathegame.game.arena.physics.Physics;
 import com.fejkathegame.game.entities.Character;
 import com.fejkathegame.game.entities.logic.MovementSystem;
 import com.fejkathegame.game.multiplayer.lobby.LobbyState;
+import com.fejkathegame.game.multiplayer.stats.StatsState;
 import com.fejkathegame.game.timer.PracticeTimer;
 import java.util.ArrayList;
 import org.newdawn.slick.Color;
@@ -90,6 +91,7 @@ public class VersusState extends State {
         physics = new Physics();
         timer = new PracticeTimer();
         timer.startCountdown(3);
+        sbg.addState(new StatsState("Stats", client, localPlayer, characters));
 
     }
 
@@ -264,11 +266,13 @@ public class VersusState extends State {
         g.resetTransform();
     }
 
-    private void checkWinLose() {
+    private void checkWinLose(StateBasedGame sbg, GameContainer gc) throws SlickException {
         if (arena.players.size() == 1) {
-
+            sbg.getState(Main.STATSSTATE).init(gc, sbg);
+            sbg.enterState(Main.STATSSTATE);
         } else if (arena.players.isEmpty()) {
-
+            sbg.getState(Main.STATSSTATE).init(gc, sbg);
+            sbg.enterState(Main.STATSSTATE);
         }
     }
 
@@ -290,10 +294,11 @@ public class VersusState extends State {
                     mp.character.renderCharacterAnimation();
                 }
             }
-
+            
             physics.handlePhysics(arena, i);
             localPlayer.update(i);
             updatePlayerIndicator();
+            checkWinLose(sbg, gc);
         }
         sendClientData();
     }
