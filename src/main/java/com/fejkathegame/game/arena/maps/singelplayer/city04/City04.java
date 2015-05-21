@@ -4,7 +4,7 @@ import com.fejkathegame.game.arena.Level;
 import com.fejkathegame.game.arena.maps.PracticeLevelHelper;
 import com.fejkathegame.game.entities.LevelObject;
 import com.fejkathegame.game.entities.PracticeTarget;
-import com.fejkathegame.game.timer.PracticeTimer;
+import com.fejkathegame.game.timer.Timer;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.tiled.TiledMap;
 
@@ -30,7 +30,7 @@ public class City04 extends Level {
         addPlayer(levelObject);
 
 
-        timer = new PracticeTimer();
+        timer = new Timer();
         timer.startTimer();
 
         helper = new PracticeLevelHelper(this);

@@ -3,7 +3,7 @@ package com.fejkathegame.game.arena.maps.singelplayer.tower02;
 import com.fejkathegame.game.arena.Level;
 import com.fejkathegame.game.arena.maps.PracticeLevelHelper;
 import com.fejkathegame.game.entities.LevelObject;
-import com.fejkathegame.game.timer.PracticeTimer;
+import com.fejkathegame.game.timer.Timer;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.tiled.TiledMap;
 
@@ -29,7 +29,7 @@ public class Tower02 extends Level {
         addPlayer(levelObject);
 
 
-        timer = new PracticeTimer();
+        timer = new Timer();
         timer.startTimer();
 
         helper = new PracticeLevelHelper(this);
