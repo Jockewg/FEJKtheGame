@@ -29,6 +29,7 @@ public class Lobby {
         }
         
         characters = new ArrayList<>();
+        characters.clear();
         heads = new ArrayList<>();
         heads.add(challenger);
     }

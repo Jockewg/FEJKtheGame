@@ -9,14 +9,18 @@ import com.fejkathegame.game.arena.State;
 import com.fejkathegame.game.arena.maps.multiplayer.versus01.VersusState;
 import com.fejkathegame.game.entities.Character;
 import com.fejkathegame.menu.HostScreenState;
-import com.fejkathegame.menu.JoinScreen;
 import com.fejkathegame.menu.JoinScreenState;
 import org.newdawn.slick.*;
 import org.newdawn.slick.state.StateBasedGame;
 
+import java.awt.Font;
+
 import java.io.IOException;
+import java.net.InetAddress;
+import java.net.NetworkInterface;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -30,6 +34,10 @@ public class LobbyState extends State {
 
     private JoinScreenState js;
     private HostScreenState hs;
+
+    private Font font;
+    private TrueTypeFont ttf;
+    boolean comingfromHS = false;
 
     private Character localPlayer;
     private int numPlayersReady;
@@ -49,7 +57,7 @@ public class LobbyState extends State {
         return Main.LOBBYSTATE;
     }
 
-    public LobbyState(String name,ClientProgram client, String pName) {
+    public LobbyState(String name, ClientProgram client, String pName) {
         this.name = name;
         this.client = client;
         playerName = pName;
@@ -68,7 +76,7 @@ public class LobbyState extends State {
             playerName = js.getPlayerName();
         }
     }
-    
+
     public LobbyState(HostScreenState hs) {
         this.hs = hs;
         if (hs != null) {
@@ -83,6 +91,19 @@ public class LobbyState extends State {
         }
     }
 
+    public String getIP() throws Exception {
+
+        for (NetworkInterface iface : Collections.list(NetworkInterface.getNetworkInterfaces())) {
+            for (InetAddress address : Collections.list(iface.getInetAddresses())) {
+                if (!address.isLoopbackAddress() && !address.isLinkLocalAddress()) {
+                    return address.getHostAddress().trim();
+                }
+            }
+        }
+
+        return "unknown";
+    }
+
     @Override
     public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {
         lobby = new Lobby(name);
@@ -91,7 +112,7 @@ public class LobbyState extends State {
 
         localPlayer = null;
         try {
-            localPlayer = new com.fejkathegame.game.entities.Character(800, 40);
+            localPlayer = new Character(800, 40);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -102,11 +123,14 @@ public class LobbyState extends State {
         sendReadyToServer();
 
         characters.add(localPlayer);
-        
+
         checkReady = new boolean[1];
         for (MPPlayer mp : client.getPlayers().values()) {
             mp.character = null;
         }
+
+        font = new java.awt.Font("Verdana", java.awt.Font.BOLD, 20);
+        ttf = new TrueTypeFont(font, true);
     }
 
     public void checkIfNewPlayerConnected() {
@@ -151,6 +175,14 @@ public class LobbyState extends State {
 
         renderPlayersInLobby(g);
 
+        if (comingfromHS) {
+            try {
+                ttf.drawString(550, 20, "IP to server: " + getIP(), Color.white);
+            } catch (Exception ex) {
+                Logger.getLogger(LobbyState.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+
         if (localPlayer.getReady()) {
             g.drawImage(lobby.getReadyButton(), (Main.WINDOW_WIDTH / 2) - 100, 350);
         } else {
@@ -194,22 +226,14 @@ public class LobbyState extends State {
         }
     }
 
-    private boolean allReadyTrue() {
-        if (Arrays.toString(checkReady).contains("f")) {
-            return false;
-        } else {
-            return true;
-        }
-    }
-
     public void checkIfAllIsReady() {
         ArrayList<Boolean> playersReady = new ArrayList<>();
-        for(MPPlayer mp : client.getPlayers().values()) {
+        for (MPPlayer mp : client.getPlayers().values()) {
             playersReady.add(mp.ready);
         }
         playersReady.add(localPlayer.getReady());
         allReady = !Arrays.asList(playersReady).toString().contains("f");
-        
+
         playersReady.clear();
     }
 
