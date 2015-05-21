@@ -87,7 +87,6 @@ public class LobbyState extends State {
         lobby = new Lobby(name);
         heads = lobby.getImages();
         characters = lobby.getCharacters();
-        
 
         localPlayer = null;
         try {
