@@ -9,9 +9,10 @@ import com.esotericsoftware.kryonet.Listener;
 import com.esotericsoftware.kryonet.Server;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 /**
  * The server sends data to all clients connected to it.
- * 
+ *
  * @author Filip
  */
 public class ServerProgram extends Listener {
@@ -19,16 +20,18 @@ public class ServerProgram extends Listener {
     static Server server;
     static final int udpPort = 27960, tcpPort = 27960;
     static Map<Integer, Player> players = new HashMap<>();
+
     /**
      * The server register the packedges binds to the port and starts.
-     * 
+     *
      * @param args
      */
     public static void main(String[] args) {
         startServer();
     }
+
     public static void startServer() {
-        
+
         server = new Server();
         server.getKryo().register(PacketUpdateX.class);
         server.getKryo().register(PacketUpdateY.class);
@@ -57,10 +60,9 @@ public class ServerProgram extends Listener {
         System.out.println("The server is ready");
     }
 
-    
     /**
      * creates a new player with uniqe id and sends to all clients.
-     * 
+     *
      * @param c the connection to the client
      */
     @Override
@@ -97,9 +99,9 @@ public class ServerProgram extends Listener {
     }
 
     /**
-     * for every packet recived the player will be updated and 
-     * sent to all clients.
-     * 
+     * for every packet recived the player will be updated and sent to all
+     * clients.
+     *
      * @param c the connection to client
      * @param o the packet recived
      */
@@ -221,31 +223,35 @@ public class ServerProgram extends Listener {
             packet.id = c.getID();
             if (players.get(c.getID()).hp != old) {
                 server.sendToAllExceptTCP(c.getID(), packet);
-                System.out.println("client " +  c.getID() + " hp is: " + players.get(c.getID()).hp);
+                System.out.println("client " + c.getID() + " hp is: " + players.get(c.getID()).hp);
             }
-        } else if(o instanceof PacketNamePlayer) {
+        } else if (o instanceof PacketNamePlayer) {
             PacketNamePlayer packet = (PacketNamePlayer) o;
             players.get(c.getID()).name = packet.name;
             packet.id = c.getID();
-                server.sendToAllExceptTCP(c.getID(), packet);
-                System.out.println("client " + c.getID() + " name is: " + players.get(c.getID()).name);
-        } else if(o instanceof PacketReadyPlayer) {
+            server.sendToAllExceptTCP(c.getID(), packet);
+            System.out.println("client " + c.getID() + " name is: " + players.get(c.getID()).name);
+        } else if (o instanceof PacketReadyPlayer) {
             PacketReadyPlayer packet = (PacketReadyPlayer) o;
             boolean old = players.get(c.getID()).ready;
             players.get(c.getID()).ready = packet.ready;
             packet.id = c.getID();
-                server.sendToAllExceptTCP(c.getID(), packet);
+            server.sendToAllExceptTCP(c.getID(), packet);
+            if (players.get(c.getID()).ready != old) {
                 System.out.println("client " + c.getID() + " ready status is: " + players.get(c.getID()).ready);
+            }
         }
     }
+
     /**
-     * for every dissconnected client there will be
-     * a message sent to all clients
-     * 
+     * for every dissconnected client there will be a message sent to all
+     * clients
+     *
      * @param c the connection to the client
      */
     @Override
-    public void disconnected(Connection c) {
+    public void disconnected(Connection c
+    ) {
         players.remove(c.getID());
         PacketRemovePlayer packet = new PacketRemovePlayer();
         packet.id = c.getID();

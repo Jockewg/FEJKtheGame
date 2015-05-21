@@ -27,6 +27,7 @@ public class Main extends StateBasedGame {
     public static final int HOSTSTATE = 2;
     public static final int LEVELSELECTSTATE = 3;
     public static final int LOBBYSTATE = 1337;
+    public static final int STATSSTATE = 1338;
     //singelplayer constants
     public static final int BIG_BlUE03 = 4;
     public static final int CITY04 = 5;
