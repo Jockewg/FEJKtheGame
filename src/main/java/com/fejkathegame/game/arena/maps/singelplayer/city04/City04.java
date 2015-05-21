@@ -36,11 +36,15 @@ public class City04 extends Level {
         helper = new PracticeLevelHelper(this);
         helper.loadTileMap();
 
+        initMovableTarget();
+        
 
-        PracticeTarget movableTarget = targets.get(15);
+    }
+    
+    public void initMovableTarget() {
+       PracticeTarget movableTarget = targets.get(15);
         float movableTargetStartingPos = movableTarget.getY();
         helper.moveTargetConstructor(movableTarget, movableTargetStartingPos, 1.0f);
-
     }
 
     /**
