@@ -36,7 +36,7 @@ public class JoinScreenState extends BasicGameState {
 
     @Override
     public int getID() {
-        return 2;
+        return Main.JOINSTATE;
     }
 
     @Override
