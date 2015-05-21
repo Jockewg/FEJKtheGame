@@ -9,7 +9,7 @@ import com.fejkathegame.game.entities.Character;
 import com.fejkathegame.game.entities.logic.MovementSystem;
 import com.fejkathegame.game.multiplayer.lobby.LobbyState;
 import com.fejkathegame.game.multiplayer.stats.StatsState;
-import com.fejkathegame.game.timer.PracticeTimer;
+import com.fejkathegame.game.timer.Timer;
 import java.util.ArrayList;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
@@ -33,7 +33,7 @@ public class VersusState extends State {
 
     private ArrayList<Character> characters;
 
-    private PracticeTimer timer;
+    private Timer timer;
 
     //Camera stuff
     private float cameraX, cameraY;
@@ -89,7 +89,7 @@ public class VersusState extends State {
         movementSystem = new MovementSystem(localPlayer);
 
         physics = new Physics();
-        timer = new PracticeTimer();
+        timer = new Timer();
         timer.startCountdown(3);
         sbg.addState(new StatsState("Stats", client, localPlayer, characters));
 

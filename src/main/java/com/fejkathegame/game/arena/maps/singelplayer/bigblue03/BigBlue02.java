@@ -3,7 +3,7 @@ package com.fejkathegame.game.arena.maps.singelplayer.bigblue03;
 import com.fejkathegame.game.arena.Level;
 import com.fejkathegame.game.arena.maps.PracticeLevelHelper;
 import com.fejkathegame.game.entities.LevelObject;
-import com.fejkathegame.game.timer.PracticeTimer;
+import com.fejkathegame.game.timer.Timer;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.tiled.TiledMap;
 
@@ -28,7 +28,7 @@ public class BigBlue02 extends Level {
         targetTiles = new ArrayList<>();
         addPlayer(levelObject);
 
-        timer = new PracticeTimer();
+        timer = new Timer();
         timer.startTimer();
 
 

@@ -7,7 +7,7 @@ import com.fejkathegame.game.arena.tiles.Tile;
 import java.util.ArrayList;
 
 import com.fejkathegame.game.entities.PracticeTarget;
-import com.fejkathegame.game.timer.PracticeTimer;
+import com.fejkathegame.game.timer.Timer;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.tiled.TiledMap;
 
@@ -28,7 +28,7 @@ public abstract class Level {
 
     public ArrayList<Tile> targetTiles;
 
-    public PracticeTimer timer;
+    public Timer timer;
 
     public abstract void addPlayer(LevelObject p);
     
