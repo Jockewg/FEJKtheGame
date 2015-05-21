@@ -5,10 +5,13 @@ import com.fejkathegame.game.entities.LevelObject;
 import com.fejkathegame.game.arena.tiles.AirTile;
 import com.fejkathegame.game.arena.tiles.SolidTile;
 import com.fejkathegame.game.arena.tiles.Tile;
+import com.fejkathegame.game.entities.HPPowerUp;
+import java.io.IOException;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.tiled.TiledMap;
 
 import java.util.ArrayList;
+import java.util.logging.Logger;
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.Image;
 
@@ -21,6 +24,8 @@ public class Versus extends Level {
     private Animation animation;
 
     private ArrayList<Tile> targetTiles;
+    
+    private HPPowerUp powerUp;
 
     /**
      * Constructor for Arena, creates the playingfield and adds all players to
@@ -39,6 +44,12 @@ public class Versus extends Level {
 
         loadCrankAnim();
         animation = new Animation(crankAnim, 30);
+        
+        try {
+            powerUp = new HPPowerUp(40, 40);
+        } catch (IOException ex) {
+            Logger.getLogger(Versus.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
 
     }
 
@@ -115,10 +126,9 @@ public class Versus extends Level {
      *
      * @throws SlickException
      */
-    @Override
     public void render() throws SlickException {
         map.render(0, 0, 0, 0, 36, 20);
-
+        powerUp.render();
         for (LevelObject p : players) {
             if (p.isAlive()) {
                 p.render();
@@ -130,4 +140,8 @@ public class Versus extends Level {
         return animation;
     }
 
+    public HPPowerUp getPowerUp(){
+        return powerUp;
+    }
+    
 }

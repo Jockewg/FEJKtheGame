@@ -8,6 +8,8 @@ import com.fejkathegame.game.arena.physics.Physics;
 import com.fejkathegame.game.entities.Character;
 import com.fejkathegame.game.entities.logic.MovementSystem;
 import com.fejkathegame.game.multiplayer.lobby.LobbyState;
+import com.fejkathegame.game.timer.PracticeTimer;
+import java.io.IOException;
 import java.util.ArrayList;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
@@ -27,6 +29,7 @@ public class VersusState extends State {
     private MovementSystem movementSystem;
     private Physics physics;
     private Character localPlayer;
+    private PracticeTimer timer;
 
     private boolean hasUpdated = true;
     
@@ -41,8 +44,6 @@ public class VersusState extends State {
     private Line line;
 
     private Polygon playerIndicator;
-
-    private UIHelper vsUI;
 
     /**
      * Constructor for ArenaState
@@ -63,7 +64,7 @@ public class VersusState extends State {
     }
 
     @Override
-    public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {
+    public void init(GameContainer gc, StateBasedGame sbg) throws SlickException{
 
         System.out.println("Creating arraylist");
 
@@ -109,7 +110,14 @@ public class VersusState extends State {
             localPlayer.setAlive(false);
             arena.players.remove(localPlayer);
         }
-
+        
+        if(localPlayer.getHitBox().intersects(arena.getPowerUp().getHitBox())){
+            if(arena.getPowerUp().isAlive()){
+                arena.getPowerUp().boost(localPlayer);
+                
+            }
+        }
+        
     }
 
     public void updateCameraRect() {
