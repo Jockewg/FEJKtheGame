@@ -127,13 +127,13 @@ public class LobbyState extends State {
     public void sendNameToServer() {
         PacketNamePlayer packet = new PacketNamePlayer();
         packet.name = localPlayer.getName();
-        client.getClient().sendUDP(packet);
+        client.getClient().sendTCP(packet);
     }
 
     public void sendReadyToServer() {
         PacketReadyPlayer packet = new PacketReadyPlayer();
         packet.ready = localPlayer.getReady();
-        client.getClient().sendUDP(packet);
+        client.getClient().sendTCP(packet);
     }
 
     @Override
