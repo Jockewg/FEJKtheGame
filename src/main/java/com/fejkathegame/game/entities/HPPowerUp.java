@@ -34,13 +34,13 @@ public class HPPowerUp extends LevelObject{
         
     }
     
-    public void update(){
-        if(isAlive()){
-            hitBox.setX(x);
-            hitBox.setY(y);
-        }
-        
-    }
+//    public void update(){
+//        if(isAlive()){
+//            hitBox.setX(x);
+//            hitBox.setY(y);
+//        }
+//        
+//    }
     
     public void render() throws SlickException {
         if(isAlive()){

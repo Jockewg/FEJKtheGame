@@ -29,7 +29,7 @@ public class VersusState extends State {
     private MovementSystem movementSystem;
     private Physics physics;
     private Character localPlayer;
-    private PracticeTimer timer;
+    private PracticeTimer powerUpTimer;
 
     private boolean hasUpdated = true;
     
@@ -114,10 +114,21 @@ public class VersusState extends State {
         if(localPlayer.getHitBox().intersects(arena.getPowerUp().getHitBox())){
             if(arena.getPowerUp().isAlive()){
                 arena.getPowerUp().boost(localPlayer);
-                
+                arena.getPowerUp().setAlive(false);
+                arena.getPowerUp().changePositionRandom();
+                powerUpTimer.startTimer();
             }
         }
         
+    }
+    
+    public void updatePowerUp(int delta){
+        if(powerUpTimer.getCurrentCountdownTime() == 10){
+            arena.getPowerUp().setAlive(true);
+            powerUpTimer.stopTimer();
+            powerUpTimer.resetTimer();
+        }
+        powerUpTimer.calculateSecond(delta);
     }
 
     public void updateCameraRect() {
