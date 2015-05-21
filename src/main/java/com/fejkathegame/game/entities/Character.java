@@ -216,7 +216,7 @@ public class Character extends LevelObject {
      *
      * @param delta
      */
-    public void jump(int delta) {
+    public void jump() {
         currentPositionX = getX() - 2;
         currentPositionY = getY() + 32;
 

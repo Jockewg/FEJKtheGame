@@ -41,7 +41,7 @@ public class MovementSystem {
         character.setAttackCoolDown(character.getAttackCoolDown()-delta);
         if(i.isMousePressed(Input.MOUSE_LEFT_BUTTON) && character.getStoredJumps() > 0||
                 i.isKeyPressed(Input.KEY_SPACE) && character.getStoredJumps() > 0) {
-            character.jump(delta);
+            character.jump();
             character.playJumpSound();
             character.setHasJumped(true);
         } else {
