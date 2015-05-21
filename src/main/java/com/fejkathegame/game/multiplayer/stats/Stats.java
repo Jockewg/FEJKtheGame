@@ -38,14 +38,12 @@ public class Stats {
     }
     
     public void render(Graphics g) {
-        
         for(Character c : characters) {
             g.setColor(new Color(1.0f, 1.0f, 1.0f, 1.0f));
             challenger.draw((characters.indexOf(c) + 1) * 128, 100, 32, 32);
             g.drawString(c.getName(), (characters.indexOf(c) + 1) * 128, 68);
             g.drawString(String.valueOf(c.getNumberOfAttacks()), (characters.indexOf(c) + 1) * 128, 132);
         }
-        
     }
     
     public ArrayList<Character> getCharacters() {

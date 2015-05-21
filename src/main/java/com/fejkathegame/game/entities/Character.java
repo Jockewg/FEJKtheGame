@@ -33,6 +33,8 @@ public class Character extends LevelObject {
     private boolean ready = false;
     private boolean canUlti = true;
     private int numberOfAttacks = 0;
+    private int numberOfHits = 0;
+    private int hitPercent = 0;
 
     private SpriteSheet runningSheet;
     private Animation runningAnimation;
@@ -1131,4 +1133,20 @@ public class Character extends LevelObject {
        return numberOfAttacks;
    }
 
+   public void setNumberOfHits(int hits) {
+       this.numberOfHits = hits;
+   }
+   
+   public int getNumberOfHits() {
+       return numberOfHits;
+   }
+   
+   public void setHitPercent(int percent) {
+       this.hitPercent = percent;
+   }
+   
+   public int getHitPercent() {
+       return hitPercent;
+   }
+   
 }
