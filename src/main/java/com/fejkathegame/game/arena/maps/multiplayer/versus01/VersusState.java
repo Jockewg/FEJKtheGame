@@ -10,11 +10,15 @@ import com.fejkathegame.game.entities.logic.MovementSystem;
 import com.fejkathegame.game.multiplayer.lobby.LobbyState;
 import com.fejkathegame.game.multiplayer.stats.StatsState;
 import com.fejkathegame.game.timer.Timer;
+import java.awt.Font;
 import java.util.ArrayList;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.TrueTypeFont;
+import org.newdawn.slick.UnicodeFont;
 import org.newdawn.slick.geom.Line;
 import org.newdawn.slick.geom.Polygon;
 import org.newdawn.slick.geom.Vector2f;
@@ -23,6 +27,7 @@ import org.newdawn.slick.state.StateBasedGame;
 public class VersusState extends State {
 
     private ClientProgram client;
+    private Image mpHealth;
     private Versus arena;
     private String name;
     private MovementSystem movementSystem;
@@ -31,6 +36,9 @@ public class VersusState extends State {
 
     private boolean hasUpdated = true;
     private int percent = 0;
+    private Font playerNameFont;
+    private TrueTypeFont ttf;
+    private UnicodeFont uf;
 
     private ArrayList<Character> characters;
 
@@ -74,6 +82,12 @@ public class VersusState extends State {
         System.out.println("Creating arraylist");
 
         line = new Line(0, 0, 450, 250);
+        
+        playerNameFont = new Font("Sans serif", Font.PLAIN, 6);
+//        ttf = new TrueTypeFont(playerNameFont, false);
+        uf = new UnicodeFont(playerNameFont, 6, false, false);
+        
+        mpHealth = new Image("src/main/resources/data/img/heartcontainer/health2.png");
 
         playerIndicator = new Polygon();
         playerIndicator.addPoint(0, 0);
@@ -251,6 +265,13 @@ public class VersusState extends State {
         g.setColor(Color.green);
         g.drawString(String.valueOf(timer.getCurrentCountdownTime()), x, y);
     }
+    
+    public void renderMpHealthAndName(MPPlayer p, Graphics g) {
+        for(int i = 0; i < p.hp; i++) {
+            mpHealth.draw(p.x - 6 + (i * 5), p.y - 7, 5, 5);
+            uf.drawString(p.x - 7, p.y - 16, p.name);
+        }
+    }
 
     @Override
     public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
@@ -258,13 +279,21 @@ public class VersusState extends State {
         g.translate(-cameraX, -cameraY);
         arena.render();
         renderPlayerIndicator(g);
-
-        g.resetTransform();
-
-        g.translate(-cameraX, -cameraY);
+        if(!timer.isCountdownRunning()) {
+            for(MPPlayer mp : client.getPlayers().values()) {
+                renderMpHealthAndName(mp, g);
+            }
+        }
+        
         if (timer.getCurrentCountdownTime() > 0) {
             renderCountdown(450, 250, g);
         }
+        g.resetTransform();
+
+        
+        
+        g.translate(-cameraX, -cameraY);
+        
         vsUI.renderVersusUI(localPlayer, cameraX, cameraY);
         g.resetTransform();
     }

@@ -6,12 +6,14 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.TrueTypeFont;
 import org.newdawn.slick.gui.TextField;
 
 public class JoinScreen {
     
     private TextField playerNameTextField, ipField;
     private Image connect;
+    private TrueTypeFont ttf;
     private Font font;
     private String ip, playerName;
     
