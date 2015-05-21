@@ -154,6 +154,9 @@ public class LobbyState extends State {
             increase += 1;
         }
         increase = 2;
+        
+        if(localPlayer.getReady())
+            allReady = true;
     }
 
     public void checkIfReadyIsPressed(Input i) {

@@ -23,7 +23,9 @@ public class MovementSystem {
      * @param delta
      */
     public void handleInput(Input i, int delta) {
-            handleChargeAttack(i, delta);
+       if (character.isCanUlti()) {
+          handleChargeAttack(i, delta);
+       }
         if(!character.getIsAttacking() && !character.getIsCharging()) {
             handleMouseInput(i, delta);
             handleKeyBoardInput(i, delta);
