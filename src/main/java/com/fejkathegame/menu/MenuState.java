@@ -81,8 +81,6 @@ public class MenuState extends BasicGameState {
             }
         }else if(menu.getButtons()[1].onHover(x, y)){
             if(i.isMousePressed(Input.MOUSE_LEFT_BUTTON)) {
-                sbg.addState(new HostScreenState("Host"));
-                sbg.getState(Main.HOSTSTATE).init(gc, sbg);
                 sbg.enterState(Main.HOSTSTATE);
             }
         }else if(menu.getButtons()[2].onHover(x, y)){

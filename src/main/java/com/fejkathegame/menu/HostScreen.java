@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.fejkathegame.menu;
 
 import org.newdawn.slick.Color;
@@ -22,6 +17,7 @@ public class HostScreen {
     private TextField playerNameTextField;
     private Image host;
     private Font font;
+    private String ip, playerName;
 
     public HostScreen(String name, GameContainer gc) throws SlickException {
         
@@ -38,6 +34,7 @@ public class HostScreen {
         playerNameTextField.render(gc, g);
         playerNameTextField.setFocus(true);
         host.draw(gc.getWidth() / 2 - 75, gc.getHeight() / 2 + 80);
+        playerNameTextField.setFocus(true);
     }
 
     public TextField getPlayerNameTextField() {

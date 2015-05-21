@@ -1,26 +1,22 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.fejkathegame.menu;
 
 import com.fejkathegame.game.Main;
-import com.fejkathegame.game.arena.State;
 import com.fejkathegame.game.multiplayer.lobby.LobbyState;
+import com.fejkathegame.game.properties.HSPropertiesAdapter;
 import com.fejkathegame.server.ServerProgram;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
 /**
  *
  * @author Filip
  */
-public class HostScreenState extends State {
+public class HostScreenState extends BasicGameState {
 
     ServerProgram server;
     private String name;
@@ -28,6 +24,8 @@ public class HostScreenState extends State {
     private Input input;
 
     private String playerName, ip;
+
+    private HSPropertiesAdapter prop = new HSPropertiesAdapter();
 
     @Override
     public int getID() {
@@ -38,25 +36,10 @@ public class HostScreenState extends State {
         this.name = name;
     }
 
-    @Override
-    public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {
-        hostScreen = new HostScreen(name, gc);
-        server = new ServerProgram();
-        input = gc.getInput();
-    }
-
-    @Override
-    public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
-        g.setBackground(Color.decode("#655d5d"));
-
-        hostScreen.render(gc, g);
-    }
-
-    @Override
-    public void update(GameContainer gc, StateBasedGame sbg, int i) throws SlickException {
-        int x = input.getMouseX();
-        int y = input.getMouseY();
-        checkIfHostIsClicked(x, y, input, gc, sbg);
+    private void initTextFields() {
+        String prevIp = prop.load("ip");
+        String prevName = prop.load("playername");
+        hostScreen.getPlayerNameTextField().setText(prevName);
     }
 
     private void checkIfHostIsClicked(int x, int y, Input i, GameContainer gc, StateBasedGame sbg) throws SlickException {
@@ -66,6 +49,8 @@ public class HostScreenState extends State {
                 ip = "localhost";
                 ServerProgram.startServer();
                 if (ServerProgram.isServerReady()) {
+                    prop.save("ip", ip);
+                    prop.save("playername", playerName);
                     sbg.addState(new LobbyState(this));
                     sbg.getState(Main.LOBBYSTATE).init(gc, sbg);
                     sbg.enterState(Main.LOBBYSTATE);
@@ -80,6 +65,28 @@ public class HostScreenState extends State {
 
     public String getIp() {
         return ip;
+    }
+
+    @Override
+    public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {
+        input = gc.getInput();
+        hostScreen = new HostScreen(name, gc);
+
+        initTextFields();
+    }
+
+    @Override
+    public void render(GameContainer gc, StateBasedGame sbg, Graphics grphcs) throws SlickException {
+        grphcs.setBackground(Color.decode("#655d5d"));
+        
+        hostScreen.render(gc, grphcs);
+    }
+
+    @Override
+    public void update(GameContainer gc, StateBasedGame sbg, int i) throws SlickException {
+        int x = input.getMouseX();
+        int y = input.getMouseY();
+        checkIfHostIsClicked(x, y, input, gc, sbg);
     }
 
 }

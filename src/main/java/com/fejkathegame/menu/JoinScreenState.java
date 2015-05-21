@@ -1,12 +1,8 @@
 package com.fejkathegame.menu;
 
-import com.esotericsoftware.kryo.Kryo;
-import com.esotericsoftware.kryonet.Client;
-import com.fejkathegame.client.ClientProgram;
 import com.fejkathegame.game.Main;
 import com.fejkathegame.game.multiplayer.lobby.LobbyState;
 import com.fejkathegame.game.properties.HSPropertiesAdapter;
-import com.fejkathegame.server.ServerProgram;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -14,7 +10,6 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
-import sun.security.x509.IPAddressName;
 
 public class JoinScreenState extends BasicGameState {
     
