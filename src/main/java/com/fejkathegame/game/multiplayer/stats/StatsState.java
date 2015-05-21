@@ -13,6 +13,7 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
+import com.fejkathegame.game.entities.Character;
 
 /**
  *
@@ -42,10 +43,14 @@ public class StatsState extends State {
     @Override
     public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {
         stats = new Stats(name);
+        stats.setCharacters(characters);
     }
 
     @Override
-    public void render(GameContainer gc, StateBasedGame sbg, Graphics grphcs) throws SlickException {
+    public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
+        
+        stats.render(g);
+
     }
 
     @Override

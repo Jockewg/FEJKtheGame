@@ -3,7 +3,7 @@ package com.fejkathegame.game.timer;
 /**
  * Created by Swartt on 2015-05-11.
  */
-public class PracticeTimer {
+public class Timer {
 
    private int timerDuration;
    private boolean timerRunning = false;
