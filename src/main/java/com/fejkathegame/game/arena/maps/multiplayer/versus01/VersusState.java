@@ -83,9 +83,9 @@ public class VersusState extends State {
 
         line = new Line(0, 0, 450, 250);
         
-        playerNameFont = new Font("Verdana", Font.PLAIN, 6);
-        ttf = new TrueTypeFont(playerNameFont, true);
-//        uf = new UnicodeFont(playerNameFont, 6, false, false);
+        playerNameFont = new Font("Sans serif", Font.PLAIN, 6);
+//        ttf = new TrueTypeFont(playerNameFont, false);
+        uf = new UnicodeFont(playerNameFont, 6, false, false);
         
         mpHealth = new Image("src/main/resources/data/img/heartcontainer/health2.png");
 
@@ -269,7 +269,7 @@ public class VersusState extends State {
     public void renderMpHealthAndName(MPPlayer p, Graphics g) {
         for(int i = 0; i < p.hp; i++) {
             mpHealth.draw(p.x - 6 + (i * 5), p.y - 7, 5, 5);
-            ttf.drawString(p.x - 7, p.y - 16, p.name);
+            uf.drawString(p.x - 7, p.y - 16, p.name);
         }
     }
 
