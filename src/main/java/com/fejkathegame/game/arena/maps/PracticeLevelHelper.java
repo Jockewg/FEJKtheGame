@@ -6,6 +6,7 @@ import com.fejkathegame.game.arena.tiles.*;
 import com.fejkathegame.game.entities.PracticeTarget;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.TrueTypeFont;
+import org.newdawn.slick.Color;
 
 import java.awt.*;
 import java.io.IOException;
@@ -46,10 +47,10 @@ public class PracticeLevelHelper {
     };
 
     public void updateText(float x, float y) {
-        ttf.drawString(x, y, score, org.newdawn.slick.Color.green);
-        ttf.drawString(x + 200, y, "Time: " + String.valueOf(level.timer.getTimerDuration()), org.newdawn.slick.Color.red);
+        ttf.drawString(x, y, score, Color.green);
+        ttf.drawString(x + 200, y, "Time: " + String.valueOf(level.timer.getTimerDuration()), Color.red);
         if (level.timer.isCountdownRunning()) {
-            ttf2.drawString(x + 350, y + 250, "countdown: " + String.valueOf(level.timer.getCurrentCountdownTime()));
+            ttf2.drawString(x + 350, y + 250, "countdown: " + String.valueOf(level.timer.getCurrentCountdownTime()), Color.blue);
         }
     }
 
