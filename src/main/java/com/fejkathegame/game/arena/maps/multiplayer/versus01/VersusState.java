@@ -84,7 +84,7 @@ public class VersusState extends State {
         for (Character c : characters) {
             arena.players.add(c);
         }
-        /*vsUI = new UIHelper(cameraX, cameraY);*/
+        vsUI = new UIHelper(this);
 
         movementSystem = new MovementSystem(localPlayer);
 
@@ -263,7 +263,7 @@ public class VersusState extends State {
         if (timer.getCurrentCountdownTime() > 0) {
             renderCountdown(450, 250, g);
         }
-//        vsUI.renderVersusUI(localPlayer);
+        vsUI.renderVersusUI(localPlayer, cameraX, cameraY);
         g.resetTransform();
     }
 
