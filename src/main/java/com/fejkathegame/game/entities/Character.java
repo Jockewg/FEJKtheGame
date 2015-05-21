@@ -31,6 +31,7 @@ public class Character extends LevelObject {
     private boolean movingLeft = false;
     private boolean isJumping, isFalling, hasJumped;
     private boolean ready = false;
+    private boolean canUlti = true;
 
     private SpriteSheet runningSheet;
     private Animation runningAnimation;
@@ -1111,5 +1112,14 @@ public class Character extends LevelObject {
     public void setReady(boolean ready) {
         this.ready = ready;
     }
+
+   public boolean isCanUlti() {
+      return canUlti;
+   }
+
+   public void setCanUlti(boolean canUlti) {
+      this.canUlti = canUlti;
+   }
+    
 
 }
