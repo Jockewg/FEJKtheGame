@@ -27,8 +27,8 @@ public class Stats {
     public Stats(String name) {
         try {
             challenger = new Image("src/main/resources/data/img/spritesheets/characterHead.png");
-            disconnect = new Image ("src/main/resources/data/img/buttons/unready.png");
-            playAgain = new Image ("src/main/resources/data/img/buttons/ready.png");
+            disconnect = new Image ("src/main/resources/data/img/buttons/disconnect.png");
+            playAgain = new Image ("src/main/resources/data/img/buttons/playagain.png");
         } catch (SlickException ex) {
             Logger.getLogger(Stats.class.getName()).log(Level.SEVERE, null, ex);
         }

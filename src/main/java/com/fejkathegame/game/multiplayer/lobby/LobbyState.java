@@ -79,6 +79,7 @@ public class LobbyState extends State {
 
     public LobbyState(HostScreenState hs) {
         this.hs = hs;
+        comingfromHS = true;
         if (hs != null) {
             if (hs.getIp() != null) {
                 client = new ClientProgram();
