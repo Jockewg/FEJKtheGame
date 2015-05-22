@@ -58,7 +58,7 @@ public class Character extends LevelObject {
     private float size;
     private float currentPositionX;
     private float currentPositionY;
-    private float attackCoolDown;
+    private float attackCoolDown,stopAttack;
     private float gravity;
     private float mousePositionX;
     private float previousMousePositionX;
@@ -111,6 +111,7 @@ public class Character extends LevelObject {
         boundingShape = new AABoundingRect(x, y, 19, 25);
         health = 5;
         attackCoolDown = 100;
+        stopAttack = 100;
         storedAttacks = 2;
         storedJumps = 0;
         size = 40;
@@ -469,6 +470,15 @@ public class Character extends LevelObject {
 
         if (isFullyCharged) {
             activateSuperAttack(delta);
+        }
+        
+        if (getIsAttacking()) {
+            if(stopAttack <= 0) {
+                setIsAttacking(false);
+            }
+            stopAttack--;
+        } else {
+            stopAttack = 100;
         }
     }
 
