@@ -173,7 +173,8 @@ public class LobbyState extends State {
     @Override
     public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
         lobby.render();
-
+        
+        g.setColor(Color.white);
         renderPlayersInLobby(g);
 
         if (comingfromHS) {
