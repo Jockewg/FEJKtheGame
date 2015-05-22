@@ -125,9 +125,9 @@ public class ServerProgram extends Listener {
             players.get(c.getID()).isAttacking = packet.isAttacking;
             packet.id = c.getID();
             if (players.get(c.getID()).isAttacking != old) {
-                server.sendToAllExceptUDP(c.getID(), packet);
+                server.sendToAllExceptTCP(c.getID(), packet);
                 if (players.get(c.getID()).isAttacking == true) {
-                    System.out.println("client " + c.getID() + " is attacking");
+//                    System.out.println("client " + c.getID() + " is attacking");
                 }
             }
         } else if (o instanceof PacketAttackDirectionPlayer) {
@@ -136,9 +136,9 @@ public class ServerProgram extends Listener {
             players.get(c.getID()).direction = packet.direction;
             packet.id = c.getID();
             if (players.get(c.getID()).direction != old) {
-                server.sendToAllExceptUDP(c.getID(), packet);
+                server.sendToAllExceptTCP(c.getID(), packet);
                 if (players.get(c.getID()).isAttacking == true) {
-                    System.out.println("client " + c.getID() + " degree: " + packet.direction);
+//                    System.out.println("client " + c.getID() + " degree: " + packet.direction);
                 }
             }
         } else if (o instanceof PacketChargePlayer) {
@@ -147,9 +147,9 @@ public class ServerProgram extends Listener {
             players.get(c.getID()).isChargeing = packet.isChargeing;
             packet.id = c.getID();
             if (players.get(c.getID()).isChargeing != old) {
-                server.sendToAllExceptUDP(c.getID(), packet);
+                server.sendToAllExceptTCP(c.getID(), packet);
                 if (players.get(c.getID()).isChargeing == true) {
-                    System.out.println("client " + c.getID() + "  is chrageing");
+//                    System.out.println("client " + c.getID() + "  is chrageing");
                 }
             }
         } else if (o instanceof PacketFullyChargedPlayer) {
@@ -158,9 +158,9 @@ public class ServerProgram extends Listener {
             players.get(c.getID()).isFullyCharged = packet.isFullyCharged;
             packet.id = c.getID();
             if (players.get(c.getID()).isFullyCharged != old) {
-                server.sendToAllExceptUDP(c.getID(), packet);
+                server.sendToAllExceptTCP(c.getID(), packet);
                 if (players.get(c.getID()).isFullyCharged == true) {
-                    System.out.println("client " + c.getID() + "  it fully charged");
+//                    System.out.println("client " + c.getID() + "  it fully charged");
                 }
             }
         } else if (o instanceof PacketMoveLeftPlayer) {
@@ -171,7 +171,7 @@ public class ServerProgram extends Listener {
             if (players.get(c.getID()).moveingLeft != old) {
                 server.sendToAllExceptUDP(c.getID(), packet);
                 if (players.get(c.getID()).moveingLeft == true) {
-                    System.out.println("client " + c.getID() + " moveing left");
+//                    System.out.println("client " + c.getID() + " moveing left");
                 }
             }
         } else if (o instanceof PacketMoveRightPlayer) {
@@ -182,7 +182,7 @@ public class ServerProgram extends Listener {
             if (players.get(c.getID()).moveingRight != old) {
                 server.sendToAllExceptUDP(c.getID(), packet);
                 if (players.get(c.getID()).moveingRight == true) {
-                    System.out.println("client " + c.getID() + " moveing right");
+//                    System.out.println("client " + c.getID() + " moveing right");
                 }
             }
         } else if (o instanceof PacketJumpPlayer) {
@@ -193,7 +193,7 @@ public class ServerProgram extends Listener {
             if (players.get(c.getID()).isJumping != old) {
                 server.sendToAllExceptUDP(c.getID(), packet);
                 if (players.get(c.getID()).isJumping == true) {
-                    System.out.println("client " + c.getID() + " is jumping");
+//                    System.out.println("client " + c.getID() + " is jumping");
                 }
             }
         } else if (o instanceof PacketFallingPlayer) {
@@ -204,7 +204,7 @@ public class ServerProgram extends Listener {
             if (players.get(c.getID()).isFalling != old) {
                 server.sendToAllExceptUDP(c.getID(), packet);
                 if (players.get(c.getID()).isFalling == true) {
-                    System.out.println("client " + c.getID() + " is falling");
+//                    System.out.println("client " + c.getID() + " is falling");
                 }
             }
         } else if (o instanceof PacketGroundedPlayer) {
@@ -215,7 +215,7 @@ public class ServerProgram extends Listener {
             if (players.get(c.getID()).isGrounded != old) {
                 server.sendToAllExceptUDP(c.getID(), packet);
                 if (players.get(c.getID()).isGrounded == true) {
-                    System.out.println("client " + c.getID() + " is grounded");
+//                    System.out.println("client " + c.getID() + " is grounded");
                 }
             }
         } else if (o instanceof PacketHpPlayer) {
@@ -225,14 +225,14 @@ public class ServerProgram extends Listener {
             packet.id = c.getID();
             if (players.get(c.getID()).hp != old) {
                 server.sendToAllExceptTCP(c.getID(), packet);
-                System.out.println("client " + c.getID() + " hp is: " + players.get(c.getID()).hp);
+//                System.out.println("client " + c.getID() + " hp is: " + players.get(c.getID()).hp);
             }
         } else if (o instanceof PacketNamePlayer) {
             PacketNamePlayer packet = (PacketNamePlayer) o;
             players.get(c.getID()).name = packet.name;
             packet.id = c.getID();
             server.sendToAllExceptTCP(c.getID(), packet);
-            System.out.println("client " + c.getID() + " name is: " + players.get(c.getID()).name);
+//            System.out.println("client " + c.getID() + " name is: " + players.get(c.getID()).name);
         } else if (o instanceof PacketReadyPlayer) {
             PacketReadyPlayer packet = (PacketReadyPlayer) o;
             boolean old = players.get(c.getID()).ready;
@@ -240,7 +240,7 @@ public class ServerProgram extends Listener {
             packet.id = c.getID();
             server.sendToAllExceptTCP(c.getID(), packet);
             if (players.get(c.getID()).ready != old) {
-                System.out.println("client " + c.getID() + " ready status is: " + players.get(c.getID()).ready);
+//                System.out.println("client " + c.getID() + " ready status is: " + players.get(c.getID()).ready);
             }
         }
     }

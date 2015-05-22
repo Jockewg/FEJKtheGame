@@ -79,7 +79,7 @@ public class VersusState extends State {
     @Override
     public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {
 
-        System.out.println("Creating arraylist");
+//        System.out.println("Creating arraylist");
 
         line = new Line(0, 0, 450, 250);
         
@@ -126,7 +126,7 @@ public class VersusState extends State {
             PacketHpPlayer packet = new PacketHpPlayer();
             packet.hp = localPlayer.getHealth();
             client.getClient().sendUDP(packet);
-            System.out.println(mp.hp);
+//            System.out.println(mp.hp);
         }
         if (mp.hp == 0 && mp.character.isAlive()) {
             mp.character.setAlive(false);
@@ -363,33 +363,33 @@ public class VersusState extends State {
             PacketAttackDirectionPlayer packet2 = new PacketAttackDirectionPlayer();
             packet2.direction = (float) localPlayer.getAttackDirection().getTheta();
             packet.isAttacking = localPlayer.getIsAttacking();
-            client.getClient().sendUDP(packet);
-            client.getClient().sendUDP(packet2);
+            client.getClient().sendTCP(packet);
+            client.getClient().sendTCP(packet2);
         } else {
             PacketAttackPlayer packet = new PacketAttackPlayer();
             PacketAttackDirectionPlayer packet2 = new PacketAttackDirectionPlayer();
             packet2.direction = (float) localPlayer.getAttackDirection().getTheta();
             packet.isAttacking = localPlayer.getIsAttacking();
-            client.getClient().sendUDP(packet);
-            client.getClient().sendUDP(packet2);
+            client.getClient().sendTCP(packet);
+            client.getClient().sendTCP(packet2);
         }
         if (localPlayer.getIsCharging()) {
             PacketChargePlayer packet = new PacketChargePlayer();
             packet.isChargeing = true;
-            client.getClient().sendUDP(packet);
+            client.getClient().sendTCP(packet);
         } else {
             PacketChargePlayer packet = new PacketChargePlayer();
             packet.isChargeing = false;
-            client.getClient().sendUDP(packet);
+            client.getClient().sendTCP(packet);
         }
         if (localPlayer.getIsFullyCharged()) {
             PacketFullyChargedPlayer packet = new PacketFullyChargedPlayer();
             packet.isFullyCharged = true;
-            client.getClient().sendUDP(packet);
+            client.getClient().sendTCP(packet);
         } else {
             PacketFullyChargedPlayer packet = new PacketFullyChargedPlayer();
             packet.isFullyCharged = false;
-            client.getClient().sendUDP(packet);
+            client.getClient().sendTCP(packet);
         }
         if (localPlayer.getMovingLeft()) {
             PacketMoveLeftPlayer packet = new PacketMoveLeftPlayer();
