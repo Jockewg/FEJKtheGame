@@ -130,6 +130,9 @@ public class VersusState extends State {
         }
         if (mp.hp == 0 && mp.character.isAlive()) {
             mp.character.setAlive(false);
+            mp.isAttacking = false;
+            mp.isChargeing = false;
+            mp.isFullyCharged = false;
             arena.players.remove(mp.character);
         }
 
