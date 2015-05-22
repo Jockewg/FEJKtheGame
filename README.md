@@ -17,10 +17,11 @@ Joakim
 --Known Bugs--
 
   - Player getes stuck when attacking the floor at a stright angle.
+  - While walking in to a wall player cannot attack.
   - If host cancel the game the client wont leave the lobby/current game or crash
   - When a player dies while attacking the sound will loop.
   - In stats screen. If host leaves the clients wont dissconnect. and clients in lobby wont be able to
-    continue
+    continue.
 
 --How to play--
 
