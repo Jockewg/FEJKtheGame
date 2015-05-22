@@ -16,7 +16,6 @@ Joakim
   
 --Known Bugs--
 
-  - Wall and floor gliding/boosting while attacking towars a floor/wall
   - Player getes stuck when attacking the floor at a stright angle.
   - If host cancel the game the client wont leave the lobby/current game or crash
   - When a player dies while attacking the sound will loop.
