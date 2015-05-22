@@ -20,7 +20,7 @@ Joakim
   - Player getes stuck when attacking the floor at a stright angle.
   - If host cancel the game the client wont leave the lobby/current game or crash
   - When a player dies while attacking the sound will loop.
-  - In stats screen. If host leaves the clients wont dissconnect. and client from lobby wont be able to
+  - In stats screen. If host leaves the clients wont dissconnect. and clients from lobby wont be able to
     continue
 
 --How to play--
