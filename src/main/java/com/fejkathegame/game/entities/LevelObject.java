@@ -23,7 +23,7 @@ public abstract class LevelObject {
     protected int storedJumps;
     protected boolean onGround = true;
     protected int storedAttacks;
-    private int health;
+    public int health;
     private boolean isAlive;
     public Graphics g;
     private boolean isAttacking = false;

@@ -6,11 +6,13 @@ import com.fejkathegame.game.arena.State;
 import com.fejkathegame.game.arena.maps.UIHelper;
 import com.fejkathegame.game.arena.physics.Physics;
 import com.fejkathegame.game.entities.Character;
+import com.fejkathegame.game.entities.Medkit;
 import com.fejkathegame.game.entities.logic.MovementSystem;
 import com.fejkathegame.game.multiplayer.lobby.LobbyState;
 import com.fejkathegame.game.multiplayer.stats.StatsState;
 import com.fejkathegame.game.timer.Timer;
 import java.awt.Font;
+import java.io.IOException;
 import java.util.ArrayList;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
@@ -55,6 +57,8 @@ public class VersusState extends State {
     private Polygon playerIndicator;
 
     private UIHelper vsUI;
+
+    private Medkit medkit;
 
     /**
      * Constructor for ArenaState
@@ -107,6 +111,11 @@ public class VersusState extends State {
         timer = new Timer();
         timer.startCountdown(3);
         sbg.addState(new StatsState("Stats", client, localPlayer, characters));
+        try {
+            medkit = new Medkit(0,0);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
     }
 
@@ -139,6 +148,12 @@ public class VersusState extends State {
         if (localPlayer.getHealth() <= 0) {
             localPlayer.setAlive(false);
             arena.players.remove(localPlayer);
+        }
+        if (localPlayer.getAttackIndicator().intersects(medkit.getHitBox()) && localPlayer.getIsAttacking()) {
+            medkit.getHealthSystem().dealDamage(1);
+            medkit.setAlive(false);
+            medkit.getTimer().resetTimer();
+            medkit.setNeedNewNumber(true);
         }
 
     }
@@ -281,6 +296,7 @@ public class VersusState extends State {
         g.scale(cameraScale, cameraScale);
         g.translate(-cameraX, -cameraY);
         arena.render();
+        medkit.run();
         renderPlayerIndicator(g);
         if(!timer.isCountdownRunning()) {
             for(MPPlayer mp : client.getPlayers().values()) {
@@ -315,6 +331,7 @@ public class VersusState extends State {
 
     @Override
     public void update(GameContainer gc, StateBasedGame sbg, int i) throws SlickException {
+        medkit.getTimer().calculateSecond(i);
         updateVectorLine();
         updateCameraRect();
         timer.calculateSecond(i);
