@@ -11,9 +11,11 @@ import com.fejkathegame.game.entities.logic.MovementSystem;
 import com.fejkathegame.game.multiplayer.lobby.LobbyState;
 import com.fejkathegame.game.multiplayer.stats.StatsState;
 import com.fejkathegame.game.timer.Timer;
+
 import java.awt.Font;
 import java.io.IOException;
 import java.util.ArrayList;
+
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -63,7 +65,7 @@ public class VersusState extends State {
     /**
      * Constructor for ArenaState
      *
-     * @param name of the stage
+     * @param name        of the stage
      * @param client
      * @param localPlayer
      * @param characters
@@ -86,11 +88,11 @@ public class VersusState extends State {
 //        System.out.println("Creating arraylist");
 
         line = new Line(0, 0, 450, 250);
-        
+
         playerNameFont = new Font("Sans serif", Font.PLAIN, 6);
 //        ttf = new TrueTypeFont(playerNameFont, false);
         uf = new UnicodeFont(playerNameFont, 6, false, false);
-        
+
         mpHealth = new Image("src/main/resources/data/img/heartcontainer/health2.png");
 
         playerIndicator = new Polygon();
@@ -112,7 +114,7 @@ public class VersusState extends State {
         timer.startCountdown(3);
         sbg.addState(new StatsState("Stats", client, localPlayer, characters));
         try {
-            medkit = new Medkit(0,0);
+            medkit = new Medkit(0, 0);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -151,6 +153,9 @@ public class VersusState extends State {
         }
         if (localPlayer.getAttackIndicator().intersects(medkit.getHitBox()) && localPlayer.getIsAttacking()) {
             medkit.getHealthSystem().dealDamage(1);
+            if (localPlayer.getHealth() < 5) {
+                localPlayer.getHealthSystem().dealDamage(-1);
+            }
             medkit.setAlive(false);
             medkit.getTimer().resetTimer();
             medkit.setNeedNewNumber(true);
@@ -283,9 +288,9 @@ public class VersusState extends State {
         g.setColor(Color.green);
         g.drawString(String.valueOf(timer.getCurrentCountdownTime()), x, y);
     }
-    
+
     public void renderMpHealthAndName(MPPlayer p, Graphics g) {
-        for(int i = 0; i < p.hp; i++) {
+        for (int i = 0; i < p.hp; i++) {
             mpHealth.draw(p.x - 6 + (i * 5), p.y - 7, 5, 5);
             uf.drawString(p.x - 7, p.y - 16, p.name);
         }
@@ -298,21 +303,20 @@ public class VersusState extends State {
         arena.render();
         medkit.run();
         renderPlayerIndicator(g);
-        if(!timer.isCountdownRunning()) {
-            for(MPPlayer mp : client.getPlayers().values()) {
+        if (!timer.isCountdownRunning()) {
+            for (MPPlayer mp : client.getPlayers().values()) {
                 renderMpHealthAndName(mp, g);
             }
         }
-        
+
         if (timer.getCurrentCountdownTime() > 0) {
             renderCountdown(450, 250, g);
         }
         g.resetTransform();
 
-        
-        
+
         g.translate(-cameraX, -cameraY);
-        
+
         vsUI.renderVersusUI(localPlayer, cameraX, cameraY);
         g.resetTransform();
     }
@@ -348,7 +352,7 @@ public class VersusState extends State {
                     mp.character.renderCharacterAnimation();
                 }
             }
-            
+
             physics.handlePhysics(arena, i);
             localPlayer.update(i);
             updatePlayerIndicator();
@@ -356,7 +360,7 @@ public class VersusState extends State {
         }
         sendClientData();
     }
-    
+
 //    public void calculateHitPercent() {
 //        percent = (localPlayer.getNumberOfAttacks()/localPlayer.getNumberOfHits());
 //    }
