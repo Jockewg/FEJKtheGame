@@ -3,6 +3,7 @@ package com.fejkathegame.client;
 import com.esotericsoftware.kryonet.Client;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
+
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -21,6 +22,8 @@ public class ClientProgram extends Listener {
     String serverIp, playerName;
     int tcpPort = 27960, updPort = 27960;
     Map<Integer, MPPlayer> players = new HashMap<>();
+    MPMedkit medkit = new MPMedkit();
+
 
     public ClientProgram(String serverIp, String playerName) {
         this.serverIp = serverIp;
@@ -54,6 +57,9 @@ public class ClientProgram extends Listener {
         client.getKryo().register(PacketHpPlayer.class);
         client.getKryo().register(PacketNamePlayer.class);
         client.getKryo().register(PacketReadyPlayer.class);
+        client.getKryo().register(PacketMedkitPosition.class);
+        client.getKryo().register(PacketMedkitAlive.class);
+        client.getKryo().register(PacketMedkitPrerendered.class);
         client.addListener(this);
 
         client.start();
@@ -128,6 +134,10 @@ public class ClientProgram extends Listener {
         } else if(o instanceof PacketReadyPlayer) {
             PacketReadyPlayer packet = (PacketReadyPlayer) o;
             players.get(packet.id).ready = packet.ready;
+        } else if (o instanceof  PacketMedkitPosition) {
+            PacketMedkitPosition packet = (PacketMedkitPosition) o;
+            medkit.x = packet.x;
+            medkit.y = packet.y;
         }
         
     }
@@ -148,4 +158,7 @@ public class ClientProgram extends Listener {
         this.players = players;
     }
 
+    public MPMedkit getMedkit() {
+        return medkit;
+    }
 }

@@ -1,5 +1,9 @@
 package com.fejkathegame.game.entities;
 
+import com.fejkathegame.client.ClientProgram;
+import com.fejkathegame.client.PacketMedkitAlive;
+import com.fejkathegame.client.PacketMedkitPosition;
+import com.fejkathegame.client.PacketMedkitPrerendered;
 import com.fejkathegame.game.entities.logic.HealthSystem;
 import com.fejkathegame.game.timer.Timer;
 import org.newdawn.slick.Color;
@@ -21,6 +25,7 @@ public class Medkit extends LevelObject {
     Timer timer;
     boolean isAlive;
     boolean needNewNumber;
+    ClientProgram client;
 
 
     /**
@@ -30,7 +35,7 @@ public class Medkit extends LevelObject {
      * @param y coordinate for spawing the object
      * @throws org.newdawn.slick.SlickException
      */
-    public Medkit(float x, float y) throws SlickException, IOException {
+    public Medkit(float x, float y, ClientProgram client) throws SlickException, IOException {
         super(x, y);
         healthSystem = new HealthSystem(this);
         health = 1;
@@ -40,6 +45,7 @@ public class Medkit extends LevelObject {
         timer = new Timer();
         needNewNumber = true;
         getRandomPosition();
+        this.client = client;
     }
 
     public void render(float x, float y) {
@@ -52,27 +58,44 @@ public class Medkit extends LevelObject {
         sprite.draw(x, y, new Color(1, 1, 1, 0.5f));
     }
 
-    public void run() {
+    public void runAsHost() {
         timer.startTimer();
         if (NeedNewNumber()) {
             getRandomPosition();
+            PacketMedkitPosition packet = new PacketMedkitPosition();
+            packet.x = x;
+            packet.y = y;
+            client.getClient().sendTCP(packet);
         }
         if (isAlive()) {
             render(x, y);
         }
         if (timer.getTimerDuration() >= 5) {
+            PacketMedkitPrerendered packet = new PacketMedkitPrerendered();
+            packet.IsPrerendered = true;
+            client.getClient().sendTCP(packet);
             preSpawnDisplay();
         }
         if (timer.getTimerDuration() >= 10) {
+            PacketMedkitAlive packet = new PacketMedkitAlive();
+            packet.isAlive = true;
+            client.getClient().sendTCP(packet);
             setAlive(true);
         }
+    }
 
-
+    public void runAsClient(){
+        if (client.getMedkit().isAlive) {
+            render(client.getMedkit().x, client.getMedkit().y);
+        }
+        if (client.getMedkit().IsPrerendered){
+            preSpawnDisplay();
+        }
     }
 
     public void getRandomPosition() {
         int minX = 30;
-        int maxX = 870;
+        int maxX = 800;
         Random randX = new Random();
         int randomX = randX.nextInt((maxX - minX) + 1) + minX;
         int minY = 30;

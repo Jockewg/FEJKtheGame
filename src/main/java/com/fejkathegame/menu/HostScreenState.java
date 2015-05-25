@@ -49,6 +49,7 @@ public class HostScreenState extends BasicGameState {
                 ip = "localhost";
                 ServerProgram.startServer();
                 if (ServerProgram.isServerReady()) {
+                    ServerProgram.isHost = true;
                     prop.save("ip", ip);
                     prop.save("playername", playerName);
                     sbg.addState(new LobbyState(this));

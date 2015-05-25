@@ -7,6 +7,7 @@ import java.util.Map;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
 import com.esotericsoftware.kryonet.Server;
+
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -21,6 +22,7 @@ public class ServerProgram extends Listener {
     static final int udpPort = 27960, tcpPort = 27960;
     static Map<Integer, Player> players = new HashMap<>();
     public static boolean serverReady = false;
+    public static boolean isHost = false;
 
     /**
      * The server register the packedges binds to the port and starts.
@@ -50,6 +52,9 @@ public class ServerProgram extends Listener {
         server.getKryo().register(PacketHpPlayer.class);
         server.getKryo().register(PacketNamePlayer.class);
         server.getKryo().register(PacketReadyPlayer.class);
+        server.getKryo().register(PacketMedkitPosition.class);
+        server.getKryo().register(PacketMedkitAlive.class);
+        server.getKryo().register(PacketMedkitPrerendered.class);
 
         try {
             server.bind(tcpPort, udpPort);
@@ -242,6 +247,15 @@ public class ServerProgram extends Listener {
             if (players.get(c.getID()).ready != old) {
 //                System.out.println("client " + c.getID() + " ready status is: " + players.get(c.getID()).ready);
             }
+        } else if (o instanceof PacketMedkitPosition) {
+            PacketMedkitPosition packet = (PacketMedkitPosition) o;
+            server.sendToAllExceptTCP(c.getID(), packet);
+        } else if (o instanceof PacketMedkitAlive) {
+            PacketMedkitAlive packet = (PacketMedkitAlive) o;
+            server.sendToAllExceptTCP(c.getID(), packet);
+        } else if (o instanceof PacketMedkitPrerendered) {
+            PacketMedkitPrerendered packet = (PacketMedkitPrerendered) o;
+            server.sendToAllExceptTCP(c.getID(), packet);
         }
     }
 
