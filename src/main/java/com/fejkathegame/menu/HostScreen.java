@@ -39,6 +39,7 @@ public class HostScreen {
         playerNameTextField.render(gc, g);
         host.draw(gc.getWidth() / 2 - 75, gc.getHeight() / 2 + 80);
         playerNameTextField.setFocus(true);
+        playerNameText.renderText(300, 145);
     }
 
     public TextField getPlayerNameTextField() {
