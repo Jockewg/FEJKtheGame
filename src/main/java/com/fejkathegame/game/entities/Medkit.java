@@ -2,6 +2,7 @@ package com.fejkathegame.game.entities;
 
 import com.fejkathegame.game.entities.logic.HealthSystem;
 import com.fejkathegame.game.timer.Timer;
+import org.newdawn.slick.Color;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;
@@ -38,6 +39,7 @@ public class Medkit extends LevelObject {
         setAlive(false);
         timer = new Timer();
         needNewNumber = true;
+        getRandomPosition();
     }
 
     public void render(float x, float y) {
@@ -46,17 +48,26 @@ public class Medkit extends LevelObject {
 
     }
 
+    public void preSpawnDisplay() {
+        sprite.draw(x, y, new Color(1, 1, 1, 0.5f));
+    }
+
     public void run() {
         timer.startTimer();
-        if (timer.getTimerDuration() >= 5) {
-            setAlive(true);
+        if (NeedNewNumber()) {
+            getRandomPosition();
         }
         if (isAlive()) {
-            if (NeedNewNumber()) {
-                getRandomPosition();
-            }
             render(x, y);
         }
+        if (timer.getTimerDuration() >= 5) {
+            preSpawnDisplay();
+        }
+        if (timer.getTimerDuration() >= 10) {
+            setAlive(true);
+        }
+
+
     }
 
     public void getRandomPosition() {

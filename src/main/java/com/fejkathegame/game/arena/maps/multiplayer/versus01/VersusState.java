@@ -155,6 +155,7 @@ public class VersusState extends State {
             medkit.getHealthSystem().dealDamage(1);
             if (localPlayer.getHealth() < 5) {
                 localPlayer.getHealthSystem().dealDamage(-1);
+
             }
             medkit.setAlive(false);
             medkit.getTimer().resetTimer();
