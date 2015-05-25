@@ -98,12 +98,12 @@ public class PracticeStateHelper {
         for (LevelSelectButton button : buttons) {
            button.updateBestTime();
         }
-       
         for (Tile at : state.level.targetTiles) {
             PracticeTarget pt = new PracticeTarget(at.getX() * 25, at.getY() * 25);
             state.level.targets.add(pt);
         }
         state.level.helper.updateScore(state.getID());
+        state.level.initMovableTarget();
     }
 
     public void drawPauseMenu(Graphics g) {

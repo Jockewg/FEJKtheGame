@@ -34,4 +34,6 @@ public abstract class Level {
     
     public abstract void render() throws SlickException;
 
+    public void initMovableTarget() {}
+
 }

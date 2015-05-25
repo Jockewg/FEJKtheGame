@@ -40,7 +40,7 @@ public class City04 extends Level {
         
 
     }
-    
+    @Override
     public void initMovableTarget() {
        PracticeTarget movableTarget = targets.get(15);
         float movableTargetStartingPos = movableTarget.getY();
