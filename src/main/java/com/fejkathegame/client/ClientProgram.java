@@ -138,6 +138,12 @@ public class ClientProgram extends Listener {
             PacketMedkitPosition packet = (PacketMedkitPosition) o;
             medkit.x = packet.x;
             medkit.y = packet.y;
+        } else if (o instanceof PacketMedkitAlive) {
+            PacketMedkitAlive packet = (PacketMedkitAlive) o;
+            medkit.isAlive = packet.isAlive;
+        } else if (o instanceof PacketMedkitPrerendered) {
+            PacketMedkitPrerendered packet = (PacketMedkitPrerendered) o;
+            medkit.IsPrerendered = packet.IsPrerendered;
         }
         
     }
