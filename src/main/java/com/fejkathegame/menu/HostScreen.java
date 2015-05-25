@@ -1,5 +1,6 @@
 package com.fejkathegame.menu;
 
+import com.fejkathegame.Fonts.FontFactory;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Font;
 import org.newdawn.slick.GameContainer;
@@ -18,6 +19,7 @@ public class HostScreen {
     private Image host;
     private Font font;
     private String ip, playerName;
+    private FontFactory playerNameText;
 
     public HostScreen(String name, GameContainer gc) throws SlickException {
         
@@ -28,6 +30,8 @@ public class HostScreen {
         host = new Image("src/main/resources/data/img/buttons/hostButton.png");
         
         playerNameTextField.setMaxLength(10);
+
+        playerNameText = new FontFactory("Veranda", 20, "Player Name:");
     }
 
     public void render(GameContainer gc, Graphics g) {
