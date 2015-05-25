@@ -104,6 +104,8 @@ public class PracticeStateHelper {
         }
         state.level.helper.updateScore(state.getID());
         state.level.initMovableTarget();
+        state.player.setX_velocity(0);
+        state.player.setY_velocity(0);
     }
 
     public void drawPauseMenu(Graphics g) {
