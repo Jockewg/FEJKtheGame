@@ -1,5 +1,6 @@
 package com.fejkathegame.menu;
 
+import com.fejkathegame.Fonts.FontFactory;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Font;
 import org.newdawn.slick.GameContainer;
@@ -16,6 +17,8 @@ public class JoinScreen {
     private TrueTypeFont ttf;
     private Font font;
     private String ip, playerName;
+    private FontFactory playerNameText;
+    private FontFactory ipNameText;
     
     /**
      * Initiates the gui for this screen.
@@ -35,6 +38,8 @@ public class JoinScreen {
         connect = new Image("src/main/resources/data/img/buttons/connect.png");
         
         playerNameTextField.setMaxLength(10);
+        playerNameText = new FontFactory("Veranda", 20, "Player Name:");
+        ipNameText = new FontFactory("Veranda", 20, "IP Address:");
     }
     
     public JoinScreen() {
@@ -52,6 +57,8 @@ public class JoinScreen {
         playerNameTextField.render(gc, g);
         ipField.render(gc, g);
         connect.draw(gc.getWidth() / 2 - 150, gc.getHeight() / 2 + 80);
+        playerNameText.renderText(300,145);
+        ipNameText.renderText(300, 225);
     }
 
     public TextField getPlayerNameTextField() {
