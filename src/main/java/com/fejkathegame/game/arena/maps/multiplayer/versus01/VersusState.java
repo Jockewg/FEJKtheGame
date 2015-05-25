@@ -370,38 +370,38 @@ public class VersusState extends State {
             PacketAttackDirectionPlayer packet2 = new PacketAttackDirectionPlayer();
             packet2.direction = (float) localPlayer.getAttackDirection().getTheta();
             packet.isAttacking = localPlayer.getIsAttacking();
-            client.getClient().sendTCP(packet);
-            client.getClient().sendTCP(packet2);
+            client.getClient().sendUDP(packet);
+            client.getClient().sendUDP(packet2);
         } else if(!localPlayer.getIsAttacking() && oldAttack) {
             oldAttack = false;
             PacketAttackPlayer packet = new PacketAttackPlayer();
             PacketAttackDirectionPlayer packet2 = new PacketAttackDirectionPlayer();
             packet2.direction = (float) localPlayer.getAttackDirection().getTheta();
             packet.isAttacking = localPlayer.getIsAttacking();
-            client.getClient().sendTCP(packet);
-            client.getClient().sendTCP(packet2);
+            client.getClient().sendUDP(packet);
+            client.getClient().sendUDP(packet2);
         }
         if (localPlayer.getIsCharging() && !oldCharge) {
             oldCharge = true;
             PacketChargePlayer packet = new PacketChargePlayer();
             packet.isChargeing = true;
-            client.getClient().sendTCP(packet);
+            client.getClient().sendUDP(packet);
         } else if (!localPlayer.getIsCharging() && oldCharge) {
             oldCharge = false;
             PacketChargePlayer packet = new PacketChargePlayer();
             packet.isChargeing = false;
-            client.getClient().sendTCP(packet);
+            client.getClient().sendUDP(packet);
         }
         if (localPlayer.getIsFullyCharged() && !oldFullyCharge) {
             oldFullyCharge = true;
             PacketFullyChargedPlayer packet = new PacketFullyChargedPlayer();
             packet.isFullyCharged = true;
-            client.getClient().sendTCP(packet);
+            client.getClient().sendUDP(packet);
         } else if (!localPlayer.getIsFullyCharged() && oldFullyCharge) {
             oldFullyCharge = false;
             PacketFullyChargedPlayer packet = new PacketFullyChargedPlayer();
             packet.isFullyCharged = false;
-            client.getClient().sendTCP(packet);
+            client.getClient().sendUDP(packet);
         }
         if (localPlayer.getMovingLeft()) {
             PacketMoveLeftPlayer packet = new PacketMoveLeftPlayer();
