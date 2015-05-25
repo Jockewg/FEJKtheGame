@@ -16,6 +16,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import com.fejkathegame.server.ServerProgram;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -65,7 +67,7 @@ public class VersusState extends State {
     /**
      * Constructor for ArenaState
      *
-     * @param name        of the stage
+     * @param name of the stage
      * @param client
      * @param localPlayer
      * @param characters
@@ -86,7 +88,6 @@ public class VersusState extends State {
     public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {
 
 //        System.out.println("Creating arraylist");
-
         line = new Line(0, 0, 450, 250);
 
         playerNameFont = new Font("Sans serif", Font.PLAIN, 6);
@@ -113,12 +114,13 @@ public class VersusState extends State {
         timer = new Timer();
         timer.startCountdown(3);
         sbg.addState(new StatsState("Stats", client, localPlayer, characters));
+        if (ServerProgram.server != null) {
             try {
                 medkit = new Medkit(0, 0, client);
-            } catch (IOException e) {
-                e.printStackTrace();
+            } catch (IOException ex) {
+                Logger.getLogger(VersusState.class.getName()).log(Level.SEVERE, null, ex);
             }
-
+        }
     }
 
     public void checkCollisionWithTarget(MPPlayer mp) {
@@ -151,17 +153,37 @@ public class VersusState extends State {
             localPlayer.setAlive(false);
             arena.players.remove(localPlayer);
         }
-        if (localPlayer.getAttackIndicator().intersects(medkit.getHitBox()) && localPlayer.getIsAttacking()) {
-            medkit.getHealthSystem().dealDamage(1);
+
+        if (ServerProgram.server != null) {
+            if (localPlayer.getAttackIndicator().intersects(medkit.getHitBox()) && localPlayer.getIsAttacking()) {
+                medkit.getHealthSystem().dealDamage(1);
+                if (localPlayer.getHealth() < 5) {
+                    localPlayer.getHealthSystem().dealDamage(-1);
+                    PacketHpPlayer packet = new PacketHpPlayer();
+                    packet.hp = localPlayer.getHealth();
+                    client.getClient().sendTCP(packet);
+                }
+                medkit.setAlive(false);
+                medkit.getTimer().resetTimer();
+                medkit.setNeedNewNumber(true);
+            }
+        } else if (localPlayer.getAttackIndicator().intersects(client.getMedkit().medkit.getHitBox()) && localPlayer.getIsAttacking()) {
+            client.getMedkit().medkit.setAlive(false);
+            System.out.println("hit");
             if (localPlayer.getHealth() < 5) {
                 localPlayer.getHealthSystem().dealDamage(-1);
                 PacketHpPlayer packet = new PacketHpPlayer();
                 packet.hp = localPlayer.getHealth();
                 client.getClient().sendTCP(packet);
             }
-            medkit.setAlive(false);
-            medkit.getTimer().resetTimer();
-            medkit.setNeedNewNumber(true);
+            client.getMedkit().medkit.setAlive(false);
+            PacketMedkitAlive packet = new PacketMedkitAlive();
+            packet.isAlive = false;
+            client.getClient().sendTCP(packet);
+            client.getMedkit().medkit.setAlive(false);
+            PacketMedkitPrerendered packet2 = new PacketMedkitPrerendered();
+            packet2.IsPrerendered = false;
+            client.getClient().sendTCP(packet2);
         }
 
     }
@@ -304,10 +326,10 @@ public class VersusState extends State {
         g.scale(cameraScale, cameraScale);
         g.translate(-cameraX, -cameraY);
         arena.render();
-        if(ServerProgram.isHost) {
+        if (ServerProgram.server != null) {
             medkit.runAsHost();
         } else {
-            medkit.runAsClient();
+            client.getMedkit().medkit.runAsClient();
         }
         renderPlayerIndicator(g);
         if (!timer.isCountdownRunning()) {
@@ -320,7 +342,6 @@ public class VersusState extends State {
             renderCountdown(450, 250, g);
         }
         g.resetTransform();
-
 
         g.translate(-cameraX, -cameraY);
 
@@ -342,7 +363,14 @@ public class VersusState extends State {
 
     @Override
     public void update(GameContainer gc, StateBasedGame sbg, int i) throws SlickException {
-        if(ServerProgram.isHost) {
+        if (client.getMedkit().medkit == null) {
+            try {
+                client.getMedkit().medkit = new Medkit(client.getMedkit().x, client.getMedkit().y, client);
+            } catch (IOException ex) {
+                Logger.getLogger(VersusState.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        if (ServerProgram.server != null) {
             medkit.getTimer().calculateSecond(i);
         }
         updateVectorLine();
@@ -361,7 +389,7 @@ public class VersusState extends State {
                     mp.character.renderCharacterAnimation();
                 }
             }
-
+            client.getMedkit().medkit.setAlive(client.getMedkit().isAlive);
             physics.handlePhysics(arena, i);
             localPlayer.update(i);
             updatePlayerIndicator();
@@ -373,7 +401,6 @@ public class VersusState extends State {
 //    public void calculateHitPercent() {
 //        percent = (localPlayer.getNumberOfAttacks()/localPlayer.getNumberOfHits());
 //    }
-
     private void sendClientData() {
         if (localPlayer.networkPosition.x != localPlayer.getCurrentX()) {
             //Send the player's X value

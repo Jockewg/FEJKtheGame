@@ -85,11 +85,14 @@ public class Medkit extends LevelObject {
     }
 
     public void runAsClient(){
-        if (client.getMedkit().isAlive) {
-            render(client.getMedkit().x, client.getMedkit().y);
+        x = client.getMedkit().x;
+        y = client.getMedkit().y;
+        System.out.println(x + " : " + y);
+        if (client.getMedkit().medkit.isAlive) {
+            render(x, y);
         }
         if (client.getMedkit().IsPrerendered){
-            preSpawnDisplay();
+            sprite.draw(client.getMedkit().x, client.getMedkit().y, new Color(1, 1, 1, 0.5f));
         }
     }
 
