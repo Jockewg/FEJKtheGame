@@ -1,23 +1,16 @@
 package com.fejkathegame.game.entities;
 
-import com.fejkathegame.game.Main;
 import com.fejkathegame.game.arena.collision.AABoundingRect;
 import com.fejkathegame.game.entities.logic.AttackSystem;
 import com.fejkathegame.game.entities.logic.HealthSystem;
 import com.fejkathegame.game.entities.logic.MovementSystem;
-import org.newdawn.slick.Color;
-import org.newdawn.slick.Image;
-import org.newdawn.slick.Input;
-import org.newdawn.slick.SlickException;
+import org.newdawn.slick.*;
 import org.newdawn.slick.geom.*;
 import org.newdawn.slick.openal.Audio;
 import org.newdawn.slick.openal.AudioLoader;
 import org.newdawn.slick.util.ResourceLoader;
 
 import java.io.IOException;
-
-import org.newdawn.slick.Animation;
-import org.newdawn.slick.SpriteSheet;
 
 /**
  * Created by Swartt on 2015-04-28.
@@ -400,7 +393,7 @@ public class Character extends LevelObject {
     }
 
 
-    //      *******************************
+//      *******************************
 //      *    Getters and Setters      *
 //      *******************************
     public void setMovingRight(boolean movingRight) {
@@ -569,7 +562,4 @@ public class Character extends LevelObject {
         return numberOfHits;
     }
 
-    public MovementSystem getMovementSystem() {
-        return movementSystem;
-    }
 }
