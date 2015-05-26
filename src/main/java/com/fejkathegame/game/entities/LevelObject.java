@@ -3,7 +3,9 @@ package com.fejkathegame.game.entities;
 import com.fejkathegame.game.arena.collision.AABoundingRect;
 import com.fejkathegame.game.arena.collision.BoundingShape;
 import com.fejkathegame.game.entities.logic.HealthSystem;
+
 import java.io.IOException;
+
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
@@ -12,26 +14,27 @@ import org.newdawn.slick.geom.Shape;
 
 public abstract class LevelObject {
 
-    protected float x, y;
-    protected BoundingShape boundingShape;
-    protected float x_velocity = 0;
-    protected float y_velocity = 0;
-    protected float maxFallSpeed = 1;
-    protected float decelerationSpeed = 1;
-    protected Image sprite;
-    protected boolean moving = false;
-    protected int storedJumps;
-    protected boolean onGround = true;
-    protected int storedAttacks;
-    private int health;
-    private boolean isAlive;
+    public float x, y;
+    public BoundingShape boundingShape;
+    public float x_velocity = 0;
+    public float y_velocity = 0;
+    public float maxFallSpeed = 1;
+    public float decelerationSpeed = 1;
+    public Image sprite;
+    public boolean moving = false;
+    public int storedJumps;
+    public boolean onGround = true;
+    public int storedAttacks;
+    public int health;
+    public boolean isAlive;
     public Graphics g;
-    private boolean isAttacking = false;
-    private Shape hitBox;
-    private HealthSystem healthSystem;
+    public boolean isAttacking = false;
+    public Shape hitBox;
+    public HealthSystem healthSystem;
 
     /**
      * Constructor for a {@code LevelObject}, creates a new level entity with standard values
+     *
      * @param x coordinate for spawing the object
      * @param y coordinate for spawing the object
      * @throws SlickException
@@ -41,18 +44,19 @@ public abstract class LevelObject {
         this.y = y;
         g = new Graphics();
         sprite = new Image("src/main/resources/data/img/placeholder.png");
-        
+
         storedJumps = 0;
-        
+
         storedAttacks = 0;
         healthSystem = new HealthSystem(this);
-        
+
         boundingShape = new AABoundingRect(x, y, 32, 31);
         hitBox = new Rectangle(x, y, 32, 32);
     }
 
     /**
      * Applies given gravity to the object
+     *
      * @param gravity
      */
     public void applyGravity(float gravity) {
@@ -71,24 +75,24 @@ public abstract class LevelObject {
     public void updateBoundingShape() {
         boundingShape.updatePosition(x, y);
     }
-    
+
     public void updateHitBox() {
         hitBox.setX(x);
         hitBox.setY(y);
     }
-    
+
     public Shape getHitBox() {
         return hitBox;
     }
-    
+
     public void setHitBox(Shape hitBox) {
         this.hitBox = hitBox;
     }
-    
+
     public void setHealthSystem(HealthSystem hs) {
         this.healthSystem = hs;
     }
-    
+
     public HealthSystem getHealthSystem() {
         return healthSystem;
     }
@@ -172,34 +176,34 @@ public abstract class LevelObject {
         this.storedAttacks = storedAttacks;
     }
 
-   public int getHealth() {
-      return health;
-   }
+    public int getHealth() {
+        return health;
+    }
 
-   public void setHealth(int health) {
-      this.health = health;
-   }
+    public void setHealth(int health) {
+        this.health = health;
+    }
 
-   public boolean isAlive() {
-      return isAlive;
-   }
+    public boolean isAlive() {
+        return isAlive;
+    }
 
-   public void setAlive(boolean isAlive) {
-      this.isAlive = isAlive;
-   }
-   
-   public void setIsAttacking(boolean isAttacking) {
-       this.isAttacking = isAttacking;
-   }
-   
-   public boolean getIsAttacking() {
-       return isAttacking;
-   }
-    
-    
-    
+    public void setAlive(boolean isAlive) {
+        this.isAlive = isAlive;
+    }
+
+    public void setIsAttacking(boolean isAttacking) {
+        this.isAttacking = isAttacking;
+    }
+
+    public boolean getIsAttacking() {
+        return isAttacking;
+    }
+
+
     /**
      * Applies deceleration to the object
+     *
      * @param delta
      */
     public void decelerate(int delta) {

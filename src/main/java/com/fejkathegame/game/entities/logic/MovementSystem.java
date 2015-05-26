@@ -41,14 +41,14 @@ public class MovementSystem {
         character.setAttackCoolDown(character.getAttackCoolDown()-delta);
         if(i.isMousePressed(Input.MOUSE_LEFT_BUTTON) && character.getStoredJumps() > 0||
                 i.isKeyPressed(Input.KEY_SPACE) && character.getStoredJumps() > 0) {
-            character.jump();
+            jump();
             character.playJumpSound();
             character.setHasJumped(true);
         } else {
             character.setHasJumped(false);
         }
         if( i.isMouseButtonDown(Input.MOUSE_RIGHT_BUTTON) && character.getStoredAttacks() > 0) {
-            character.attack(i, delta);
+            character.attackSystem.attack(i);
         }
     }
 
@@ -59,9 +59,9 @@ public class MovementSystem {
      */
     public void handleKeyBoardInput(Input i, int delta) {
         if(i.isKeyDown(Input.KEY_A) || i.isKeyDown(Input.KEY_LEFT)) {
-            character.moveLeft(delta);
+            moveLeft(delta);
         } else if(i.isKeyDown(Input.KEY_D) || i.isKeyDown(Input.KEY_RIGHT)) {
-            character.moveRight(delta);
+            moveRight(delta);
         } else {
             character.setMoving(false);
             character.setMovingLeft(false);
@@ -79,10 +79,101 @@ public class MovementSystem {
             character.setMovingRight(false);
             character.setIsCharging(true);
             character.setMoving(false);
-            character.chargeSuperAttack(delta);
+            character.attackSystem.chargeSuperAttack(delta);
         } else {
             character.setIsCharging(false);
             character.stopChargeSound();
         }
+    }
+    /**
+     * Decelerates the Character, avoiding jerky movement
+     *
+     * @param delta
+     */
+    public void decelerate(int delta) {
+        if (character.x_velocity > 0) {
+            character.x_velocity -= character.decelerationSpeed * delta;
+            if (character.x_velocity < 0) {
+                character.x_velocity = 0;
+            }
+        } else if (character.x_velocity < 0) {
+            character.x_velocity += character.decelerationSpeed * delta;
+            if (character.x_velocity > 0) {
+                character.x_velocity = 0;
+            }
+        }
+    }
+    /**
+     * Launches the Character into the air upwards
+     */
+    public void jump() {
+        character.currentPositionX = character.getX() - 2;
+        character.currentPositionY = character.getY() + 32;
+
+        character.fallAnimation.setCurrentFrame(0);
+        character.fallAnimation.stop();
+
+        if (!character.grounded) {
+            character.jumpIndicatorTransp = 1.0f;
+        }
+
+        character.jumpAnimation.setCurrentFrame(0);
+        character.jumpAnimation.start();
+
+        character.y_velocity = -0.55f;
+        character.storedJumps--;
+
+    }
+    public void checkMomentum() {
+        if (character.y_velocity < 0 && !character.isAttacking) {
+            character.isJumping = true;
+            character.isFalling = false;
+            character.grounded = false;
+        } else if (character.y_velocity > 0 && !character.isAttacking) {
+            character.isJumping = false;
+            character.isFalling = true;
+            character.grounded = false;
+        } else if (character.onGround) {
+            character.grounded = true;
+            character.isJumping = false;
+            character.isFalling = false;
+        }
+    }
+    /**
+     * Moves the character to the left
+     *
+     * @param delta
+     */
+    public void moveLeft(int delta) {
+        character.movingRight = false;
+        character.flipped = true;
+        if (character.x_velocity > -character.maximumSpeed) {
+            character.x_velocity -= character.accelerationSpeed * delta;
+
+            if (character.x_velocity < -character.maximumSpeed) {
+                character.x_velocity = -character.maximumSpeed;
+            }
+        }
+        character.moving = true;
+        character.movingLeft = true;
+    }
+    /**
+     * moves the character to the right
+     *
+     * @param delta
+     */
+    public void moveRight(int delta) {
+        character.movingLeft = false;
+        character.flipped = false;
+        if (character.x_velocity < character.maximumSpeed) {
+            character.x_velocity += character.accelerationSpeed * delta;
+
+            if (character.x_velocity > character.maximumSpeed) {
+                character.x_velocity = character.maximumSpeed;
+            }
+        }
+        character.moving = true;
+        character.movingRight = true;
+
     }
 }
