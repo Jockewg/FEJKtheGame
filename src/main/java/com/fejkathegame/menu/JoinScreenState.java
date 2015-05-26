@@ -82,6 +82,7 @@ public class JoinScreenState extends BasicGameState {
      * @param x x position of the mouse
      * @param y y position of the mouse
      * @param i the Input to be used to read mouse pos
+     * @param gc
      * @param sbg
      */
     public void checkIfConnectIsClicked(int x, int y, Input i, GameContainer gc, StateBasedGame sbg) throws SlickException {

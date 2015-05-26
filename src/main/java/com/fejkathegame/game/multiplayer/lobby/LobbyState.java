@@ -10,6 +10,7 @@ import com.fejkathegame.game.arena.maps.multiplayer.versus01.VersusState;
 import com.fejkathegame.game.entities.Character;
 import com.fejkathegame.menu.HostScreenState;
 import com.fejkathegame.menu.JoinScreenState;
+import com.fejkathegame.server.ServerProgram;
 import org.newdawn.slick.*;
 import org.newdawn.slick.state.StateBasedGame;
 
@@ -235,7 +236,9 @@ public class LobbyState extends State {
         }
         playersReady.add(localPlayer.getReady());
         allReady = !Arrays.asList(playersReady).toString().contains("f");
-
+        if (hs != null) {
+            ServerProgram.serverIsPlaying = true;
+        }
         playersReady.clear();
     }
 

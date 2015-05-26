@@ -21,6 +21,7 @@ public class ServerProgram extends Listener {
     static final int udpPort = 27960, tcpPort = 27960;
     static Map<Integer, Player> players = new HashMap<>();
     public static boolean serverReady = false;
+    public static boolean serverIsPlaying = false;
 
     /**
      * The server register the packedges binds to the port and starts.
@@ -50,6 +51,7 @@ public class ServerProgram extends Listener {
         server.getKryo().register(PacketHpPlayer.class);
         server.getKryo().register(PacketNamePlayer.class);
         server.getKryo().register(PacketReadyPlayer.class);
+        server.getKryo().register(PacketServerIsPlaying.class);
 
         try {
             server.bind(tcpPort, udpPort);
@@ -69,35 +71,41 @@ public class ServerProgram extends Listener {
      */
     @Override
     public void connected(Connection c) {
-        Player player = new Player();
-        player.name = "" + c.getID();
-        player.x = 256;
-        player.y = 256;
-        player.c = c;
-        player.direction = 0.0f;
-        player.isAttacking = false;
-        player.isChargeing = false;
-        player.isFullyCharged = false;
-        player.isFalling = false;
-        player.isJumping = false;
-        player.isGrounded = false;
-        player.hp = 5;
-        player.ready = false;
+        if (!serverIsPlaying) {
+            Player player = new Player();
+            player.name = "" + c.getID();
+            player.x = 256;
+            player.y = 256;
+            player.c = c;
+            player.direction = 0.0f;
+            player.isAttacking = false;
+            player.isChargeing = false;
+            player.isFullyCharged = false;
+            player.isFalling = false;
+            player.isJumping = false;
+            player.isGrounded = false;
+            player.hp = 5;
+            player.ready = false;
 
-        PacketAddPlayer packet = new PacketAddPlayer();
-        packet.id = c.getID();
-        packet.name = player.name;
-        server.sendToAllExceptTCP(c.getID(), packet);
+            PacketAddPlayer packet = new PacketAddPlayer();
+            packet.id = c.getID();
+            packet.name = player.name;
+            server.sendToAllExceptTCP(c.getID(), packet);
 
-        for (Player p : players.values()) {
-            PacketAddPlayer packet2 = new PacketAddPlayer();
-            packet2.id = p.c.getID();
-            packet2.name = p.name;
-            c.sendTCP(packet2);
+            for (Player p : players.values()) {
+                PacketAddPlayer packet2 = new PacketAddPlayer();
+                packet2.id = p.c.getID();
+                packet2.name = p.name;
+                c.sendTCP(packet2);
+            }
+
+            players.put(c.getID(), player);
+            System.out.println("Connection received.");
+        } else if (serverIsPlaying) {
+            PacketServerIsPlaying packet = new PacketServerIsPlaying();
+            packet.isPlaying = true;
+            c.sendTCP(packet);
         }
-
-        players.put(c.getID(), player);
-        System.out.println("Connection received.");
     }
 
     /**

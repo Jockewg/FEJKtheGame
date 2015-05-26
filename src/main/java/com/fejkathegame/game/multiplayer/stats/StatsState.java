@@ -74,6 +74,9 @@ public class StatsState extends State {
                 for(MPPlayer mp : client.getPlayers().values()) {
                     mp.ready = false;
                 }
+                if (ServerProgram.server != null) {
+                    ServerProgram.serverIsPlaying = false;
+                }
                 sbg.getState(Main.oldLobby.getID()).init(gc, sbg);
                 sbg.enterState(Main.oldLobby.getID());
             }
