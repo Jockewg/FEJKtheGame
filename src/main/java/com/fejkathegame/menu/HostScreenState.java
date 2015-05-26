@@ -47,11 +47,11 @@ public class HostScreenState extends BasicGameState {
             if (i.isMousePressed(Input.MOUSE_LEFT_BUTTON)) {
                 playerName = hostScreen.getPlayerNameTextField().getText();
                 ip = "localhost";
-                ServerProgram.startServer();
-                if (ServerProgram.isServerReady()) {
+                server.startServer();
+                if (server.isServerReady()) {
                     prop.save("ip", ip);
                     prop.save("playername", playerName);
-                    sbg.addState(new LobbyState(this));
+                    sbg.addState(new LobbyState(this, server));
                     sbg.getState(Main.LOBBYSTATE).init(gc, sbg);
                     sbg.enterState(Main.LOBBYSTATE);
                 }
@@ -71,7 +71,7 @@ public class HostScreenState extends BasicGameState {
     public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {
         input = gc.getInput();
         hostScreen = new HostScreen(name, gc);
-
+        server = new ServerProgram();
         initTextFields();
     }
 

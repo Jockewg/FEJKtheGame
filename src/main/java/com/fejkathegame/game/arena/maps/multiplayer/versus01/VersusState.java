@@ -10,6 +10,7 @@ import com.fejkathegame.game.entities.logic.MovementSystem;
 import com.fejkathegame.game.multiplayer.lobby.LobbyState;
 import com.fejkathegame.game.multiplayer.stats.StatsState;
 import com.fejkathegame.game.timer.Timer;
+import com.fejkathegame.server.ServerProgram;
 import java.awt.Font;
 import java.util.ArrayList;
 import org.newdawn.slick.Color;
@@ -26,6 +27,7 @@ import org.newdawn.slick.state.StateBasedGame;
 
 public class VersusState extends State {
 
+    private ServerProgram server;
     private ClientProgram client;
     private Image mpHealth;
     private Versus arena;
@@ -74,6 +76,14 @@ public class VersusState extends State {
         this.characters = characters;
     }
 
+    public VersusState(String name, ClientProgram client, Character localPlayer, ArrayList<Character> characters, ServerProgram server) {
+        this.name = name;
+        this.client = client;
+        this.localPlayer = localPlayer;
+        this.characters = characters;
+        this.server = server;
+    }
+
     @Override
     public int getID() {
         return Main.VERSUSSTATE;
@@ -83,13 +93,12 @@ public class VersusState extends State {
     public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {
 
 //        System.out.println("Creating arraylist");
-
         line = new Line(0, 0, 450, 250);
-        
+
         playerNameFont = new Font("Sans serif", Font.PLAIN, 6);
 //        ttf = new TrueTypeFont(playerNameFont, false);
         uf = new UnicodeFont(playerNameFont, 6, false, false);
-        
+
         mpHealth = new Image("src/main/resources/data/img/heartcontainer/health2.png");
 
         playerIndicator = new Polygon();
@@ -109,8 +118,11 @@ public class VersusState extends State {
         physics = new Physics();
         timer = new Timer();
         timer.startCountdown(3);
-        sbg.addState(new StatsState("Stats", client, localPlayer, characters));
-
+        if (server.server == null) {
+            sbg.addState(new StatsState("Stats", client, localPlayer, characters));
+        } else {
+            sbg.addState(new StatsState("Stats", client, localPlayer, characters, server));
+        }
     }
 
     public void checkCollisionWithTarget(MPPlayer mp) {
@@ -271,9 +283,9 @@ public class VersusState extends State {
         g.setColor(Color.green);
         g.drawString(String.valueOf(timer.getCurrentCountdownTime()), x, y);
     }
-    
+
     public void renderMpHealthAndName(MPPlayer p, Graphics g) {
-        for(int i = 0; i < p.hp; i++) {
+        for (int i = 0; i < p.hp; i++) {
             mpHealth.draw(p.x - 6 + (i * 5), p.y - 7, 5, 5);
             uf.drawString(p.x - 7, p.y - 16, p.name);
         }
@@ -285,21 +297,19 @@ public class VersusState extends State {
         g.translate(-cameraX, -cameraY);
         arena.render();
         renderPlayerIndicator(g);
-        if(!timer.isCountdownRunning()) {
-            for(MPPlayer mp : client.getPlayers().values()) {
+        if (!timer.isCountdownRunning()) {
+            for (MPPlayer mp : client.getPlayers().values()) {
                 renderMpHealthAndName(mp, g);
             }
         }
-        
+
         if (timer.getCurrentCountdownTime() > 0) {
             renderCountdown(450, 250, g);
         }
         g.resetTransform();
 
-        
-        
         g.translate(-cameraX, -cameraY);
-        
+
         vsUI.renderVersusUI(localPlayer, cameraX, cameraY);
         g.resetTransform();
     }
@@ -334,7 +344,7 @@ public class VersusState extends State {
                     mp.character.renderCharacterAnimation();
                 }
             }
-            
+
             physics.handlePhysics(arena, i);
             localPlayer.update(i);
             updatePlayerIndicator();
@@ -342,11 +352,10 @@ public class VersusState extends State {
         }
         sendClientData();
     }
-    
+
 //    public void calculateHitPercent() {
 //        percent = (localPlayer.getNumberOfAttacks()/localPlayer.getNumberOfHits());
 //    }
-
     private void sendClientData() {
         if (localPlayer.networkPosition.x != localPlayer.getCurrentX()) {
             //Send the player's X value
@@ -372,7 +381,7 @@ public class VersusState extends State {
             packet.isAttacking = localPlayer.getIsAttacking();
             client.getClient().sendTCP(packet);
             client.getClient().sendTCP(packet2);
-        } else if(!localPlayer.getIsAttacking() && oldAttack) {
+        } else if (!localPlayer.getIsAttacking() && oldAttack) {
             oldAttack = false;
             PacketAttackPlayer packet = new PacketAttackPlayer();
             PacketAttackDirectionPlayer packet2 = new PacketAttackDirectionPlayer();

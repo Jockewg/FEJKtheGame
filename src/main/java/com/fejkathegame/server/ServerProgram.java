@@ -17,22 +17,22 @@ import java.util.logging.Logger;
  */
 public class ServerProgram extends Listener {
 
-    public static Server server;
-    static final int udpPort = 27960, tcpPort = 27960;
-    static Map<Integer, Player> players = new HashMap<>();
-    public static boolean serverReady = false;
-    public static boolean serverIsPlaying = false;
+    public Server server;
+    final int udpPort = 27960, tcpPort = 27960;
+    Map<Integer, Player> players = new HashMap<>();
+    public boolean serverReady = false;
+    public boolean serverIsPlaying = false;
 
     /**
      * The server register the packedges binds to the port and starts.
      *
      * @param args
      */
-    public static void main(String[] args) {
-        startServer();
-    }
+//    public static void main(String[] args) {
+//        startServer();
+//    }
 
-    public static void startServer() {
+    public void startServer() {
 
         server = new Server();
         server.getKryo().register(PacketUpdateX.class);
@@ -101,8 +101,9 @@ public class ServerProgram extends Listener {
 
             players.put(c.getID(), player);
             System.out.println("Connection received.");
-        } else if (serverIsPlaying) {
+        } else {
             PacketServerIsPlaying packet = new PacketServerIsPlaying();
+            packet.id = c.getID();
             packet.isPlaying = true;
             c.sendTCP(packet);
         }
@@ -269,7 +270,12 @@ public class ServerProgram extends Listener {
         System.out.println("Connection dropped.");
     }
 
-    public static boolean isServerReady() {
+    public boolean isServerReady() {
         return serverReady;
     }
+
+    public boolean isServerIsPlaying() {
+        return serverIsPlaying;
+    }
+    
 }

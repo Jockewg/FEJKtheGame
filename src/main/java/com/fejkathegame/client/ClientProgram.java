@@ -90,7 +90,7 @@ public class ClientProgram extends Listener {
             players.get(packet.id).name = packet.name;
             players.get(packet.id).connected = true;
             players.get(packet.id).ready = false;
-        } else if (o instanceof PacketRemovePlayer && clientStarted) {
+        } else if (o instanceof PacketRemovePlayer) {
             PacketRemovePlayer packet = (PacketRemovePlayer) o;
             players.get(packet.id).connected = false;
         } else if (o instanceof PacketUpdateX) {

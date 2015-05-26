@@ -52,6 +52,7 @@ public class LobbyState extends State {
 
     private int increase = 2;
     private boolean allReady = false;
+    private ServerProgram server;
 
     @Override
     public int getID() {
@@ -78,7 +79,8 @@ public class LobbyState extends State {
         }
     }
 
-    public LobbyState(HostScreenState hs) {
+    public LobbyState(HostScreenState hs, ServerProgram server) {
+        this.server = server;
         this.hs = hs;
         comingfromHS = true;
         if (hs != null) {
@@ -174,7 +176,7 @@ public class LobbyState extends State {
     @Override
     public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
         lobby.render();
-        
+
         g.setColor(Color.white);
         renderPlayersInLobby(g);
 
@@ -237,7 +239,7 @@ public class LobbyState extends State {
         playersReady.add(localPlayer.getReady());
         allReady = !Arrays.asList(playersReady).toString().contains("f");
         if (hs != null) {
-            ServerProgram.serverIsPlaying = true;
+            server.serverIsPlaying = true;
         }
         playersReady.clear();
     }
@@ -250,7 +252,11 @@ public class LobbyState extends State {
         checkIfAllIsReady();
         if (allReady && characters.size() >= 2) {
             Main.oldLobby = this;
-            sbg.addState(new VersusState("01versus", client, localPlayer, characters));
+            if (server.server != null) {
+                sbg.addState(new VersusState("01versus", client, localPlayer, characters, server));
+            } else {
+                sbg.addState(new VersusState("01versus", client, localPlayer, characters));
+            }
             sbg.getState(Main.VERSUSSTATE).init(gc, sbg);
             sbg.enterState(Main.VERSUSSTATE);
         }

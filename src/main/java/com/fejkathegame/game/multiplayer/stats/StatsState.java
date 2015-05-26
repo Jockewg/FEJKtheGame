@@ -27,6 +27,7 @@ import org.newdawn.slick.Input;
 public class StatsState extends State {
 
     ClientProgram client;
+    ServerProgram server;
     private String name;
     private Character localPlayer;
     private Stats stats;
@@ -44,6 +45,14 @@ public class StatsState extends State {
         this.client = client;
         this.localPlayer = localPlayer;
         this.characters = characters;
+    }
+
+    public StatsState(String name, ClientProgram client, Character localPlayer, ArrayList<Character> characters, ServerProgram server) {
+        this.name = name;
+        this.client = client;
+        this.localPlayer = localPlayer;
+        this.characters = characters;
+        this.server = server;
     }
 
     @Override
@@ -71,11 +80,11 @@ public class StatsState extends State {
         if (i.getMouseX() > 550 && i.getMouseX() < 750
                 && i.getMouseY() > 350 && i.getMouseY() < 425) {
             if (i.isMousePressed(Input.MOUSE_LEFT_BUTTON)) {
-                for(MPPlayer mp : client.getPlayers().values()) {
+                for (MPPlayer mp : client.getPlayers().values()) {
                     mp.ready = false;
                 }
-                if (ServerProgram.server != null) {
-                    ServerProgram.serverIsPlaying = false;
+                if (server.server != null) {
+                    server.serverIsPlaying = false;
                 }
                 sbg.getState(Main.oldLobby.getID()).init(gc, sbg);
                 sbg.enterState(Main.oldLobby.getID());
@@ -87,8 +96,8 @@ public class StatsState extends State {
         if (i.getMouseX() > 350 && i.getMouseX() < 550
                 && i.getMouseY() > 350 && i.getMouseY() < 425) {
             if (i.isMousePressed(Input.MOUSE_LEFT_BUTTON)) {
-                if(ServerProgram.server != null) {
-                    ServerProgram.server.close();
+                if (server.server != null) {
+                    server.server.close();
                 }
                 client.getClient().close();
                 sbg.enterState(Main.MENU);
