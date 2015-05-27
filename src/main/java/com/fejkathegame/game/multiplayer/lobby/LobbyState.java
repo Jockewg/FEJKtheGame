@@ -147,6 +147,8 @@ public class LobbyState extends State {
                 }
                 mpPlayer.character.setHealth(5);
                 mpPlayer.hp = 5;
+                mpPlayer.isAttacking = false;
+                mpPlayer.character.setIsAttacking(false);
                 mpPlayer.character.setName(mpPlayer.name);
                 mpPlayer.character.setReady(false);
                 characters.add(mpPlayer.character);
@@ -250,8 +252,6 @@ public class LobbyState extends State {
         if (allReady && characters.size() >= 2) {
             Main.oldLobby = this;
             if (ServerProgram.getServer() != null) {
-                server.serverIsPlaying = true;
-                System.out.println("server is playing == true");
                 sbg.addState(new VersusState("01versus", client, localPlayer, characters, server));
             } else {
                 sbg.addState(new VersusState("01versus", client, localPlayer, characters));

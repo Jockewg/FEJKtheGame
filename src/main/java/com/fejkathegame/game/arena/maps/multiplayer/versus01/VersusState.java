@@ -98,7 +98,13 @@ public class VersusState extends State {
         playerNameFont = new Font("Sans serif", Font.PLAIN, 6);
 //        ttf = new TrueTypeFont(playerNameFont, false);
         uf = new UnicodeFont(playerNameFont, 6, false, false);
-
+        
+        for (MPPlayer mp : client.getPlayers().values()) {
+            mp.isAttacking = false;
+            mp.isChargeing = false;
+            mp.isFullyCharged = false;
+        }
+        
         mpHealth = new Image("src/main/resources/data/img/heartcontainer/health2.png");
 
         playerIndicator = new Polygon();

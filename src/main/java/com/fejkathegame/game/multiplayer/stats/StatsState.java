@@ -82,9 +82,7 @@ public class StatsState extends State {
             if (i.isMousePressed(Input.MOUSE_LEFT_BUTTON)) {
                 for (MPPlayer mp : client.getPlayers().values()) {
                     mp.ready = false;
-                }
-                if (server.getServer() != null) {
-                    server.setServerIsPlaying(false);
+                    mp.character = null;
                 }
                 sbg.getState(Main.oldLobby.getID()).init(gc, sbg);
                 sbg.enterState(Main.oldLobby.getID());
