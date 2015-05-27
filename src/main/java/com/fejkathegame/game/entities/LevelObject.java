@@ -20,7 +20,6 @@ public abstract class LevelObject {
     public float y_velocity = 0;
     public float maxFallSpeed = 1;
     public float decelerationSpeed = 1;
-    public Image sprite;
     public boolean moving = false;
     public int storedJumps;
     public boolean onGround = true;
@@ -43,7 +42,6 @@ public abstract class LevelObject {
         this.x = x;
         this.y = y;
         g = new Graphics();
-        sprite = new Image("src/main/resources/data/img/placeholder.png");
 
         storedJumps = 0;
 
@@ -148,7 +146,6 @@ public abstract class LevelObject {
     }
 
     public void render() throws SlickException {
-        sprite.draw(x, y);
         updateHitBox();
     }
 

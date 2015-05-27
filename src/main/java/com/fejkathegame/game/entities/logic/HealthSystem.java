@@ -15,7 +15,6 @@ import org.newdawn.slick.util.ResourceLoader;
  */
 public class HealthSystem {
     LevelObject object;
-    private Image heartImage = new Image("src/main/resources/data/img/heartcontainer/health2.png");
     private Image[] healthBar = new Image[6];
     ArrayList<Heart> hearts = new ArrayList<>();
     private Audio hurtSound;
@@ -32,17 +31,7 @@ public class HealthSystem {
      */
     public HealthSystem(LevelObject levelObj) throws SlickException, IOException {
         this.object = levelObj;
-        initHealthBar();
         hurtSound = AudioLoader.getAudio("WAV", ResourceLoader.getResourceAsStream("src/main/resources/data/sound/Hurt.wav"));
-    }
-    
-    public void initHealthBar() throws SlickException {
-        healthBar[0] = new Image("src/main/resources/data/img/statusBar/health/health0.png");
-        healthBar[1] = new Image("src/main/resources/data/img/statusBar/health/health1.png");
-        healthBar[2] = new Image("src/main/resources/data/img/statusBar/health/health2.png");
-        healthBar[3] = new Image("src/main/resources/data/img/statusBar/health/health3.png");
-        healthBar[4] = new Image("src/main/resources/data/img/statusBar/health/health4.png");
-        healthBar[5] = new Image("src/main/resources/data/img/statusBar/health/health5.png");
     }
     
     public void playHurtSound() {
