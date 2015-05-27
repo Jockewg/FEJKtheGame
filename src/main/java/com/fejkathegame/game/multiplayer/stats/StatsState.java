@@ -82,6 +82,7 @@ public class StatsState extends State {
             if (i.isMousePressed(Input.MOUSE_LEFT_BUTTON)) {
                 for (MPPlayer mp : client.getPlayers().values()) {
                     mp.ready = false;
+                    characters.remove(mp.character);
                     mp.character = null;
                 }
                 sbg.getState(Main.oldLobby.getID()).init(gc, sbg);

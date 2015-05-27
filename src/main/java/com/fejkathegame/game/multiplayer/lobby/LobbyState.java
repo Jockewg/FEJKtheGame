@@ -206,10 +206,10 @@ public class LobbyState extends State {
 
         g.drawString(localPlayer.getName(), 128, 132);
 
-        for (MPPlayer c : client.getPlayers().values()) {
-            if (c.connected) {
-                g.drawString(c.name, increase * 128, 132);
-                if (c.ready) {
+        for (MPPlayer mp : client.getPlayers().values()) {
+            if (mp.connected) {
+                g.drawString(mp.name, increase * 128, 132);
+                if (mp.ready) {
                     g.drawString("READY", increase * 128, 68);
                 } else {
                     g.drawString("NOT READY", increase * 128, 68);

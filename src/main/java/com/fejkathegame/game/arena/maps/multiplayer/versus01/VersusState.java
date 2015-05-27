@@ -40,6 +40,9 @@ public class VersusState extends State {
     private boolean oldAttack = false;
     private boolean oldCharge = false;
     private boolean oldFullyCharge = false;
+    private boolean oldJumping = false;
+    private boolean oldFalling = false;
+    private boolean oldGrounded = false;
     private int percent = 0;
     private Font playerNameFont;
     private TrueTypeFont ttf;
@@ -439,29 +442,35 @@ public class VersusState extends State {
             packet.moveingRight = false;
             client.getClient().sendUDP(packet);
         }
-        if (localPlayer.isJumping()) {
+        if (localPlayer.isJumping() && !oldJumping) {
+            oldJumping = true;
             PacketJumpPlayer packet = new PacketJumpPlayer();
             packet.isJumping = true;
             client.getClient().sendUDP(packet);
-        } else {
+        } else if (!localPlayer.isJumping() && oldJumping) {
+            oldJumping = false;
             PacketJumpPlayer packet = new PacketJumpPlayer();
             packet.isJumping = false;
             client.getClient().sendUDP(packet);
         }
-        if (localPlayer.isFalling()) {
+        if (localPlayer.isFalling() && !oldFalling) {
+            oldFalling = true;
             PacketFallingPlayer packet = new PacketFallingPlayer();
             packet.isFalling = true;
             client.getClient().sendUDP(packet);
-        } else {
+        } else if(!localPlayer.isFalling() && oldFalling) {
+            oldFalling = false;
             PacketFallingPlayer packet = new PacketFallingPlayer();
             packet.isFalling = false;
             client.getClient().sendUDP(packet);
         }
-        if (localPlayer.getGrounded()) {
+        if (localPlayer.getGrounded() && !oldGrounded) {
+            oldGrounded = true;
             PacketGroundedPlayer packet = new PacketGroundedPlayer();
             packet.isGrounded = true;
             client.getClient().sendUDP(packet);
-        } else {
+        } else if(!localPlayer.getGrounded() && oldGrounded) {
+            oldGrounded = false;
             PacketGroundedPlayer packet = new PacketGroundedPlayer();
             packet.isGrounded = false;
             client.getClient().sendUDP(packet);
