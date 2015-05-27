@@ -83,8 +83,8 @@ public class StatsState extends State {
                 for (MPPlayer mp : client.getPlayers().values()) {
                     mp.ready = false;
                 }
-                if (server.server != null) {
-                    server.serverIsPlaying = false;
+                if (server.getServer() != null) {
+                    server.setServerIsPlaying(false);
                 }
                 sbg.getState(Main.oldLobby.getID()).init(gc, sbg);
                 sbg.enterState(Main.oldLobby.getID());
@@ -96,8 +96,8 @@ public class StatsState extends State {
         if (i.getMouseX() > 350 && i.getMouseX() < 550
                 && i.getMouseY() > 350 && i.getMouseY() < 425) {
             if (i.isMousePressed(Input.MOUSE_LEFT_BUTTON)) {
-                if (server.server != null) {
-                    server.server.close();
+                if (ServerProgram.getServer() != null) {
+                    ServerProgram.getServer().close();
                 }
                 client.getClient().close();
                 sbg.enterState(Main.MENU);

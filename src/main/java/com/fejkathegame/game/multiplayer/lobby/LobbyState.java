@@ -238,9 +238,6 @@ public class LobbyState extends State {
         }
         playersReady.add(localPlayer.getReady());
         allReady = !Arrays.asList(playersReady).toString().contains("f");
-        if (hs != null) {
-            server.serverIsPlaying = true;
-        }
         playersReady.clear();
     }
 
@@ -252,7 +249,9 @@ public class LobbyState extends State {
         checkIfAllIsReady();
         if (allReady && characters.size() >= 2) {
             Main.oldLobby = this;
-            if (server.server != null) {
+            if (ServerProgram.getServer() != null) {
+                server.serverIsPlaying = true;
+                System.out.println("server is playing == true");
                 sbg.addState(new VersusState("01versus", client, localPlayer, characters, server));
             } else {
                 sbg.addState(new VersusState("01versus", client, localPlayer, characters));

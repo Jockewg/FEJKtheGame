@@ -118,7 +118,7 @@ public class VersusState extends State {
         physics = new Physics();
         timer = new Timer();
         timer.startCountdown(3);
-        if (server.server == null) {
+        if (ServerProgram.getServer() == null) {
             sbg.addState(new StatsState("Stats", client, localPlayer, characters));
         } else {
             sbg.addState(new StatsState("Stats", client, localPlayer, characters, server));
@@ -334,14 +334,16 @@ public class VersusState extends State {
         if (!timer.isCountdownRunning()) {
             movementSystem.handleInput(gc.getInput(), i);
             for (MPPlayer mp : client.getPlayers().values()) {
-                updateMpPlayer(mp, i);
-                checkCollisionWithTarget(mp);
-                if (mp.character.getHealth() >= 1) {
-                    if (mp.isAttacking) {
-                        mp.character.renderAttackIndicator();
-                        mp.character.setAttackIndicatorTransp(1.0f);
+                if (mp.character != null) {
+                    updateMpPlayer(mp, i);
+                    checkCollisionWithTarget(mp);
+                    if (mp.character.getHealth() >= 1) {
+                        if (mp.isAttacking) {
+                            mp.character.renderAttackIndicator();
+                            mp.character.setAttackIndicatorTransp(1.0f);
+                        }
+                        mp.character.renderCharacterAnimation();
                     }
-                    mp.character.renderCharacterAnimation();
                 }
             }
 
@@ -350,6 +352,7 @@ public class VersusState extends State {
             updatePlayerIndicator();
             checkWinLose(sbg, gc);
         }
+
         sendClientData();
     }
 

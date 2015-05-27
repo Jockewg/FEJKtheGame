@@ -17,7 +17,7 @@ import java.util.logging.Logger;
  */
 public class ServerProgram extends Listener {
 
-    public Server server;
+    public static Server server;
     final int udpPort = 27960, tcpPort = 27960;
     Map<Integer, Player> players = new HashMap<>();
     public boolean serverReady = false;
@@ -102,10 +102,11 @@ public class ServerProgram extends Listener {
             players.put(c.getID(), player);
             System.out.println("Connection received.");
         } else {
-            PacketServerIsPlaying packet = new PacketServerIsPlaying();
-            packet.id = c.getID();
-            packet.isPlaying = true;
-            c.sendTCP(packet);
+            System.out.println("did not create or sent package");
+//            PacketServerIsPlaying packet = new PacketServerIsPlaying();
+//            packet.id = c.getID();
+//            packet.isPlaying = true;
+//            c.sendTCP(packet);
         }
     }
 
@@ -277,5 +278,12 @@ public class ServerProgram extends Listener {
     public boolean isServerIsPlaying() {
         return serverIsPlaying;
     }
-    
+
+    public void setServerIsPlaying(boolean serverIsPlaying) {
+        this.serverIsPlaying = serverIsPlaying;
+    }
+
+    public static Server getServer() {
+        return server;
+    }
 }
