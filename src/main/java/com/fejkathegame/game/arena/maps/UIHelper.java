@@ -8,6 +8,11 @@ import com.fejkathegame.game.Main;
 /**
  *
  * @author Joakim
+ * 
+ * This class are supposed to help simplify the use of UI:s by simply calling 
+ * wich UI you'll want to render. 
+ * Either the Versus UI with HP-bars, powermeter and jumpstack or
+ * the Practice UI containing a timer and targetcount.
  */
 public class UIHelper {
  
@@ -16,7 +21,7 @@ public class UIHelper {
     State state;
     
     public UIHelper(State state){
-    this.state = state;
+        this.state = state;
     }
     
     public void renderVersusUI(Character character, float x, float y){

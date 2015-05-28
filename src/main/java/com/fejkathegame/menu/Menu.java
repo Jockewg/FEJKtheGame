@@ -2,8 +2,6 @@ package com.fejkathegame.menu;
 
 import com.fejkathegame.game.Main;
 import com.fejkathegame.menu.button.MenuButton;
-import java.util.ArrayList;
-import java.util.List;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 

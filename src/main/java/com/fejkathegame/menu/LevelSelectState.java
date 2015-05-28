@@ -14,6 +14,9 @@ import org.newdawn.slick.state.StateBasedGame;
 /**
  *
  * @author Khamekaze
+ * 
+ * This state is initialized when you enter practice mode.
+ * This is where you choose wich map to train on.
  */
 public class LevelSelectState extends BasicGameState {
 
@@ -50,7 +53,12 @@ public class LevelSelectState extends BasicGameState {
         selectLevel(mouseX, mouseY, input, sbg);
         
     }
-    
+    /**
+     * Checks if you're scrolling the maps and so you dont go to far.
+     * @param i
+     * @param camera
+     * @param lvlselect 
+     */
     public void scrollPage(Input i, MenuCamera camera, LevelSelect lvlselect){
         
         int mouseBefore = Mouse.getDWheel();
@@ -71,7 +79,13 @@ public class LevelSelectState extends BasicGameState {
             }
         }
     }
-
+    /**
+     * Initiates the right state depending on wich button you press.
+     * @param x the mouse position in X-axis
+     * @param y the mouse position in Y-axis
+     * @param i wich button is pressed
+     * @param sbg 
+     */
     public void selectLevel(int x, int y, Input i, StateBasedGame sbg) {
         
         if(i.isKeyPressed(Input.KEY_ESCAPE)){

@@ -1,12 +1,13 @@
 
 package com.fejkathegame.menu.button;
 
-import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 
 /**
  *
  * @author Joakim
+ * 
+ * A version of Button using an image instead of vectorgraphics.
  */
 public class MenuButton extends Button {
     

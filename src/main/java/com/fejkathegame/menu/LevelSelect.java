@@ -11,11 +11,13 @@ import org.newdawn.slick.SlickException;
 /**
  *
  * @author Khamekaze
+ * 
+ * This class is used to store importet stuff for later use within the state with a similar name.
+ * Here a directory is chosen and from there all the files are processed and 
+ * used to create buttons for selecting wich map to practice on.
  */
 public class LevelSelect {
     
-    //private int numberOfLevels = 3;
-    //private Image[] levelImages;
     private static ArrayList<LevelSelectButton> levelButtons;
     private final File levelDirr;
     
@@ -25,7 +27,6 @@ public class LevelSelect {
         ArrayList<String> listOfNames = arrayToArrayListAdapter(levelDirr.list());
         for(int i = 0; i < listOfNames.size(); i++){
             int mapId = i + 4;
-            System.out.println("id of map in LevelSelect is: " + mapId);
             levelButtons.add(new LevelSelectButton(100, 100 + (i * 60), 400, 50, listOfNames.get(i), mapId));
         }
     }
@@ -48,20 +49,6 @@ public class LevelSelect {
             
         }
         
-//        int x = 150;
-//        int y = 150;
-//        int levelNum = 1;
-//        for(Image i : levelImages) {
-//            if(x <= 150) {
-//                i.draw(x, y);
-//                g.drawString("Level " + levelNum, x, y + 170);
-//            } else {
-//                i.draw(x, y);
-//                g.drawString("Level " + levelNum, x, y + 170);
-//            }
-//            levelNum++;
-//            x = x + 235;
-//        }
     }
 
     public static ArrayList<LevelSelectButton> getLevelButtons() {

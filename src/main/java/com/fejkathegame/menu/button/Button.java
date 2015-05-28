@@ -1,13 +1,12 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.fejkathegame.menu.button;
 
 /**
  *
  * @author Joakim
+ * 
+ * Basic Button with xy positioning, width and hight.
+ * It also uses a separate hitbox for when rendering/update differences occure.
  */
 public class Button {
     
@@ -22,6 +21,11 @@ public class Button {
         
     }
     
+    /**
+     * When your mousepointer hover over the button
+     * @param x
+     * @param y
+     */
     public boolean onHover(int x, int y){
         if(x > hitPosX && x < (hitPosX + width)){
             if(y > hitPosY && y < (hitPosY + height)){

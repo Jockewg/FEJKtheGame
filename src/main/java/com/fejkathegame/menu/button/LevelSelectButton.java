@@ -8,6 +8,8 @@ import org.newdawn.slick.Graphics;
 /**
  *
  * @author Joakim
+ * 
+ * A version of Button using vectorgraphics instead of an image.
  */
 public class LevelSelectButton extends Button{
 
