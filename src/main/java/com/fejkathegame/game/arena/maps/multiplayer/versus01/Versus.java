@@ -20,14 +20,11 @@ public class Versus extends Level {
 
     private Animation animation;
 
-    private ArrayList<Tile> targetTiles;
-
     /**
-     * Constructor for Arena, creates the playingfield and adds all players to
+     * Constructor for Arena, creates the playing field and adds all players to
      * the field
      *
      * @param name name of the file containing the tilemap
-     * @param levelObject a player to be added to the level
      * @throws SlickException
      */
     public Versus(String name) throws SlickException {

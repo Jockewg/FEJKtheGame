@@ -3,7 +3,6 @@ package com.fejkathegame.game.arena.collision;
 import com.fejkathegame.game.arena.tiles.Tile;
 
 import java.util.ArrayList;
-import org.newdawn.slick.geom.Shape;
 
 
 /**
@@ -37,12 +36,22 @@ public class AABoundingRect extends BoundingShape {
                 box.y + box.height < this.y);
     }
 
+    /**
+     * Updates the position of the hitbox
+     * @param newX
+     * @param newY
+     */
     @Override
     public void updatePosition(float newX, float newY) {
         this.x = newX;
         this.y = newY;
     }
 
+    /**
+     * Moves the position of the hitbox
+     * @param x
+     * @param y
+     */
     @Override
     public void movePosition(float x, float y) {
         this.x += x;

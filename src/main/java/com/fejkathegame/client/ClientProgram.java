@@ -11,7 +11,7 @@ import java.util.logging.Logger;
 
 /**
  *
- * Sends data to the server it connects to
+ * Handles the connection between the server and client as well as receiving information
  *
  * @author Filip.
  */
@@ -33,8 +33,8 @@ public class ClientProgram extends Listener {
     }
 
     /**
-     * Starts the server and regiters the packets to send/recive and tries to
-     * conenct to server
+     *
+     * Starts the client and registers the packets to send/receive and tries to connect to server
      *
      * @param ip The servers ip
      */
@@ -76,10 +76,10 @@ public class ClientProgram extends Listener {
   
     /**
      *
-     * What happens when the recived packet is a registed packet.
+     * Determines what type of package is received and handles the logical response for that type of package
      *
      * @param c the connection to the server
-     * @param o the objec the clietn recives
+     * @param o the objec the client receives
      */
     @Override
     public void received(Connection c, Object o) {

@@ -4,6 +4,9 @@ import com.fejkathegame.game.arena.tiles.Tile;
 
 import java.util.ArrayList;
 
+/**
+ * abstract class for a bounding shape
+ */
 public abstract class BoundingShape {
     
     public boolean checkCollision(BoundingShape bv) {
