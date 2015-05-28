@@ -374,7 +374,7 @@ public class VersusState extends State {
             PacketUpdateX packet = new PacketUpdateX();
             packet.x = localPlayer.getCurrentX();
             client.getClient().sendUDP(packet);
-
+            client.getClient().setIdleThreshold(1);
             localPlayer.networkPosition.x = localPlayer.getCurrentX();
         }
         if (localPlayer.networkPosition.y != localPlayer.getCurrentY()) {
@@ -382,7 +382,7 @@ public class VersusState extends State {
             PacketUpdateY packet = new PacketUpdateY();
             packet.y = localPlayer.getCurrentY();
             client.getClient().sendUDP(packet);
-
+            client.getClient().setIdleThreshold(1);
             localPlayer.networkPosition.y = localPlayer.getCurrentY();
         }
         if (localPlayer.getIsAttacking() && !oldAttack) {

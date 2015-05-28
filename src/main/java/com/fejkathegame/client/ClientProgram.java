@@ -22,7 +22,7 @@ public class ClientProgram extends Listener {
     int tcpPort = 27960, updPort = 27960;
     Map<Integer, MPPlayer> players = new HashMap<>();
     boolean clientStarted = false;
-    boolean serverPlaying = false;
+    boolean serverIsPlaying = false;
 
     public ClientProgram(String serverIp, String playerName) {
         this.serverIp = serverIp;
@@ -73,7 +73,7 @@ public class ClientProgram extends Listener {
         System.out.println("Connected! The client program is now waiting for a packet...\n");
 
     }
-
+  
     /**
      *
      * What happens when the recived packet is a registed packet.
@@ -137,12 +137,8 @@ public class ClientProgram extends Listener {
             players.get(packet.id).ready = packet.ready;
         } else if (o instanceof PacketServerIsPlaying) {
             PacketServerIsPlaying packet = (PacketServerIsPlaying) o;
-            serverPlaying = packet.isPlaying;
-            if (packet.isPlaying && client != null) {
-                client.close();
-            }
+            serverIsPlaying = packet.serverIsPlaying;
         }
-
     }
 
     public Client getClient() {
@@ -159,5 +155,9 @@ public class ClientProgram extends Listener {
 
     public void setPlayers(Map<Integer, MPPlayer> players) {
         this.players = players;
+    }
+    
+    public boolean serverIsPlaying() {
+        return serverIsPlaying;
     }
 }

@@ -21,6 +21,7 @@ public class ServerProgram extends Listener {
     final int udpPort = 27960, tcpPort = 27960;
     Map<Integer, Player> players = new HashMap<>();
     public boolean serverReady = false;
+    boolean serverIsPlaying = false;
 
     /**
      * The server register the packedges binds to the port and starts.
@@ -69,35 +70,42 @@ public class ServerProgram extends Listener {
      */
     @Override
     public void connected(Connection c) {
-        Player player = new Player();
-        player.name = "" + c.getID();
-        player.x = 256;
-        player.y = 256;
-        player.c = c;
-        player.direction = 0.0f;
-        player.isAttacking = false;
-        player.isChargeing = false;
-        player.isFullyCharged = false;
-        player.isFalling = false;
-        player.isJumping = false;
-        player.isGrounded = false;
-        player.hp = 5;
-        player.ready = false;
+        System.out.println(serverIsPlaying);
+        if (!serverIsPlaying) {
+            Player player = new Player();
+            player.name = "" + c.getID();
+            player.x = 256;
+            player.y = 256;
+            player.c = c;
+            player.direction = 0.0f;
+            player.isAttacking = false;
+            player.isChargeing = false;
+            player.isFullyCharged = false;
+            player.isFalling = false;
+            player.isJumping = false;
+            player.isGrounded = false;
+            player.hp = 5;
+            player.ready = false;
 
-        PacketAddPlayer packet = new PacketAddPlayer();
-        packet.id = c.getID();
-        packet.name = player.name;
-        server.sendToAllExceptTCP(c.getID(), packet);
+            PacketAddPlayer packet = new PacketAddPlayer();
+            packet.id = c.getID();
+            packet.name = player.name;
+            server.sendToAllExceptTCP(c.getID(), packet);
 
-        for (Player p : players.values()) {
-            PacketAddPlayer packet2 = new PacketAddPlayer();
-            packet2.id = p.c.getID();
-            packet2.name = p.name;
-            c.sendTCP(packet2);
+            for (Player p : players.values()) {
+                PacketAddPlayer packet2 = new PacketAddPlayer();
+                packet2.id = p.c.getID();
+                packet2.name = p.name;
+                c.sendTCP(packet2);
+            }
+
+            players.put(c.getID(), player);
+            System.out.println("Connection received.");
+        } else {
+            PacketServerIsPlaying packet = new PacketServerIsPlaying();
+            packet.serverIsPlaying = true;
+            c.sendTCP(packet);
         }
-
-        players.put(c.getID(), player);
-        System.out.println("Connection received.");
     }
 
     /**
@@ -206,10 +214,12 @@ public class ServerProgram extends Listener {
             server.sendToAllExceptTCP(c.getID(), packet);
         } else if (o instanceof PacketReadyPlayer) {
             PacketReadyPlayer packet = (PacketReadyPlayer) o;
-            boolean old = players.get(c.getID()).ready;
             players.get(c.getID()).ready = packet.ready;
             packet.id = c.getID();
             server.sendToAllExceptTCP(c.getID(), packet);
+        } else if (o instanceof PacketServerIsPlaying) {
+            PacketServerIsPlaying packet = (PacketServerIsPlaying) o;
+            serverIsPlaying = packet.serverIsPlaying;
         }
     }
 
@@ -220,13 +230,14 @@ public class ServerProgram extends Listener {
      * @param c the connection to the client
      */
     @Override
-    public void disconnected(Connection c
-    ) {
-        players.remove(c.getID());
-        PacketRemovePlayer packet = new PacketRemovePlayer();
-        packet.id = c.getID();
-        server.sendToAllExceptTCP(c.getID(), packet);
-        System.out.println("Connection dropped.");
+    public void disconnected(Connection c) {
+        if (!serverIsPlaying) {
+            players.remove(c.getID());
+            PacketRemovePlayer packet = new PacketRemovePlayer();
+            packet.id = c.getID();
+            server.sendToAllExceptTCP(c.getID(), packet);
+            System.out.println("Connection dropped.");
+        }
     }
 
     public boolean isServerReady() {

@@ -7,6 +7,7 @@ package com.fejkathegame.game.multiplayer.stats;
 
 import com.fejkathegame.client.ClientProgram;
 import com.fejkathegame.client.MPPlayer;
+import com.fejkathegame.client.PacketServerIsPlaying;
 import com.fejkathegame.game.Main;
 import com.fejkathegame.game.arena.State;
 import java.util.ArrayList;
@@ -82,8 +83,12 @@ public class StatsState extends State {
             if (i.isMousePressed(Input.MOUSE_LEFT_BUTTON)) {
                 for (MPPlayer mp : client.getPlayers().values()) {
                     mp.ready = false;
-                    characters.remove(mp.character);
                     mp.character = null;
+                }
+                if (ServerProgram.server != null) {
+                    PacketServerIsPlaying packet = new PacketServerIsPlaying();
+                    packet.serverIsPlaying = false;
+                    client.getClient().sendTCP(packet);
                 }
                 sbg.getState(Main.oldLobby.getID()).init(gc, sbg);
                 sbg.enterState(Main.oldLobby.getID());

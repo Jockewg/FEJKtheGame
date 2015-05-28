@@ -4,12 +4,14 @@ import com.fejkathegame.client.ClientProgram;
 import com.fejkathegame.client.MPPlayer;
 import com.fejkathegame.client.PacketNamePlayer;
 import com.fejkathegame.client.PacketReadyPlayer;
+import com.fejkathegame.client.PacketServerIsPlaying;
 import com.fejkathegame.game.Main;
 import com.fejkathegame.game.arena.State;
 import com.fejkathegame.game.arena.maps.multiplayer.versus01.VersusState;
 import com.fejkathegame.game.entities.Character;
 import com.fejkathegame.menu.HostScreenState;
 import com.fejkathegame.menu.JoinScreenState;
+import com.fejkathegame.menu.Menu;
 import com.fejkathegame.server.ServerProgram;
 import org.newdawn.slick.*;
 import org.newdawn.slick.state.StateBasedGame;
@@ -123,15 +125,10 @@ public class LobbyState extends State {
 
         localPlayer.setName(playerName);
         localPlayer.setReady(false);
-        sendNameToServer();
-        sendReadyToServer();
-
+        
         characters.add(localPlayer);
 
         checkReady = new boolean[1];
-        for (MPPlayer mp : client.getPlayers().values()) {
-            mp.character = null;
-        }
 
         font = new java.awt.Font("Verdana", java.awt.Font.BOLD, 20);
         ttf = new TrueTypeFont(font, true);
@@ -151,6 +148,7 @@ public class LobbyState extends State {
                 mpPlayer.character.setIsAttacking(false);
                 mpPlayer.character.setName(mpPlayer.name);
                 mpPlayer.character.setReady(false);
+                mpPlayer.connected = true;
                 characters.add(mpPlayer.character);
             }
             if (mpPlayer.connected == false) {
@@ -245,19 +243,28 @@ public class LobbyState extends State {
 
     @Override
     public void update(GameContainer gc, StateBasedGame sbg, int i) throws SlickException {
-        checkIfNewPlayerConnected();
-        checkIfReadyIsPressed(gc.getInput());
-        sendReadyToServer();
-        checkIfAllIsReady();
-        if (allReady && characters.size() >= 2) {
-            Main.oldLobby = this;
-            if (ServerProgram.getServer() != null) {
-                sbg.addState(new VersusState("01versus", client, localPlayer, characters, server));
-            } else {
-                sbg.addState(new VersusState("01versus", client, localPlayer, characters));
+        if (client.serverIsPlaying()) {
+            client.getClient().close();
+            sbg.enterState(Main.MENU);
+        } else {
+            checkIfNewPlayerConnected();
+            checkIfReadyIsPressed(gc.getInput());
+            sendNameToServer();
+            sendReadyToServer();
+            checkIfAllIsReady();
+            if (allReady && characters.size() >= 2) {
+                Main.oldLobby = this;
+                if (ServerProgram.getServer() != null) {
+                    PacketServerIsPlaying packet = new PacketServerIsPlaying();
+                    packet.serverIsPlaying = true;
+                    client.getClient().sendTCP(packet);
+                    sbg.addState(new VersusState("01versus", client, localPlayer, characters, server));
+                } else {
+                    sbg.addState(new VersusState("01versus", client, localPlayer, characters));
+                }
+                sbg.getState(Main.VERSUSSTATE).init(gc, sbg);
+                sbg.enterState(Main.VERSUSSTATE);
             }
-            sbg.getState(Main.VERSUSSTATE).init(gc, sbg);
-            sbg.enterState(Main.VERSUSSTATE);
         }
     }
 }

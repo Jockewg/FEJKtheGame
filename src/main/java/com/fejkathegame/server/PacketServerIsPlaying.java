@@ -11,5 +11,5 @@ package com.fejkathegame.server;
  */
 public class PacketServerIsPlaying {
     public int id;
-    public boolean isPlaying;
+    public boolean serverIsPlaying;
 }
