@@ -76,7 +76,8 @@ public class ClientProgram extends Listener {
   
     /**
      *
-     * What happens when the recived packet is a registed packet.
+     * Checks if packet recived is a packet that exists and updates the
+     * mpplayer list.
      *
      * @param c the connection to the server
      * @param o the objec the clietn recives

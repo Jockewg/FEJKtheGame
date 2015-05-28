@@ -9,14 +9,25 @@ import org.newdawn.slick.geom.Transform;
 import org.newdawn.slick.geom.Vector2f;
 
 /**
+ * The character attack system.
+ * 
  * Created by Swartt on 2015-05-26.
  */
 public class AttackSystem {
     Character character;
 
+    /**
+     * a constructor accepting a character
+     * 
+     * @param character 
+     */
     public AttackSystem(Character character) {
         this.character = character;
     }
+    
+    /**
+     * The explostion animation.
+     */
     public void renderExplosion() {
         if (character.isFullyCharged) {
             character.explosion.draw(character.superAttackIndicator.getX(),
@@ -51,7 +62,7 @@ public class AttackSystem {
      * <p/>
      * Activates an attack that damages everthing within 900 radius
      *
-     * @param delta
+     * @param delta the update time per frame.
      */
     public void activateSuperAttack(int delta) {
         character.chargeAttackSound.playAsSoundEffect(1.0f, 1.0f, false);
@@ -121,6 +132,10 @@ public class AttackSystem {
         character.sweepYEnd = character.sweepYStart;
 
     }
+    
+    /**
+     * Update the attack indicator to the degree the attack is.
+     */
     public void updateAttackIndicator() {
         character.attackIndicator.setLocation(0, 0);
         character.attackIndicator = (Polygon) character.attackIndicator.transform(

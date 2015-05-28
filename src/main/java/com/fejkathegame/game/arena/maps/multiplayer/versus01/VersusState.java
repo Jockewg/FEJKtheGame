@@ -25,6 +25,9 @@ import org.newdawn.slick.geom.Polygon;
 import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.state.StateBasedGame;
 
+/**
+ * The versus arena for multiplayer.
+ */
 public class VersusState extends State {
 
     private ServerProgram server;
@@ -65,12 +68,12 @@ public class VersusState extends State {
     private UIHelper vsUI;
 
     /**
-     * Constructor for ArenaState
+     * Constructor for VersusState
      *
      * @param name of the stage
-     * @param client
-     * @param localPlayer
-     * @param characters
+     * @param client connected to the stage
+     * @param localPlayer that the player controlls
+     * @param characters in the map.
      */
     public VersusState(String name, ClientProgram client, Character localPlayer, ArrayList<Character> characters) {
         this.name = name;
@@ -78,7 +81,16 @@ public class VersusState extends State {
         this.localPlayer = localPlayer;
         this.characters = characters;
     }
-
+    
+    /**
+     * A constructor for VersusState
+     * 
+     * @param name of the stage
+     * @param client connected to the stage
+     * @param localPlayer that the player controlls
+     * @param characters in the map.
+     * @param server for the client that is hosting.
+     */
     public VersusState(String name, ClientProgram client, Character localPlayer, ArrayList<Character> characters, ServerProgram server) {
         this.name = name;
         this.client = client;
@@ -91,7 +103,14 @@ public class VersusState extends State {
     public int getID() {
         return Main.VERSUSSTATE;
     }
-
+    
+    /**
+     * initial state for VersusState
+     * 
+     * @param gc
+     * @param sbg
+     * @throws SlickException 
+     */
     @Override
     public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {
 
@@ -134,6 +153,11 @@ public class VersusState extends State {
         }
     }
 
+    /**
+     * Checks the collision between localplayer and mpPlayer
+     * 
+     * @param mp 
+     */
     public void checkCollisionWithTarget(MPPlayer mp) {
         if (localPlayer.getAttackIndicator().intersects(mp.character.getHitBox()) && localPlayer.getIsAttacking()) {
             if (mp.character.isAlive()) {
@@ -167,6 +191,9 @@ public class VersusState extends State {
 
     }
 
+    /**
+     * 
+     */
     public void updateCameraRect() {
         float dY = line.getDY();
         float dX = +line.getDX();
