@@ -1,21 +1,16 @@
 package com.fejkathegame.game.entities;
 
-import com.fejkathegame.game.Main;
 import com.fejkathegame.game.arena.collision.AABoundingRect;
+import com.fejkathegame.game.entities.logic.AttackSystem;
 import com.fejkathegame.game.entities.logic.HealthSystem;
 import com.fejkathegame.game.entities.logic.MovementSystem;
-import org.newdawn.slick.Color;
-import org.newdawn.slick.Image;
-import org.newdawn.slick.Input;
-import org.newdawn.slick.SlickException;
+import org.newdawn.slick.*;
 import org.newdawn.slick.geom.*;
 import org.newdawn.slick.openal.Audio;
 import org.newdawn.slick.openal.AudioLoader;
 import org.newdawn.slick.util.ResourceLoader;
 
 import java.io.IOException;
-import org.newdawn.slick.Animation;
-import org.newdawn.slick.SpriteSheet;
 
 /**
  * Created by Swartt on 2015-04-28.
@@ -23,16 +18,14 @@ import org.newdawn.slick.SpriteSheet;
 public class Character extends LevelObject {
 
     public Vector2f networkPosition = new Vector2f(0, 0);
-    private boolean grounded = false;
-    private boolean isAlive;
-    private boolean moving = false;
-    private boolean flipped;
-    private boolean movingRight = false;
-    private boolean movingLeft = false;
-    private boolean isJumping, isFalling, hasJumped;
+    public boolean grounded = false;
+    public boolean flipped;
+    public boolean movingRight = false;
+    public boolean movingLeft = false;
+    public boolean isJumping, isFalling, hasJumped;
     private boolean ready = false;
     private boolean canUlti = true;
-    private int numberOfAttacks = 0;
+    public int numberOfAttacks = 0;
     private int numberOfHits = 0;
     private int hitPercent = 0;
 
@@ -41,60 +34,53 @@ public class Character extends LevelObject {
     private SpriteSheet stanceSheet;
     private Animation stanceAnimation;
     private SpriteSheet jumpSheet;
-    private Animation jumpAnimation;
+    public Animation jumpAnimation;
     private SpriteSheet fallingSheet;
-    private Animation fallAnimation;
+    public Animation fallAnimation;
     private SpriteSheet chargingSheet;
     private Animation chargingAnimation;
     private SpriteSheet chargeReleaseSheet;
-    private Animation chargeReleaseAnimation;
-    private Image explosion;
+    public Animation chargeReleaseAnimation;
+    public Image explosion;
     private SpriteSheet charginParticleSheet;
     private Animation chargingParticleAnimation;
 
-    private double sweepAttack, sweepLimit;
+    public double sweepAttack, sweepLimit;
     private float currentX = 0, currentY = 0;
     private float jumpStrength;
     private float size;
-    private float currentPositionX;
-    private float currentPositionY;
-    private float attackCoolDown,stopAttack;
+    public float currentPositionX;
+    public float currentPositionY;
+    public float attackCoolDown, stopAttack;
     private float gravity;
     private float mousePositionX;
     private float previousMousePositionX;
-    private float accelerationSpeed = 1;
-    private float decelerationSpeed = 1;
-    private float maximumSpeed = 2;
+    public float accelerationSpeed = 1;
+    public float maximumSpeed = 2;
     private float playerWidth, playerHeight;
-    private float jumpIndicatorTransp = 0.0f;
+    public float jumpIndicatorTransp = 0.0f;
     private float attackIndicatorTransp = 0.0f;
-    private float sweepXStart, sweepYStart, sweepXEnd, sweepYEnd, sweepSpeed;
-    private float oldRotate;
-    private float rotateDirection;
-    private float calculatedXAttack, calculatedYAttack;
-    private float attackVelocity;
+    public float sweepXStart, sweepYStart, sweepXEnd, sweepYEnd, sweepSpeed;
+    public float oldRotate;
+    public float rotateDirection;
+    public float calculatedXAttack, calculatedYAttack;
+    public float attackVelocity;
 
-    private int health;
-    private int storedAttacks;
-    private int storedJumps;
-
-    private Vector2f attackDirection = new Vector2f(0, 0), attackStart, current;
-    private HealthSystem healthSystem;
+    public Vector2f attackDirection = new Vector2f(0, 0), attackStart, current;
     public MovementSystem movementSystem;
     private Shape player;
     private Color color;
-    private Image sprite;
-    private Audio jumpSound, attackSound, chargeActivationSound, chargeAttackSound;
+    public Audio jumpSound, attackSound, chargeActivationSound, chargeAttackSound;
     private Shape jumpIndicator;
-    private Polygon attackIndicator;
-    private Ellipse superAttackIndicator;
+    public Polygon attackIndicator;
+    public Ellipse superAttackIndicator;
     private boolean isCharging = false;
-    private boolean isFullyCharged = false;
-    private Shape hitBox;
+    public boolean isFullyCharged = false;
     private Image[] numberOfJumps = new Image[2];
     private Image attackCharger;
     private float attackChargeSize = 0;
     private String name;
+    public AttackSystem attackSystem;
 
     /**
      * Constructor for creating a character, gives it the default values for a
@@ -107,7 +93,6 @@ public class Character extends LevelObject {
         maximumSpeed = 0.40f;
         maxFallSpeed = 0.75f;
         decelerationSpeed = 0.003f;
-        sprite = new Image("src/main/resources/data/img/placeholder.png");
         boundingShape = new AABoundingRect(x, y, 19, 25);
         health = 5;
         attackCoolDown = 100;
@@ -116,8 +101,9 @@ public class Character extends LevelObject {
         storedJumps = 0;
         size = 40;
         isAlive = true;
-        this.healthSystem = new HealthSystem(this);
-        this.movementSystem = new MovementSystem(this);
+        healthSystem = new HealthSystem(this);
+        movementSystem = new MovementSystem(this);
+        attackSystem = new AttackSystem(this);
         gravity = 0.5f;
         jumpStrength = -15;
         jumpSound = AudioLoader.getAudio("WAV", ResourceLoader.getResourceAsStream("src/main/resources/data/sound/Jump5.wav"));
@@ -142,25 +128,6 @@ public class Character extends LevelObject {
 
         loadCharacterAnimations();
 
-    }
-    
-    /**
-     * Decelerates the Character, avoiding jerky movement
-     *
-     * @param delta
-     */
-    public void decelerate(int delta) {
-        if (x_velocity > 0) {
-            x_velocity -= decelerationSpeed * delta;
-            if (x_velocity < 0) {
-                x_velocity = 0;
-            }
-        } else if (x_velocity < 0) {
-            x_velocity += decelerationSpeed * delta;
-            if (x_velocity > 0) {
-                x_velocity = 0;
-            }
-        }
     }
 
     public void loadCharacterAnimations() throws SlickException {
@@ -203,130 +170,20 @@ public class Character extends LevelObject {
         numberOfJumps[1] = new Image("src/main/resources/data/img/statusBar/jump/jumpCounterEmpty.png");
     }
 
-    public void renderExplosion() {
-        if (isFullyCharged) {
-            explosion.draw(superAttackIndicator.getX(),
-                    superAttackIndicator.getY(),
-                    superAttackIndicator.getRadius1() * 2,
-                    superAttackIndicator.getRadius2() * 2);
-        }
-    }
 
-    /**
-     * Launches the Character into the air upwards
-     *
-     * @param delta
-     */
-    public void jump() {
-        currentPositionX = getX() - 2;
-        currentPositionY = getY() + 32;
 
-        fallAnimation.setCurrentFrame(0);
-        fallAnimation.stop();
-
-        if (!grounded) {
-            jumpIndicatorTransp = 1.0f;
-        }
-
-        jumpAnimation.setCurrentFrame(0);
-        jumpAnimation.start();
-
-        y_velocity = -0.55f;
-        storedJumps--;
-        
-    }
-
-    public void checkMomentum() {
-        if (y_velocity < 0 && !getIsAttacking()) {
-            isJumping = true;
-            isFalling = false;
-            grounded = false;
-        } else if (y_velocity > 0 && !getIsAttacking()) {
-            isJumping = false;
-            isFalling = true;
-            grounded = false;
-        } else if (onGround) {
-            grounded = true;
-            isJumping = false;
-            isFalling = false;
-        }
-    }
-
-    /**
-     * Moves the character to the left
-     *
-     * @param delta
-     */
-    public void moveLeft(int delta) {
-        movingRight = false;
-        flipped = true;
-        if (x_velocity > -maximumSpeed) {
-            x_velocity -= accelerationSpeed * delta;
-
-            if (x_velocity < -maximumSpeed) {
-                x_velocity = -maximumSpeed;
-            }
-        }
-        moving = true;
-        movingLeft = true;
-    }
-
-    /**
-     * moves the character to the right
-     *
-     * @param delta
-     */
-    public void moveRight(int delta) {
-        movingLeft = false;
-        flipped = false;
-        if (x_velocity < maximumSpeed) {
-            x_velocity += accelerationSpeed * delta;
-
-            if (x_velocity > maximumSpeed) {
-                x_velocity = maximumSpeed;
-            }
-        }
-        moving = true;
-        movingRight = true;
-
-    }
-
-    /**
-     * Charges the super attack.
-     *
-     * Charges the attack as long as not interrupted. If interrupted, the charge
-     * will be reset.
-     *
-     * @param i
-     * @param delta
-     */
-    public void chargeSuperAttack(int delta) {
-        float shrinking1 = superAttackIndicator.getRadius1() - (0.75f / delta);
-        superAttackIndicator.setRadius1(shrinking1);
-        superAttackIndicator.setRadius2(shrinking1);
-        superAttackIndicator.setCenterX(getX() + 9);
-        superAttackIndicator.setCenterY(getY() + 13);
-
-        if (superAttackIndicator.getRadius1() < 16) {
-            isFullyCharged = true;
-            chargeActivationSound.stop();
-        }
-
-    }
-    
     public void playJumpSound() {
 //        if(!jumpSound.isPlaying())
-            jumpSound.playAsSoundEffect(1.0f, 1.0f, false);
+        jumpSound.playAsSoundEffect(1.0f, 1.0f, false);
     }
-    
+
     public void playAttackSound() {
-        if(!attackSound.isPlaying())
+        if (!attackSound.isPlaying())
             attackSound.playAsSoundEffect(1.0f, 1.0f, false);
     }
 
     /**
      * Plays the sound effect of charging the super attack.
-     *
      */
     public void playChargeSound() {
         if (isCharging) {
@@ -338,7 +195,6 @@ public class Character extends LevelObject {
 
     /**
      * Stops the charge effect of the super attack.
-     *
      */
     public void stopChargeSound() {
         if (!isCharging) {
@@ -346,84 +202,6 @@ public class Character extends LevelObject {
                 chargeActivationSound.stop();
             }
         }
-    }
-
-    /**
-     * Called when the super attack is fully charged.
-     *
-     * Activates an attack that damages everthing within 900 radius
-     *
-     * @param delta
-     */
-    public void activateSuperAttack(int delta) {
-        chargeAttackSound.playAsSoundEffect(1.0f, 1.0f, false);
-        float expanding = superAttackIndicator.getRadius1() + (2 * delta);
-        superAttackIndicator.setCenterX(getX());
-        superAttackIndicator.setCenterY(getY());
-        superAttackIndicator.setRadii(expanding, expanding);
-        if (chargeReleaseAnimation.isStopped() && chargeReleaseAnimation.getFrame() == 0) {
-            chargeReleaseAnimation.start();
-        }
-
-        if (chargeReleaseAnimation.getFrame() == 7) {
-            chargeReleaseAnimation.setCurrentFrame(7);
-            chargeReleaseAnimation.stop();
-        }
-
-        if (superAttackIndicator.getRadius1() > Main.WINDOW_WIDTH) {
-            isFullyCharged = false;
-            superAttackIndicator.setRadii(32, 32);
-            chargeReleaseAnimation.stop();
-            chargeReleaseAnimation.setCurrentFrame(0);
-        }
-    }
-
-    /**
-     * Preforms an attack, launching the Character in the direction of the
-     * attack
-     *
-     * @param i
-     * @param delta
-     */
-    public void attack(Input i, int delta) {
-        sweepXStart = i.getMouseX();
-        sweepYStart = i.getMouseY();
-
-        if (sweepXEnd != sweepXStart && sweepYStart != sweepYEnd) {
-            sweepSpeed = (float) Math.sqrt(Math.pow(sweepXStart - sweepXEnd, 2)
-                    + Math.pow(sweepYStart - sweepYEnd, 2));
-        }
-
-        attackDirection.set(sweepXStart - sweepXEnd,
-                sweepYStart - sweepYEnd);
-
-        if (sweepSpeed >= sweepAttack && sweepSpeed <= sweepLimit
-                && attackCoolDown <= 0) { // Attack movement here
-            setIsAttacking(true);
-            attackStart = new Vector2f(x, y);
-
-            calculatedXAttack = (float) ((attackVelocity) * Math.cos(Math.toRadians(attackDirection.getTheta())));
-            calculatedYAttack = (float) ((attackVelocity) * Math.sin(Math.toRadians(attackDirection.getTheta())));
-
-            rotateDirection = (float) attackDirection.getTheta();
-            attackCoolDown = 1000;
-
-            updateAttackIndicator();
-
-            storedAttacks--;
-            numberOfAttacks++;
-            if (sweepXEnd > sweepXStart) {
-                flipped = true;
-            } else if (sweepXStart > sweepXEnd) {
-                flipped = false;
-            }
-            
-            
-        }
-
-        sweepXEnd = sweepXStart;
-        sweepYEnd = sweepYStart;
-
     }
 
     /**
@@ -462,18 +240,18 @@ public class Character extends LevelObject {
         chargingParticleAnimation.update(delta);
         healthSystem.damageCooldown(delta);
 
-        checkMomentum();
+        movementSystem.checkMomentum();
 
         if (!isCharging && !isFullyCharged) {
             superAttackIndicator.setRadii(32, 32);
         }
 
         if (isFullyCharged) {
-            activateSuperAttack(delta);
+            attackSystem.activateSuperAttack(delta);
         }
-        
+
         if (getIsAttacking()) {
-            if(stopAttack <= 0) {
+            if (stopAttack <= 0) {
                 setIsAttacking(false);
             }
             stopAttack--;
@@ -581,14 +359,9 @@ public class Character extends LevelObject {
         if (isAlive) {
             renderAttackIndicator();
             updateHitBox();
-            renderExplosion();
+            attackSystem.renderExplosion();
 
             renderCharacterAnimation();
-        }
-
-        if (isCharging || isFullyCharged) {
-//            g.setColor(new Color(1.0f, 1.0f, 1.0f, 1.0f));
-//            g.draw(superAttackIndicator);
         }
     }
 
@@ -598,21 +371,13 @@ public class Character extends LevelObject {
      * @param x
      * @param y
      */
+    @Deprecated
     public void renderJumpIndicator(float x, float y) {
         g.setColor(new Color(1.0f, 1.0f, 1.0f, jumpIndicatorTransp));
         jumpIndicator.setX(x);
         jumpIndicator.setY(y);
         g.fill(jumpIndicator);
         jumpIndicatorTransp -= 0.02f;
-    }
-
-    public void updateAttackIndicator() {
-        attackIndicator.setLocation(0, 0);
-        attackIndicator = (Polygon) attackIndicator.transform(
-                Transform.createRotateTransform((float) Math.toRadians(rotateDirection - oldRotate)));
-        attackIndicator.setLocation(x + 16, y + 16);
-        oldRotate = rotateDirection;
-        playAttackSound();
     }
 
     /**
@@ -627,11 +392,6 @@ public class Character extends LevelObject {
         attackIndicatorTransp -= 0.07f;
     }
 
-    @Override
-    public void updateHitBox() {
-        hitBox.setX(x);
-        hitBox.setY(y);
-    }
 
 //      *******************************
 //      *    Getters and Setters      *
@@ -650,16 +410,6 @@ public class Character extends LevelObject {
 
     public boolean getMovingLeft() {
         return movingLeft;
-    }
-
-    @Override
-    public Shape getHitBox() {
-        return hitBox;
-    }
-
-    @Override
-    public void setHitBox(Shape hitBox) {
-        this.hitBox = hitBox;
     }
 
     public boolean getIsCharging() {
@@ -682,73 +432,6 @@ public class Character extends LevelObject {
         return superAttackIndicator;
     }
 
-    @Override
-    public boolean isAlive() {
-        return isAlive;
-    }
-
-    @Override
-    public void setAlive(boolean isAlive) {
-        this.isAlive = isAlive;
-    }
-
-    @Override
-    public boolean isMoving() {
-        return moving;
-    }
-
-    @Override
-    public void setMoving(boolean moving) {
-        this.moving = moving;
-    }
-
-    public double getSweepAttack() {
-        return sweepAttack;
-    }
-
-    public void setSweepAttack(double sweepAttack) {
-        this.sweepAttack = sweepAttack;
-    }
-
-    public double getSweepLimit() {
-        return sweepLimit;
-    }
-
-    public void setSweepLimit(double sweepLimit) {
-        this.sweepLimit = sweepLimit;
-    }
-
-    public float getJumpStrength() {
-        return jumpStrength;
-    }
-
-    public void setJumpStrength(float jumpStrength) {
-        this.jumpStrength = jumpStrength;
-    }
-
-    public float getSize() {
-        return size;
-    }
-
-    public void setSize(float size) {
-        this.size = size;
-    }
-
-    public float getCurrentPositionX() {
-        return currentPositionX;
-    }
-
-    public void setCurrentPositionX(float currentPositionX) {
-        this.currentPositionX = currentPositionX;
-    }
-
-    public float getCurrentPositionY() {
-        return currentPositionY;
-    }
-
-    public void setCurrentPositionY(float currentPositionY) {
-        this.currentPositionY = currentPositionY;
-    }
 
     public float getAttackCoolDown() {
         return attackCoolDown;
@@ -758,234 +441,16 @@ public class Character extends LevelObject {
         this.attackCoolDown = attackCoolDown;
     }
 
-    public float getGravity() {
-        return gravity;
-    }
-
-    public void setGravity(float gravity) {
-        this.gravity = gravity;
-    }
-
-    public float getMousePositionX() {
-        return mousePositionX;
-    }
-
-    public void setMousePositionX(float mousePositionX) {
-        this.mousePositionX = mousePositionX;
-    }
-
-    public float getPreviousMousePositionX() {
-        return previousMousePositionX;
-    }
-
-    public void setPreviousMousePositionX(float previousMousePositionX) {
-        this.previousMousePositionX = previousMousePositionX;
-    }
-
-    public float getAccelerationSpeed() {
-        return accelerationSpeed;
-    }
-
-    public void setAccelerationSpeed(float accelerationSpeed) {
-        this.accelerationSpeed = accelerationSpeed;
-    }
-
-    public float getDecelerationSpeed() {
-        return decelerationSpeed;
-    }
-
-    public void setDecelerationSpeed(float decelerationSpeed) {
-        this.decelerationSpeed = decelerationSpeed;
-    }
-
-    public float getMaximumSpeed() {
-        return maximumSpeed;
-    }
-
-    public void setMaximumSpeed(float maximumSpeed) {
-        this.maximumSpeed = maximumSpeed;
-    }
-
-    public float getPlayerWidth() {
-        return playerWidth;
-    }
-
-    public void setPlayerWidth(float playerWidth) {
-        this.playerWidth = playerWidth;
-    }
-
-    public float getPlayerHeight() {
-        return playerHeight;
-    }
-
-    public void setPlayerHeight(float playerHeight) {
-        this.playerHeight = playerHeight;
-    }
-
-    public float getJumpIndicatorTransp() {
-        return jumpIndicatorTransp;
-    }
-
-    public void setJumpIndicatorTransp(float jumpIndicatorTransp) {
-        this.jumpIndicatorTransp = jumpIndicatorTransp;
-    }
-
-    public float getAttackIndicatorTransp() {
-        return attackIndicatorTransp;
-    }
-
     public void setAttackIndicatorTransp(float attackIndicatorTransp) {
         this.attackIndicatorTransp = attackIndicatorTransp;
-    }
-
-    public float getSweepXStart() {
-        return sweepXStart;
-    }
-
-    public void setSweepXStart(float sweepXStart) {
-        this.sweepXStart = sweepXStart;
-    }
-
-    public float getSweepYStart() {
-        return sweepYStart;
-    }
-
-    public void setSweepYStart(float sweepYStart) {
-        this.sweepYStart = sweepYStart;
-    }
-
-    public float getSweepXEnd() {
-        return sweepXEnd;
-    }
-
-    public void setSweepXEnd(float sweepXEnd) {
-        this.sweepXEnd = sweepXEnd;
-    }
-
-    public float getSweepYEnd() {
-        return sweepYEnd;
-    }
-
-    public void setSweepYEnd(float sweepYEnd) {
-        this.sweepYEnd = sweepYEnd;
-    }
-
-    public float getSweepSpeed() {
-        return sweepSpeed;
-    }
-
-    public void setSweepSpeed(float sweepSpeed) {
-        this.sweepSpeed = sweepSpeed;
-    }
-
-    public float getOldRotate() {
-        return oldRotate;
-    }
-
-    public void setOldRotate(float oldRotate) {
-        this.oldRotate = oldRotate;
-    }
-
-    public float getRotateDirection() {
-        return rotateDirection;
     }
 
     public void setRotateDirection(float rotateDirection) {
         this.rotateDirection = rotateDirection;
     }
 
-    public float getCalculatedXAttack() {
-        return calculatedXAttack;
-    }
-
-    public void setCalculatedXAttack(float calculatedXAttack) {
-        this.calculatedXAttack = calculatedXAttack;
-    }
-
-    public float getCalculatedYAttack() {
-        return calculatedYAttack;
-    }
-
-    public void setCalculatedYAttack(float calculatedYAttack) {
-        this.calculatedYAttack = calculatedYAttack;
-    }
-
-    public float getAttackVelocity() {
-        return attackVelocity;
-    }
-
-    public void setAttackVelocity(float attackVelocity) {
-        this.attackVelocity = attackVelocity;
-    }
-
-    @Override
-    public int getHealth() {
-        return health;
-    }
-
-    @Override
-    public void setHealth(int health) {
-        this.health = health;
-    }
-
-    @Override
-    public int getStoredAttacks() {
-        return storedAttacks;
-    }
-
-    @Override
-    public void setStoredAttacks(int storedAttacks) {
-        this.storedAttacks = storedAttacks;
-    }
-
-    @Override
-    public int getStoredJumps() {
-        return storedJumps;
-    }
-
-    @Override
-    public void setStoredJumps(int storedJumps) {
-        this.storedJumps = storedJumps;
-    }
-
     public Vector2f getAttackDirection() {
         return attackDirection;
-    }
-
-    public void setAttackDirection(Vector2f attackDirection) {
-        this.attackDirection = attackDirection;
-    }
-
-    public Vector2f getAttackStart() {
-        return attackStart;
-    }
-
-    public void setAttackStart(Vector2f attackStart) {
-        this.attackStart = attackStart;
-    }
-
-    public Vector2f getCurrent() {
-        return current;
-    }
-
-    public void setCurrent(Vector2f current) {
-        this.current = current;
-    }
-
-    public HealthSystem getHealthSystem() {
-        return healthSystem;
-    }
-
-    public void setHealthSystem(HealthSystem healthSystem) {
-        this.healthSystem = healthSystem;
-    }
-
-    public MovementSystem getMovementSystem() {
-        return movementSystem;
-    }
-
-    public void setMovementSystem(MovementSystem movementSystem) {
-        this.movementSystem = movementSystem;
     }
 
     public Shape getPlayer() {
@@ -1004,45 +469,11 @@ public class Character extends LevelObject {
         this.color = color;
     }
 
-    public Image getSprite() {
-        return sprite;
-    }
-
-    public void setSprite(Image sprite) {
-        this.sprite = sprite;
-    }
-
-    public Audio getJumpSound() {
-        return jumpSound;
-    }
-
-    public void setJumpSound(Audio jumpSound) {
-        this.jumpSound = jumpSound;
-    }
-
-    public Audio getAttackSound() {
-        return attackSound;
-    }
-
-    public void setAttackSound(Audio attackSound) {
-        this.attackSound = attackSound;
-    }
-
-    public Shape getJumpIndicator() {
-        return jumpIndicator;
-    }
-
-    public void setJumpIndicator(Shape jumpIndicator) {
-        this.jumpIndicator = jumpIndicator;
-    }
 
     public Polygon getAttackIndicator() {
         return attackIndicator;
     }
 
-    public void setAttackIndicator(Polygon attackIndicator) {
-        this.attackIndicator = attackIndicator;
-    }
 
     public float getX() {
         return x;
@@ -1058,14 +489,6 @@ public class Character extends LevelObject {
 
     public float getCurrentY() {
         return currentY;
-    }
-
-    public float getXVelocity() {
-        return x_velocity;
-    }
-
-    public float getYVelocity() {
-        return y_velocity;
     }
 
     public boolean isJumping() {
@@ -1084,10 +507,6 @@ public class Character extends LevelObject {
         this.isFalling = isFalling;
     }
 
-    public boolean isFlipped() {
-        return flipped;
-    }
-
     public void setFlipped(boolean flipped) {
         this.flipped = flipped;
     }
@@ -1100,63 +519,47 @@ public class Character extends LevelObject {
         this.grounded = grounded;
     }
 
-    public boolean HasJumped() {
-        return hasJumped;
-    }
-
     public void setHasJumped(boolean hasJumped) {
         this.hasJumped = hasJumped;
     }
-    
+
     public String getName() {
-        if(name == null) {
+        if (name == null) {
             return "HELLO";
         } else
             return name;
     }
-    
+
     public void setName(String name) {
         this.name = name;
     }
-    
+
     public boolean getReady() {
         return ready;
     }
-    
+
     public void setReady(boolean ready) {
         this.ready = ready;
     }
 
-   public boolean isCanUlti() {
-      return canUlti;
-   }
+    public boolean isCanUlti() {
+        return canUlti;
+    }
 
-   public void setCanUlti(boolean canUlti) {
-      this.canUlti = canUlti;
-   }
-    
-   public void setNumberOfAttacks(int numAtt) {
-       this.numberOfAttacks = numAtt;
-   }
-   
-   public int getNumberOfAttacks() {
-       return numberOfAttacks;
-   }
+    public void setCanUlti(boolean canUlti) {
+        this.canUlti = canUlti;
+    }
 
-   public void setNumberOfHits(int hits) {
-       this.numberOfHits = hits;
-   }
-   
-   public int getNumberOfHits() {
-       return numberOfHits;
-   }
-   
-   public void setHitPercent(int percent) {
-       this.hitPercent = percent;
-   }
-   
-   public int getHitPercent() {
-       return hitPercent;
-   }
-   
+    public int getNumberOfAttacks() {
+        return numberOfAttacks;
+    }
+
+    public void setNumberOfHits(int hits) {
+        this.numberOfHits = hits;
+    }
+
+    public int getNumberOfHits() {
+        return numberOfHits;
+    }
+
 }

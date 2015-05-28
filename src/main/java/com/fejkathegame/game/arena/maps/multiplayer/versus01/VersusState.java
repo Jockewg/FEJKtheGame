@@ -267,16 +267,16 @@ public class VersusState extends State {
             mp.character.setGrounded(mp.isGrounded);
             if (mp.isAttacking && hasUpdated) {
                 mp.character.setRotateDirection(mp.direction);
-                mp.character.updateAttackIndicator();
+                mp.character.attackSystem.updateAttackIndicator();
                 hasUpdated = false;
             } else if (!mp.isAttacking) {
                 hasUpdated = true;
             }
 
             if (mp.isChargeing && mp.character.getHealth() >= 1) {
-                mp.character.chargeSuperAttack(i);
+                mp.character.attackSystem.chargeSuperAttack(i);
             } else if (mp.isFullyCharged && mp.character.getHealth() >= 1) {
-                mp.character.activateSuperAttack(i);
+                mp.character.attackSystem.activateSuperAttack(i);
             } else {
                 mp.character.stopChargeSound();
             }
