@@ -42,7 +42,10 @@ public class LevelSelectButton extends Button{
     public void setBestTime(String time){
         bestTime = time;
     }
-    
+
+    /**
+     * Updates the best time based on the score from the database
+     */
     public void updateBestTime() {
        bestTime = "Best Time : ";
        if(highScoreAdapt.readScore(mapId) == Integer.MAX_VALUE){

@@ -35,7 +35,11 @@ public class HealthSystem {
         initHealthBar();
         hurtSound = AudioLoader.getAudio("WAV", ResourceLoader.getResourceAsStream("src/main/resources/data/sound/Hurt.wav"));
     }
-    
+
+    /**
+     * Initializes the health bar
+     * @throws SlickException
+     */
     public void initHealthBar() throws SlickException {
         healthBar[0] = new Image("src/main/resources/data/img/statusBar/health/health0.png");
         healthBar[1] = new Image("src/main/resources/data/img/statusBar/health/health1.png");
@@ -65,7 +69,11 @@ public class HealthSystem {
             damageCooldown = 1000;
         }
     }
-    
+
+    /**
+     * Checks if a player has taken damage recently
+     * @param delta
+     */
     public void damageCooldown(int delta) {
         if(damageCooldown != 0) {
             damageCooldown -= delta;
@@ -114,7 +122,7 @@ public class HealthSystem {
         return hearts;
     }
 }
-
+@Deprecated
 class Heart {
     Image graphicImage;
     float positionX;

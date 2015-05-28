@@ -1,6 +1,7 @@
 package com.fejkathegame.game.arena.maps;
 
 /**
+ * Camera Object holding all the values of the the cameras position
  * Created by Swartt on 2015-05-11.
  */
 public class PracticeCamera {

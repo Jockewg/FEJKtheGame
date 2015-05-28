@@ -35,6 +35,9 @@ public class Timer {
       countdownRunning = false;
    }
 
+    /**
+     * resets the timer
+     */
     public void resetTimer(){
         timerDuration = 0;
         secondsPassed = 0;
@@ -44,17 +47,24 @@ public class Timer {
         countdownRunning = false;
     }
 
+    /**
+     * Calculates when a second has passed
+     * @param delta
+     */
    public void calculateSecond(int delta) {
-      secondsPassed += delta;
-      if (secondsPassed > 1000) {
-         secondsPassed = 0;
-         countDownLength--;
-         if (timerRunning && !countdownRunning) {
-            timerDuration++;
-         }
-      }
+       secondsPassed += delta;
+       if (secondsPassed > 1000) {
+           secondsPassed = 0;
+           countDownLength--;
+           if (timerRunning && !countdownRunning) {
+               timerDuration++;
+           }
+       }
    }
 
+    /**
+     * @return the current value of the countdown
+     */
    public int getCurrentCountdownTime() {
       if (countDownLength <= end) {
          countDownLength = 0;
@@ -63,6 +73,9 @@ public class Timer {
       return countDownLength;
    }
 
+    /**
+     * @return the current value of the countdown in reverse order
+     */
    public float getCurrentCountdownTimeInReverseIncrement() {
       int current = getCurrentCountdownTime();
       if (current > 0) {

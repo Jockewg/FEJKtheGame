@@ -130,6 +130,10 @@ public class Character extends LevelObject {
 
     }
 
+    /**
+     * Loads the characters animation sheet
+     * @throws SlickException
+     */
     public void loadCharacterAnimations() throws SlickException {
         runningSheet = new SpriteSheet("src/main/resources/data/img/spritesheets/spritesheet3.png", 192, 192);
         runningAnimation = new Animation(runningSheet, 30);
@@ -165,18 +169,26 @@ public class Character extends LevelObject {
         chargingParticleAnimation.setAutoUpdate(false);
     }
 
+    /**
+     * Loads the jump container images
+     * @throws SlickException
+     */
     public void loadStoredJumpsIndicator() throws SlickException {
         numberOfJumps[0] = new Image("src/main/resources/data/img/statusBar/jump/jumpCounter.png");
         numberOfJumps[1] = new Image("src/main/resources/data/img/statusBar/jump/jumpCounterEmpty.png");
     }
 
 
-
+    /**
+     * Plays a sound when jumping
+     */
     public void playJumpSound() {
-//        if(!jumpSound.isPlaying())
         jumpSound.playAsSoundEffect(1.0f, 1.0f, false);
     }
 
+    /**
+     * Plays a sound when attacking
+     */
     public void playAttackSound() {
         if (!attackSound.isPlaying())
             attackSound.playAsSoundEffect(1.0f, 1.0f, false);
@@ -260,6 +272,11 @@ public class Character extends LevelObject {
         }
     }
 
+    /**
+     * renders the stored jump indicator
+     * @param x coordinates
+     * @param y coordinates
+     */
     public void renderStoredJumpsIndicator(float x, float y) {
         if (storedJumps == 2) {
             numberOfJumps[0].getScaledCopy(0.1f).draw(x - 1, y);
@@ -273,6 +290,11 @@ public class Character extends LevelObject {
         }
     }
 
+    /**
+     * Renders the attack charge
+     * @param x coordinates
+     * @param y coordinates
+     */
     public void renderAttackCharge(float x, float y) {
         if (attackCoolDown < 1000) {
             attackChargeSize += 1.35f;
@@ -303,6 +325,9 @@ public class Character extends LevelObject {
         attackCharger.getFlippedCopy(true, false).draw(x, y, attackChargeSize, 8);
     }
 
+    /**
+     * Renders the characters animations
+     */
     public void renderCharacterAnimation() {
         if (isCharging) {
             playChargeSound();
@@ -368,8 +393,8 @@ public class Character extends LevelObject {
     /**
      * Displays a white line under the character when he jumps in the air
      *
-     * @param x
-     * @param y
+     * @param x coordiantes
+     * @param y coordinates
      */
     @Deprecated
     public void renderJumpIndicator(float x, float y) {

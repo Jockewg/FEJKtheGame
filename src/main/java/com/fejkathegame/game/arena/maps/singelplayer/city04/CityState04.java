@@ -65,7 +65,7 @@ public class CityState04 extends State {
 
     @Override
     public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
-       stateHelper.render(gc, sbg, g);
+       stateHelper.render(g);
     }
 
 

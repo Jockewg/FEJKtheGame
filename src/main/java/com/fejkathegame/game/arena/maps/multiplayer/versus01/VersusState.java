@@ -105,7 +105,7 @@ public class VersusState extends State {
     }
     
     /**
-     * initial state for VersusState
+     * initializes the state
      * 
      * @param gc
      * @param sbg
@@ -114,11 +114,9 @@ public class VersusState extends State {
     @Override
     public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {
 
-//        System.out.println("Creating arraylist");
         line = new Line(0, 0, 450, 250);
 
         playerNameFont = new Font("Sans serif", Font.PLAIN, 6);
-//        ttf = new TrueTypeFont(playerNameFont, false);
         uf = new UnicodeFont(playerNameFont, 6, false, false);
         
         for (MPPlayer mp : client.getPlayers().values()) {
@@ -192,7 +190,7 @@ public class VersusState extends State {
     }
 
     /**
-     * 
+     * Updates the dynamic camera
      */
     public void updateCameraRect() {
         float dY = line.getDY();
@@ -245,6 +243,9 @@ public class VersusState extends State {
 
     }
 
+    /**
+     * Updates the vector line between two players (if only two players are present).
+     */
     public void updateVectorLine() {
         if (arena.players.isEmpty()) {
             line = new Line(0, 0, 900, 500);
@@ -261,16 +262,28 @@ public class VersusState extends State {
         }
     }
 
+    /**
+     * Updates the indicator position of he local player
+     */
     public void updatePlayerIndicator() {
         playerIndicator.setX(localPlayer.getX() - 4);
         playerIndicator.setY(localPlayer.getY() - 17);
     }
 
+    /**
+     * Renders the indicator for the player
+     * @param g
+     */
     public void renderPlayerIndicator(Graphics g) {
         g.setColor(new Color(1.0f, 0.0f, 0.0f, 0.5f));
         g.fill(playerIndicator);
     }
 
+    /**
+     * Updates the opponent status
+     * @param mp
+     * @param i
+     */
     public void updateMpPlayer(MPPlayer mp, int i) {
         if (mp.character.getHealth() > 0) {
             mp.character.update(i);
@@ -315,12 +328,22 @@ public class VersusState extends State {
         }
     }
 
+    /**
+     * Renders the countdown timer
+     * @param x coordinates
+     * @param y coordinates
+     * @param g
+     */
     public void renderCountdown(float x, float y, Graphics g) {
         g.setColor(Color.green);
         g.drawString(String.valueOf(timer.getCurrentCountdownTime()), x, y);
     }
 
-    public void renderMpHealthAndName(MPPlayer p, Graphics g) {
+    /**
+     *  Renders the enemies HP bars
+     * @param p
+     */
+    public void renderMpHealthAndName(MPPlayer p) {
         for (int i = 0; i < p.hp; i++) {
             mpHealth.draw(p.x - 6 + (i * 5), p.y - 7, 5, 5);
             uf.drawString(p.x - 7, p.y - 16, p.name);
@@ -335,7 +358,7 @@ public class VersusState extends State {
         renderPlayerIndicator(g);
         if (!timer.isCountdownRunning()) {
             for (MPPlayer mp : client.getPlayers().values()) {
-                renderMpHealthAndName(mp, g);
+                renderMpHealthAndName(mp);
             }
         }
 
@@ -350,15 +373,19 @@ public class VersusState extends State {
         g.resetTransform();
     }
 
+    /**
+     * checks if a player has won
+     * @param sbg
+     * @param gc
+     * @throws SlickException
+     */
     private void checkWinLose(StateBasedGame sbg, GameContainer gc) throws SlickException {
         if (arena.players.size() == 1) {
             sbg.getState(Main.STATSSTATE).init(gc, sbg);
             sbg.enterState(Main.STATSSTATE);
-//            calculateHitPercent();
         } else if (arena.players.isEmpty()) {
             sbg.getState(Main.STATSSTATE).init(gc, sbg);
             sbg.enterState(Main.STATSSTATE);
-//            calculateHitPercent();
         }
     }
 
@@ -392,9 +419,10 @@ public class VersusState extends State {
         sendClientData();
     }
 
-//    public void calculateHitPercent() {
-//        percent = (localPlayer.getNumberOfAttacks()/localPlayer.getNumberOfHits());
-//    }
+
+    /**
+     * sends data to the server updating the current state of the clients player
+     */
     private void sendClientData() {
         if (localPlayer.networkPosition.x != localPlayer.getCurrentX()) {
             //Send the player's X value

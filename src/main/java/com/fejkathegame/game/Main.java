@@ -63,7 +63,6 @@ public class Main extends StateBasedGame {
         addState(new HostScreenState("Host"));
         addState(new MenuState("menu"));
         addState(new LevelSelectState());
-        //add multiplayer maps
         //add singelplayermaps
         addState(new Tutorial01State("tutorial01"));
         addState(new Tower02State("tower02"));

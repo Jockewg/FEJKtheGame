@@ -23,13 +23,19 @@ public class UIHelper {
     public UIHelper(State state){
         this.state = state;
     }
-    
+
+    /**
+     * Renders the health of the character
+     * @param character
+     * @param x
+     * @param y
+     */
     public void renderVersusUI(Character character, float x, float y){
         character.getHealthSystem().render(x + (Main.WINDOW_WIDTH / 2) - 67.5f, y + 500 - 28);
         character.renderStoredJumpsIndicator(x + (Main.WINDOW_WIDTH / 2) - 67.5f - 10, y + 500 - 28);
         character.renderAttackCharge(x + (Main.WINDOW_WIDTH / 2) - 67.5f, y + 500 - 28 - 8);
     }
-    
+    @Deprecated
     public void renderPracticeUI(){
        /* state.level.updateText( state.camera.getCamX(), state.camera.getCamY());*/
     }

@@ -63,6 +63,9 @@ public class Tower02State extends State {
        setCameraAnimationRunning(true);
    }
 
+    /**
+     * Animates the camera while the countdown is running
+     */
    public void cameraAnimation() {
       cameraMotionY += level.timer.getCurrentCountdownTimeInReverseIncrement();
       camera.setCamX(0);
@@ -74,7 +77,7 @@ public class Tower02State extends State {
 
    @Override
    public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
-      helper.render(gc, sbg, g);
+      helper.render(g);
    }
 
    @Override

@@ -26,11 +26,7 @@ public class ServerProgram extends Listener {
     /**
      * The server register the packedges binds to the port and starts.
      *
-     * @param args
      */
-//    public static void main(String[] args) {
-//        startServer();
-//    }
     public void startServer() {
 
         server = new Server();
@@ -64,7 +60,7 @@ public class ServerProgram extends Listener {
     }
 
     /**
-     * creates a new player with uniqe id and sends to all clients.
+     * creates a new player with unique id and sends to all clients.
      *
      * @param c the connection to the client
      */
@@ -224,7 +220,7 @@ public class ServerProgram extends Listener {
     }
 
     /**
-     * for every dissconnected client there will be a message sent to all
+     * for every disconnected client there will be a message sent to all
      * clients
      *
      * @param c the connection to the client

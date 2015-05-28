@@ -12,7 +12,12 @@ package com.fejkathegame.game.properties;
 public class HSPropertiesAdapter {
       
    PropertiesAdapter adapter = new PropertiesAdapter();
-   
+
+    /**
+     * Saves the score to the database, if no value exists it saves it as "null"
+     * @param key
+     * @param value
+     */
    public void save (String key, String value) {
       if (!value.equals("null")) {
          adapter.save(key, value);
@@ -20,6 +25,12 @@ public class HSPropertiesAdapter {
          adapter.save(key, "null");
       }
    }
+
+    /**
+     * Loads the score from a the database, checks if the value is null
+     * @param key
+     * @return
+     */
    public String load (String key) {
       String result = adapter.load(key);
       

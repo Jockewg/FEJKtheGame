@@ -23,6 +23,11 @@ public class PropertiesAdapter {
    InputStream inputStream;
    String configFilePath = "config.prop";
 
+    /**
+     * Saves the value to the database
+     * @param key
+     * @param value
+     */
    public void save(String key, String value) {
       try {
          File file = new File(configFilePath);
@@ -40,7 +45,12 @@ public class PropertiesAdapter {
          e.printStackTrace();
       }
    }
-   
+
+    /**
+     * Loads a value from the database tied to the given string
+     * @param key
+     * @return
+     */
    public String load(String key){
       String value = "null";
               try {

@@ -37,12 +37,6 @@ public class BigBlue02 extends Level {
     }
 
     /**
-     * populates the level with tiles
-     *
-     * @throws org.newdawn.slick.SlickException
-     */
-
-    /**
      * adds a player to the player array
      *
      * @param p

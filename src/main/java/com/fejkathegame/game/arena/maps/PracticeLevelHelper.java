@@ -42,10 +42,19 @@ public class PracticeLevelHelper {
         score = "Targets Left: " + String.valueOf(level.targets.size());
     }
 
+    /**
+     * Starts the countdown
+     */
     public void startTimer(){
-        level.timer.startCountdown(3);
+        int delayBeforeStart = 3;
+        level.timer.startCountdown(delayBeforeStart);
     };
 
+    /**
+     * Updates the texts position
+     * @param x coordinates
+     * @param y coordinates
+     */
     public void updateText(float x, float y) {
         ttf.drawString(x, y, score, Color.green);
         ttf.drawString(x + 200, y, "Time: " + String.valueOf(level.timer.getTimerDuration()), Color.red);
@@ -54,6 +63,10 @@ public class PracticeLevelHelper {
         }
     }
 
+    /**
+     * Updates all current score, also finishes the game if all targets have been destroyed
+     * @param map
+     */
     public void updateScore(int map) {
         if (level.targets.size() > 0) {
             score = "Targets Left: " + String.valueOf(level.targets.size());
@@ -64,12 +77,21 @@ public class PracticeLevelHelper {
         }
     }
 
+    /**
+     * Constructor for movable targets
+     * @param movableTarget
+     * @param movableTargetStartingPos
+     * @param targetVelY
+     */
     public void moveTargetConstructor(PracticeTarget movableTarget, float movableTargetStartingPos, float targetVelY) {
         this.movableTarget = movableTarget;
         this.movableTargetStartingPos = movableTargetStartingPos;
         this.targetVelY = targetVelY;
     }
 
+    /**
+     * Moves selected target
+     */
     public void moveTarget() {
         movableTarget.setY(movableTarget.getY() + targetVelY);
 
@@ -81,12 +103,19 @@ public class PracticeLevelHelper {
 
     }
 
+    /**
+     * Shows the targets number in the array, used for debugging
+     */
     public void showTargetNumber() {
         for (int i = 0; i < level.targets.size(); i++) {
             ttf.drawString(level.targets.get(i).getX(), level.targets.get(i).getY(), String.valueOf(i));
         }
     }
 
+    /**
+     * Saves the score to the database
+     * @param map
+     */
     public void saveScore(int map) {
         if (!writtenToFile) {
             adapter.saveScore(map, level.timer.getTimerDuration());

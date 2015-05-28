@@ -76,6 +76,9 @@ public class Tutorial01State extends State {
       stateHelper = new PracticeStateHelper(this);
    }
 
+    /**
+     * sets the boundaries of the camera so it does not go outside of the bounds of the map
+     */
    public void setCameraBoundaries() {
       offsetMaxX = level.map.getWidth() * 25 - 450;
       offsetMaxY = level.map.getHeight() * 25 - 325;

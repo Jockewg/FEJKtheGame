@@ -38,6 +38,10 @@ public class PracticeStateHelper {
         state.player.setCanUlti(false);
     }
 
+    /**
+     * Checks if the player hits a target, if true then it updates the current state
+     * @param map
+     */
     public void checkCollisionWithTarget(int map) {
         for (int i = 0; i < state.level.targets.size(); i++) {
             if (state.player.getAttackIndicator().intersects(state.level.targets.get(i).getHitbox()) && state.player.getIsAttacking()
@@ -49,6 +53,9 @@ public class PracticeStateHelper {
         }
     }
 
+    /**
+     * Checks if the camera is allowed to move, stops the camera from showing out of bounds
+     */
     public void checkCameraOffset() {
         if (state.player.getX() <= state.camera.getOffsetMinX() + 450) {
             state.camera.setCamX(state.camera.getOffsetMinX());
@@ -67,6 +74,15 @@ public class PracticeStateHelper {
         }
     }
 
+    /**
+     * Pauses the game
+     * @param i
+     * @param sbg
+     * @param playerSpawnX
+     * @param playerSpawnY
+     * @throws SlickException
+     * @throws IOException
+     */
     public void pauseGame(Input i, StateBasedGame sbg, float playerSpawnX, float playerSpawnY) throws SlickException, IOException {
         if (i.isKeyPressed(Input.KEY_ESCAPE)) {
             if (!state.isPaused()) {
@@ -82,6 +98,13 @@ public class PracticeStateHelper {
         }
     }
 
+    /**
+     * Resets the level, changes all values to default
+     * @param x
+     * @param y
+     * @throws SlickException
+     * @throws IOException
+     */
     public void resetLevel(float x, float y) throws SlickException, IOException {
         state.setCameraAnimationRunning(true);
         state.setPaused(false);
@@ -92,7 +115,6 @@ public class PracticeStateHelper {
         state.level.timer.startCountdown(3);
         state.level.timer.startTimer();
         state.level.targets.clear();
-        /*state.setCameraAnimationRunning(false);*/
         state.level.helper.writtenToFile = false;
         ArrayList<LevelSelectButton> buttons = LevelSelect.getLevelButtons();
         for (LevelSelectButton button : buttons) {
@@ -108,6 +130,10 @@ public class PracticeStateHelper {
         state.player.setY_velocity(0);
     }
 
+    /**
+     * renders the pause menu
+     * @param g
+     */
     public void drawPauseMenu(Graphics g) {
         g.setColor(new Color(0.8f, 0.8f, 0.8f, 0.8f));
         pauseMenuBackground.setCenterX(state.camera.getCamX() + 450);
@@ -117,6 +143,15 @@ public class PracticeStateHelper {
         g.drawString("Press escape to unpause or X to exit the level", state.camera.getCamX() + 300, state.camera.getCamY() + 150);
     }
 
+    /**
+     * Updates the game state
+     * @param gc
+     * @param sbg
+     * @param i
+     * @param playerSpawnX
+     * @param playerSpawnY
+     * @throws SlickException
+     */
     public void update(GameContainer gc, StateBasedGame sbg, int i, float playerSpawnX, float playerSpawnY) throws SlickException {
         try {
             pauseGame(gc.getInput(), sbg, playerSpawnX, playerSpawnY);
@@ -135,7 +170,12 @@ public class PracticeStateHelper {
         }
     }
 
-    public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
+    /**
+     * Renders the game
+     * @param g
+     * @throws SlickException
+     */
+    public void render(Graphics g) throws SlickException {
 
         g.setAntiAlias(false);
         g.scale(Main.SCALE, Main.SCALE);

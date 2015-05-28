@@ -76,6 +76,9 @@ public abstract class LevelObject {
         boundingShape.updatePosition(x, y);
     }
 
+    /**
+     * Updates the hitbox coordinates
+     */
     public void updateHitBox() {
         hitBox.setX(x);
         hitBox.setY(y);

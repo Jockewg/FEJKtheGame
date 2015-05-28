@@ -1,7 +1,9 @@
 package com.fejkathegame.game.entities;
 
 import com.fejkathegame.game.entities.logic.HealthSystem;
+
 import java.io.IOException;
+
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;
@@ -12,11 +14,11 @@ import org.newdawn.slick.geom.Shape;
  */
 public class PracticeTarget extends LevelObject {
 
-   private HealthSystem healthSystem;
-   private int health;
-   private boolean isAlive;
-   private Image sprite;
-   private Shape hitBox;
+    private HealthSystem healthSystem;
+    private int health;
+    private boolean isAlive;
+    private Image sprite;
+    private Shape hitBox;
 
     /**
      * @param x the X coordinate of the object
@@ -24,43 +26,44 @@ public class PracticeTarget extends LevelObject {
      * @throws SlickException
      * @throws IOException
      */
-   public PracticeTarget(float x, float y) throws SlickException, IOException {
-      super(x, y);
-      healthSystem = new HealthSystem(this);
-      health = 1;
-      sprite = new Image("src/main/resources/data/img/target/target.png");
-      hitBox = new Rectangle(x, y, 30, 30);
-   }
+    public PracticeTarget(float x, float y) throws SlickException, IOException {
+        super(x, y);
+        healthSystem = new HealthSystem(this);
+        health = 1;
+        sprite = new Image("src/main/resources/data/img/target/target.png");
+        hitBox = new Rectangle(x, y, 30, 30);
+    }
 
-   @Override
-   public boolean isAlive() {
-      return isAlive;
-   }
-   
-   public Shape getHitbox() {
-       return hitBox;
-   }
+    @Override
+    public boolean isAlive() {
+        return isAlive;
+    }
 
-   @Override
-   public void setAlive(boolean alive) {
-      this.isAlive = alive;
-   }
+    public Shape getHitbox() {
+        return hitBox;
+    }
 
-   @Override
+    @Override
+    public void setAlive(boolean alive) {
+        this.isAlive = alive;
+    }
+
+    @Override
     public int getHealth() {
         return health;
     }
 
-   @Override
+    @Override
     public void setHealth(int health) {
         this.health = health;
     }
+
     @Override
     public void render() throws SlickException {
         updateHitBox();
         sprite.draw(x, y);
-    } 
-    
+    }
+
     public HealthSystem getHealthSystem() {
         return healthSystem;
     }

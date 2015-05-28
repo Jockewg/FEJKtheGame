@@ -31,7 +31,6 @@ public class Versus extends Level {
         map = new TiledMap("src/main/resources/data/levels/multiplayer/" + name + ".tmx", "src/main/resources/data/img");
         players = new ArrayList<>();
 
-//        addPlayer(levelObject);
         loadTileMap();
 
         loadCrankAnim();

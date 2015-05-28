@@ -6,8 +6,6 @@ import java.io.*;
  * Created by Swartt on 2015-05-13.
  */
 public class HighscoreAdapter {
-    InputStream inputStream;
-    String configFilePath = "config.prop";
     PropertiesAdapter saver = new PropertiesAdapter();
 
 

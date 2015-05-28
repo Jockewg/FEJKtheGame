@@ -97,6 +97,10 @@ public class LobbyState extends State {
         }
     }
 
+    /**
+     * @return the local IP of the user in string format
+     * @throws Exception
+     */
     public String getIP() throws Exception {
 
         for (NetworkInterface iface : Collections.list(NetworkInterface.getNetworkInterfaces())) {
@@ -134,6 +138,9 @@ public class LobbyState extends State {
         ttf = new TrueTypeFont(font, true);
     }
 
+    /**
+     * Checks if a new player is connected
+     */
     public void checkIfNewPlayerConnected() {
         for (MPPlayer mpPlayer : client.getPlayers().values()) { //other player render here.
             if (mpPlayer.character == null) {
@@ -218,6 +225,10 @@ public class LobbyState extends State {
         increase = 2;
     }
 
+    /**
+     * Checks if a the local player has declared them self ready
+     * @param i
+     */
     public void checkIfReadyIsPressed(Input i) {
         if (i.getMouseX() > (Main.WINDOW_WIDTH / 2) - 100 && i.getMouseX() < (Main.WINDOW_WIDTH / 2) + 100
                 && i.getMouseY() > 350 && i.getMouseY() < 425) {
@@ -231,6 +242,9 @@ public class LobbyState extends State {
         }
     }
 
+    /**
+     * Checks if all players are ready
+     */
     public void checkIfAllIsReady() {
         ArrayList<Boolean> playersReady = new ArrayList<>();
         for (MPPlayer mp : client.getPlayers().values()) {
