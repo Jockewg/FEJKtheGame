@@ -4,6 +4,8 @@ import com.fejkathegame.game.entities.Character;
 import org.newdawn.slick.Input;
 
 /**
+ * the movement system for character.
+ * 
  * Created by Swartt on 2015-04-28.
  */
 public class MovementSystem {
@@ -54,7 +56,7 @@ public class MovementSystem {
 
     /**
      * handles the keyboard input from the player
-     * @param i
+     * @param i 
      * @param delta
      */
     public void handleKeyBoardInput(Input i, int delta) {
@@ -73,6 +75,12 @@ public class MovementSystem {
         }
     }
     
+    /**
+     * The character charge attack
+     * 
+     * @param i
+     * @param delta 
+     */
     public void handleChargeAttack(Input i, int delta) {
         if(i.isKeyDown(Input.KEY_E) && !character.getIsFullyCharged() && character.isAlive()) {
             character.setMovingLeft(false);
@@ -124,6 +132,10 @@ public class MovementSystem {
         character.storedJumps--;
 
     }
+    
+    /**
+     * Checks the momentum of the player.
+     */
     public void checkMomentum() {
         if (character.y_velocity < 0 && !character.isAttacking) {
             character.isJumping = true;

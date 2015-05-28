@@ -76,7 +76,7 @@ public class ClientProgram extends Listener {
   
     /**
      *
-     * Determines what type of package is received and handles the logical response for that type of package
+     * Determines what type of package is received and handles the logical response for that type of package.
      *
      * @param c the connection to the server
      * @param o the objec the client receives
