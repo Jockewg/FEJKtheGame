@@ -47,6 +47,7 @@ public class VersusState extends State {
     private boolean oldFalling = false;
     private boolean oldGrounded = false;
     private int percent = 0;
+    private int limit = 0;
     private Font playerNameFont;
     private TrueTypeFont ttf;
     private UnicodeFont uf;
@@ -81,10 +82,10 @@ public class VersusState extends State {
         this.localPlayer = localPlayer;
         this.characters = characters;
     }
-    
+
     /**
      * A constructor for VersusState
-     * 
+     *
      * @param name of the stage
      * @param client connected to the stage
      * @param localPlayer that the player controlls
@@ -103,13 +104,13 @@ public class VersusState extends State {
     public int getID() {
         return Main.VERSUSSTATE;
     }
-    
+
     /**
      * initializes the state
-     * 
+     *
      * @param gc
      * @param sbg
-     * @throws SlickException 
+     * @throws SlickException
      */
     @Override
     public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {
@@ -118,13 +119,13 @@ public class VersusState extends State {
 
         playerNameFont = new Font("Sans serif", Font.PLAIN, 6);
         uf = new UnicodeFont(playerNameFont, 6, false, false);
-        
+
         for (MPPlayer mp : client.getPlayers().values()) {
             mp.isAttacking = false;
             mp.isChargeing = false;
             mp.isFullyCharged = false;
         }
-        
+
         mpHealth = new Image("src/main/resources/data/img/heartcontainer/health2.png");
 
         playerIndicator = new Polygon();
@@ -153,8 +154,8 @@ public class VersusState extends State {
 
     /**
      * Checks the collision between localplayer and mpPlayer
-     * 
-     * @param mp 
+     *
+     * @param mp
      */
     public void checkCollisionWithTarget(MPPlayer mp) {
         if (localPlayer.getAttackIndicator().intersects(mp.character.getHitBox()) && localPlayer.getIsAttacking()) {
@@ -244,7 +245,8 @@ public class VersusState extends State {
     }
 
     /**
-     * Updates the vector line between two players (if only two players are present).
+     * Updates the vector line between two players (if only two players are
+     * present).
      */
     public void updateVectorLine() {
         if (arena.players.isEmpty()) {
@@ -272,6 +274,7 @@ public class VersusState extends State {
 
     /**
      * Renders the indicator for the player
+     *
      * @param g
      */
     public void renderPlayerIndicator(Graphics g) {
@@ -281,6 +284,7 @@ public class VersusState extends State {
 
     /**
      * Updates the opponent status
+     *
      * @param mp
      * @param i
      */
@@ -330,6 +334,7 @@ public class VersusState extends State {
 
     /**
      * Renders the countdown timer
+     *
      * @param x coordinates
      * @param y coordinates
      * @param g
@@ -340,7 +345,8 @@ public class VersusState extends State {
     }
 
     /**
-     *  Renders the enemies HP bars
+     * Renders the enemies HP bars
+     *
      * @param p
      */
     public void renderMpHealthAndName(MPPlayer p) {
@@ -375,6 +381,7 @@ public class VersusState extends State {
 
     /**
      * checks if a player has won
+     *
      * @param sbg
      * @param gc
      * @throws SlickException
@@ -419,26 +426,30 @@ public class VersusState extends State {
         sendClientData();
     }
 
-
     /**
      * sends data to the server updating the current state of the clients player
      */
     private void sendClientData() {
-        if (localPlayer.networkPosition.x != localPlayer.getCurrentX()) {
-            //Send the player's X value
-            PacketUpdateX packet = new PacketUpdateX();
-            packet.x = localPlayer.getCurrentX();
-            client.getClient().sendUDP(packet);
-            client.getClient().setIdleThreshold(1);
-            localPlayer.networkPosition.x = localPlayer.getCurrentX();
-        }
-        if (localPlayer.networkPosition.y != localPlayer.getCurrentY()) {
-            //Send the player's Y value
-            PacketUpdateY packet = new PacketUpdateY();
-            packet.y = localPlayer.getCurrentY();
-            client.getClient().sendUDP(packet);
-            client.getClient().setIdleThreshold(1);
-            localPlayer.networkPosition.y = localPlayer.getCurrentY();
+        if (limit == 2) {
+            if (localPlayer.networkPosition.x != localPlayer.getCurrentX()) {
+                //Send the player's X value
+                PacketUpdateX packet = new PacketUpdateX();
+                packet.x = localPlayer.getCurrentX();
+                client.getClient().sendUDP(packet);
+                client.getClient().setIdleThreshold(1);
+                localPlayer.networkPosition.x = localPlayer.getCurrentX();
+            }
+            if (localPlayer.networkPosition.y != localPlayer.getCurrentY()) {
+                //Send the player's Y value
+                PacketUpdateY packet = new PacketUpdateY();
+                packet.y = localPlayer.getCurrentY();
+                client.getClient().sendUDP(packet);
+                client.getClient().setIdleThreshold(1);
+                localPlayer.networkPosition.y = localPlayer.getCurrentY();
+            }
+            limit = 0;
+        } else {
+            limit++;
         }
         if (localPlayer.getIsAttacking() && !oldAttack) {
             oldAttack = true;
@@ -513,7 +524,7 @@ public class VersusState extends State {
             PacketFallingPlayer packet = new PacketFallingPlayer();
             packet.isFalling = true;
             client.getClient().sendUDP(packet);
-        } else if(!localPlayer.isFalling() && oldFalling) {
+        } else if (!localPlayer.isFalling() && oldFalling) {
             oldFalling = false;
             PacketFallingPlayer packet = new PacketFallingPlayer();
             packet.isFalling = false;
@@ -524,7 +535,7 @@ public class VersusState extends State {
             PacketGroundedPlayer packet = new PacketGroundedPlayer();
             packet.isGrounded = true;
             client.getClient().sendUDP(packet);
-        } else if(!localPlayer.getGrounded() && oldGrounded) {
+        } else if (!localPlayer.getGrounded() && oldGrounded) {
             oldGrounded = false;
             PacketGroundedPlayer packet = new PacketGroundedPlayer();
             packet.isGrounded = false;
